@@ -1,0 +1,16 @@
+# Area de trabajo del usuario: fuera del repositorio a proposito.
+# Su contenido cambia o desaparece sin aviso, y los protocolos tienen
+# prohibido leerlo o tocarlo. Sin esta linea, el `git add -A` del cierre
+# lo commitearia entero.
+temporal/
+
+# Secretos. Git no olvida: si una credencial entra al historial,
+# borrar el archivo despues no la borra.
+.env
+.env.*
+!.env.example
+
+# Ruido del sistema y del editor
+Thumbs.db
+desktop.ini
+.DS_Store
