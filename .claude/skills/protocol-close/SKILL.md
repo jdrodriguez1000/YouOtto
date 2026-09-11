@@ -141,11 +141,23 @@ numero detras citado dentro de un archivo que tiene que poder copiarse tal cual.
 proyecto, cita entradas que alli no existen.
 
 ```bash
-git grep -noE '\b(T|D|F|L|A|C|DT|S)-[0-9]{2,3}\b' -- _phases _workflow
+git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' -- _phases _workflow | grep -vE ':PI-[0-9]+$'
 ```
 
-🔑 **La respuesta correcta es CERO lineas** (`exit 1`). Si devuelve alguna, se reporta como hallazgo
-propio en el informe con su archivo y su linea, igual que en 1b: no se arregla en silencio.
+🔑 **La respuesta correcta es CERO lineas**. Si devuelve alguna, se reporta como hallazgo propio en
+el informe con su archivo y su linea, igual que en 1b: no se arregla en silencio.
+
+🚨 **El patron NO enumera prefijos, y esa es la parte que importa.** Una version anterior listaba los
+ocho que existian el dia que se escribio, y quedo ciega a los diez que nacieron despues: con dos
+citas reales inyectadas en un archivo de etapa devolvia cero. Un control que hay que ampliar cada vez
+que nace un codigo nuevo esta roto por diseño — el dia que falle sera justo el dia en que nadie se
+acuerde de ampliarlo.
+
+⚠️ **`PI-` es la unica exclusion, y se declara porque no es una entrada del registro.** Los
+principios de ingenieria viven en `CLAUDE.md`, son parte del metodo y viajan a cualquier proyecto:
+citarlos en un archivo de etapa es correcto. Cualquier otra sigla con numero **es** una entrada de un
+registro, y ahi no puede estar. Si algun dia nace otra serie del metodo con esta forma, se anade aqui
+**declarandola**, nunca ensanchando el patron.
 
 🚨 **El ambito son dos carpetas, no las seis del Paso 1b, y la diferencia no es un descuido.** En
 `.claude/`, `_methodology/`, `_templates/` y `CLAUDE.md` un codigo con numero es **legitimo**: los
@@ -515,6 +527,43 @@ exactamente los que la memoria deja fuera. **El diff sabe que archivos se tocaro
 no se corrige: se anota. La diferencia entre las dos cosas es la unica razon de que el paso exista
 aqui y no en la auditoria.
 
+### 🚨 SEGUNDA PASADA, anclada, despues del commit (obligatoria)
+
+⚠️ **`git diff --cached` no es «los archivos que el commit toca»: es lo que hay en staging CUANDO SE
+CORRE.** Y este paso corre antes de que el cierre escriba `progress.md`, el informe y el tablero. Esos
+tres entran en el commit sin haber pasado por el barrido — y `progress.md` es el archivo con **mas**
+riesgo de los tres: el cierre lo reescribe entero y contiene patrones `\b`, el origen exacto del
+`0x08` que este paso persigue. Una vez ocurrio: la tabla publico catorce archivos donde el commit
+llevaba diecisiete, y los dos contrastes cuadraron con ella porque salen del **mismo** staging corto.
+
+⛔ **Por eso los dos contrastes de arriba no bastan.** Los dos preguntan por otro camino, pero
+**dentro del mismo ambito**: no pueden ver lo que el ambito deja fuera. Lo unico que ve la brecha es
+repetir el barrido sobre el commit ya hecho:
+
+```bash
+# 1 — el barrido, anclado al commit
+for f in $(git diff --name-only --diff-filter=d <hash>^ <hash>); do
+  n=$(git show <hash>:"$f" | grep -c $'[\x01-\x08\x0b\x0c\x0e-\x1f]')
+  [ "$n" -gt 0 ] && echo "$f: $n"
+done
+
+# 2 — contraste 1 anclado: cuantos archivos lleva el commit de verdad
+git diff --name-only --diff-filter=d <hash>^ <hash> | wc -l
+
+# 3 — contraste 2 anclado: el total, sin pasar por la tabla
+for f in $(git diff --name-only --diff-filter=d <hash>^ <hash>); do git show <hash>:"$f"; done \
+  | grep -c $'[\x01-\x08\x0b\x0c\x0e-\x1f]'
+```
+
+**Las tres salidas se publican en la NOTA DE CIERRE del informe**, junto al CENSO y al CONTROL, y
+**tambien cuando salen limpias**. Si el recuento del contraste 1 anclado no coincide con el numero de
+filas de la tabla de la seccion 8, **eso no es un error: es lo esperado** — se dice cuantos archivos
+quedaron fuera y cuales, con la salida delante.
+
+🚨 **Si la segunda pasada saca una linea que la primera no vio, no se corrige: se anota.** El commit
+ya existe. Va con su **nota fechada**, como cualquier defecto ya commiteado — y ese es exactamente el
+caso que la primera pasada no podia atrapar.
+
 ⚠️ **Su resultado se publica en el informe, tambien cuando sale vacio.** «Ninguna linea» es un
 resultado, y va con su orden y su salida cruda como cualquier otro — un control sin evidencia
 publicada es indistinguible de un control que no se corrio.
@@ -852,6 +901,33 @@ este informe, los archivos y `git`. No escribas como si compartiera contexto:
 - 🚨 **Escribe el informe completo, sin resumir.** Lo que se ahorre aqui es exactamente lo que el
   auditor tendra que reconstruir, y lo reconstruira adivinando.
 
+### 🚨 Ninguna cifra del informe se teclea. **Ninguna, y en ninguna seccion**
+
+Toda cifra y toda enumeracion que el informe presente como completa **se deriva con una orden y se
+pega su salida**. No hay seccion exenta: vale para la prosa de cualquier seccion, para la NOTA DE
+CIERRE, y para las notas fechadas que se anadan despues.
+
+⚠️ **Esta regla nacio generica a proposito, y esa es toda su utilidad.** Versiones anteriores la
+escribieron **para un sitio concreto** —una para la seccion de supuestos, otra para el desglose de la
+NOTA DE CIERRE—, y las dos veces el mismo defecto reaparecio **un sitio mas alla**: en la prosa de
+otra seccion, y en una lista que la propia regla anterior autorizaba a escribir a mano. Una regla que
+nombra el lugar solo protege ese lugar.
+
+🔑 **Y por eso una lista tampoco se salva por ser lista.** Una enumeracion de codigos declarada
+completa es una cifra escrita en palabras: si dice «completan los catorce», tiene que salir de la
+orden igual que el `14`. Escribir la lista a mano solo vale **declarandola parcial** — «entre ellos»,
+«los que tocan lo de hoy» —, nunca con un verbo que afirme completitud.
+
+⛔ **Un barrido de TODOS los numeros de la prosa no sirve, y se midio:** marca del orden de 130
+lineas en un informe real, casi todas legitimas. No es un control, es ruido.
+
+🔑 **Pero el ambito estrecho si sirve, y va mas abajo.** Lo que separa la cifra buena de la falsa es
+pegarla desde su orden, asi que la franja donde el defecto vive es **la prosa pegada a una salida
+cruda**. Ese recorte es el CONTROL DE CIFRA ADYACENTE del final de este paso: obligatorio, y no
+sustituye a esta regla — la comprueba.
+
+🔑 **La duda se resuelve siempre igual:** si dudas entre pegar la salida y resumirla, pega la salida.
+
 ### 🚨 Las dos listas del informe se **generan**; escribirlas de memoria es como se quedan cortas
 
 Las secciones 1 y 2 llevan cada una una enumeracion, y **una enumeracion sin salvedad se lee como
@@ -981,7 +1057,7 @@ nota fechada de la jornada.** Una sola fuente, derivada una vez.
 
 | Hallazgo | Veredicto | Evidencia / Razon |
 |---|---|---|
-| F-NNN — <resumen> | Implementado | `T-NNN`, en este commit |
+| F-NNN — <resumen> | Aceptado — corregido en este commit | `T-NNN`, en este commit |
 | F-NNN — <resumen> | Aceptado — pendiente | `T-NNN`, `No implementada` |
 | F-NNN — <resumen> | No se implementa | `D-NNN` |
 
@@ -1008,6 +1084,14 @@ entradas YA EXISTENTES que el commit edita, con su codigo (`L-XXX (nace)`, `L-XX
 
 ## 4. Supuestos vigentes y riesgos
 <`A-XXX` abiertos, que se apoya en ellos, y que pasa si resultan falsos>
+<si se publica la orden que los enumera, debajo va SU SALIDA CRUDA: esta seccion no escribe a mano
+un recuento — ni «devuelve trece filas» ni «son N» — al lado de la orden que lo desmiente>
+<y la LISTA de codigos tampoco se teclea si se presenta como completa: se deriva con la misma orden
+(`... | grep -oE 'A-[0-9]+' | sort -u`) y se pega. Escrita a mano solo vale declarandola parcial —
+«entre ellos», «los que tocan lo de hoy» —, nunca con un verbo que afirme completitud>
+<🚨 Cinco veces ha salido falso un recuento tecleado junto a su propia orden, y una de ellas fue una
+lista que una version anterior de esta misma linea autorizaba a escribir a mano. Si dudas entre pegar
+la salida y resumirla, pega la salida>
 
 ## 5. Siguiente tarea propuesta
 <la primera accion concreta de la proxima sesion, con su codigo, importancia y urgencia>
@@ -1035,6 +1119,21 @@ escribe a mano: se pega la orden que la produce y su salida cruda>
 salida — que tiene que salir vacia —, y la frase que dice que no queda ninguna sin anclar>
 <y dentro de esa misma nota, la salida del CONTROL DE PROSA BORRADA del Paso 7c-bis, entera y con su
 orden, tambien cuando sale limpia: sin ella, «no se borro prosa» y «nadie lo comprobo» se leen igual>
+<y si la nota desglosa las ordenes ancladas por entrada —«`D-XXX`: 1; `T-XXX`: 3»—, ese desglose se
+DERIVA con una orden y se pega su salida, nunca se teclea: un desglose escrito a mano que no suma su
+propia cifra obliga a rehacer justo el trabajo que existe para ahorrar. La orden recorre el commit
+de ANCLAJE, no el sustantivo — es ahi donde el 7c-bis escribio los hashes>
+<y dentro de esa misma nota, la SEGUNDA PASADA anclada del Paso 2e: sus tres ordenes y sus tres
+salidas, tambien cuando salen limpias, y cuantos archivos del commit quedaron fuera de la tabla de
+la seccion 8 — que es lo que esta pasada existe para ver>
+<y dentro de esa misma nota, la salida del CONTROL DE CIFRA ADYACENTE del Paso 6b, entera y con su
+orden, tambien cuando no obliga a corregir nada, con la lectura linea por linea de su condicion de
+parada>
+<🚨 los cuatro bloques van ROTULADOS con su nombre literal —`**BARRIDO DE ANCLAJE — salida:**`,
+`**CONTROL DE PROSA BORRADA — salida:**`, `**SEGUNDA PASADA anclada del Paso 2e — salida:**` y
+`**CONTROL DE CIFRA ADYACENTE — salida:**`—, y no es cosmetica: el Paso 7c-ter los busca por esa
+cadena exacta antes de dejar commitear el anclaje. El rotulo lleva el sufijo ` — salida:` justo para
+que no lo pueda satisfacer una mencion suelta del control en la prosa del informe>
 
 ## 8. Evidencia del Paso 2e
 <la orden del barrido de caracteres de control sobre los archivos que el commit toca, y su salida
@@ -1044,21 +1143,40 @@ barrido contra HEAD, y para las nuevas se publica la linea con `cat -A` para que
 <una cifra heredada no se omite: heredada no es inexistente>
 <y los DOS CONTRASTES de la tabla, con su orden y su salida, aunque la tabla salga limpia: cuantas
 filas tiene que tener, y el total sin pasar por la tabla. La tabla tiene que cuadrar con los dos>
+<⚠️ esta seccion mide el AREA DE STAGING previa al commit, no el commit: los archivos que el cierre
+escribe despues —`progress.md`, este informe y el tablero— quedan fuera por construccion, y se dice.
+Quien cubre esa brecha es la SEGUNDA PASADA anclada, que va en la NOTA DE CIERRE de la seccion 7>
 ```
 
 ### Los tres veredictos de la seccion 0, y nada mas
 
 | Veredicto | Cuando |
 |---|---|
-| `Implementado` | hecho, y esta en este commit |
+| `Aceptado — corregido en este commit` | de acuerdo, y la correccion esta en este commit — **con su `T-XXX`** |
 | `Aceptado — pendiente` | de acuerdo, pero aun no hecho — **con su `T-XXX`** |
 | `No se implementa` | rechazado — **con su `D-XXX`** |
+
+⛔ **`Implementado` no es uno de los tres, y no es un sinonimo del primero.** Es el estado que
+`CLAUDE.md` y `project.md` reservan a la auditoria: un hallazgo pasa a `Implementado` cuando **una
+auditoria posterior verifica la correccion sobre un commit posterior**, nunca cuando a `manager` le
+parece resuelto. Escribirlo aqui hace que el informe declare cerrado lo que solo el auditor puede
+cerrar.
+
+🔑 **Y el problema no es de precision, es de quien lee.** La seccion 0 es lo primero que se abre
+para saber en que quedo un hallazgo. Quien lea `Implementado` ahi y no abra `findings.md` concluira
+que esta cerrado — y `findings.md`, que es el registro autoritativo, dira otra cosa en el mismo
+commit. Esta regla nacio de un defecto real: dos informes seguidos publicaron `Implementado` para
+seis hallazgos que su propio `findings.md` dejaba en `Aceptado — pendiente`.
+
+⚠️ **Los dos primeros veredictos dicen lo mismo salvo en una cosa: donde esta la correccion.**
+`corregido en este commit` afirma un hecho que el diff prueba; `pendiente` remite a una tarea
+abierta. Ninguno de los dos afirma el estado del hallazgo, que no es de `manager`.
 
 ### 🚨 Esa tabla se audita fila a fila. Cada veredicto exige algo comprobable
 
 | Veredicto | Lo que el auditor va a comprobar | Si no esta |
 |---|---|---|
-| `Implementado` | que la correccion **aparezca en el diff de este commit** | es un hallazgo, y el original **sigue abierto** |
+| `Aceptado — corregido en este commit` | que la correccion **aparezca en el diff de este commit** | es un hallazgo, y el original **sigue abierto** |
 | `Aceptado — pendiente` | que cite su `T-XXX`, y que esa tarea **exista y siga abierta** | el hallazgo no se da por recogido |
 | `No se implementa` | que cite su `D-XXX` | un rechazo sin decision registrada **no es auditable** |
 
@@ -1086,7 +1204,7 @@ git rev-parse --short HEAD          # el de la izquierda de la tabla
 git log -1 --format='%h %s' HEAD    # el asunto dice si es una auditoria, y de que commit
 ```
 
-⚠️ **No marques `Implementado` lo que el diff no muestre.** Si estas de acuerdo pero no esta hecho,
+⚠️ **No marques `Aceptado — corregido en este commit` lo que el diff no muestre.** Si estas de acuerdo pero no esta hecho,
 su veredicto es `Aceptado — pendiente` con su tarea abierta. Marcarlo hecho no lo adelanta: lo
 convierte en un hallazgo nuevo y deja el original abierto igual.
 
@@ -1176,6 +1294,44 @@ linea de instruccion entre parrafos de instrucciones no desentona.
 ⛔ **Y despues del commit ya no se borra:** el informe estaria auditado, y quitarle lineas cambia lo
 que la auditoria describio. Entonces la salida es la nota fechada, como siempre. Por eso este
 control va **aqui**, antes del `git add`, y no en el Paso 7b.
+
+### 🚨 CONTROL DE CIFRA ADYACENTE (obligatorio, antes del `git add`)
+
+La regla de arriba es de redaccion, y una regla de redaccion sola **ya fallo tres veces seguidas**:
+se enuncio mejor, se generalizo a todo el informe, y el mismo defecto reaparecio en el commit que la
+estrenaba. Lo que faltaba no era el enunciado, era que **nada la comprobara antes de commitear**.
+
+Este control no barre todos los numeros del informe —eso se midio y es ruido—. Barre solo la
+franja donde el defecto aparece siempre: **la prosa que sigue a un bloque de salida cruda**, que es
+justo donde se teclea la cifra que ese bloque acababa de dar.
+
+```bash
+awk '
+  /^```/ { infence = !infence; if (!infence) { since=0; armed=1 } ; next }
+  infence { next }
+  armed { since++; if (since<=3 && $0 ~ /[0-9]/ && $0 !~ /^[[:space:]]*$/) print FILENAME":"NR": "$0; if (since>3) armed=0 }
+' _audit/S-XXX.md
+```
+
+⛔ **La respuesta correcta NO es cero.** Un informe sano devuelve del orden de diez lineas, y casi
+todas son legitimas. **La condicion de parada es esta: cada linea que salga se lee contra el bloque
+que la precede, y su cifra tiene que salir de esa salida.** Si no sale de ahi, se deriva con una
+orden y se pega; no se ajusta a mano.
+
+🔑 **Lo que hace util a un control tan corto es que agrupa las cifras que hablan de lo mismo.** Las
+tres lineas que se contradecian en un informe real —«las 16 ocurrencias», «las 17 ocurrencias
+preexistentes» y «Diecisiete, y la suma … es diecisiete»— salen **una debajo de otra** en su salida,
+a veinte y cuarenta lineas de distancia en el archivo. Leyendo el informe de corrido no se ven
+juntas nunca; en esta salida la contradiccion es la primera cosa que se nota.
+
+⚠️ **La salida se publica en la NOTA DE CIERRE, tambien cuando no obliga a corregir nada.** Un
+control cuyo resultado no se publica no se distingue de un control que no se corrio.
+
+🚨 **Y esa publicacion la comprueba el Paso 7c-ter, no tu memoria.** Este control nacio porque una
+regla de redaccion sola ya habia fallado tres veces, y su estreno repitio el patron: se escribio, se
+corrio, y **no se publico** — desde fuera no habia forma de distinguirlo de uno que nadie corrio.
+Guarda su salida al correrlo aqui: la vas a pegar en la NOTA DE CIERRE bajo el rotulo literal
+`**CONTROL DE CIFRA ADYACENTE — salida:**`, y el 7c-ter no deja commitear el anclaje sin ella.
 
 ---
 
@@ -1556,6 +1712,78 @@ documentacion: la orden ejecutada literal y su salida cruda.
 🔑 **Lo que se publica es la salida entera, incluidas las dos lineas `== … ==`.** Son justamente lo
 que distingue «el control salio limpio» de «el control no se corrio»: sin ellas, una salida vacia y
 una ejecucion que no ocurrio se leen igual.
+
+### 7c-ter — Que la NOTA DE CIERRE lleve las cuatro salidas (obligatorio, antes de commitear el anclaje)
+
+Cuatro pasos distintos terminan diciendo «y su salida se publica en la NOTA DE CIERRE»: el barrido de
+anclaje del Paso 2d, el CONTROL DE PROSA BORRADA del 7c-bis, la SEGUNDA PASADA anclada del Paso 2e y
+el CONTROL DE CIFRA ADYACENTE del Paso 6b. **Las cuatro son reglas de redaccion, y una regla de
+redaccion sola ya fallo:** el ultimo de los cuatro se estreno escrito, corrido y sin publicar.
+
+Este paso no juzga el contenido de las cuatro salidas —eso lo hace la auditoria—. Comprueba lo unico
+que se puede comprobar desde fuera: **que estan**.
+
+```bash
+for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**"; do
+  grep -qF "$m" _audit/S-XXX.md || echo "FALTA en la NOTA DE CIERRE: $m"
+done
+```
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| nada | los cuatro rotulos estan | sigue: commitea el anclaje |
+| alguna linea `FALTA…` | **la NOTA DE CIERRE no lleva esa salida** | 🚨 **detente**: corre el control que falta, pega su orden y su salida cruda bajo su rotulo, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
+| el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
+
+⚠️ **Aqui la salida vacia SI es la correcta**, al reves que en el CONTROL DE CIFRA ADYACENTE. No es
+una incoherencia: aquel busca lineas para leerlas, este busca ausencias.
+
+🔑 **Por que va aqui y no en el Paso 7b.** La NOTA DE CIERRE no existe todavia cuando corre el 7b:
+la escribe el 7c, despues del commit sustantivo. El ultimo momento en que aun se puede anadir algo
+sin dejar una nota fechada es justo antes del commit de anclaje, y ese momento es este.
+
+⚠️ **Este control enumera casos, y eso caduca.** Reconoce cuatro rotulos porque hoy hay cuatro
+obligaciones; **un quinto paso que exija publicar su salida en la NOTA DE CIERRE tiene que anadir su
+rotulo a esta lista en la misma pasada en que nazca**, o este control seguira devolviendo vacio
+mientras la nota se queda coja. Un control que no cubre lo nuevo es peor que ninguno, porque
+tranquiliza.
+
+⛔ **Y no comprueba que la salida sea la de este informe.** Un rotulo con la salida de la sesion
+anterior pegada debajo pasa este control sin una queja. Lo que impide eso es el anclaje de las
+ordenes, no esto.
+
+### 7c-quater — Que la seccion 1 publique la orden prescrita, no una variante (obligatorio, antes de commitear el anclaje)
+
+La lista de archivos de la seccion 1 la produce **una** orden, y la tabla del Paso 7c la fija literal.
+Copiarla a mano sale mal de vez en cuando, y siempre por el mismo sitio: **perder `--format=`**. Sin
+esa opcion la orden devuelve ademas ocho lineas de cabecera del commit, asi que la salida pegada
+debajo deja de ser la que esa orden produce — aunque los archivos listados sean los correctos.
+
+```bash
+grep -qF 'git show --stat --name-only --format=' _audit/S-XXX.md ||
+  echo "FALTA en la seccion 1: la orden prescrita por el Paso 7c (sin --format= la salida no reproduce)"
+```
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| nada | la seccion 1 publica la orden prescrita | sigue: commitea el anclaje |
+| la linea `FALTA…` | **el bloque de la seccion 1 no reproduce** | 🚨 **detente**: corrige la orden publicada a la de la tabla del Paso 7c, comprueba que su salida es la pegada, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
+| el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
+
+🔑 **Por que esto se puede comprobar y otras cosas de la seccion 1 no.** La orden esta **prescrita
+literalmente** en esta misma skill, asi que comprobarla es igualdad de cadenas, no criterio. Lo demas
+que suele fallar en esa seccion —una etiqueta mal elegida, un residuo de edicion, una vineta que
+describe un cambio que no ocurrio— es prosa, y ningun `grep` la distingue de la buena. **Este paso no
+lo intenta**: un control que promete cazar prosa tranquiliza sin cubrir, y eso es peor que no tenerlo.
+
+⚠️ **Esta regla nacio de un defecto real, y de una reincidencia.** El aviso ya existia en prosa y la
+plantilla del informe ya se endurecio una vez por esta misma seccion; aun asi, un cierre posterior
+publico la orden sin `--format=`. **Un aviso se lee una vez; una cadena literal se comprueba en cada
+cierre.**
+
+⛔ **Y no comprueba que la salida pegada sea la de este commit.** Una orden correcta con la lista de
+la sesion anterior debajo pasa este control sin una queja. Lo que impide eso es el anclaje del Paso
+7c, no esto.
 
 ### 7d — La fecha escrita contra la del commit (obligatorio)
 

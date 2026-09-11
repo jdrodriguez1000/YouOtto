@@ -242,7 +242,9 @@ La etapa termina cuando **las diez son ciertas**, y vienen de cuatro sitios dist
       **NO MIRADOS**, no limpios.
 - [ ] **10 · La cosecha esta hecha:** ninguna leccion de esta etapa queda `Sin evaluar` en la columna
       `Portabilidad` de `lessons.md`, y lo que quedo `Global candidata` esta ya en el archivo de
-      lecciones globales, con su `D-XXX` y con la version nueva del archivo declarada.
+      lecciones globales, con su `D-XXX` y con la version nueva del archivo declarada. La ejecuta
+      `manager` con la skill `protocol-harvest`, y **antes** de la firma del patrocinador: hecha
+      despues, esta casilla no se podria marcar nunca.
 
 ⚠️ **La octava no exige que los hallazgos esten cerrados**, y no es un descuido: cerrar un hallazgo
 es de la auditoria siguiente. Lo que la etapa si puede exigir es que ninguno se quede sin evaluar.

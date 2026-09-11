@@ -131,7 +131,8 @@ git show <hash>
 | el diff muestra algo relevante que el informe no menciona | 🚨 hallazgo: la lista se quedo corta |
 | una tarea marcada `Implementada` que el diff contradice | 🚨 hallazgo: estado que no corresponde |
 | una decision que afirma haber verificado, sin comando ni salida | 🚨 hallazgo: veredicto sin evidencia |
-| la seccion 0 marca `Implementado` algo que no esta en el diff | 🚨 hallazgo, y el original sigue abierto |
+| la seccion 0 marca `Aceptado — corregido en este commit` algo que no esta en el diff | 🚨 hallazgo, y el original sigue abierto |
+| la seccion 0 usa `Implementado` en su columna `Veredicto` | 🚨 hallazgo: ese estado es tuyo, `manager` no puede cerrar sus hallazgos |
 
 🚨 **Cada hallazgo tuyo va con su comando y su salida cruda.** Vale para ti exactamente igual que
 para el auditado: «se comprobo» no es evidencia. Si `manager` tiene que rehacer tu barrido para
@@ -167,13 +168,40 @@ busca su razon en `project.md` o en una `D-XXX`. Si esta escrita, no hay nada qu
 **c) Fuga de datos propios en lo que deberia ser agnostico:**
 
 ```bash
-git grep -nE "<nombre del proyecto>|<carpeta raiz de las rutas absolutas>|<host del remoto>" <hash> -- .claude CLAUDE.md _phases _methodology
+git grep -nE "<nombre del proyecto>|<carpeta raiz de las rutas absolutas>|<host del remoto>" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow
 ```
 
 🔑 **Cero lineas es lo correcto.** Cualquier linea es un hallazgo: un dato del proyecto se colo en un
 archivo que tiene que poder copiarse tal cual.
 
-**Los tres tienen tres resultados, no dos:** correcto · con diferencias · **no se pudo correr**. El
+🚨 **Las seis carpetas son las mismas que barre el cierre, y tienen que seguir siendolo.** Este
+control existe en dos protocolos, y **el mismo control en dos sitios tiene que ser el mismo
+comando**: si los ambitos se separan, el que mira menos dira «limpio» sobre lo que no miro, y eso es
+peor que no tenerlo. Nacio de un caso real: durante varias sesiones este barrido cubrio cuatro
+carpetas y el del cierre seis, y el hueco estuvo tapado **porque un auditor amplio el ambito por su
+cuenta** — no porque su protocolo se lo mandara. Un control que depende de que alguien se acuerde ya
+esta roto.
+
+**d) Fuga por codigos instanciados en las dos carpetas que exigen cero:**
+
+```bash
+git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' <hash> -- _phases _workflow | grep -vE ':PI-[0-9]+$'
+```
+
+🔑 **Cero lineas es lo correcto.** Un codigo del registro **con su numero puesto** dentro de un
+archivo que tiene que poder copiarse tal cual es un dato propio igual que un nombre o una ruta:
+copiado a otro repositorio, afirma una historia que alli no ocurrio.
+
+🚨 **El ambito son dos carpetas, no las seis de (c), y la diferencia no es un descuido.** En
+`.claude/`, `_methodology/`, `_templates/` y `CLAUDE.md` un codigo con numero es **legitimo** —los
+protocolos citan las decisiones que los explican, el metodo numera ejemplos, una plantilla escribe el
+primero de su serie—. Exigir cero ahi haria el control incumplible desde el primer dia, y un control
+que siempre avisa termina sin lector.
+
+⚠️ **`PI-` es la unica exclusion:** los principios de ingenieria son parte del metodo y viajan a
+cualquier proyecto. Cualquier otra sigla con numero es una entrada de un registro.
+
+**Los cuatro tienen tres resultados, no dos:** correcto · con diferencias · **no se pudo correr**. El
 tercero va al informe como `SIN COMPROBAR` con su motivo. «No pude comprobarlo» no es «esta bien».
 
 ---

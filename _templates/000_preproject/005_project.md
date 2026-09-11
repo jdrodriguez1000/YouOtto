@@ -186,7 +186,7 @@ apagado.**
 | `.claude/` | **Con que** se construye: los agentes y las skills que ejecutan los protocolos. Agnostica — no lleva dentro ningun dato de este proyecto, y el Paso 1b lo comprueba |
 | `_brief/` | El encargo del cliente, tal como llego. **Entrada al proyecto, no registro de el** |
 | `_persistence/` | **Como va** el trabajo: siete archivos, indice arriba y detalle debajo |
-| `_audit/` | **Como se comprueba** el trabajo: el informe de cada sesion, la auditoria de cada una, el tablero y el registro de hallazgos. En las subcarpetas de cada Gate, ademas, sus dictamenes — que **no** son auditorias de sesion y no entran en el tablero ni en `findings.md` |
+| `_audit/` | **Como se comprueba** el trabajo: el informe de cada sesion, la auditoria de cada una, el tablero y el registro de hallazgos. En las subcarpetas de cada Gate, ademas, sus dictamenes; y en una subcarpeta con el nombre de cada etapa, las **actas de cierre de esa etapa**. Ni unos ni otras son auditorias de sesion: **no** entran en el tablero ni en `findings.md` |
 | `_methodology/` | **Con que criterio** se construye: el metodo de desarrollo y, en `sources/`, las fuentes de las que se consolido, que no se editan. Agnostica — el Paso 1b lo comprueba |
 | `_phases/` | **Que se hace en cada etapa**: un archivo por etapa, con lo que autoriza, lo que prohibe, su procedimiento y su condicion de salida. Agnostica — el Paso 1b lo comprueba |
 | `_templates/` | **Con que forma** se escribe cada artefacto: una subcarpeta por etapa o gate con artefactos con plantilla, y dentro una plantilla por artefacto. Guarda solo plantillas en blanco. Agnostica — el Paso 1b lo comprueba |

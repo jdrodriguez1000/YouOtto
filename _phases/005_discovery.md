@@ -105,10 +105,28 @@ validado.
 
 1. **Una necesidad expresada por alguien**, aunque venga disfrazada de solucion.
 2. **Acceso al patrocinador y a personas que puedan hablar del proceso real.**
+3. **El acta de cierre de la etapa anterior, levantada y firmada.** Levantada por quien verifica las
+   casillas de su condicion de salida, y firmada por el patrocinador — las dos cosas, porque son dos
+   firmas distintas y ninguna sustituye a la otra.
 
 🚨 **Si falta el acceso, la etapa no puede empezar.** No se sustituye con suposiciones: sin nadie a
 quien preguntar, lo que se produce no es descubrimiento sino invencion documentada. Lo que si se
 puede hacer es registrar la falta de acceso como `A-XXX` o `C-XXX` y escalarla al usuario.
+
+🚨 **Y si falta el acta, tampoco.** Sin ella se entra aqui con la etapa anterior a medias y **nadie
+lo nota**: el trabajo de esta etapa no tropieza con lo que quedo sin terminar en la anterior, lo
+hereda en silencio. Una condicion de salida que nadie tiene que mirar antes de seguir no es una
+condicion de salida — es una nota al pie.
+
+🔑 **Esta tercera entrada es la que convierte el acta en puerta**, y por eso vive aqui y no en la
+etapa que la produce. Un acta que se levanta y se archiva cuesta lo mismo que una que se lee, y no
+impide nada; lo que la hace valer es que la etapa siguiente **no pueda empezar sin ella**.
+
+⚠️ **Un acta con casillas sin cumplir sigue siendo un acta, y no habilita nada.** Lo que esta
+entrada exige es una etapa cerrada, no un documento existente: si el acta declara casillas
+incumplidas, o el patrocinador no la firmo, la puerta esta cerrada igual. Y si se decide entrar de
+todas formas, eso es una excepcion deliberada y va con su `D-XXX` — nunca como un tramite que se dio
+por hecho.
 
 ## 4. Procedimiento
 

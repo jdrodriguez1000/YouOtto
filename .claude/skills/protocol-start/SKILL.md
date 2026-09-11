@@ -1,6 +1,6 @@
 ---
 name: protocol-start
-description: Protocolo de inicio de sesion del proyecto. Lee de forma obligatoria el estado de git, project.md, CLAUDE.md, _persistence/progress.md y _persistence/tasks.md; a demanda decisions.md, constraints.md, assumptions.md, lessons.md y techdebt.md. Con eso presenta en pantalla donde esta el proyecto, las ultimas tareas realizadas y las siguientes, ordenadas por urgencia e importancia. Es de solo lectura. Uso exclusivo del agente session-starter.
+description: Protocolo de inicio de sesion del proyecto. Lee de forma obligatoria el estado de git, project.md, CLAUDE.md, _persistence/progress.md, _persistence/tasks.md y _persistence/assumptions.md (los `Abierto`, con su disparador); a demanda decisions.md, constraints.md, lessons.md y techdebt.md. Con eso presenta en pantalla donde esta el proyecto, las ultimas tareas realizadas y las siguientes, ordenadas por urgencia e importancia. Es de solo lectura. Uso exclusivo del agente session-starter.
 ---
 
 # Protocolo de inicio de sesion
@@ -72,9 +72,33 @@ creado. Dilo y sigue.
 3. **`_persistence/progress.md`** — secciones 1 (Estado general), 2 (Ultimo realizado),
    3 (Siguiente paso), y la tabla de sesiones del indice.
 4. **`_persistence/tasks.md`** — el indice, que ya trae estado, importancia y urgencia de cada tarea.
+5. **`_persistence/assumptions.md`** — el indice, y **el cuerpo de los que estan `Abierto`**: ahi
+   vive el disparador, que el indice no lleva.
 
-De los dos de `_persistence/` lee **el indice**, no el archivo entero. Ver *«Como se leen estos
+De `progress.md` y `tasks.md` lee **el indice**, no el archivo entero. Ver *«Como se leen estos
 archivos»* mas abajo.
+
+### 🚨 Por que los supuestos se leen SIEMPRE, y no cuando una tarea los invoque
+
+Una tarea es algo que hay que **construir**; un supuesto es algo que hay que **averiguar**. Son dos
+listas distintas, y un arranque que lee solo la primera reporta media jornada.
+
+⚠️ **El camino que hay que evitar es entrar a los supuestos desde las tareas.** Preguntarse *«¿hay
+alguna tarea apoyada en un supuesto?»* parece la puerta natural y es justo la que no sirve: **un
+supuesto que ninguna tarea apoya no aparece nunca por ahi**, y esos son precisamente los que llevan
+mas tiempo sin que nadie los mire. Este protocolo entro por esa puerta durante mucho tiempo, y el
+resultado fue reportar bloqueos con supuestos abiertos al lado que nadie vio.
+
+🔑 **Que se busca en el cuerpo:** el **disparador** de cada supuesto `Abierto` —el momento concreto
+en que alguien iba a mirarlo— y si ese momento **ya ocurrio**. Los que si, van al reporte.
+
+⛔ **Y ahi se para.** Reportar un supuesto cuyo disparador se cumplio es **reporte**; decidir que se
+hace con el, no — este protocolo es de solo lectura, y esa linea no se cruza ni cuando la respuesta
+parezca obvia.
+
+⚠️ **Si un supuesto `Abierto` no dice cual es su disparador, eso se reporta tal cual**, y no se le
+inventa uno. Un supuesto sin disparador es el caso que las convenciones del archivo describen como
+el que se queda abierto para siempre: nombrarlo es lo unico util que puede hacer el arranque.
 
 Si alguno no existe o esta vacio, **dilo en el reporte** en lugar de inventar contenido.
 
@@ -221,12 +245,16 @@ teniendo clara **que pregunta concreta** quieres responder con cada uno:
 |---|---|
 | `_persistence/decisions.md` | progress/tasks mencionen una decision, un cambio de rumbo, o una tarea dependa de una previa |
 | `_persistence/constraints.md` | las siguientes tareas toquen areas con limites conocidos |
-| `_persistence/assumptions.md` | haya tareas apoyadas en supuestos sin confirmar, o supuestos que puedan haber caducado |
 | `_persistence/lessons.md` | se vaya a repetir un tipo de trabajo que ya fallo antes |
 | `_persistence/techdebt.md` | haya deuda que bloquee lo siguiente, o propuestas del cierre sin confirmar |
 | `_audit/S-XXX.md` | quieras ver que se dijo de una sesion concreta, o que puntos debiles declaro |
 | el `R-XXX.md` de una auditoria | el Paso 1c muestre hallazgos nuevos **y** el usuario pida el detalle. Por defecto basta con anunciarlos por codigo y gravedad |
 | `_brief/` | el usuario lo pida explicitamente. **No es fuente de estado** — ver la regla del Paso 1 |
+
+⚠️ **`assumptions.md` ya no esta en esta tabla, y estuvo.** Paso a lectura **obligatoria** del
+Paso 1b. Su fila decia *«leelo cuando haya tareas apoyadas en supuestos sin confirmar»* — es decir,
+entrando desde las tareas, que es exactamente el camino por el que un supuesto sin tarea detras no
+se ve nunca. No se movio por importancia: se movio porque **la condicion de lectura era el defecto**.
 
 ⚠️ **`temporal/` no se lee.** Es el area de trabajo del usuario, no parte del registro, y su
 contenido cambia o desaparece sin aviso.
@@ -335,6 +363,12 @@ En espanol, sin relleno:
 1. <codigo> <tarea> — <importancia/urgencia> — <por que es la siguiente>
 2. ...
 
+## Tareas de etapas no iniciadas        <-- omitir solo si no hay ninguna
+- <`T-XXX` <tarea> — etapa `<cual>` — se retoma cuando <disparador>>
+
+## Supuestos que tocan mirar        <-- OBLIGATORIO, nunca se omite
+- <`A-XXX` <supuesto> — disparador: <cual> — <cumplido | sin disparador escrito> | «ninguno»>
+
 ## Contexto relevante        <-- omitir si no leiste archivos del Paso 2
 - **Decisiones:** ...
 - **Restricciones:** ...
@@ -359,8 +393,39 @@ Reglas del reporte:
 - 🔑 **Las siguientes tareas se ordenan por urgencia y despues por importancia**, no por orden de
   aparicion en el archivo: primero las `Bloqueante`, y dentro de ellas `Alta` antes que `Media` y
   `Baja`. Esos campos existen para decidir el orden del dia; usalos.
+- 🚨 **Una tarea de una etapa que no ha empezado NO es una siguiente tarea, y va en su propio
+  bloque.** Se reconoce por su campo `Etapa`: si no es la etapa activa que declara `progress.md`, va
+  a «Tareas de etapas no iniciadas» con su etapa y su disparador, **nunca numerada entre las
+  siguientes**.
+
+  ```bash
+  # etapa activa
+  grep -iE '^\| Etapa ' _persistence/progress.md | tail -1
+  # pendientes, con su etapa, para separarlas
+  grep -E '^\| \[T-' _persistence/tasks.md | grep -E '\| No implementada \|' \
+    | awk -F'|' '{gsub(/^ +| +$/,"",$2); gsub(/^ +| +$/,"",$7); print $7"  "$2}' | sort
+  ```
+
+- 🔑 **Por que separarlas y no solo mencionarlo:** mezcladas con las de la etapa activa, compiten por
+  el dia y se proponen como trabajo que todavia no toca — y quien lea el reporte no tiene forma de
+  saberlo sin abrir cada ficha. Separadas, el aplazamiento **se ve** sin que nadie tenga que
+  recordarlo.
+- ⚠️ **Que esten aparte no las esconde: el bloque se publica.** Una tarea de otra etapa sigue siendo
+  trabajo real del proyecto, y desaparecerla del reporte seria el defecto contrario. Se omite el
+  bloque entero **solo** si no hay ninguna.
 - 🔻 **Un bloqueo vigente es OBLIGATORIO si existe, y va el primero de «Siguientes tareas».**
-  Buscalo en `progress.md`, en `tasks.md` y en `techdebt.md`.
+  Buscalo en `progress.md`, en `tasks.md`, en `techdebt.md` **y en `assumptions.md`**: un supuesto
+  abierto cuyo disparador ya se cumplio bloquea igual que una tarea, y no esta en las otras tres
+  listas.
+- 🚨 **El bloque «Supuestos que tocan mirar» es obligatorio y no se omite nunca**, ni cuando
+  diga «ninguno». Es la unica salida visible de la lectura de `assumptions.md`, y sin ella
+  **saltarse esa lectura no se distingue de haberla hecho** — exactamente por lo mismo que el bloque
+  «Auditoria». Un paso obligatorio cuyo olvido no deja huella se olvida.
+- 🔑 **Entran los `Abierto` cuyo disparador YA se cumplio**, no todos los abiertos. Un supuesto
+  cuyo momento aun no llego esta bien donde esta, y listarlo entero cada jornada convierte el bloque
+  en ruido que nadie lee. **Los que no tienen disparador escrito entran igual**, dichos como tales:
+  esos no van a llegar nunca por si solos.
+- ⚠️ **El limite de 5 elementos aplica tambien aqui**, y si hay mas se dice cuantos quedan fuera.
 - ⚠️ **Un bloqueo se cita por su ACCION, no por la fecha en que se espera.** Escribirlo como *«lo
   primero de la proxima etapa»* lo deja gastado en cuanto esa etapa empieza.
 - 🚨 **Un bloqueo no se cuelga de una tarea que no lo tiene.** Si no sabes de cual es, **dilo suelto:

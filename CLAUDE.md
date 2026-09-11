@@ -208,11 +208,15 @@ es que la discrepancia **quede escrita y sea contrastable**.
 - ⚠️ **Si el asunto es irreversible, no lo decides tu.** Reversible → decides y registras la
   discrepancia. Irreversible —borrar datos, publicar, migrar, gastar— → **se escala al usuario
   antes de actuar**, nunca despues.
-- 🚨 **Ese eje se aplica a criterio, y hay que decirlo cada vez que se use.** Los cuatro ejemplos
-  del parentesis son ejemplos, **no un inventario**: mientras no exista en `_persistence/` un
-  inventario de acciones irreversibles registrado, **declara la clasificacion en la propia
-  respuesta** —«lo clasifico como reversible a criterio, porque…»—, nunca como si la leyeras de una
-  tabla. Un criterio declarado como criterio se puede discutir; uno disfrazado de tabla, no.
+- 🚨 **Ese eje NO se aplica a criterio cuando la accion ya esta inventariada.** Los cuatro ejemplos
+  del parentesis son ejemplos, no la lista: el inventario de acciones irreversibles vive en
+  `constraints.md`, con sus dos tablas —lo que exige permiso antes y lo que se hace y se revisa
+  despues—, y **la clasificacion se lee de ahi**.
+- 🚨 **Lo que no este en ninguna de las dos tablas si se clasifica a criterio, y hay que decirlo.**
+  El inventario no pretende ser completo. Ante una accion que no aparezca, **declara la clasificacion
+  en la propia respuesta** —«lo clasifico como reversible a criterio, porque…»—, nunca como si la
+  leyeras de una tabla; y si se repite, **anadela al inventario** con su `D-XXX`. Un criterio
+  declarado como criterio se puede discutir; uno disfrazado de tabla, no.
 - **Un asunto cerrado no se reabre**, salvo que el riesgo anunciado se materialice — eso es un
   hallazgo nuevo con evidencia nueva.
 
@@ -359,6 +363,19 @@ consulta: un bloque que nadie abrio no es un bloque sin hallazgos.
 una etapa, las lecciones de `lessons.md` que superen su filtro suben al original, con su `D-XXX`. Va
 en un solo sentido, y nunca durante una auditoria — una vara que cambia mientras mide deja de
 comparar.
+
+🚨 **La cosecha la ejecutas tu, con la skill `protocol-harvest`, y es el unico protocolo del
+andamiaje que escribe FUERA de este repositorio.** Por eso lleva puerta: clasificar las lecciones y
+redactar lo que se propone son tuyos, pero **no se toca el otro repositorio hasta que el usuario
+aprueba** las entradas, una por una. Aprobado eso, escribir, commitear y subir van seguidos.
+
+🔑 **La puerta va antes de escribir, no antes del push.** Un commit local se revierte; lo que no se
+revierte es que una entrada entrara al archivo sin que nadie la filtrara — y el valor entero de ese
+archivo esta en que cada linea paso por un juicio humano.
+
+⛔ **No la delegas.** Ningun agente de este repositorio tiene alcance fuera de el, y darle uno seria
+un cambio de alcance, no configuracion. Ademas un agente arranca en frio: no vio la etapa cuyas
+lecciones esta cosechando, que es justo el contexto que hace falta para no promover una anecdota.
 
 ⛔ **No lo usan `session-starter` ni `session-closer`.** Los dos arrancan en frio y su trabajo es la
 evidencia del repositorio, no el criterio.
