@@ -43,6 +43,14 @@ esqueleto, o en un desfase que se deja a proposito y queda razonado.
 producto **no se promueven nunca**: llevan datos propios por diseño, y copiarlos haria que el proyecto
 siguiente arrancara afirmando una historia que no ocurrio.
 
+🔑 **Una sola excepcion, y no trae nada de aqui: las copias de la raiz del esqueleto.** El esqueleto
+lleva en su raiz los archivos de instancia ya puestos en su sitio —`project.md`, los de `_persistence/`
+y los de `_audit/`—, y cada uno es **una copia de su plantilla**. Esas copias **no salen de este
+repositorio**, cuyas instancias tienen datos propios: se regeneran **dentro del esqueleto, desde su
+propia plantilla ya promovida**. Es el Paso 1b. Sin el, cada promocion que toca una plantilla deja su
+copia por detras, y el proyecto que clone rellena un molde viejo sin saberlo — **esta excepcion nacio
+de un defecto real, detectado en la primera promocion**.
+
 ⛔ **Nada de lo que promuevas puede nacer aqui.** Un archivo se promueve **tal como este ya escrito y
 commiteado** en este repositorio. Si al promover ves que algo habria que mejorar, se mejora **aqui
 primero**, con su cierre y su auditoria, y se promueve en la pasada siguiente. El esqueleto no es donde
@@ -122,6 +130,52 @@ final de linea aparece como enteramente distinto, y se promoveria un archivo que
 | `Files ... differ` | un archivo que existe en los dos y que aqui va por delante | **candidato a promover** |
 | `Only in` el arbol de **este** proyecto | algo que nacio aqui y alli no existe | **candidato a promover** (archivo o carpeta entera) |
 | `Only in` el arbol del **esqueleto** | algo que existe alli y aqui no | 🚨 **HALLAZGO, no candidato.** Ver Paso 2 |
+
+---
+
+## Paso 1b — Las copias de la raiz contra su plantilla
+
+**Nada del esqueleto puede quedar viejo, y eso incluye las copias de la raiz.** Son diez parejas, y la
+plantilla manda siempre:
+
+| Plantilla (en `_templates/000_preproject/`) | Copia en la raiz del esqueleto |
+|---|---|
+| `005_project.md` | `project.md` |
+| `010_progress.md` | `_persistence/progress.md` |
+| `015_tasks.md` | `_persistence/tasks.md` |
+| `020_decisions.md` | `_persistence/decisions.md` |
+| `025_constraints.md` | `_persistence/constraints.md` |
+| `030_assumptions.md` | `_persistence/assumptions.md` |
+| `035_lessons.md` | `_persistence/lessons.md` |
+| `040_techdebt.md` | `_persistence/techdebt.md` |
+| `045_audit_index.md` | `_audit/index.md` |
+| `050_audit_findings.md` | `_audit/findings.md` |
+
+**Se mide dos veces: antes de la puerta, sobre el esqueleto tal como esta, y despues del commit, sobre
+el commit.** La orden compara cada copia con **la plantilla que tendra el esqueleto despues de
+promover**, que es la de este repositorio:
+
+```bash
+for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do
+  t=${p%%:*}; c=${p#*:}
+  printf '%3d  %s\n' "$(diff --strip-trailing-cr "_templates/000_preproject/$t" "$ESQ/$c" | grep -c '^[<>]')" "$c"
+done
+```
+
+| Lo que ves | Que se hace |
+|---|---|
+| `0` en las diez | nada: ninguna copia va por detras |
+| un numero distinto de `0` | **la copia se regenera** desde la plantilla, y entra en la puerta como un archivo mas |
+| una copia o una plantilla que no existe | 🚨 **hallazgo**: la tabla de arriba y el esqueleto ya no coinciden. Se detiene esa pareja y se dice |
+
+🚨 **Antes de proponer la regeneracion, se leen las lineas que solo tiene la copia** (`grep '^>'` en la
+salida del `diff`), igual que en el Paso 2. Lo esperado es que sean versiones anteriores de la
+plantilla; si una copia lleva algo que la plantilla no tiene, eso no se sobrescribe sin que lo decida el
+usuario.
+
+⛔ **La copia sale de la plantilla, nunca de la instancia de este repositorio.** La instancia de aqui
+tiene los datos de este proyecto; copiarla al esqueleto seria la fuga que el resto del protocolo existe
+para impedir.
 
 ---
 
@@ -221,6 +275,11 @@ Se presenta al usuario, y **aqui se para**:
 - **cada archivo candidato, uno por uno**, con lo que cambia: cuantas lineas entran, cuantas se borran,
   y **que eran las que se borran** (Paso 2);
 - los archivos o carpetas **nuevos**, dichos como nuevos;
+- las **copias de la raiz que se regeneran** (Paso 1b), con lo que cambia en cada una y que eran las
+  lineas que se borran — o que las diez dan `0`;
+- 🚨 **las cifras de lineas que entran y salen, sacadas de una orden** (`diff | grep -c '^<'` y
+  `'^>'`), nunca contadas a mano mirando el `diff`: contada a mano, una cifra de la puerta ya salio
+  mal;
 - lo que solo existe en el esqueleto, **como hallazgo**, con su promocion detenida;
 - la salida de los **tres barridos** del Paso 3, con sus patrones;
 - las parejas donde el **final de linea** difiere, y como se va a copiar cada una;
@@ -244,7 +303,9 @@ Ya con la aprobacion, y **solo con ella**:
 
 1. se copia cada archivo aprobado, **respetando el final de linea del destino** (Paso 4);
 2. las carpetas nuevas se crean con su contenido **completo**, no a medias;
-3. commit en el esqueleto, con un mensaje que diga **de que proyecto viene** la promocion, **que
+3. cada copia de la raiz aprobada se regenera **desde la plantilla ya copiada al esqueleto**, en el
+   mismo commit, para que el esqueleto no exista nunca con la plantilla nueva y la copia vieja;
+4. commit en el esqueleto, con un mensaje que diga **de que proyecto viene** la promocion, **que
    entra**, y **el hash de origen**;
 4. push.
 
@@ -283,7 +344,10 @@ La promocion no termina fuera: termina cuando **este** repositorio puede demostr
    - y su bloque de verificacion, con la orden y su salida cruda.
 2. **El barrido del Paso 1, corrido otra vez despues**, con su salida: es lo que demuestra que lo
    promovido de verdad cerro el desfase. Si queda algo, se dice que queda y por que.
-3. **El indice y la entrada, en la misma pasada.** Una entrada sin fila en el indice es invisible.
+3. **Y el del Paso 1b sobre el commit del esqueleto** —plantilla y copia leidas las dos con
+   `git -C "$ESQ" show <hash del esqueleto>:`—, con las diez lineas de su salida. Tienen que dar `0`
+   las diez; si alguna no, se dice cual y por que.
+4. **El indice y la entrada, en la misma pasada.** Una entrada sin fila en el indice es invisible.
 
 🚨 **Lo que este registro afirma del otro repositorio es lo unico que el auditor NO puede ver.** Si es
 falso, nada de aqui lo desmiente. Por eso va con los dos hashes delante, y por eso el barrido de
@@ -318,6 +382,7 @@ Datos propios en las seis areas — <cero lineas | 🚨 <las lineas>>
 Codigos instanciados — <cero lineas | 🚨 <las lineas>>
 Barrido ensanchado — <el patron, y cero lineas | 🚨 <las lineas>>
 Finales de linea — <todas las parejas iguales | <las que se convirtieron, y a que>>
+Copias de la raiz (1b) — <las diez a 0 sobre el commit del esqueleto | <las regeneradas> | 🚨 <las que no dan 0, y por que>>
 
 ### Commits
 Origen (este repositorio) — <hash corto>
