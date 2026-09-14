@@ -41,6 +41,9 @@ escrito no es un fallo; una sin el, si — y sin la nota, alguien la leera como 
 | Lecciones globales — repositorio | `<ruta absoluta del repositorio de lecciones>` |
 | Lecciones globales — archivo | `<nombre del archivo>`, en la raiz de ese repositorio |
 | Lecciones globales — remoto | `<url>` |
+| Esqueleto de arranque — repositorio | `<ruta absoluta del esqueleto en esta maquina; un guion si no esta clonado aqui>` |
+| Esqueleto de arranque — remoto | `<url del remoto del esqueleto>` |
+| Esqueleto de arranque — version de partida | `<hash completo del commit del que salio este proyecto>` |
 
 🔑 **Forma canonica: relativa y con `/`.** Las rutas relativas de esta tabla se escriben **tal
 como se pegan en un comando**, con separador `/` y desde la raiz de este repositorio. Es la unica
@@ -48,9 +51,9 @@ forma valida, y por una razon concreta: funciona igual en Bash y en PowerShell. 
 de aqui a un bloque `bash` obtiene una orden que corre; no una que hay que traducir antes.
 
 ⚠️ **Las rutas absolutas de arriba son excepciones declaradas**, no una segunda forma a elegir:
-existen porque nombran **una ubicacion en esta maquina** —la de este repositorio y la del
-repositorio de lecciones—, no porque sirvan para navegar dentro de ellos. **Para citar un archivo
-del proyecto se usa la relativa.**
+existen porque nombran **una ubicacion en esta maquina** —la de este repositorio, la del
+repositorio de lecciones y la del esqueleto de arranque—, no porque sirvan para navegar dentro de
+ellos. **Para citar un archivo del proyecto se usa la relativa.**
 
 📌 **Las tres filas de «Lecciones globales» son la ubicacion que `CLAUDE.md` no puede llevar
 dentro.** La regla —que existen, para que sirven y cuando se consultan— vive en `CLAUDE.md`, que es
@@ -60,6 +63,21 @@ proyecto que guarda datos propios. Si el repositorio de lecciones se mueve, se c
 ⚠️ **Ese repositorio no es una carpeta de este proyecto**, y por eso **no** le toca fila en
 «Carpetas propias» ni la mira el control de carpetas del cierre. Es un recurso externo que se
 consulta, como lo seria una documentacion en linea.
+
+📌 **Las tres filas de «Esqueleto de arranque» dicen de donde salio este repositorio, y las lee
+quien no puede llevar el dato dentro.** El barrido de desfase del cierre y el protocolo de promocion
+viven en archivos que tienen que poder copiarse a otro proyecto tal cual, asi que la ruta la buscan
+aqui. **Si el esqueleto se mueve, se cambia en un sitio.**
+
+🔑 **La fila de «version de partida» es la unica que no se vuelve a tocar nunca.** Es el hash que
+devolvio `git log -1 --format=%H` sobre el clone, **antes** de borrar su `.git`, y es lo unico que
+queda de aquel historial: dice de que version del andamiaje partio este proyecto. Las otras dos
+cambian si el esqueleto se mueve; esta, no.
+
+⚠️ **La fila del repositorio local admite `—` y eso no es dejarla a medias.** El esqueleto puede no
+estar clonado en esta maquina: entonces el barrido de desfase del cierre reporta `SIN COMPROBAR` con
+su motivo, que es un resultado legitimo. Lo que no vale es inventar una ruta para que el control
+parezca correr.
 
 ## Reparto de autoridad
 
@@ -186,7 +204,7 @@ apagado.**
 | `.claude/` | **Con que** se construye: los agentes y las skills que ejecutan los protocolos. Agnostica — no lleva dentro ningun dato de este proyecto, y el Paso 1b lo comprueba |
 | `_brief/` | El encargo del cliente, tal como llego. **Entrada al proyecto, no registro de el** |
 | `_persistence/` | **Como va** el trabajo: siete archivos, indice arriba y detalle debajo |
-| `_audit/` | **Como se comprueba** el trabajo: el informe de cada sesion, la auditoria de cada una, el tablero y el registro de hallazgos. En las subcarpetas de cada Gate, ademas, sus dictamenes — que **no** son auditorias de sesion y no entran en el tablero ni en `findings.md` |
+| `_audit/` | **Como se comprueba** el trabajo: el informe de cada sesion, la auditoria de cada una, el tablero y el registro de hallazgos. En las subcarpetas de cada Gate, ademas, sus dictamenes; y en una subcarpeta con el nombre de cada etapa, las **actas de cierre de esa etapa**. Ni unos ni otras son auditorias de sesion: **no** entran en el tablero ni en `findings.md` |
 | `_methodology/` | **Con que criterio** se construye: el metodo de desarrollo y, en `sources/`, las fuentes de las que se consolido, que no se editan. Agnostica — el Paso 1b lo comprueba |
 | `_phases/` | **Que se hace en cada etapa**: un archivo por etapa, con lo que autoriza, lo que prohibe, su procedimiento y su condicion de salida. Agnostica — el Paso 1b lo comprueba |
 | `_templates/` | **Con que forma** se escribe cada artefacto: una subcarpeta por etapa o gate con artefactos con plantilla, y dentro una plantilla por artefacto. Guarda solo plantillas en blanco. Agnostica — el Paso 1b lo comprueba |

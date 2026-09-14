@@ -29,7 +29,7 @@
 | Estado | `Implementada` / `No implementada` / `Cancelada` / `Suspendida` |
 | Importancia | `Alta` / `Media` / `Baja` |
 | Urgencia | `Bloqueante` / `No bloqueante` |
-| Origen | `usuario` / `manager` / `report_auditor` |
+| Origen | `usuario` / `manager` / `report_auditor` / `session-closer` |
 | Etapa | una de las etapas declaradas en la tabla «Etapas» de `project.md` |
 
 **`Origen` es obligatorio y su valor sale de esta lista.** Que significa cada uno:
@@ -39,6 +39,7 @@
 | `usuario` | una peticion o una decision del usuario |
 | `manager` | iniciativa propia al ejecutar |
 | `report_auditor` | un hallazgo `F-NNN` de una auditoria |
+| `session-closer` | un control del cierre de sesion que detecta un pendiente en un archivo que el cierre no puede editar |
 
 🚨 **Anadir un valor nuevo es una decision, no una improvisacion.** El criterio es uno solo:
 **nombra un origen de demanda que ninguno de los ya existentes cubre**. Un matiz de un origen
