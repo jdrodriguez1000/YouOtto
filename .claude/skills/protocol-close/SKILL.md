@@ -246,6 +246,25 @@ comprobado sin volver a correrla.** El control solo vale si en medio nadie toca 
 🚨 **La linea del reporte sale siempre**, este al dia o no. Sin ella, un cierre que comprobo y uno
 que no se leen identicos.
 
+### Y la fila contra la ficha en `_audit/findings.md`
+
+Cada hallazgo vive en dos sitios del mismo archivo: su fila del indice y su ficha. Las dos llevan un
+estado, y quien evalua un hallazgo puede cambiar uno y olvidar el otro. Esta comprobacion compara el
+estado de cada fila con el `Estado` de su ficha:
+
+```bash
+diff <(awk '/^```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 1); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) \
+     <(awk '/^```/{c=!c; next} c{next} /^### F-[0-9]+ /{match($0,/F-[0-9]+/); cur=substr($0,RSTART,RLENGTH); got=0} /^\| Estado \|/ && cur!="" && !got{s=$0; sub(/^\| Estado \| */,"",s); sub(/ *\|$/,"",s); print cur" "s; got=1}' _audit/findings.md | sort)
+```
+
+Sin salida = cada fila y su ficha dicen lo mismo. Una pareja `<` / `>` con el mismo codigo es un
+hallazgo con dos estados; un codigo solo en un lado es una fila sin ficha, o una ficha sin fila.
+
+⛔ **Aqui no se aplica «arreglalo ahora».** `_audit/findings.md` no es tuyo (ver la tabla del
+principio): una diferencia **no se corrige en este cierre**. Va al reporte con sus lineas y a **Sin
+resolver**, y la corrige quien trata los hallazgos, en la sesion siguiente. Si el archivo no existe
+todavia, la linea dice `SIN COMPROBAR` con ese motivo.
+
 ---
 
 ## Paso 2c — Las carpetas del arbol contra las declaradas (antes del `git add`)
@@ -315,6 +334,23 @@ una: se vuelve a correr, y su salida tiene que ser la que el bloque publica.
 | ninguna linea | todo lo escrito hoy va anclado | sigue |
 | una linea, y al reejecutarla da lo mismo que el bloque publica | la orden es reproducible aunque no lleve ancla | sigue, pero **anclala**: `git show <hash>:` cuesta un `git grep` |
 | una linea, y al reejecutarla da **otra cosa** | 🚨 el bloque afirma algo que su commit no sostiene | no se cierra asi. O se corrige el numero, o el bloque va con su **nota fechada** al lado |
+
+🚨 **Y si esa orden vive en un archivo que este protocolo no puede editar, el pendiente se abre como
+tarea — no se queda en el informe.** La tercera fila pide corregir o poner nota, y ninguna de las dos
+cosas cabe en `decisions.md`, `assumptions.md`, `constraints.md`, `lessons.md` ni en los archivos del
+auditor. Entonces se abre una `T-XXX` en `tasks.md`, que si es de este protocolo, con
+**`Origen: session-closer`**, y en su cuerpo van tres cosas: **el archivo**, **la orden literal** y
+**lo que publica frente a lo que da hoy**. El informe la cita por su codigo en la seccion 6.
+
+🔑 **Por que una tarea y no solo el aviso.** Un pendiente escrito solo en el informe de sesion vive en
+un archivo que nadie vuelve a abrir para trabajar: el arranque lee `tasks.md`, no los informes. Este
+defecto se detecto varias veces en este mismo paso, se dejo dicho en el informe cada vez, y cada vez
+acabo en hallazgo de auditoria por la misma razon — **el aviso existia y no tenia dueno**. Detectar ya
+funcionaba; lo que fallaba era el traspaso.
+
+⚠️ **La tarea no corrige nada: registra.** La nota fechada la escribe despues quien si puede editar ese
+archivo. Y si la orden vive en un archivo que este protocolo si edita (`tasks.md`, `progress.md`, el
+informe), no se abre tarea: se corrige o se anota ahi mismo, como dice la tabla.
 
 🚨 **Y la evidencia de este paso publica la lista COMPLETA de su primera orden, nunca una
 seleccion de ella.** Se pega la orden con **su recuento** y **todas** las lineas que devolvio, con el
@@ -408,6 +444,27 @@ publicarla: la primera se contrasta, la segunda se cree.
 con la posicion que le dio `cat -n`; una posicion sin salida es un hueco visible, que es
 exactamente lo que no fue visible la vez que esto fallo. Si una posicion repite a otra, se dice **de cual** y
 la orden repetida tiene que estar en la salida de `uniq -d`.
+
+🚨 **Y cada fila de ese bloque lleva LA ORDEN LITERAL, no solo su numero.** La regla de arriba se
+cumplio una vez al pie de la letra y el control fallo igual: una tabla de 54 filas se rotulo a mano y
+la columna quedo **desplazada** en un tramo entero. Las notas eran ciertas; la orden que cada una
+decia describir, no. Y una fila marcada `Si` que numera la orden equivocada **no prueba nada**: el
+control entero se convierte en decorado sin que nadie lo note.
+
+🔑 **Por que la cadena y no otro control.** Un numero copiado con una posicion de diferencia no se
+parece a nada, asi que se propaga en silencio. Una cadena si: si la fila dice `grep -c '<algo>'` y la
+lista pone otra cosa en esa posicion, la discrepancia **se ve leyendo**, sin correr nada. El numero
+se conserva —es lo que enlaza con la lista de `cat -n` y lo que hace visible un hueco—, pero deja de
+ser el unico identificador.
+
+⚠️ **No hace falta la orden entera cuando es larga: hace falta que sea DISCRIMINANTE.** El trozo que
+la distingue de sus vecinas en la lista de esa sesion, y nada mas. Una orden truncada hasta volverse
+ambigua no cumple la regla, porque no distingue — que es lo unico que se le pide.
+
+| # | Orden | Reproduce | Nota |
+|---|---|---|---|
+| 12 | `grep -c 'unicamente <rol>' <archivo>` | Si | `1` |
+| 13 | `grep -nE '^## Paso [0-9]+' <archivo>` | Si | mismas 9 lineas |
 
 ⚠️ **El recuento no es estable entre entornos, y por eso no basta con la cifra.** La misma orden
 sobre el mismo commit puede devolver numeros distintos segun como expanda el patron cada shell; los
@@ -613,6 +670,80 @@ tienen que caber en una fila y decidirse sin abrir la entrada.
 
 ---
 
+## Paso 2f — El desfase con el esqueleto de arranque (antes del `git add`)
+
+Los Pasos 2b a 2e comprueban este repositorio contra si mismo. Este lo compara **contra el esqueleto
+de arranque**: las seis areas que tienen que poder copiarse tal cual a otro proyecto, frente a la
+copia que vive en el repositorio del esqueleto.
+
+```bash
+ESQ="<ruta absoluta del esqueleto de arranque>"
+if [ ! -d "$ESQ" ]; then
+  echo "SIN COMPROBAR - la ruta del esqueleto no existe en esta maquina: $ESQ"
+else
+  for d in .claude _phases _methodology _templates _workflow; do
+    diff -rq --strip-trailing-cr "$ESQ/$d" "$d"
+  done
+  diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md
+fi
+```
+
+La ruta sale de `project.md`, como todo lo que aqui va entre `<angulos>`.
+
+🚨 **La guarda `if [ ! -d ... ]` es parte del paso, no un adorno defensivo.** Sin ella, una ruta que no
+existe no produce un `SIN COMPROBAR`: produce **seis lineas de `diff: ... No such file or directory`**
+por stderr, con salida `2`. Eso no se distingue a simple vista de un desfase, y es justo la confusion
+que el tercer resultado existe para evitar. **Medido, no supuesto.**
+
+🚨 **INFORMA, NO FRENA. Su salida normal es una lista de archivos, y eso esta bien.** Significa «hay
+cosas por promover», no «algo va mal». **No es condicion de parada**, y eso lo separa del Paso 7c-ter,
+que si detiene el cierre porque alli la salida correcta es vacia.
+
+⚠️ **Por que no frena, y conviene que este escrito junto al paso y no solo en su decision:** este
+control saltaria en casi toda sesion que mejore el andamiaje, o sea casi todas. **Un control que salta
+siempre se aprende a ignorar** — y con el se ignora el dia que importa.
+
+**Tres resultados, no dos:**
+
+| Lo que ves | Que significa | Que haces |
+|---|---|---|
+| **sin salida** | el esqueleto esta al dia | dilo, y publica la orden con su salida vacia |
+| **`Files ... differ`** / **`Only in ...`** | hay promociones pendientes | publica la lista **entera**, sin seleccionar |
+| la ruta no existe en esta maquina, o `project.md` no la declara | no se pudo comprobar | `🚨 SIN COMPROBAR — <el motivo>` |
+
+🚨 **`SIN COMPROBAR` nunca es silencio.** «No pude comprobarlo» no es «esta bien», y una linea
+`SIN COMPROBAR` repetida sesion tras sesion es la unica forma de que el hueco se note. Es la misma
+regla del Paso 0.
+
+⚠️ **Las dos direcciones de `Only in` dicen cosas distintas, y la segunda es la interesante:**
+
+| Lo que ves | Que significa |
+|---|---|
+| `Only in` el arbol de **este** proyecto | algo nacio aqui y el esqueleto no lo tiene todavia: promocion pendiente, lo normal |
+| `Only in` el arbol del **esqueleto** | algo existe alli y aqui no. **Eso no deberia pasar**: el andamiaje viaja en un solo sentido, asi que o se borro aqui sin registrarlo, o alguien edito el esqueleto por su cuenta |
+
+🚨 **El `--strip-trailing-cr` no es cosmetica, y quitarlo rompe el paso.** Cuando los dos arboles no
+comparten final de linea, un archivo que solo difiere en eso aparece como **enteramente distinto**
+—medido, uno salto de 40 lineas de diferencia real a 778—. Un control que exagera se ignora igual que
+uno que grita.
+
+⚠️ **Y por eso mismo el paso NO usa la version estricta, ni la anade «por completitud».** Si un
+archivo difiere solo en el final de linea, este paso tiene que decir **que estan al dia**, porque su
+contenido lo esta. Donde se gestiona el final de linea es en la restriccion que lo declara, no aqui.
+
+⛔ **Este paso no promueve nada.** Detectar y promover estan separados a proposito: detectar es casi
+gratis y corre siempre; promover lleva puerta manual y lo pide el usuario. Ver que hay tres archivos
+por promover **no obliga a promoverlos hoy**.
+
+📌 **Por que existe este paso:** el esqueleto es un original, y un original sin mecanismo de deteccion
+**deja de ser original en silencio**. No es hipotetico: el esqueleto llego a estar ocho archivos por
+detras sin que nadie lo notara, y se descubrio de casualidad. El desfase no duele el dia que ocurre;
+duele cuando un proyecto nuevo arranca de una copia vieja y hereda un defecto que aqui ya estaba
+corregido. Un metodo cuyo disparador es «alguien lo nota» falla en silencio, y no hay forma de saber
+cuantas veces no se activo.
+
+---
+
 ## Paso 3 — `_persistence/progress.md` (obligatorio)
 
 Es el archivo principal: da la vision general, **no detalla tareas**. Actualizalo **siempre**, en
@@ -684,7 +815,8 @@ de campos de su entrada. **Las dos se actualizan juntas.**
 `Implementada` · `No implementada` · `Cancelada` · `Suspendida`
 
 Y cada tarea lleva ademas **Importancia** (`Alta` / `Media` / `Baja`) y **Urgencia**
-(`Bloqueante` / `No bloqueante`), mas **Origen** (`usuario` / `manager` / `report_auditor`).
+(`Bloqueante` / `No bloqueante`), mas **Origen** (`usuario` / `manager` / `report_auditor` /
+`session-closer`).
 
 - Mueve a `Implementada` solo lo que la evidencia respalde.
 - Lo que quedo a medias **sigue en `No implementada`**, y su entrada de detalle dice **en que punto
@@ -704,6 +836,10 @@ Y cada tarea lleva ademas **Importancia** (`Alta` / `Media` / `Baja`) y **Urgenc
 **Aqui entra tambien lo que produjeron los Pasos 2b y 2c**: si salieron al dia, no hay nada que
 anotar; si algo fallo, la tarea nueva se anade con su id. Ese es el motivo de que aquellos
 controles vayan arriba y no abajo.
+
+**Y lo que produjo el Paso 2d en un archivo que no es tuyo:** cada orden que no reproduce ahi deja su
+tarea con `Origen: session-closer`. Es el unico valor de `Origen` que pones tu por iniciativa del
+control, y solo para ese caso.
 
 Una tarea que se entiende en una linea **se queda en el indice** y su entrada de detalle es minima.
 No infles el archivo.
@@ -1146,6 +1282,17 @@ filas tiene que tener, y el total sin pasar por la tabla. La tabla tiene que cua
 <⚠️ esta seccion mide el AREA DE STAGING previa al commit, no el commit: los archivos que el cierre
 escribe despues —`progress.md`, este informe y el tablero— quedan fuera por construccion, y se dice.
 Quien cubre esa brecha es la SEGUNDA PASADA anclada, que va en la NOTA DE CIERRE de la seccion 7>
+
+## 9. Evidencia del Paso 2f
+<la orden del barrido de desfase con el esqueleto y su salida cruda — tambien cuando sale vacia>
+<si devuelve lineas, van TODAS, sin seleccionar y sin resumir «y tres mas»: la lista es la noticia>
+<⚠️ una salida con lineas NO es un fallo del cierre: son promociones pendientes, y se dice asi. El
+paso informa, no frena>
+<si la ruta del esqueleto no existe en la maquina o `project.md` no la declara, la seccion dice
+`🚨 SIN COMPROBAR — <el motivo>`, nunca se omite ni se deja en blanco>
+<si alguna linea es `Only in` el arbol DEL ESQUELETO, se senala aparte: eso contradice el sentido unico
+del andamiaje y es un hallazgo, no una promocion pendiente>
+<el recuento de lineas se DERIVA de la propia salida, no se teclea>
 ```
 
 ### Los tres veredictos de la seccion 0, y nada mas
@@ -1760,9 +1907,16 @@ esa opcion la orden devuelve ademas ocho lineas de cabecera del commit, asi que 
 debajo deja de ser la que esa orden produce — aunque los archivos listados sean los correctos.
 
 ```bash
-grep -qF 'git show --stat --name-only --format=' _audit/S-XXX.md ||
+grep -qE '^(> )?\$ git show --stat --name-only --format= <hash>$' _audit/S-XXX.md ||
   echo "FALTA en la seccion 1: la orden prescrita por el Paso 7c (sin --format= la salida no reproduce)"
 ```
+
+🚨 **El patron busca una LINEA DE ORDEN con el hash de este commit, no la cadena en cualquier sitio.**
+`<hash>` es el del commit sustantivo, el mismo que el Paso 7c escribe. Una version anterior buscaba
+la cadena suelta, y el informe la contiene casi siempre en otros sitios: en la prosa que explica la
+orden, en la lista numerada del Paso 2d, con `<hash>` sin sustituir. El control pasaba aunque la orden
+de verdad faltara. El `(> )?` admite la NOTA DE CIERRE, que se escribe citada; un cierre cuya seccion
+1 sale del area de staging publica alli la orden anclada, y eso es legitimo.
 
 | Que sale | Que significa | Que haces |
 |---|---|---|
@@ -1783,7 +1937,8 @@ cierre.**
 
 ⛔ **Y no comprueba que la salida pegada sea la de este commit.** Una orden correcta con la lista de
 la sesion anterior debajo pasa este control sin una queja. Lo que impide eso es el anclaje del Paso
-7c, no esto.
+7c, no esto. ⚠️ **Tampoco distingue la seccion 1 de la NOTA DE CIERRE:** las dos son sitios validos
+para la orden anclada, y separarlos no cazaria ningun defecto que se haya visto.
 
 ### 7d — La fecha escrita contra la del commit (obligatorio)
 
@@ -1881,7 +2036,10 @@ retransmite. Un reporte recortado se recorta dos veces.
 Fuga de datos propios (1b) — <cero lineas | 🚨 <las lineas> | 🚨 SIN COMPROBAR — <que falta en project.md>>
 Codigos instanciados en `_phases/` y `_workflow/` (1c) — <cero lineas | 🚨 <las lineas, con archivo y numero de linea>>
 Indices de `_persistence/` (2b) — <al dia | corregidos | 🚨 SIN COMPROBAR — <que fallo>>
+Fila ↔ ficha en `_audit/findings.md` (2b) — <coinciden | 🚨 <las lineas>, a Sin resolver | 🚨 SIN COMPROBAR — <que fallo>>
 Carpetas declaradas (2c) — <coinciden | <las diferencias y su razon> | 🚨 SIN COMPROBAR — <por que>>
+Ordenes sin reproducir en archivos ajenos (2d) — <ninguna | <N> tareas abiertas: <sus T-XXX, con el archivo de cada una>>
+Desfase con el esqueleto (2f) — <al dia, sin salida | <N> archivos por promover: <la lista entera> | 🚨 SIN COMPROBAR — <el motivo>>
 Huecos de plantilla en el informe (6b) — <cero lineas | 🚨 <las lineas, borradas antes del `git add`>>
 Criterios de cierre anclados (7c-bis) — <N ordenes de M, en <las D-XXX nuevas> | ninguna decision nueva | 🚨 <las que no coinciden, con las dos salidas> | <las no anclables, y por que>>
 Fecha de la sesion contra el commit (7d) — <coinciden: AAAA-MM-DD | 🚨 <la escrita y la del commit, y donde se corrigio> | 🚨 SIN COMPROBAR>

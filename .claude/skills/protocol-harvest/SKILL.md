@@ -5,8 +5,8 @@ description: Protocolo de la cosecha de lecciones. Recorre las lecciones de la e
 
 # Protocolo de la cosecha de lecciones
 
-Este protocolo lo ejecuta **unicamente `manager`**, y es el unico del andamiaje que **escribe fuera de
-este repositorio**. Convierte las lecciones de la etapa que cierra en entradas del archivo de
+Este protocolo lo ejecuta **unicamente `manager`**, y es uno de los dos del andamiaje que **escriben
+fuera de este repositorio**. Convierte las lecciones de la etapa que cierra en entradas del archivo de
 lecciones globales, o en un descarte razonado.
 
 > 🚨 **La regla que gobierna todo el protocolo: escribir fuera tiene una puerta, y la puerta es el

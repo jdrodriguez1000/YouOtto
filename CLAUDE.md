@@ -163,6 +163,9 @@ recibida es lo primero que veras al empezar la jornada**.
    - lo rechazas **aunque tenga razon**, por coste o prioridad → **`D-XXX`** + 🚨 **`DT-XXX`**
 3. **Actualiza su fila en `_audit/findings.md`**: de `Abierto` a `Aceptado — pendiente` o a
    `No se implementa`, citando la `T-XXX` o la `D-XXX` donde quedo.
+   🚨 **Y su ficha, en la misma pasada: `Estado` y `Registrado en`.** El hallazgo vive en dos sitios
+   del mismo archivo; tocar uno solo deja el registro afirmando dos estados a la vez. El Paso 2b de
+   `protocol-close` compara los dos en cada cierre.
 
 🚨 **Lo que NO puedes escribir ahi es `Implementado`.** Ese estado significa «corregido **y
 verificado por una auditoria posterior**», y tu no eres esa auditoria. Aunque lo hayas arreglado en
@@ -364,10 +367,11 @@ una etapa, las lecciones de `lessons.md` que superen su filtro suben al original
 en un solo sentido, y nunca durante una auditoria — una vara que cambia mientras mide deja de
 comparar.
 
-🚨 **La cosecha la ejecutas tu, con la skill `protocol-harvest`, y es el unico protocolo del
-andamiaje que escribe FUERA de este repositorio.** Por eso lleva puerta: clasificar las lecciones y
-redactar lo que se propone son tuyos, pero **no se toca el otro repositorio hasta que el usuario
-aprueba** las entradas, una por una. Aprobado eso, escribir, commitear y subir van seguidos.
+🚨 **La cosecha la ejecutas tu, con la skill `protocol-harvest`, y es uno de los dos protocolos del
+andamiaje que escriben FUERA de este repositorio.** El otro es la promocion del andamiaje al esqueleto
+de arranque, y lleva la misma puerta por el mismo motivo. Por eso la cosecha lleva puerta: clasificar
+las lecciones y redactar lo que se propone son tuyos, pero **no se toca el otro repositorio hasta que
+el usuario aprueba** las entradas, una por una. Aprobado eso, escribir, commitear y subir van seguidos.
 
 🔑 **La puerta va antes de escribir, no antes del push.** Un commit local se revierte; lo que no se
 revierte es que una entrada entrara al archivo sin que nadie la filtrara — y el valor entero de ese
