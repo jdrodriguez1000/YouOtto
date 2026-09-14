@@ -307,7 +307,7 @@ Ya con la aprobacion, y **solo con ella**:
    mismo commit, para que el esqueleto no exista nunca con la plantilla nueva y la copia vieja;
 4. commit en el esqueleto, con un mensaje que diga **de que proyecto viene** la promocion, **que
    entra**, y **el hash de origen**;
-4. push.
+5. push.
 
 ```bash
 git -C "$ESQ" add -A && git -C "$ESQ" status --short
