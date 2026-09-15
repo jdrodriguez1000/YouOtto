@@ -1,4 +1,4 @@
-# project.md — <NOMBRE DEL PROYECTO>
+# project.md — YouOtto
 
 > 📄 **Se copia a `project.md`, en la raiz del repositorio y en minusculas.** Es el unico archivo del
 > proyecto que guarda datos propios: todo lo que en los protocolos, los agentes y `CLAUDE.md`
@@ -18,10 +18,10 @@
 
 | Campo | Valor |
 |---|---|
-| Nombre del proyecto | `<NOMBRE>` |
+| Nombre del proyecto | `YouOtto` |
 | Rol de esta sesion | `manager` |
 | Auditoria | agente `report_auditor`, dentro de este mismo repositorio |
-| Idioma de trabajo | `<idioma del contenido>` para la comunicacion y la documentacion; `<idioma de los nombres>` para los nombres de archivos y de carpetas |
+| Idioma de trabajo | `Espanol` para la comunicacion y la documentacion; `Ingles` para los nombres de archivos y de carpetas |
 | Etapa actual | vive en `_persistence/progress.md`, no aqui |
 
 📌 **Si la grafia del nombre, la del remoto y la de la carpeta en disco no coinciden, se anota aqui
@@ -32,18 +32,18 @@ escrito no es un fallo; una sin el, si — y sin la nota, alguien la leera como 
 
 | Campo | Valor |
 |---|---|
-| Repositorio del proyecto | `<ruta absoluta en esta maquina>` |
+| Repositorio del proyecto | `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\YouOtto` |
 | Informes de sesion | `_audit/S-XXX.md` |
 | Auditorias | `_audit/R-XXX.md` |
 | Tablero de auditorias | `_audit/index.md` |
 | Estado de los hallazgos | `_audit/findings.md` |
-| Entregables de `<etapa>` | `<carpeta>/` |
-| Lecciones globales — repositorio | `<ruta absoluta del repositorio de lecciones>` |
-| Lecciones globales — archivo | `<nombre del archivo>`, en la raiz de ese repositorio |
-| Lecciones globales — remoto | `<url>` |
-| Esqueleto de arranque — repositorio | `<ruta absoluta del esqueleto en esta maquina; un guion si no esta clonado aqui>` |
-| Esqueleto de arranque — remoto | `<url del remoto del esqueleto>` |
-| Esqueleto de arranque — version de partida | `<hash completo del commit del que salio este proyecto>` |
+| Entregables de `005_discovery` | `005_discovery/` |
+| Lecciones globales — repositorio | `C:\Users\USUARIO\Documents\Company_TripleS\TripleS_Lessons` |
+| Lecciones globales — archivo | `global_lessons.md`, en la raiz de ese repositorio |
+| Lecciones globales — remoto | `https://github.com/jdrodriguez1000/TripleS_Lessons.git` |
+| Esqueleto de arranque — repositorio | `C:\Users\USUARIO\Documents\Company_TripleS\SDAI_TripleS` |
+| Esqueleto de arranque — remoto | `https://github.com/jdrodriguez1000/SDAI_TripleS.git` |
+| Esqueleto de arranque — version de partida | `707d572bb037d9c2c164da7cb356d2848b7b2180` |
 
 🔑 **Forma canonica: relativa y con `/`.** Las rutas relativas de esta tabla se escriben **tal
 como se pegan en un comando**, con separador `/` y desde la raiz de este repositorio. Es la unica
@@ -125,8 +125,8 @@ hallazgos, el registro diria lo que quisieramos que dijera.
 
 | Campo | Valor |
 |---|---|
-| Etapas declaradas | `<etapa>`, `<etapa>` |
-| Etapas posteriores a `<la ultima declarada>` | **no registradas** |
+| Etapas declaradas | `000_preproject`, `005_discovery`, `010_prototype`, `020_baseline`, `025_wslt`, `030_growth`, `040_evol` |
+| Etapas posteriores a `040_evol` | **no registradas** |
 
 `000_preproject` es la etapa en la que no se construye producto: se monta la forma de trabajar
 —protocolos, persistencia, canal con la auditoria—. Es deliberado que tenga nombre propio y no un
@@ -187,9 +187,9 @@ decidir cual miente.
 
 | Campo | Valor |
 |---|---|
-| Remoto | `<url del remoto>` |
-| Rama principal | `<rama>` |
-| Host del remoto | `<host>` |
+| Remoto | `https://github.com/jdrodriguez1000/YouOtto.git` |
+| Rama principal | `main` |
+| Host del remoto | `github.com` |
 
 📌 **La fila «Host del remoto» existe para el Paso 1b de `protocol-close`**, que la usa literal
 dentro de su patron de busqueda. Va separada del remoto completo a proposito: buscar la URL entera
@@ -209,7 +209,7 @@ apagado.**
 | `_phases/` | **Que se hace en cada etapa**: un archivo por etapa, con lo que autoriza, lo que prohibe, su procedimiento y su condicion de salida. Agnostica — el Paso 1b lo comprueba |
 | `_templates/` | **Con que forma** se escribe cada artefacto: una subcarpeta por etapa o gate con artefactos con plantilla, y dentro una plantilla por artefacto. Guarda solo plantillas en blanco. Agnostica — el Paso 1b lo comprueba |
 | `_workflow/` | **Quien hace cada cosa y con cuanto sistema**: `team.md`, el reparto entre Humano, Software e IA; `ai_levels.md`, los niveles y la rubrica para elegir uno; y un archivo por etapa que aplica los dos a sus actividades. Agnostica — el Paso 1b lo comprueba |
-| `<carpeta de entregables>/` | **Los entregables de la etapa del mismo nombre** |
+| `005_discovery/` | **Los entregables de la etapa del mismo nombre** |
 | `temporal/` | Area de trabajo del usuario. **Fuera del repositorio**, excluida en `.gitignore` |
 
 🚨 **Esta tabla se contrasta contra el arbol en cada cierre de sesion** (Paso 2c de `protocol-close`):

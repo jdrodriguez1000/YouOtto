@@ -18,7 +18,7 @@
 
 | Informe | Sesion | Fecha | Commit auditado | Auditoria | Veredicto | Hallazgos |
 |---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — |
+| `S-001.md` | S-001 | 2026-09-15 | Pendiente | Pendiente | Pendiente | - |
 
 ---
 

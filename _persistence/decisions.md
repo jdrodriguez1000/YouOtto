@@ -21,7 +21,13 @@
 
 | Codigo | Decision | Fecha | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| [D-001](#d-001---etapas-declaradas-del-proyecto) | Etapas declaradas del proyecto | 2026-09-15 | Vigente |
+| [D-002](#d-002---carpetas-de-entregables-declaradas-al-arrancar-cada-etapa) | Carpetas de entregables declaradas al arrancar cada etapa | 2026-09-15 | Vigente |
+| [D-003](#d-003---adopcion-del-gate-1-y-del-gate-2) | Adopcion del Gate 1 y del Gate 2 | 2026-09-15 | Vigente |
+| [D-004](#d-004---se-conserva-el-historial-heredado-del-esqueleto) | Se conserva el historial heredado del esqueleto | 2026-09-15 | Vigente |
+| [D-005](#d-005---consulta-de-arranque-de-las-lecciones-globales) | Consulta de arranque de las lecciones globales | 2026-09-15 | Vigente |
+| [D-006](#d-006---se-escribe-el-inventario-de-acciones-irreversibles) | Se escribe el inventario de acciones irreversibles | 2026-09-15 | Vigente |
+| [D-007](#d-007---dueno-y-sitio-de-evaluacion-observabilidad-y-seguridad) | Dueno y sitio de evaluacion, observabilidad y seguridad | 2026-09-15 | Vigente |
 
 ---
 
@@ -104,3 +110,226 @@ Plantilla:
 - **Alternativas descartadas:** que otros caminos habia y por que no. Al `git diff` solo llega el
   ganador; si las alternativas no se escriben aqui, no se escriben en ningun sitio.
 -->
+
+### D-001 - Etapas declaradas del proyecto
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `project.md` llego del esqueleto con la fila «Etapas declaradas» en blanco
+  (`<etapa>`, `<etapa>`). Sin etapas declaradas, el control de etapas del cierre no puede
+  ejecutarse. El metodo trae siete archivos de etapa en `_phases/`, verificado contra `HEAD`
+  (`707d572`):
+
+  ```
+  $ git ls-tree --name-only 707d572 _phases/
+  _phases/000_preproject.md
+  _phases/005_discovery.md
+  _phases/010_prototype.md
+  _phases/020_baseline.md
+  _phases/025_wslt.md
+  _phases/030_growth.md
+  _phases/040_evol.md
+  ```
+
+- **Decision:** el proyecto adopta las siete etapas del metodo: `000_preproject`, `005_discovery`,
+  `010_prototype`, `020_baseline`, `025_wslt`, `030_growth` y `040_evol`.
+- **Por que:** el usuario zanjo que el proyecto recorre el ciclo completo. Declararlas en
+  `project.md` deja al control de etapas del cierre con valores contra los que comprobar.
+- **Alternativas descartadas:** declarar solo las primeras (`000_preproject` y `005_discovery`) e
+  ir anadiendo las siguientes al llegar a ellas, cada una con su `D-XXX`. Lo propuso `manager` como
+  opcion habitual; el usuario eligio declarar el ciclo entero desde el inicio.
+- ⚠️ **Lo que esta decision NO adopta:** ni los Gates 1 y 2 (cada uno exige su propia `D-XXX`) ni
+  las carpetas de entregables de cada etapa en «Carpetas propias», que siguen pendientes.
+
+### D-002 - Carpetas de entregables declaradas al arrancar cada etapa
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** con las siete etapas declaradas (`D-001`), `project.md` pedia una fila de
+  entregables en «Rutas» y otra en «Carpetas propias» por cada etapa que produce artefactos.
+  `000_preproject` no tiene carpeta propia: sus plantillas se copian a `_persistence/` y `_audit/`.
+  Las otras seis si la tienen, y ninguna existe todavia en el arbol.
+- **Decision:** la carpeta de entregables de cada etapa se declara en `project.md` cuando esa etapa
+  arranca, no todas de golpe. Hoy se declara solo `005_discovery/`, la siguiente etapa, por
+  adelantado.
+- **Por que:** el Paso 2c del cierre contrasta «Carpetas propias» contra el arbol en las dos
+  direcciones. Cada fila declarada por adelantado sale senalada hasta que su carpeta exista; una sola
+  fila pendiente se lee, seis se acaban ignorando. `005_discovery/` se declara ya porque su etapa
+  esta escrita en `_phases/` y su contenido esta enumerado en `_templates/005_discovery/`, que es la
+  condicion que `project.md` pide a una declaracion anticipada.
+- **Alternativas descartadas:** declarar las seis carpetas desde ya (`005_discovery/` a
+  `040_evol/`). Descartada porque dejaba seis diferencias abiertas en el control del cierre durante
+  etapas enteras.
+- ⚠️ **Diferencia esperada en el cierre:** hasta que se escriba el primer artefacto de
+  `005_discovery`, el Paso 2c senalara la fila `005_discovery/` sin carpeta. Su razon es esta
+  decision; si la diferencia no desaparece al arrancar la etapa, el control esta senalando algo real.
+
+### D-003 - Adopcion del Gate 1 y del Gate 2
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** declarar las etapas (`D-001`) no adopta los Gates; cada uno exige su `D-XXX`. Sus
+  agentes (`gate1_auditor`, `gate2_auditor`) y skills (`protocol-gate1`, `protocol-gate2`) ya
+  existen en `.claude/`, montados por el esqueleto.
+- **Decision:** el proyecto adopta el Gate 1 (¿vale la pena construir el MVP?), que juzga la
+  evidencia de `010_prototype`, y el Gate 2 (¿vale la pena seguir invirtiendo?), que juzga la de
+  `030_growth`.
+- **Por que:** el ciclo completo adoptado en `D-001` incluye los dos puntos donde se decide seguir o
+  detener la inversion. Adoptarlos desde el inicio fija que esas etapas no se cierran sin dictamen
+  tecnico y decision del patrocinador.
+- **Alternativas descartadas:** dejar los dos sin adoptar hasta acercarse al cierre de
+  `010_prototype`, o adoptar solo el Gate 1. El usuario eligio adoptar los dos.
+- ⚠️ **Lo que esta decision NO fija:** la asignacion de las firmas de cada Gate, que
+  `_phases/010_prototype.md` exige registrar con su propia `D-XXX` antes de lanzarlo.
+
+### D-004 - Se conserva el historial heredado del esqueleto
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el repositorio se creo clonando el esqueleto y cambiando el remoto, sin borrar su
+  `.git`, en contra de lo que pide `README.md` (linea 47). Por eso el historial de este repositorio
+  son los siete commits del esqueleto, ya subidos al remoto del proyecto. Verificado contra `HEAD`
+  (`707d572`); `git log` y `git ls-remote` preguntan por el repositorio, no por un commit, y se dejan
+  sin anclar:
+
+  ```
+  $ git log --format='%h %ad %an | %s' --date=short
+  707d572 2026-09-14 Triple S | Promocion del andamiaje desde RaidomAI_App (origen d2ee2aa)
+  bf8c56e 2026-09-14 Triple S | Publica la guia de arranque como README.md (origen a3bb32e)
+  afeedf4 2026-09-14 Triple S | Promocion del andamiaje desde RaidomAI_App (origen a3bb32e)
+  c7d0a87 2026-09-14 Triple S | Regenera las copias de la raiz desde sus plantillas (origen 841dc53)
+  841dc53 2026-09-14 Triple S | Promocion del andamiaje desde RaidomAI_App (origen db0e613)
+  1748f0a 2026-09-11 Triple S | Sincroniza las seis areas agnosticas con el proyecto de origen
+  fa7da56 2026-09-11 Triple S | Estado de partida del esqueleto, tal como estaba antes de sincronizar
+
+  $ git ls-remote origin
+  707d572bb037d9c2c164da7cb356d2848b7b2180	HEAD
+  707d572bb037d9c2c164da7cb356d2848b7b2180	refs/heads/main
+  ```
+
+- **Decision:** se conserva el historial heredado tal como esta; no se rehace ni se fuerza el push.
+- **Por que:** rehacerlo exigia reemplazar `main` en el remoto con un push forzado, que no se puede
+  deshacer, y no recuperaba ningun archivo: el arbol de `HEAD` es identico al del commit de partida.
+  Lo que aporta ese historial —de que version se partio— ya esta en `project.md`, y los commits
+  siguen integros en el repositorio del esqueleto.
+- **Alternativas descartadas:** borrar `.git`, reiniciar el repositorio con un commit inicial y
+  subirlo con push forzado. Lo pidio el usuario en principio y lo desestimo tras ver lo que se perdia.
+- ⚠️ **Consecuencia que queda:** `git log` de este repositorio muestra commits que no ocurrieron en
+  el proyecto. Los commits anteriores a la primera sesion propia son del esqueleto, no trabajo de
+  este proyecto. Como consecuencia buena, `707d572` sigue resolviendo aqui, y la orden de `D-001`
+  sigue siendo reproducible.
+
+### D-005 - Consulta de arranque de las lecciones globales
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la casilla 9 de salida de `000_preproject` exige consultar, **antes de definir
+  alcance**, los bloques de decisiones/arquitectura y de corte del trabajo del archivo de lecciones
+  globales, anotando lo que produjeron con el codigo de cada leccion y declarando NO MIRADOS los
+  bloques no recorridos. El archivo y su repositorio los declara `project.md`.
+- **Decision:** se consultan los bloques **D** (`LG-38`–`LG-45`) y **E** (`LG-46`–`LG-54`) sobre la
+  version `5a32165` del archivo, entrando por su indice y sin leerlo entero. Lo que producen:
+
+  | Leccion | Que produce en este proyecto |
+  |---|---|
+  | `LG-38` | **Cambio.** `CLAUDE.md` remite a un inventario de acciones irreversibles en `constraints.md` que **no existe**. Se propone escribirlo antes de salir de la etapa; pendiente de aprobacion del usuario |
+  | `LG-54` | **Cambio.** Evaluacion, observabilidad y seguridad necesitan **dueño y sitio** declarados desde ya, sin construirlas. Pendiente de decision del usuario |
+  | `LG-39` | Sin cambio ahora. Las decisiones de una sola via (modelo de datos, identidad, runtime…) se toman al abrir `020_baseline`, no en esta etapa, que no construye producto |
+  | `LG-40`, `LG-41` | Sin cambio ahora. Aplican al contrastar la arquitectura contra el esqueleto de `025_wslt` |
+  | `LG-42` | Sin cambio: `decisions.md` ya registra el porque, fechado, y revoca en vez de reescribir |
+  | `LG-43`, `LG-44`, `LG-45` | Sin cambio ahora. Aplican al escribir codigo y fijar limites del producto |
+  | `LG-46`–`LG-53` | Sin cambio: el propio bloque declara que manda el metodo del proyecto, y `_phases/` ya separa prototipo, esqueleto y slices, exige criterio de cierre y distingue tareas de supuestos con disparador |
+
+- **Bloques NO MIRADOS:** A, B, C, F, G, H, I y J. No se recorrieron; no se declaran limpios.
+- **Evidencia.** La estructura de bloques, anclada a la version consultada (el repositorio de
+  lecciones estaba sin cambios locales: `git status --short` no devolvio nada):
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show 5a32165:global_lessons.md | grep -nE "^## Bloque|^\| \*\*LG-(38|54)\*\*" | cut -c1-90
+  151:## Bloque A — Evidencia y verificación
+  173:## Bloque B — Pruebas
+  190:## Bloque C — Documentos, memoria y traspaso
+  209:## Bloque D — Decisiones y arquitectura
+  213:| **LG-38** | **Lo barato es lo reversible; lo caro es lo que no se deshace** | El có
+  224:## Bloque E — Cómo se corta el trabajo
+  239:| **LG-54** | **Evaluación, observabilidad y seguridad se declaran el día 1, cuando 
+  243:## Bloque F — Medir y experimentar
+  260:## Bloque G — Errores, operación y seguridad
+  280:## Bloque H — Trabajar con agentes y con dos terminales
+  295:## Bloque I — Solo si el proyecto usa modelos de lenguaje
+  315:## Bloque J — El método y sus documentos como objeto auditable
+  ```
+
+  La ausencia del inventario de `LG-38`, verificada contra `HEAD` (`707d572`):
+
+  ```
+  $ git grep -ni "irreversible" 707d572 -- _persistence
+  exit=1
+  ```
+
+- **Por que:** hacer la consulta antes de `005_discovery` deja que las lecciones cambien el rumbo
+  cuando cambiarlo cuesta cero; registrarla con sus codigos es lo que permite saber despues si el
+  archivo sirvio.
+- **Alternativas descartadas:** leer tambien los bloques A y C, que se activan «siempre». Se dejan
+  para cuando haya trabajo que verificar o documentar, porque la casilla pide D y E y el archivo
+  prohibe leer de mas. Quedan declarados NO MIRADOS.
+
+### D-006 - Se escribe el inventario de acciones irreversibles
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** la consulta de `D-005` encontro que `CLAUDE.md` remite a un inventario de acciones
+  irreversibles que no existia en `_persistence/`. En esta misma sesion, el push forzado para
+  rehacer el historial (`D-004`) tuvo que clasificarse a criterio por esa falta.
+- **Decision:** se escribe el inventario como `C-001` en `constraints.md`, con sus dos tablas, a
+  partir del borrador que propuso `manager` y aprobo el usuario. Aplica `LG-38`.
+- **Por que:** `LG-38` pide la lista de lo irreversible escrita antes de necesitarla. Sin ella,
+  cada clasificacion es criterio y el auditor no puede contrastarla contra nada.
+- **Alternativas descartadas:** seguir clasificando a criterio hasta que se repitiera alguna accion.
+  Descartada porque ya se habia necesitado una vez en la primera sesion.
+- ⚠️ **Una fila no estaba en el borrador aprobado:** «escribir fuera de este repositorio». La anadio
+  `manager` porque `CLAUDE.md` ya pone esa accion detras de la aprobacion del usuario; no amplia lo
+  que exige permiso, solo lo lista.
+
+### D-007 - Dueno y sitio de evaluacion, observabilidad y seguridad
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `LG-54` (consultada en `D-005`) pide dar dueño y sitio a evaluacion, observabilidad
+  y seguridad desde el primer dia, sin construirlas todavia.
+- **Decision:**
+  - **Dueño de las tres:** `manager`, con aprobacion del usuario sobre lo que declare.
+  - **Sitio:** el artefacto «tres preguntas» de `020_baseline` (plantilla
+    `_templates/020_baseline/040_three_questions.md`, Paso 9 de `_phases/020_baseline.md`), donde
+    cada una se declara con su artefacto, y su version minima construida en `025_wslt`.
+- **Por que:** el metodo ya fija ese sitio. Crear otro ahora duplicaria la declaracion en dos
+  lugares. Lo que faltaba era el dueño, y que quedara escrito antes de definir alcance.
+- **Alternativas descartadas:** que el dueño fuera el usuario, y declarar un sitio propio desde esta
+  etapa. El usuario eligio `manager` con su aprobacion; el sitio propio se descarta por duplicar el
+  artefacto del metodo.
+- ⚠️ **Disparador:** el Paso 9 de `020_baseline`. Hasta entonces esta decision es solo el dueño y
+  el sitio; ninguna de las tres tiene todavia su artefacto.
+- ⚠️ **Seguridad pesa mas en este proyecto:** el encargo guarda «el historial de juegos registrados
+  del usuario» (`_brief/client_brief.md`, linea 294), que puede ser un dato de personas (`A-001`).
+  Si lo es, recogerlo exige permiso previo segun `C-001`.

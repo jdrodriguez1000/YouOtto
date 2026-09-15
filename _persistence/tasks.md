@@ -17,7 +17,8 @@
 
 | Codigo | Tarea | Estado | Importancia | Urgencia | Etapa |
 |---|---|---|---|---|---|
-| — | — | — | — | — | — |
+| [T-001](#t-001---completar-projectmd-y-montar-el-andamiaje-minimo-de-000_preproject) | Completar `project.md` y montar el andamiaje minimo de `000_preproject` | Implementada | Alta | Bloqueante | 000_preproject |
+| [T-002](#t-002---asignar-las-firmas-del-gate-1-y-del-gate-2-antes-de-cerrar-sus-etapas) | Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas | No implementada | Media | No bloqueante | 010_prototype |
 
 ---
 
@@ -108,3 +109,43 @@ Plantilla:
 - **Por que:** que problema resuelve.
 - **Criterio de cierre:** como se sabe que quedo hecha.
 -->
+
+### T-001 - Completar `project.md` y montar el andamiaje minimo de `000_preproject`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | Bloqueante |
+| Etapa | 000_preproject |
+| Origen | usuario |
+| Sesion | S-001 |
+
+- **Que:** rellenar `project.md` (identidad, rutas, remoto, etapas, carpetas) a partir de la
+  plantilla del esqueleto, y dejar el primer ciclo de la jornada corrido entero (arranque, trabajo,
+  cierre).
+- **Por que:** un `project.md` a medias deja `SIN COMPROBAR` los controles del cierre que leen sus
+  valores (Pasos 1b y 2c de `protocol-close`), segun advierte el propio archivo.
+- **Criterio de cierre:** que `project.md`, anclado al commit de esta sesion, no conserve ningun
+  marcador de plantilla sin rellenar.
+
+  ```
+  $ git show <hash>:project.md | grep -cE '<[A-Za-z]'
+  0
+  ```
+
+### T-002 - Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | manager |
+| Sesion | S-001 |
+
+- **Que:** registrar, con su propia `D-XXX`, quien firma el dictamen de `gate1_auditor` y el de
+  `gate2_auditor` antes de lanzar cada Gate.
+- **Por que:** `D-003` adopto los dos Gates pero dejo explicitamente sin fijar esa asignacion, y
+  `_phases/010_prototype.md` la exige registrada antes de lanzar el Gate 1.
+- **Criterio de cierre:** existe una `D-XXX` que nombra quien firma cada Gate, citada desde
+  `_persistence/decisions.md` (`D-003`).

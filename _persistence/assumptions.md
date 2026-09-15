@@ -21,7 +21,8 @@
 
 | Codigo | Supuesto | Fecha | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| [A-001](#a-001---los-juegos-registrados-pueden-ser-datos-de-personas) | Los juegos registrados pueden ser datos de personas | 2026-09-15 | Abierto |
+| [A-002](#a-002---los-agentes-de-gate-y-de-acta-se-cargan-al-reiniciar-claude-code) | Los agentes de Gate y de acta se cargan al reiniciar Claude Code | 2026-09-15 | Abierto |
 
 ---
 
@@ -79,3 +80,39 @@ Plantilla:
 - **Como se refuta:** el control concreto que daria un resultado distinto si el supuesto fuera falso.
 - **Disparador:** el momento concreto en que alguien va a mirarlo.
 -->
+
+### A-001 - Los juegos registrados pueden ser datos de personas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Abierto |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** el historial de juegos registrados que describe el encargo («el historial de juegos
+  registrados del usuario», `_brief/client_brief.md`, linea 294) puede quedar asociado a personas
+  identificables, y entonces seria un dato de personas.
+- **Sobre que se construye encima:** la nota de seguridad de `D-007` y la aplicacion de `C-001`
+  (recoger datos de personas exige permiso previo) al diseño del registro de juegos.
+- **Como se refuta:** en `005_discovery`, la identificacion de actores deja escrito si hay un solo
+  usuario sin cuenta ni identidad guardada (se refuta) o varios usuarios identificables (se
+  confirma y pasa a `constraints.md`).
+- **Disparador:** la clasificacion de actores de `005_discovery` (`_templates/005_discovery/010_actors.md`).
+
+### A-002 - Los agentes de Gate y de acta se cargan al reiniciar Claude Code
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Abierto |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** `phase_exit_auditor`, `gate1_auditor` y `gate2_auditor` existen en `.claude/agents/`
+  pero no aparecian entre los agentes que esta sesion podia lanzar; se supone que es porque se
+  cargan al arrancar Claude Code y aparecen tras reiniciarlo.
+- **Sobre que se construye encima:** el plan de cierre de `000_preproject`, cuyo acta la emite
+  `phase_exit_auditor`.
+- **Como se refuta:** tras reiniciar Claude Code, `phase_exit_auditor` sigue sin figurar entre los
+  agentes disponibles; entonces el defecto esta en la definicion del agente, no en la carga.
+- **Disparador:** la primera sesion tras reiniciar Claude Code, y en todo caso antes de lanzar el
+  acta de cierre de `000_preproject`.

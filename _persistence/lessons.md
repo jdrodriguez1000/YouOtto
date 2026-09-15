@@ -20,7 +20,8 @@
 
 | Codigo | Leccion | Fecha | Etapa | Portabilidad |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| [L-001](#l-001---el-historial-heredado-del-esqueleto-se-comprueba-antes-del-primer-push) | El historial heredado del esqueleto se comprueba antes del primer push | 2026-09-15 | 000_preproject | Sin evaluar |
+| [L-002](#l-002---un-registro-que-una-regla-cita-se-comprueba-que-existe-al-arrancar) | Un registro que una regla cita se comprueba que existe al arrancar | 2026-09-15 | 000_preproject | Sin evaluar |
 
 ---
 
@@ -81,3 +82,38 @@ Plantilla:
 - **Leccion:** que ensena, en una frase que valga fuera de este caso.
 - **Como aplicarla:** la accion concreta a futuro. Sin esto, es una anecdota.
 -->
+
+### L-001 - El historial heredado del esqueleto se comprueba antes del primer push
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Etapa | 000_preproject |
+| Origen | manager |
+
+- **Contexto:** completar `project.md` en la primera sesion del proyecto, arrancado desde el
+  esqueleto.
+- **Que ocurrio:** el paso de borrar el `.git` del clon (`README.md`, linea 47) no se hizo. El
+  proyecto subio a su remoto los siete commits del esqueleto, y nadie lo noto hasta que se comparo
+  el hash de partida con el `HEAD` del proyecto. Para entonces deshacerlo exigia un push forzado, y
+  se decidio conservarlo (`D-004`).
+- **Leccion:** un paso de arranque que no deja rastro visible se salta sin que nadie lo note, y se
+  descubre cuando corregirlo ya es irreversible.
+- **Como aplicarla:** antes del primer push de un proyecto nuevo, correr
+  `git rev-list --count HEAD` y `git log --oneline`: si aparecen commits que no son del proyecto, el
+  historial heredado sigue ahi y se decide que hacer mientras aun es local.
+
+### L-002 - Un registro que una regla cita se comprueba que existe al arrancar
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Etapa | 000_preproject |
+| Origen | manager |
+
+- **Contexto:** consulta de las lecciones globales de arranque (`D-005`), aplicando `LG-38`.
+- **Que ocurrio:** `CLAUDE.md` manda leer la clasificacion de lo irreversible de un inventario en
+  `constraints.md`, pero ni el archivo ni su plantilla lo traian. La regla se habia estado cumpliendo
+  «a criterio» sin que ningun control lo senalara, hasta que la consulta lo busco (`D-006`).
+- **Leccion:** una regla que remite a un registro que no existe parece vigente y no obliga a nada.
+- **Como aplicarla:** al arrancar un proyecto, buscar en `CLAUDE.md` y los protocolos cada registro
+  al que remiten («vive en», «el inventario de») y comprobar con `grep` que existe; el que falte se
+  crea o se registra como deuda antes de salir de `000_preproject`.
