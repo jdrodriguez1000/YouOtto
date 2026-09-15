@@ -180,9 +180,11 @@ Plantilla:
   forma anclada debajo.
 
   ```
-  $ git show <hash>:_persistence/tasks.md | grep -cE '^[[:space:]]*\$ git show 5cae773:project.md'
+  $ git show e222812:_persistence/tasks.md | grep -cE '^[[:space:]]*\$ git show 5cae773:project.md'
   1
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `e222812`.** Reproduce lo publicado arriba.
 
 ### T-004 - Publicar la salida real del CONTROL DE CIFRA ADYACENTE de S-001
 | Campo | Valor |
@@ -211,9 +213,11 @@ Plantilla:
 - **Criterio de cierre:** la nota existe en el informe a ese commit y lleva las ocho lineas.
 
   ```
-  $ git show <hash>:_audit/S-001.md | grep -cE '^> S-001\.md:(36|81|82|130|131|173|210|211): '
+  $ git show e222812:_audit/S-001.md | grep -cE '^> S-001\.md:(36|81|82|130|131|173|210|211): '
   8
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `e222812`.** Reproduce lo publicado arriba.
 
 ### T-005 - Corregir el ancla de la fila S-001 en el indice de progress.md
 | Campo | Valor |
@@ -240,6 +244,8 @@ Plantilla:
 - **Criterio de cierre:** el ancla coincide con la que genera el encabezado.
 
   ```
-  $ git show <hash>:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'
+  $ git show e222812:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'
   ](#s-001---primera-sesion-de-trabajo-projectmd-completo-y-el-porque-del-arranque)
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `e222812`.** Reproduce lo publicado arriba.

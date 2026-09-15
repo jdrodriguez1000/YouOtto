@@ -395,15 +395,17 @@ Plantilla:
   parrafo que los explica.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '^\+\$ '
+  $ git show e222812:.claude/skills/protocol-close/SKILL.md | grep -cF '^\+\$ '
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '^\$ .*<hash>'
+  $ git show e222812:.claude/skills/protocol-close/SKILL.md | grep -cF '^\$ .*<hash>'
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'f&&/^\$ /'
+  $ git show e222812:.claude/skills/protocol-close/SKILL.md | grep -cF 'f&&/^\$ /'
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '[[:space:]]*\$ '
+  $ git show e222812:.claude/skills/protocol-close/SKILL.md | grep -cF '[[:space:]]*\$ '
   12
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `e222812`.** Las cuatro reproducen lo publicado arriba.
 
 ### D-009 - Se corrige la cabecera YAML de los agentes de Gate y de acta
 | Campo | Valor |
@@ -443,9 +445,9 @@ Plantilla:
   cabeceras son YAML valido.
 
   ```
-  $ git grep -nE "^description:.*: " <hash> -- .claude/agents | wc -l
+  $ git grep -nE "^description:.*: " e222812 -- .claude/agents | wc -l
   0
-  $ for a in gate1_auditor gate2_auditor phase_exit_auditor report_auditor session-closer session-starter; do printf '%s ' $a; git show <hash>:.claude/agents/$a.md | python -c "import sys,re,yaml; s=sys.stdin.read(); fm=re.match(r'^---\r?\n(.*?)\r?\n---',s,re.S).group(1); yaml.safe_load(fm); print('OK')" 2>&1 | grep -E '^(OK|yaml\.)' ; done
+  $ for a in gate1_auditor gate2_auditor phase_exit_auditor report_auditor session-closer session-starter; do printf '%s ' $a; git show e222812:.claude/agents/$a.md | python -c "import sys,re,yaml; s=sys.stdin.read(); fm=re.match(r'^---\r?\n(.*?)\r?\n---',s,re.S).group(1); yaml.safe_load(fm); print('OK')" 2>&1 | grep -E '^(OK|yaml\.)' ; done
   gate1_auditor OK
   gate2_auditor OK
   phase_exit_auditor OK
@@ -453,3 +455,5 @@ Plantilla:
   session-closer OK
   session-starter OK
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `e222812`.** Las dos reproducen lo publicado arriba.
