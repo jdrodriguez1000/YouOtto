@@ -22,9 +22,9 @@
 
 | Codigo | Hallazgo | Auditoria | Gravedad | Estado |
 |---|---|---|---|---|
-| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Abierto |
-| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Abierto |
-| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Abierto |
+| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Aceptado — pendiente |
+| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Aceptado — pendiente |
+| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Aceptado — pendiente |
 
 ---
 
@@ -93,8 +93,8 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-003 / D-008 |
 | Cerrado en | |
 
 - **Que se observo:** sobre `5cae773`, el censo literal del Paso 7c (`grep -cE '^\$ .*<hash>'` en
@@ -107,7 +107,9 @@ Plantilla:
 - **Por que importa:** el criterio de cierre de una tarea `Implementada` no es reproducible tal como
   esta escrito, y un control obligatorio del cierre sale limpio sobre lo que no mira; con este
   formato de registro, el falso negativo se repite en cada sesion.
-- **Que se hizo:** pendiente de evaluacion de `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`45e33a4`), con orden y salida en
+  `D-008`. El usuario eligio ampliar los patrones de `protocol-close` (`D-008`), y la orden de `T-001`
+  queda anclada por nota fechada. Registrado en `T-003`.
 
 ### F-002 - El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero
 | Campo | Valor |
@@ -115,8 +117,8 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-004 |
 | Cerrado en | |
 
 - **Que se observo:** la NOTA DE CIERRE de la seccion 7 de `_audit/S-001.md` pega la orden pero no
@@ -126,7 +128,9 @@ Plantilla:
   Salida completa en `_audit/R-001.md`, seccion 2.
 - **Por que importa:** `protocol-close` exige esa salida entera y con su orden; publicada como
   veredicto y con una cifra que no reproduce, no se distingue de un control no corrido.
-- **Que se hizo:** pendiente de evaluacion de `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`45e33a4`): el rotulo esta en la linea
+  279 de `_audit/S-001.md` y la 288 dice «Devolvio 7 lineas» sin salida. Registrado en `T-004`: nota
+  fechada con la salida de 8 lineas. El cambio al Paso 7c-ter no se hace mientras no se repita.
 
 ### F-003 - Ancla rota en el indice de progress.md para S-001
 | Campo | Valor |
@@ -134,8 +138,8 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Baja |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-005 |
 | Cerrado en | |
 
 - **Que se observo:** `git show 5cae773:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'`
@@ -143,4 +147,5 @@ Plantilla:
   encabezado genera `...-projectmd-...`. Las otras catorce anclas de `_persistence/` resuelven
   (`_audit/R-001.md`, seccion 1.7).
 - **Por que importa:** la fila del indice no lleva a su entrada.
-- **Que se hizo:** pendiente de evaluacion de `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`45e33a4`): el ancla sigue siendo
+  `#...project.md...` y el encabezado esta en la linea 120 de `progress.md`. Registrado en `T-005`.

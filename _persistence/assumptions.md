@@ -22,7 +22,8 @@
 | Codigo | Supuesto | Fecha | Estado |
 |---|---|---|---|
 | [A-001](#a-001---los-juegos-registrados-pueden-ser-datos-de-personas) | Los juegos registrados pueden ser datos de personas | 2026-09-15 | Abierto |
-| [A-002](#a-002---los-agentes-de-gate-y-de-acta-se-cargan-al-reiniciar-claude-code) | Los agentes de Gate y de acta se cargan al reiniciar Claude Code | 2026-09-15 | Abierto |
+| [A-002](#a-002---los-agentes-de-gate-y-de-acta-se-cargan-al-reiniciar-claude-code) | Los agentes de Gate y de acta se cargan al reiniciar Claude Code | 2026-09-15 | Refutado |
+| [A-003](#a-003---con-la-cabecera-yaml-valida-los-agentes-de-gate-y-de-acta-cargan) | Con la cabecera YAML valida, los agentes de Gate y de acta cargan | 2026-09-15 | Confirmado |
 
 ---
 
@@ -103,7 +104,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-15 |
-| Estado | Abierto |
+| Estado | Refutado |
 | Origen | manager |
 | Dueno | manager |
 
@@ -116,3 +117,58 @@ Plantilla:
   agentes disponibles; entonces el defecto esta en la definicion del agente, no en la carga.
 - **Disparador:** la primera sesion tras reiniciar Claude Code, y en todo caso antes de lanzar el
   acta de cierre de `000_preproject`.
+- 🕐 **Nota 2026-09-15: refutado.** El usuario confirmo que habia reiniciado Claude Code antes de esta
+  sesion, y en ella los agentes lanzables del proyecto siguen siendo solo `session-starter`,
+  `session-closer` y `report_auditor`. La causa esta en la definicion y es comprobable. En los tres
+  agentes que faltan, la `description` de la cabecera va sin comillas y contiene `NO decision: …`.
+  Ese `: ` hace invalido el YAML, y los tres que si cargan no lo llevan. Verificado contra `HEAD`
+  (`45e33a4`):
+
+  ```
+  $ git grep -nE "^description:.*: " 45e33a4 -- .claude/agents | cut -d: -f1-3
+  45e33a4:.claude/agents/gate1_auditor.md:3
+  45e33a4:.claude/agents/gate2_auditor.md:3
+  45e33a4:.claude/agents/phase_exit_auditor.md:3
+  $ for a in gate1_auditor gate2_auditor phase_exit_auditor report_auditor session-closer session-starter; do printf '%s ' $a; git show 45e33a4:.claude/agents/$a.md | python -c "import sys,re,yaml; s=sys.stdin.read(); fm=re.match(r'^---\r?\n(.*?)\r?\n---',s,re.S).group(1); yaml.safe_load(fm); print('OK')" 2>&1 | grep -E '^(OK|yaml\.)' ; done
+  gate1_auditor yaml.scanner.ScannerError: mapping values are not allowed here
+  gate2_auditor yaml.scanner.ScannerError: mapping values are not allowed here
+  phase_exit_auditor yaml.scanner.ScannerError: mapping values are not allowed here
+  report_auditor OK
+  session-closer OK
+  session-starter OK
+  ```
+
+  ⚠️ El defecto viene del esqueleto de arranque: su `HEAD` (`707d572`) trae las tres cabeceras con el
+  mismo `: `. Corregirlo no depende de este supuesto, y queda pendiente de decision del usuario.
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS" grep -nE "^description:.*: " 707d572 -- .claude/agents | cut -d: -f1-3
+  707d572:.claude/agents/gate1_auditor.md:3
+  707d572:.claude/agents/gate2_auditor.md:3
+  707d572:.claude/agents/phase_exit_auditor.md:3
+  ```
+
+### A-003 - Con la cabecera YAML valida, los agentes de Gate y de acta cargan
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Confirmado |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** el YAML invalido de la cabecera era la unica causa de que `gate1_auditor`,
+  `gate2_auditor` y `phase_exit_auditor` no aparecieran, y con la correccion de `D-009` cargan tras
+  reiniciar Claude Code.
+- **Sobre que se construye encima:** el acta de cierre de `000_preproject`, que emite
+  `phase_exit_auditor`, y los dos Gates adoptados en `D-003`.
+- **Como se refuta:** en la primera sesion tras reiniciar con `D-009` ya aplicada, alguno de los tres
+  sigue sin figurar entre los agentes lanzables. Entonces hay otra causa, y la validacion YAML no
+  bastaba para detectarla.
+- **Disparador:** la primera sesion tras reiniciar Claude Code con `D-009` aplicada, y en todo caso
+  antes de lanzar el acta de cierre de `000_preproject`.
+- 🕐 **Nota 2026-09-15: confirmado, antes del disparador previsto.** En esta misma sesion, sin
+  reiniciar y despues de aplicar `D-009`, Claude Code anuncio como lanzables `gate1_auditor`,
+  `gate2_auditor` y `phase_exit_auditor`, con la `description` ya corregida (`NO decision — …`).
+  Recargo los archivos al cambiar, asi que el reinicio no hacia falta. La correccion queda en `D-009`.
+  ⚠️ **Lo que no se puede anclar:** que agentes estan disponibles en una sesion no deja rastro en el
+  repositorio. La evidencia es el aviso de la propia sesion, igual que lo fue la refutacion de `A-002`.

@@ -1,6 +1,6 @@
 ---
 name: phase_exit_auditor
-description: Emite la revision tecnica del acta de cierre de una etapa. Se lanza cuando manager declara una etapa lista y lo deja commiteado y subido, o cuando el usuario pida "cierra la etapa", "verifica las casillas de salida", "levanta el acta de cierre" o algo similar. Lee las casillas de la condicion de salida del archivo de la etapa que se le pase, comprueba primero que la evidencia sea auditable, verifica cada casilla con su orden y su salida cruda, y deja el acta en la subcarpeta de _audit/ que lleva el nombre de la etapa, con su commit y su push. Emite dictamen, NO decision: dar la etapa por cerrada lo firma el patrocinador. No construye, no corrige y no decide.
+description: Emite la revision tecnica del acta de cierre de una etapa. Se lanza cuando manager declara una etapa lista y lo deja commiteado y subido, o cuando el usuario pida "cierra la etapa", "verifica las casillas de salida", "levanta el acta de cierre" o algo similar. Lee las casillas de la condicion de salida del archivo de la etapa que se le pase, comprueba primero que la evidencia sea auditable, verifica cada casilla con su orden y su salida cruda, y deja el acta en la subcarpeta de _audit/ que lleva el nombre de la etapa, con su commit y su push. Emite dictamen, NO decision — dar la etapa por cerrada lo firma el patrocinador. No construye, no corrige y no decide.
 tools: Read, Write, Edit, Glob, Grep, Bash, Skill
 model: sonnet
 color: cyan

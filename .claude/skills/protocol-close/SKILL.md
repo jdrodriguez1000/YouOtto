@@ -320,7 +320,7 @@ anclados:
 
 ```bash
 git diff --cached -U0 -- _persistence _audit \
-  | grep -E '^\+\$ ' \
+  | grep -E '^\+[[:space:]]*\$ ' \
   | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}'
 ```
 
@@ -366,7 +366,7 @@ seleccionar, y seleccionar es justo lo que el parrafo anterior prohibe.
 ```bash
 # la UNICA cifra del paso: LINEAS devueltas
 git diff -U0 <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md" \
-  | grep -E '^\+\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
+  | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
 ```
 
 ⛔ **La cifra de ORDENES DISTINTAS ya no se publica, y no es una simplificacion de estilo: se
@@ -389,7 +389,7 @@ Por eso lo que se pega lleva el informe excluido y el commit por delante:
 
 ```bash
 git diff -U0 <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md" \
-  | grep -E '^\+\$ ' \
+  | grep -E '^\+[[:space:]]*\$ ' \
   | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}'
 ```
 
@@ -410,7 +410,7 @@ en el bloque que uno recuerda haber escrito, y la memoria atribuye antes de comp
 la produce, y que se pega con su salida cruda:
 
 ```bash
-git diff -U0 -- _persistence _audit | awk '/^\+\+\+ /{f=$2} /^\+\$ /{print f" :: "$0}' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}'
+git diff -U0 -- _persistence _audit | awk '/^\+\+\+ /{f=$2} /^\+[[:space:]]*\$ /{print f" :: "$0}' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}'
 ```
 
 📌 **La procedencia es del archivo, no de la entrada.** El diff sabe en que archivo entro cada
@@ -427,11 +427,11 @@ y que se pegan con su salida:
 ```bash
 B='git diff -U0 <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md"'
 # la lista, numerada por la propia orden
-eval "$B" | grep -E '^\+\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | cat -n
+eval "$B" | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | cat -n
 # el recuento de LINEAS — la unica cifra del paso
-eval "$B" | grep -E '^\+\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
+eval "$B" | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
 # cuales se repiten
-eval "$B" | grep -E '^\+\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | sort | uniq -d
+eval "$B" | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | sort | uniq -d
 ```
 
 ⛔ **La salida de `uniq -d` se pega ENTERA, y sin nombrar a mano cuales son.** Ya paso: un informe
@@ -483,8 +483,13 @@ crece despues, y entre las dos cosas no hay ningun momento en que algo chille. E
 lecciones ya describia el defecto; lo que faltaba era quien lo aplicara — una regla sin
 mecanismo no es una regla, es una intencion.
 
-⚠️ **El patron `^\+\$ ` acota a proposito, y por eso no basta con el.** Recoge las lineas de orden
-—las que empiezan por `$ ` dentro de un bloque— que el diff añade. No ve una orden escrita en prosa
+⚠️ **El patron `^\+[[:space:]]*\$ ` acota a proposito, y por eso no basta con el.** Recoge las
+lineas de orden —las que empiezan por `$ ` dentro de un bloque, con o sin sangria— que el diff añade.
+
+🚨 **La sangria esta admitida porque su ausencia ya fallo.** Una version anterior del patron exigia la
+marca en la primera columna, y el registro escribe los bloques dentro de vinetas, con dos espacios
+delante: el control salio limpio sobre ordenes que no veia, y una tarea cerrada publico su criterio sin
+anclar. Lo mismo vale para el CENSO y el CONTROL del Paso 7c y para la localizacion del 7c-bis. No ve una orden escrita en prosa
 ni una que la jornada dejo sin el prefijo `$ `, y no distingue un ancla legitima de un hash citado
 por casualidad. Es un cedazo, no una prueba: **la relectura de lo escrito sigue siendo obligatoria**.
 
@@ -1638,7 +1643,7 @@ ese commit, heredadas incluidas. **No tiene que salir vacio**, y su salida se pu
 
 ```bash
 for f in $(git ls-tree -r --name-only <hash> _persistence _audit | grep -v '_audit/S-XXX.md'); do
-  n=$(git show <hash>:"$f" | grep -cE '^\$ .*<hash>')
+  n=$(git show <hash>:"$f" | grep -cE '^[[:space:]]*\$ .*<hash>')
   [ "$n" != "0" ] && echo "$f: $n"
 done
 ```
@@ -1649,7 +1654,7 @@ trabajo del Paso 7c-bis: aqui no hay herencia posible, todo lo que salga lo escr
 
 ```bash
 for f in $(git diff --name-only <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md"); do
-  n=$(git diff -U0 <hash>^ <hash> -- "$f" | grep -cE '^\+\$ git show <hash>:')
+  n=$(git diff -U0 <hash>^ <hash> -- "$f" | grep -cE '^\+[[:space:]]*\$ git show <hash>:')
   [ "$n" != "0" ] && echo "$f: $n"
 done
 ```
@@ -1726,10 +1731,10 @@ es terminar tu propio trabajo.
 
 ```bash
 git show <hash>:_persistence/decisions.md \
-  | awk '/^### D-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^\$ /{print d" | "$0}'
+  | awk '/^### D-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^[[:space:]]*\$ /{print d" | "$0}'
 
 git show <hash>:_persistence/tasks.md \
-  | awk '/^### T-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^\$ /{print d" | "$0}'
+  | awk '/^### T-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^[[:space:]]*\$ /{print d" | "$0}'
 ```
 
 De esa lista, **solo tocas las entradas nacidas en esta sesion** — las que el Paso 2 te dio como

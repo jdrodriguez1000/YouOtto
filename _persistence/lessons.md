@@ -22,6 +22,8 @@
 |---|---|---|---|---|
 | [L-001](#l-001---el-historial-heredado-del-esqueleto-se-comprueba-antes-del-primer-push) | El historial heredado del esqueleto se comprueba antes del primer push | 2026-09-15 | 000_preproject | Sin evaluar |
 | [L-002](#l-002---un-registro-que-una-regla-cita-se-comprueba-que-existe-al-arrancar) | Un registro que una regla cita se comprueba que existe al arrancar | 2026-09-15 | 000_preproject | Sin evaluar |
+| [L-003](#l-003---un-control-con-patron-literal-se-prueba-contra-el-formato-real-del-registro) | Un control con patron literal se prueba contra el formato real del registro | 2026-09-15 | 000_preproject | Sin evaluar |
+| [L-004](#l-004---un-agente-que-no-aparece-se-diagnostica-validando-su-cabecera-antes-de-suponer) | Un agente que no aparece se diagnostica validando su cabecera antes de suponer | 2026-09-15 | 000_preproject | Sin evaluar |
 
 ---
 
@@ -117,3 +119,36 @@ Plantilla:
 - **Como aplicarla:** al arrancar un proyecto, buscar en `CLAUDE.md` y los protocolos cada registro
   al que remiten («vive en», «el inventario de») y comprobar con `grep` que existe; el que falte se
   crea o se registra como deuda antes de salir de `000_preproject`.
+
+### L-003 - Un control con patron literal se prueba contra el formato real del registro
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+
+- **Contexto:** evaluacion de `F-001`, de la primera auditoria del proyecto.
+- **Que ocurrio:** los barridos de anclaje del cierre buscaban `$ ` en la primera columna, y el
+  registro escribe los bloques dentro de vinetas, con sangria. El control salio limpio sobre ordenes
+  que no veia, y el propio informe notaba el sintoma pero la cuenta lo dejaba fuera (`D-008`).
+- **Leccion:** un control mecanico que sale limpio no prueba nada si su patron nunca se probo con una
+  linea que tuviera que atrapar.
+- **Como aplicarla:** al escribir o cambiar un patron de control, correrlo sobre un commit donde el
+  defecto este presente y comprobar que lo devuelve. Si no hay caso real, fabricar la linea con el
+  formato con que el registro escribe de verdad.
+
+### L-004 - Un agente que no aparece se diagnostica validando su cabecera antes de suponer
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Etapa | 000_preproject |
+| Origen | manager |
+
+- **Contexto:** los agentes de Gate y de acta no aparecian entre los lanzables.
+- **Que ocurrio:** se supuso que faltaba reiniciar Claude Code (`A-002`) y se espero una sesion. La
+  causa estaba en el propio archivo: un `: ` sin comillas en la `description` hacia invalido el YAML,
+  y Claude Code descarta el agente sin avisar (`D-009`).
+- **Leccion:** un fallo de carga silencioso se diagnostica leyendo el archivo con el mismo formato con
+  que se carga, antes de construir un supuesto sobre el entorno.
+- **Como aplicarla:** si un agente o una skill no aparece, pasar su cabecera por un parser YAML en el
+  momento. Solo si sale valida tiene sentido sospechar de la carga.

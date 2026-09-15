@@ -1,6 +1,6 @@
 ---
 name: gate1_auditor
-description: Emite el dictamen tecnico del Gate 1. Se lanza cuando la etapa del prototipo ha cerrado y su evidencia esta commiteada y subida, o cuando el usuario pida "corre el Gate 1", "evalua el prototipo", "dictamen del gate" o algo similar. Comprueba primero por el orden del historial que la evidencia sea auditable, despues contrasta los criterios de la guia de metodo uno por uno, y deja el resultado en _audit/015_gate1/, con su commit y su push. Emite dictamen, NO decision: construir el MVP, replantear o detener lo decide el patrocinador. No construye, no corrige y no decide.
+description: Emite el dictamen tecnico del Gate 1. Se lanza cuando la etapa del prototipo ha cerrado y su evidencia esta commiteada y subida, o cuando el usuario pida "corre el Gate 1", "evalua el prototipo", "dictamen del gate" o algo similar. Comprueba primero por el orden del historial que la evidencia sea auditable, despues contrasta los criterios de la guia de metodo uno por uno, y deja el resultado en _audit/015_gate1/, con su commit y su push. Emite dictamen, NO decision — construir el MVP, replantear o detener lo decide el patrocinador. No construye, no corrige y no decide.
 tools: Read, Write, Edit, Glob, Grep, Bash, Skill
 model: opus
 color: yellow

@@ -28,6 +28,8 @@
 | [D-005](#d-005---consulta-de-arranque-de-las-lecciones-globales) | Consulta de arranque de las lecciones globales | 2026-09-15 | Vigente |
 | [D-006](#d-006---se-escribe-el-inventario-de-acciones-irreversibles) | Se escribe el inventario de acciones irreversibles | 2026-09-15 | Vigente |
 | [D-007](#d-007---dueno-y-sitio-de-evaluacion-observabilidad-y-seguridad) | Dueno y sitio de evaluacion, observabilidad y seguridad | 2026-09-15 | Vigente |
+| [D-008](#d-008---los-barridos-de-anclaje-de-protocol-close-admiten-ordenes-indentadas) | Los barridos de anclaje de protocol-close admiten ordenes indentadas | 2026-09-15 | Vigente |
+| [D-009](#d-009---se-corrige-la-cabecera-yaml-de-los-agentes-de-gate-y-de-acta) | Se corrige la cabecera YAML de los agentes de Gate y de acta | 2026-09-15 | Vigente |
 
 ---
 
@@ -333,3 +335,121 @@ Plantilla:
 - ⚠️ **Seguridad pesa mas en este proyecto:** el encargo guarda «el historial de juegos registrados
   del usuario» (`_brief/client_brief.md`, linea 294), que puede ser un dato de personas (`A-001`).
   Si lo es, recogerlo exige permiso previo segun `C-001`.
+
+### D-008 - Los barridos de anclaje de protocol-close admiten ordenes indentadas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-001` (`_audit/R-001.md`): los patrones que localizan ordenes publicadas en el
+  Paso 2d, el CENSO y el CONTROL del Paso 7c y la localizacion del 7c-bis exigen `$ ` en la primera
+  columna, y este registro escribe los bloques de comando dentro de vinetas, con dos espacios. El
+  cierre de `S-001` salio limpio y dejo el criterio de `T-001` con `<hash>` sin resolver.
+- **Decision:** ampliar esos once patrones de `.claude/skills/protocol-close/SKILL.md` para que
+  admitan sangria (`[[:space:]]*` delante de `\$ `). La eligio el usuario entre tres opciones.
+- **Por que:** el control tiene que ver las ordenes como el registro las escribe de verdad. Una
+  convencion de formato dejaria el control dependiendo de que nadie se equivoque, que es justo el
+  fallo que abrio el hallazgo.
+- **Alternativas descartadas:**
+  - **Fijar por convencion que los bloques se escriben sin indentar**, sin tocar el protocolo:
+    descartada porque el control seguiria ciego a la primera orden que se escriba en una vineta.
+  - **Anclar solo la orden de `T-001` y dejar la causa como `DT-XXX`:** descartada porque el falso
+    negativo se repetiria en cada sesion.
+  - **Admitir tambien el prefijo de cita `> `:** descartada por `PI-2`. A `45e33a4` no hay ninguna
+    orden citada asi en `_persistence/` ni en `_audit/` fuera del informe de sesion, que ya tiene su
+    propio patron en el Paso 7c-ter. Orden y salida debajo.
+- ⚠️ **Consecuencia:** `.claude/` deja de coincidir con el esqueleto de arranque hasta que se
+  promueva (`protocol-promote`, con su puerta). El Paso 2f lo mostrara en cada cierre, pero no bloquea.
+- **Verificacion previa**, contra `HEAD` (`45e33a4`):
+
+  ```
+  $ git show 45e33a4:_persistence/tasks.md | grep -nE '^[[:space:]]*\$ .*<hash>'
+  132:  $ git show <hash>:project.md | grep -cE '<[A-Za-z]'
+  $ for f in $(git ls-tree -r --name-only 45e33a4 _persistence _audit | grep -v '_audit/S-001.md'); do n=$(git show 45e33a4:"$f" | grep -cE '^[[:space:]]*> *\$ '); [ "$n" != "0" ] && echo "$f: $n"; done; echo "(fin)"
+  (fin)
+  ```
+
+- **Prueba del cambio.** Se usa el commit del hallazgo: el patron antiguo no ve nada y el nuevo
+  encuentra las seis ordenes indentadas, entre ellas la de `T-001`:
+
+  ```
+  $ git diff -U0 5cae773^ 5cae773 -- _persistence _audit ":(exclude)_audit/S-001.md" | grep -E '^\+\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
+  0
+  $ git diff -U0 5cae773^ 5cae773 -- _persistence _audit ":(exclude)_audit/S-001.md" | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | cat -n
+       1	+  $ git ls-tree --name-only 707d572 _phases/
+       2	+  $ git log --format='%h %ad %an | %s' --date=short
+       3	+  $ git ls-remote origin
+       4	+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show 5a32165:global_lessons.md | grep -nE "^## Bloque|^\| \*\*LG-(38|54)\*\*" | cut -c1-90
+       5	+  $ git grep -ni "irreversible" 707d572 -- _persistence
+       6	+  $ git show <hash>:project.md | grep -cE '<[A-Za-z]'
+  $ git show 5cae773:_persistence/tasks.md | awk '/^### T-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^\$ /{print d" | "$0}' | wc -l
+  0
+  $ git show 5cae773:_persistence/tasks.md | awk '/^### T-/{d=$2} /Criterio de cierre/{f=1} /^---$/{f=0} f&&/^[[:space:]]*\$ /{print d" | "$0}'
+  T-001 |   $ git show <hash>:project.md | grep -cE '<[A-Za-z]'
+  ```
+
+- **Criterio de cierre:** a ese commit, la skill no conserva ninguna de las formas antiguas del
+  patron (en `45e33a4` eran 9, 1 y 2) y lleva la sangria en doce lineas: los once patrones y el
+  parrafo que los explica.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '^\+\$ '
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '^\$ .*<hash>'
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'f&&/^\$ /'
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '[[:space:]]*\$ '
+  12
+  ```
+
+### D-009 - Se corrige la cabecera YAML de los agentes de Gate y de acta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-15 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `A-002` quedo refutado. `gate1_auditor`, `gate2_auditor` y `phase_exit_auditor` no
+  cargan porque su `description`, sin comillas, contiene `NO decision: …`, y ese `: ` hace invalido el
+  YAML de la cabecera. Orden y salida en la nota de `A-002`. El defecto viene del esqueleto de arranque.
+- **Decision:** sustituir `NO decision: ` por `NO decision — ` en la `description` de los tres agentes,
+  sin tocar nada mas. El usuario pidio hacerlo en esta sesion.
+- **Por que:** sin esos tres agentes no se puede emitir el acta de cierre de `000_preproject` ni los
+  dictamenes de los Gates adoptados en `D-003`. El cambio es de un caracter y no altera lo que dice
+  la descripcion.
+- **Alternativas descartadas:**
+  - **Entrecomillar la `description` entera:** tambien valida el YAML, pero obliga a escapar las
+    comillas dobles que ya lleva dentro («"corre el Gate 1"») y toca mas texto del necesario (`PI-3`).
+  - **Dejarlo para otra sesion:** el usuario pidio corregirlo ahora.
+- ⚠️ **Consecuencia:** como `D-008`, `.claude/` se aleja un poco mas del esqueleto hasta que se
+  promueva. Que los agentes cargan de verdad no lo prueba el parser, sino la sesion (`A-003`).
+- **Prueba del cambio.** La misma validacion, que en `45e33a4` fallaba en los tres (nota de `A-002`),
+  corrida sobre el arbol de trabajo tras el cambio:
+
+  ```
+  $ for a in gate1_auditor gate2_auditor phase_exit_auditor report_auditor session-closer session-starter; do printf '%s ' $a; cat .claude/agents/$a.md | python -c "import sys,re,yaml; s=sys.stdin.read(); fm=re.match(r'^---\r?\n(.*?)\r?\n---',s,re.S).group(1); yaml.safe_load(fm); print('OK')" 2>&1 | grep -E '^(OK|yaml\.)' ; done
+  gate1_auditor OK
+  gate2_auditor OK
+  phase_exit_auditor OK
+  report_auditor OK
+  session-closer OK
+  session-starter OK
+  ```
+
+- **Criterio de cierre:** a ese commit, ninguna `description` de agente lleva `: ` y las seis
+  cabeceras son YAML valido.
+
+  ```
+  $ git grep -nE "^description:.*: " <hash> -- .claude/agents | wc -l
+  0
+  $ for a in gate1_auditor gate2_auditor phase_exit_auditor report_auditor session-closer session-starter; do printf '%s ' $a; git show <hash>:.claude/agents/$a.md | python -c "import sys,re,yaml; s=sys.stdin.read(); fm=re.match(r'^---\r?\n(.*?)\r?\n---',s,re.S).group(1); yaml.safe_load(fm); print('OK')" 2>&1 | grep -E '^(OK|yaml\.)' ; done
+  gate1_auditor OK
+  gate2_auditor OK
+  phase_exit_auditor OK
+  report_auditor OK
+  session-closer OK
+  session-starter OK
+  ```

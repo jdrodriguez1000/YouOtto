@@ -19,6 +19,9 @@
 |---|---|---|---|---|---|
 | [T-001](#t-001---completar-projectmd-y-montar-el-andamiaje-minimo-de-000_preproject) | Completar `project.md` y montar el andamiaje minimo de `000_preproject` | Implementada | Alta | Bloqueante | 000_preproject |
 | [T-002](#t-002---asignar-las-firmas-del-gate-1-y-del-gate-2-antes-de-cerrar-sus-etapas) | Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas | No implementada | Media | No bloqueante | 010_prototype |
+| [T-003](#t-003---hacer-que-los-barridos-de-anclaje-del-cierre-vean-ordenes-indentadas) | Hacer que los barridos de anclaje del cierre vean ordenes indentadas | Implementada | Alta | No bloqueante | 000_preproject |
+| [T-004](#t-004---publicar-la-salida-real-del-control-de-cifra-adyacente-de-s-001) | Publicar la salida real del CONTROL DE CIFRA ADYACENTE de S-001 | Implementada | Media | No bloqueante | 000_preproject |
+| [T-005](#t-005---corregir-el-ancla-de-la-fila-s-001-en-el-indice-de-progressmd) | Corregir el ancla de la fila S-001 en el indice de progress.md | Implementada | Baja | No bloqueante | 000_preproject |
 
 ---
 
@@ -133,6 +136,15 @@ Plantilla:
   0
   ```
 
+- 🕐 **Nota 2026-09-15 (`F-001`, `T-003`):** la orden de arriba se publico con `<hash>` sin resolver,
+  porque el barrido del cierre no veia ordenes indentadas. Anclada al commit de la sesion, `5cae773`,
+  reproduce lo publicado:
+
+  ```
+  $ git show 5cae773:project.md | grep -cE '<[A-Za-z]'
+  0
+  ```
+
 ### T-002 - Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas
 | Campo | Valor |
 |---|---|
@@ -149,3 +161,85 @@ Plantilla:
   `_phases/010_prototype.md` la exige registrada antes de lanzar el Gate 1.
 - **Criterio de cierre:** existe una `D-XXX` que nombra quien firma cada Gate, citada desde
   `_persistence/decisions.md` (`D-003`).
+
+### T-003 - Hacer que los barridos de anclaje del cierre vean ordenes indentadas
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+| Sesion | S-002 |
+
+- **Que:** atender `F-001`. Hay que ampliar los patrones de `protocol-close` segun `D-008` y anclar,
+  con nota fechada, la orden de `T-001`.
+- **Por que:** con los patrones antiguos, un control obligatorio del cierre sale limpio sobre ordenes
+  que no ve, y una tarea `Implementada` publica un criterio que no se puede reproducir.
+- **Criterio de cierre:** el de `D-008`, y que ninguna orden de `T-001` quede con `<hash>` sin una
+  forma anclada debajo.
+
+  ```
+  $ git show <hash>:_persistence/tasks.md | grep -cE '^[[:space:]]*\$ git show 5cae773:project.md'
+  1
+  ```
+
+### T-004 - Publicar la salida real del CONTROL DE CIFRA ADYACENTE de S-001
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+| Sesion | S-002 |
+
+- **Que:** atender `F-002` con una nota fechada en `_audit/S-001.md`, seccion 7, que pegue la salida
+  entera de la orden del Paso 6b sobre el informe tal como entro en `5cae773` y la lea linea por linea.
+  El texto original no se toca.
+- **Por que:** el informe publico «7 lineas» sin la salida, y la orden devuelve 8. Asi no se distingue
+  de un control que no se corrio. Verificado vigente contra `HEAD` (`45e33a4`):
+
+  ```
+  $ git show 45e33a4:_audit/S-001.md | grep -n -A12 "CONTROL DE CIFRA ADYACENTE — salida" | grep -E "Devolvio|CIFRA"
+  279:> **CONTROL DE CIFRA ADYACENTE — salida:**
+  288-> Devolvio 7 lineas (ver el detalle corrido antes de commitear, en la seccion 6 de este cierre). Las
+  ```
+
+- ⚠️ **Lo que no incluye:** cambiar el Paso 7c-ter. El auditor lo propone solo «si se repite»; hoy
+  hay un caso, y se revisa si aparece otro.
+- **Criterio de cierre:** la nota existe en el informe a ese commit y lleva las ocho lineas.
+
+  ```
+  $ git show <hash>:_audit/S-001.md | grep -cE '^> S-001\.md:(36|81|82|130|131|173|210|211): '
+  8
+  ```
+
+### T-005 - Corregir el ancla de la fila S-001 en el indice de progress.md
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+| Sesion | S-002 |
+
+- **Que:** atender `F-003` cambiando `project.md` por `projectmd` en el ancla de la fila `S-001` del
+  indice de `_persistence/progress.md`.
+- **Por que:** la fila del indice no lleva a su entrada. Verificado vigente contra `HEAD`
+  (`45e33a4`):
+
+  ```
+  $ git show 45e33a4:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'
+  ](#s-001---primera-sesion-de-trabajo-project.md-completo-y-el-porque-del-arranque)
+  $ git show 45e33a4:_persistence/progress.md | grep -nE '^### S-001'
+  120:### S-001 - Primera sesion de trabajo: `project.md` completo y el porque del arranque
+  ```
+
+- **Criterio de cierre:** el ancla coincide con la que genera el encabezado.
+
+  ```
+  $ git show <hash>:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'
+  ](#s-001---primera-sesion-de-trabajo-projectmd-completo-y-el-porque-del-arranque)
+  ```
