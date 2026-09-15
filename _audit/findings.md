@@ -22,9 +22,10 @@
 
 | Codigo | Hallazgo | Auditoria | Gravedad | Estado |
 |---|---|---|---|---|
-| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Aceptado — pendiente |
-| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Aceptado — pendiente |
-| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Aceptado — pendiente |
+| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Implementado |
+| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Implementado |
+| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
+| [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Abierto |
 
 ---
 
@@ -93,9 +94,9 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-003 / D-008 |
-| Cerrado en | |
+| Cerrado en | e222812 (R-002) |
 
 - **Que se observo:** sobre `5cae773`, el censo literal del Paso 7c (`grep -cE '^\$ .*<hash>'` en
   `_persistence` y `_audit`) no devuelve nada; el mismo censo con `'^[[:space:]]*\$ .*<hash>'`
@@ -117,9 +118,9 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-004 |
-| Cerrado en | |
+| Cerrado en | e222812 (R-002) |
 
 - **Que se observo:** la NOTA DE CIERRE de la seccion 7 de `_audit/S-001.md` pega la orden pero no
   su salida («Devolvio 7 lineas (ver el detalle ... en la seccion 6)»); la seccion 6 no contiene
@@ -138,9 +139,9 @@ Plantilla:
 | Auditoria | R-001 |
 | Fecha | 2026-09-15 |
 | Gravedad | Baja |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-005 |
-| Cerrado en | |
+| Cerrado en | e222812 (R-002) |
 
 - **Que se observo:** `git show 5cae773:_persistence/progress.md | grep -oE '\]\(#s-001[^)]*\)'`
   devuelve `](#s-001---primera-sesion-de-trabajo-project.md-completo-y-el-porque-del-arranque)`; el
@@ -149,3 +150,27 @@ Plantilla:
 - **Por que importa:** la fila del indice no lleva a su entrada.
 - **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`45e33a4`): el ancla sigue siendo
   `#...project.md...` y el encabezado esta en la linea 120 de `progress.md`. Registrado en `T-005`.
+
+### F-004 - El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas
+| Campo | Valor |
+|---|---|
+| Auditoria | R-002 |
+| Fecha | 2026-09-15 |
+| Gravedad | Media |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** `outside()` (`.claude/skills/protocol-close/SKILL.md:1826`, Paso 7c-bis) solo
+  reconoce cercas en la primera columna (`/^```/`), y a `e222812` `decisions.md` y `tasks.md` tienen
+  0 cercas en columna cero y 18 y 14 indentadas. Sobre el anclaje de `S-002` (`e222812` frente a
+  `4b27ae4`) la orden literal marca 6 + 3 lineas como «prosa borrada» que son ordenes sustituidas
+  dentro de bloques; con `/^[[:space:]]*```/` salen 0. La tabla del paso manda detenerse ante
+  cualquier linea, y el cierre publico en su lugar una variante corregida a mano. Mismo patron en las
+  lineas 218, 219, 256, 257 y 1462 de la skill, y en `protocol-audit` (4a y 7d). Comandos y salidas
+  completos en `_audit/R-002.md`, secciones 1.3 y 2.
+- **Por que importa:** un control obligatorio que con el formato real del registro siempre devuelve
+  lineas tras un anclaje obliga a detenerse cada vez o a correr una orden distinta de la escrita, y
+  entonces el resultado publicado no es el del control. Falsos positivos, no falsos negativos: por eso
+  no es `Alta`.
+- **Que se hizo:** pendiente de evaluacion de `manager`.
