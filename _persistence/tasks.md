@@ -270,10 +270,12 @@ Plantilla:
 - **Criterio de cierre:** el de `D-010`.
 
   ```
-  $ git grep -nF '/^```/' <hash> -- .claude | wc -l
+  $ git grep -nF '/^```/' 101db28 -- .claude | wc -l
   0
-  $ git grep -cF '/^[[:space:]]*```/' <hash> -- .claude
-  .claude/skills/protocol-audit/SKILL.md:4
-  .claude/skills/protocol-close/SKILL.md:6
-  .claude/skills/protocol-start/SKILL.md:2
+  $ git grep -cF '/^[[:space:]]*```/' 101db28 -- .claude
+  101db28:.claude/skills/protocol-audit/SKILL.md:4
+  101db28:.claude/skills/protocol-close/SKILL.md:6
+  101db28:.claude/skills/protocol-start/SKILL.md:2
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Las dos reproducen lo publicado arriba.

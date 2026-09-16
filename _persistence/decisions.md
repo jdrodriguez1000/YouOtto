@@ -527,13 +527,15 @@ Plantilla:
   la nueva en seis, cuatro y dos lineas.
 
   ```
-  $ git grep -nF '/^```/' <hash> -- .claude | wc -l
+  $ git grep -nF '/^```/' 101db28 -- .claude | wc -l
   0
-  $ git grep -cF '/^[[:space:]]*```/' <hash> -- .claude | cut -d: -f2-
+  $ git grep -cF '/^[[:space:]]*```/' 101db28 -- .claude | cut -d: -f2-
   .claude/skills/protocol-audit/SKILL.md:4
   .claude/skills/protocol-close/SKILL.md:6
   .claude/skills/protocol-start/SKILL.md:2
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `101db28`.** Las dos reproducen lo publicado arriba.
 
 ### D-011 - Firmas del Gate 1 y del Gate 2
 | Campo | Valor |
@@ -572,9 +574,11 @@ Plantilla:
   patrocinador.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | awk '/^### D-011/{f=1} /^### D-012/{f=0} f' | grep -v '\$ ' | grep -cE 'gate1_auditor. en el Gate 1, .gate2_auditor. en el Gate 2|es del \*\*usuario\*\*'
+  $ git show 101db28:_persistence/decisions.md | awk '/^### D-011/{f=1} /^### D-012/{f=0} f' | grep -v '\$ ' | grep -cE 'gate1_auditor. en el Gate 1, .gate2_auditor. en el Gate 2|es del \*\*usuario\*\*'
   2
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Reproduce lo publicado arriba.
 
 ### D-012 - Cosecha de lecciones de 000_preproject
 | Campo | Valor |
@@ -621,6 +625,8 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, ninguna leccion de `000_preproject` queda `Sin evaluar`.
 
   ```
-  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
+  $ git show 101db28:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
   0
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Reproduce lo publicado arriba.
