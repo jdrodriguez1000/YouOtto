@@ -1196,15 +1196,17 @@ Plantilla:
   el patron suelto, y los controles de fuga y de codigos siguen en cero.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Linea de orden significa una de dos formas'
+  $ git show 87d10b8:.claude/skills/protocol-close/SKILL.md | grep -cF 'Linea de orden significa una de dos formas'
   1
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF "grep -F 'diff --cached'"
+  $ git show 87d10b8:.claude/skills/protocol-close/SKILL.md | grep -cF "grep -F 'diff --cached'"
   0
-  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 87d10b8 -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  $ git show 87d10b8:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
   0
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `87d10b8`.** Las cuatro reproducen lo publicado arriba.
 
 ### D-024 - Estado propio para la decision revocada en parte
 | Campo | Valor |
@@ -1242,13 +1244,15 @@ Plantilla:
   ninguna revocacion total en el registro.
 
   ```
-  $ git show <hash>:_templates/000_preproject/020_decisions.md | grep -cF 'Revocada en parte por D-XXX'
+  $ git show 87d10b8:_templates/000_preproject/020_decisions.md | grep -cF 'Revocada en parte por D-XXX'
   2
-  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF 'Revocada en parte por D-XXX` no es cerrada'
+  $ git show 87d10b8:.claude/skills/protocol-start/SKILL.md | grep -cF 'Revocada en parte por D-XXX` no es cerrada'
   1
-  $ git show <hash>:_persistence/decisions.md | grep -E '^\| .*\| Revocada (en parte )?por D-[0-9]+ \|$'
+  $ git show 87d10b8:_persistence/decisions.md | grep -E '^\| .*\| Revocada (en parte )?por D-[0-9]+ \|$'
   | [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Revocada en parte por D-020 |
   | [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Revocada en parte por D-023 |
   | Estado | Revocada en parte por D-020 |
   | Estado | Revocada en parte por D-023 |
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `87d10b8`.** Las tres reproducen lo publicado arriba.
