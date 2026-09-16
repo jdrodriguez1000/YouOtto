@@ -45,6 +45,8 @@
 | [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Revocada en parte por D-023 |
 | [D-023](#d-023---el-control-sin-anclar-del-7c-quater-solo-mira-lineas-de-orden) | El control SIN ANCLAR del 7c-quater solo mira lineas de orden | 2026-09-16 | Vigente |
 | [D-024](#d-024---estado-propio-para-la-decision-revocada-en-parte) | Estado propio para la decision revocada en parte | 2026-09-16 | Vigente |
+| [D-025](#d-025---f-009-se-acepta-y-el-desfase-con-el-esqueleto-abre-su-propia-deuda) | F-009 se acepta y el desfase con el esqueleto abre su propia deuda | 2026-09-16 | Vigente |
+| [D-026](#d-026---el-7c-quater-declara-que-no-ve-una-orden-partida-en-dos-lineas) | El 7c-quater declara que no ve una orden partida en dos lineas | 2026-09-16 | Vigente |
 
 ---
 
@@ -1256,3 +1258,91 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `87d10b8`.** Las tres reproducen lo publicado arriba.
+
+### D-025 - F-009 se acepta y el desfase con el esqueleto abre su propia deuda
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-009` de `R-007`: la seccion 9 de `S-007.md` atribuye la promocion pendiente de
+  tres archivos a `DT-001`, que esta `Implementada` (pagada por `D-016`). El desfase actual nacio
+  despues (`D-022`, `D-023`, `D-024`) y no tiene ninguna `DT-XXX` abierta. Verificado vigente contra
+  `HEAD` (`3aa301c`); la linea es la 383 y no la 239 porque el commit de anclaje `ee59542` desplazo el
+  texto:
+
+  ```
+  $ git show HEAD:_audit/S-007.md | grep -n 'DT-001'
+  383:punto por punto, como ya viene arrastrando `DT-001` desde `S-004`/`S-005`/`S-006`.
+  $ git show HEAD:_persistence/techdebt.md | grep -nE '^\| \[DT-'
+  24:| [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | Implementada | Confirmada | Media | No bloqueante |
+  25:| [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
+  ```
+
+- **Decision:** el usuario elige **aceptarlo y abrir una deuda propia**, `DT-003`, para el desfase con
+  el esqueleto de arranque, como `T-014`. `S-007.md` no se reescribe. La deuda se paga despues con
+  `protocol-promote`, con la puerta del usuario.
+- **Por que:** el hallazgo se sostiene contra el registro. El error del informe es de atribucion; lo
+  que de verdad falta es que el desfase tenga una entrada que lo siga, y eso lo arregla la deuda, no
+  una nota en el informe.
+- **Alternativas descartadas:**
+  - **Promover hoy, sin deuda:** paga el desfase, pero escribe fuera del repositorio con una puerta
+    archivo por archivo, y `D-026` en esta misma jornada vuelve a tocar `protocol-close`.
+  - **Nota fechada en la seccion 9 de `S-007.md`:** el informe es del cierre y esta auditado (mismo
+    criterio que `D-018` y `D-023`), y no da seguimiento al desfase.
+- **Criterio de cierre:** a ese commit, `DT-003` esta abierta en indice y ficha, y `F-009` dice
+  `Aceptado — pendiente` en su fila y en su ficha.
+
+  ```
+  $ git show <hash>:_persistence/techdebt.md | grep -cE '^(\| \[DT-003\].*\| No implementada \||### DT-003 )'
+  2
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-009\].*\| Aceptado — pendiente \|$|^\| Estado \| Aceptado — pendiente \|$'
+  2
+  ```
+
+### D-026 - El 7c-quater declara que no ve una orden partida en dos lineas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** recomendacion sin hallazgo de `R-007` (seccion 5): el patron de `D-023` se aplica
+  linea a linea, y una orden entre comillas invertidas partida en dos lineas, con la tuberia en la
+  segunda, no se detecta. Comprobado sobre dos copias de prueba en el scratchpad, la misma orden
+  partida y en una linea:
+
+  ```
+  $ S="C:/Users/USUARIO/AppData/Local/Temp/claude/C--Users-USUARIO-Documents-Company-TripleS-Proyectos-TripleS-YouOtto/b817b890-4f6b-446f-a02a-973ada6af465/scratchpad"; printf '## 1. Archivos\nla cifra sale de `git diff --cached --name-only\n| wc -l`: 3\n## 2. Otra\n' > "$S/split.md"; cat "$S/split.md"; echo ---; sed -n '/^## 1\./,/^## 2\./p' "$S/split.md" | grep -E '^[[:space:]]*(> )?\$ git diff --cached|`git diff --cached[^`]*\|' | grep -vF -- '--stat --name-only' | wc -l; printf '## 1. Archivos\nla cifra sale de `git diff --cached --name-only | wc -l`: 3\n## 2. Otra\n' > "$S/oneline.md"; sed -n '/^## 1\./,/^## 2\./p' "$S/oneline.md" | grep -E '^[[:space:]]*(> )?\$ git diff --cached|`git diff --cached[^`]*\|' | grep -vF -- '--stat --name-only' | wc -l
+  ## 1. Archivos
+  la cifra sale de `git diff --cached --name-only
+  | wc -l`: 3
+  ## 2. Otra
+  ---
+  0
+  1
+  ```
+
+- **Decision:** el usuario elige **declararlo**: una frase en el parrafo de limite del 7c-quater de
+  `protocol-close`, como `T-015`. El patron no cambia.
+- **Por que:** la skill ya declara sus limites, y este no tiene reverso (a diferencia de la orden sin
+  tuberia, aqui si hay recuento). Cazarlo exigiria leer varias lineas a la vez, y no aparece en ningun
+  informe (`R-007`, seccion 1.4): declararlo cuesta una frase.
+- **Alternativas descartadas:**
+  - **No tocar la skill:** deja un punto ciego conocido sin escribir, justo lo que la skill evita en
+    sus otros controles.
+  - **Ampliar el patron a varias lineas:** mas complejidad para un caso que no se ha visto (`PI-2`).
+- ⚠️ **Consecuencia:** `protocol-close/SKILL.md`, que ya difiere del esqueleto, se aleja un poco mas;
+  entra en `DT-003`.
+- **Criterio de cierre:** a ese commit, el 7c-quater declara el punto ciego, y los controles de fuga
+  y de codigos siguen en cero.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'partida en dos lineas'
+  1
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  ```

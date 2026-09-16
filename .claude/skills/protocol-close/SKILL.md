@@ -2015,7 +2015,10 @@ cuenta. **Esta regla nacio de un defecto real:** una version anterior buscaba `d
 cualquier linea, y la prosa que describe este mismo control lo disparo en su primera ejecucion real;
 un control que salta siempre acaba ignorandose, y asi ocurrio. ⚠️ **El limite es el reverso:** una
 orden de staging citada en prosa sin tuberia no se detecta — pero sin tuberia tampoco hay recuento
-al lado que pueda dejar de reproducir.
+al lado que pueda dejar de reproducir. ⚠️ **Y un punto ciego que no tiene reverso:** `grep` lee
+linea a linea, asi que una orden entre comillas invertidas **partida en dos lineas**, con la tuberia
+en la segunda, tampoco se detecta, aunque si sea un recuento. No se ha visto en ningun informe; si
+aparece, se revisa la seccion 1 a mano.
 
 🚨 **El patron busca una LINEA DE ORDEN con el hash de este commit, no la cadena en cualquier sitio.**
 `<hash>` es el del commit sustantivo, el mismo que el Paso 7c escribe. Una version anterior buscaba

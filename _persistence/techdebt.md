@@ -23,6 +23,7 @@
 |---|---|---|---|---|---|
 | [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | Implementada | Confirmada | Media | No bloqueante |
 | [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
+| [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | No implementada | Confirmada | Media | No bloqueante |
 
 ---
 
@@ -166,3 +167,35 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
   la pegue de una ejecucion real; solo la auditoria lo detecta despues.
 - **Como se paga:** definir que ordenes son reejecutables sin efectos fuera del repositorio y hacer
   que el control las reejecute y compare la salida.
+
+### DT-003 - El andamiaje vuelve a alejarse del esqueleto de arranque
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Confirmacion | Confirmada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Origen | report_auditor |
+| Fecha | 2026-09-16 |
+
+- **Deuda:** despues del pago de `DT-001` (`D-016`), `D-022`, `D-023` y `D-024` cambiaron tres
+  archivos copiables sin promoverlos al esqueleto de arranque
+  (`C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS`, en `4d20ce2`), y `D-026` vuelve a tocar
+  `protocol-close/SKILL.md`. Nace de `F-009` (`D-025`). Medido antes de `D-026`:
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; git -C "$ESQ" log --oneline -1; for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "exit=$?"
+  4d20ce2 Promocion del andamiaje desde YouOtto (origen 4fad4dd)
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-start/SKILL.md and .claude/skills/protocol-start/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/_templates/000_preproject/020_decisions.md and _templates/000_preproject/020_decisions.md differ
+  exit=0
+  ```
+
+  ⚠️ `exit=0` es el del ultimo `diff` (`CLAUDE.md`), no el del bucle.
+- **Por que se tomo:** cada cambio atendia un hallazgo o una recomendacion de auditoria de la propia
+  sesion; promover exige la puerta de `protocol-promote`, que no es parte del cierre.
+- **Costo de no pagarla:** un proyecto que parta hoy del esqueleto hereda el control SIN ANCLAR que
+  salta con prosa, un estado de decision de menos y un limite del 7c-quater sin declarar.
+- **Como se paga:** correr `protocol-promote` con la puerta del usuario para llevar los archivos que
+  difieran al esqueleto de arranque.

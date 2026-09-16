@@ -30,7 +30,7 @@
 | [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Implementado |
 | [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
-| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Abierto |
+| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Aceptado — pendiente |
 
 ---
 
@@ -279,8 +279,8 @@ Plantilla:
 | Auditoria | R-007 |
 | Fecha | 2026-09-16 |
 | Gravedad | Baja |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-014, D-025 |
 | Cerrado en | |
 
 - **Que se observo:** `git show 87d10b8:_audit/S-007.md` dice en la linea 239 que la promocion
@@ -291,4 +291,7 @@ Plantilla:
 - **Por que importa:** el informe afirma abierta una deuda que el registro da por pagada, y quien lo
   lea buscara en `DT-001` un seguimiento que alli no existe. `Baja`: la promocion pendiente si esta
   escrita, en las consecuencias de `D-022`/`D-024` y en `progress.md`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`3aa301c`), con orden y salida en
+  `D-025` (la linea es la 383: el anclaje la desplazo). `S-007.md` no se reescribe; el usuario eligio
+  abrir `DT-003` para el desfase con el esqueleto, que se paga con `protocol-promote`. Registrado en
+  `T-014`.

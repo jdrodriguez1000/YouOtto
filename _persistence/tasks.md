@@ -30,6 +30,8 @@
 | [T-011](#t-011---pedir-en-la-nota-de-cierre-la-forma-anclada-de-la-orden-del-paso-2d) | Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-012](#t-012---acotar-el-control-sin-anclar-del-7c-quater-a-lineas-de-orden) | Acotar el control SIN ANCLAR del 7c-quater a lineas de orden | Implementada | Media | No bloqueante | 005_discovery |
 | [T-013](#t-013---anadir-el-estado-de-decision-revocada-en-parte) | Anadir el estado de decision revocada en parte | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-014](#t-014---abrir-la-deuda-del-desfase-con-el-esqueleto-de-arranque) | Abrir la deuda del desfase con el esqueleto de arranque | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-015](#t-015---declarar-en-el-7c-quater-el-punto-ciego-de-la-orden-partida) | Declarar en el 7c-quater el punto ciego de la orden partida | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -448,3 +450,34 @@ Plantilla:
   plantilla, declararlo no cerrado en `protocol-start` y aplicarlo a `D-015` y `D-022`, segun `D-024`.
 - **Por que:** recomendacion sin hallazgo de `R-006`; el usuario eligio el estado nuevo.
 - **Criterio de cierre:** el de `D-024`, con sus ordenes ancladas y sus salidas.
+
+### T-014 - Abrir la deuda del desfase con el esqueleto de arranque
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-008 |
+
+- **Que:** atender `F-009`: abrir `DT-003` para el desfase actual con el esqueleto de arranque, sin
+  reescribir `S-007.md`, segun `D-025`.
+- **Por que:** el informe atribuia el desfase a `DT-001`, que esta pagada, y el desfase no tenia
+  ninguna deuda abierta. Verificacion contra `HEAD` (`3aa301c`) en `D-025`.
+- **Criterio de cierre:** el de `D-025`, con sus ordenes ancladas y sus salidas.
+
+### T-015 - Declarar en el 7c-quater el punto ciego de la orden partida
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-008 |
+
+- **Que:** anadir al parrafo de limite del Paso 7c-quater de `protocol-close` que una orden entre
+  comillas invertidas partida en dos lineas no se detecta, segun `D-026`.
+- **Por que:** recomendacion sin hallazgo de `R-007` (seccion 5); el usuario eligio declararlo.
+- **Criterio de cierre:** el de `D-026`, con sus ordenes ancladas y sus salidas.

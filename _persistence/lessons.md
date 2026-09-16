@@ -29,6 +29,7 @@
 | [L-007](#l-007---un-criterio-que-comparten-dos-entradas-se-copia-del-archivo-no-se-reescribe) | Un criterio que comparten dos entradas se copia del archivo, no se reescribe | 2026-09-16 | 000_preproject | Ya cubierta por LG-98 |
 | [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -244,3 +245,21 @@ Plantilla:
 - **Como aplicarla:** al crear un control por `grep`, correrlo tambien sobre un texto que lo mencione
   (el informe o la decision que lo introduce) y mirar **las lineas** que devuelve, no solo la cifra;
   acotar el patron a la forma sintactica de lo que se busca, no a la cadena.
+
+### L-010 - La prueba de que un control no detecta algo lleva su caso positivo al lado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** comprobacion del punto ciego del 7c-quater para `D-026`: una orden entre comillas
+  invertidas partida en dos lineas, con la tuberia en la segunda.
+- **Que ocurrio:** el primer archivo de prueba dejo la tuberia al final de la primera linea, y el
+  control la detecto (`1`): la prueba no reproducia el caso que decia probar. Se repitio con la tuberia
+  en la segunda linea (`0`) y, al lado, la misma orden en una sola linea (`1`).
+- **Leccion:** un `0` solo demuestra un punto ciego si el mismo control, con el mismo patron, da
+  positivo sobre el caso equivalente que si deberia ver; sin ese contraste, el `0` puede venir de una
+  prueba mal construida.
+- **Como aplicarla:** al afirmar que un control no detecta algo, correrlo sobre dos entradas que solo
+  difieran en el rasgo del punto ciego, mostrar las entradas (`cat`) y publicar las dos salidas juntas.
