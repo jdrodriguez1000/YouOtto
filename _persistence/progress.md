@@ -37,6 +37,7 @@
 | [S-001](#s-001---primera-sesion-de-trabajo-projectmd-completo-y-el-porque-del-arranque) | Primera sesion de trabajo: `project.md` completo y el porque del arranque | 2026-09-15 | 000_preproject |
 | [S-002](#s-002---atendidos-los-tres-hallazgos-de-r-001-y-corregida-la-cabecera-yaml-de-los-agentes-de-gate-y-acta) | Atendidos los tres hallazgos de `R-001` y corregida la cabecera YAML de los agentes de Gate y acta | 2026-09-15 | 000_preproject |
 | [S-003](#s-003---firmas-de-los-gates-hallazgo-f-004-de-r-002-atendido-y-cosecha-de-lecciones-de-000_preproject) | Firmas de los Gates, hallazgo `F-004` de `R-002` atendido, y cosecha de lecciones de `000_preproject` | 2026-09-16 | 000_preproject |
+| [S-004](#s-004---hallazgo-f-005-de-r-003-atendido-control-de-salida-reproducida-en-el-7c-bis-y-cosecha-de-l-007) | Hallazgo `F-005` de `R-003` atendido, CONTROL DE SALIDA REPRODUCIDA en el 7c-bis, y cosecha de `L-007` | 2026-09-16 | 000_preproject |
 
 ---
 
@@ -68,41 +69,43 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `000_preproject` |
-| Ultima actualizacion | `2026-09-16 (S-003)` |
+| Ultima actualizacion | `2026-09-16 (S-004)` |
 | Salud | `En marcha` |
-| Avance de la etapa | Se registro `D-011`: firma tecnica de cada Gate para el agente de Gate correspondiente (`gate1_auditor`, `gate2_auditor`) y firma del patrocinador para el usuario; con ella `T-002` queda `Implementada`. Se acepto el hallazgo `F-004` de `R-002` (CONTROL DE PROSA BORRADA ciego a cercas indentadas) con `D-010`: las doce apariciones del patron de cerca en `protocol-close`, `protocol-audit` y `protocol-start` admiten sangria; `T-006` queda `Implementada`. Se hizo la cosecha de lecciones de `000_preproject` (`D-012`): `L-001` promovida a `LG-105` en el archivo global (version 4, commit `9e883a9` en `TripleS_Lessons`); `L-002` y `L-004` quedan `Solo proyecto`; `L-003` y dos lecciones nuevas de esta sesion (`L-005`, `L-006`) quedan `Ya cubierta` por lecciones globales existentes. Ninguna leccion de `000_preproject` sigue `Sin evaluar` |
+| Avance de la etapa | Se acepto el hallazgo `F-005` de `R-003` (el anclaje de `T-006` sustituyo una salida que no reproducia y la nota `📌` afirmo que reproducia) con `D-013`: nota fechada bajo el criterio de cierre de `T-006` con las dos salidas, mas un CONTROL DE SALIDA REPRODUCIDA nuevo en el Paso 7c-bis de `protocol-close`, con su rotulo anadido a la lista del Paso 7c-ter y a la plantilla de la NOTA DE CIERRE. `F-005` queda `Aceptado — pendiente` con `T-007`, que esta sesion cierra `Implementada`. Se escribio `L-007` y se cosecho (`D-014`): queda `Ya cubierta por LG-98`, sin subir nada al archivo global (sigue en version 4, commit `9e883a9`). Ninguna leccion de `000_preproject` sigue `Sin evaluar` |
 | Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona, con disparador al entrar en `005_discovery` |
 
 ---
 
 ## 2. Ultimo realizado
 
-Tercera sesion de trabajo. Segun el diff: se registro `D-011` (firmas de los Gates: firma tecnica
-del agente de Gate correspondiente, firma del patrocinador del usuario), que cierra `T-002`
-(`Implementada`). Se evaluo el hallazgo `F-004` de la auditoria `R-002` sobre `S-002` y se acepto con
-`D-010`: se sustituyo el patron de cerca de bloque (`/^```/` → `/^[[:space:]]*```/`) en las doce
-apariciones de `.claude/skills/protocol-close/SKILL.md` (seis), `protocol-audit/SKILL.md` (cuatro) y
-`protocol-start/SKILL.md` (dos, esta ultima no citada por el hallazgo); `F-004` queda
-`Aceptado — pendiente` en `_audit/findings.md` con `T-006`, que esta sesion cierra `Implementada`
-verificando cero apariciones del patron antiguo y doce del nuevo. Se hizo la cosecha de lecciones de
-`000_preproject` (`D-012`), fuera de este repositorio: `L-001` promovida a `LG-105` en
-`global_lessons.md` (version 4, commit `9e883a9` subido a `origin/main` de `TripleS_Lessons`);
-`L-002` y `L-004` marcadas `Solo proyecto`; `L-003` marcada `Ya cubierta por LG-06`; y dos lecciones
-nuevas de esta misma sesion, `L-005` y `L-006` (defectos de redaccion al registrar `D-010` y
-`D-011`), marcadas `Ya cubierta` por `LG-103` y `LG-101` respectivamente. Ninguna leccion de
-`000_preproject` queda `Sin evaluar`.
+Cuarta sesion de trabajo. Segun el diff: se acepto el hallazgo `F-005` de la auditoria `R-003` sobre
+`S-003` y se registro `D-013`: la segunda orden del criterio de cierre de `T-006`, tal como quedo
+anclada en `101db28`, no llevaba el filtro `| cut -d: -f2-` que si lleva la misma orden en `D-010`, y
+su salida publicada no era reproducible con esa orden; el anclaje del Paso 7c-bis la sustituyo sin
+detenerse y la nota `📌` afirmo que reproducia. Se corrigio con una nota fechada bajo el bloque de
+`T-006` (las dos salidas, publicada y anclada, sin reescribir lo commiteado) y con un CONTROL DE
+SALIDA REPRODUCIDA nuevo, obligatorio en el Paso 7c-bis de `.claude/skills/protocol-close/SKILL.md`:
+compara, entrada por entrada, las lineas de salida de los bloques de «Criterio de cierre» del commit
+de la sesion contra las del arbol ya anclado. Su rotulo se anadio a la lista de cinco que exige el
+Paso 7c-ter y a la NOTA DE CIERRE de la plantilla del informe. `F-005` queda `Aceptado — pendiente`
+en `_audit/findings.md` con `T-007`, que esta sesion cierra `Implementada`. Se escribio `L-007` (un
+criterio compartido entre dos entradas se copia del archivo, no se reescribe a mano) y se cosecho
+(`D-014`): queda `Ya cubierta por LG-98`; no hubo puerta que abrir porque no sube nada al archivo
+global.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-003`). Con `T-002` y `T-006` ya `Implementada` y la cosecha de lecciones hecha (`D-012`, casilla
-10), repasar una por una las diez casillas de la condicion de salida de `_phases/000_preproject.md`
-con su orden y su salida cruda; si las diez son ciertas, lanzar `phase_exit_auditor` con
-`protocol-phase-exit` para la revision tecnica del acta, antes de la firma del patrocinador. Sigue
-pendiente decidir sobre `A-001` (si el historial de juegos registrados es dato de persona) al entrar
-en `005_discovery`, con la clasificacion de actores (`_templates/005_discovery/010_actors.md`).
+(`S-004`). Con `F-005` atendido (`T-007` `Implementada`) y ninguna leccion `Sin evaluar`, repasar una
+por una las diez casillas de la condicion de salida de `_phases/000_preproject.md` con su orden y su
+salida cruda; si las diez son ciertas, lanzar `phase_exit_auditor` con `protocol-phase-exit` para la
+revision tecnica del acta, antes de la firma del patrocinador. Sigue pendiente decidir sobre `A-001`
+(si el historial de juegos registrados es dato de persona) al entrar en `005_discovery`, con la
+clasificacion de actores (`_templates/005_discovery/010_actors.md`). Sigue abierta `DT-001` (`.claude/`
+se aleja del esqueleto de arranque), ahora sobre seis archivos incluido `protocol-close/SKILL.md` de
+nuevo, pendiente de confirmar por el usuario.
 
 ---
 
@@ -184,6 +187,25 @@ Plantilla:
   y `T-006` quedan `Implementada`.
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion; con eso hecho,
   repasar la condicion de salida de `000_preproject` casilla por casilla. `A-001` sigue sin cambios.
+
+### S-004 - Hallazgo `F-005` de `R-003` atendido, CONTROL DE SALIDA REPRODUCIDA en el 7c-bis, y cosecha de `L-007`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 000_preproject |
+| Tareas | T-007 |
+
+- **Que se hizo:** se acepto `F-005` de `R-003` con `D-013`: nota fechada bajo el criterio de cierre
+  de `T-006` con las dos salidas (publicada y anclada), y un CONTROL DE SALIDA REPRODUCIDA nuevo en
+  el Paso 7c-bis de `protocol-close` que compara, entrada por entrada, la salida de los bloques de
+  «Criterio de cierre» del commit de la sesion contra el arbol ya anclado; su rotulo se anadio al
+  Paso 7c-ter (cinco rotulos en vez de cuatro) y a la plantilla de la NOTA DE CIERRE del informe.
+  `F-005` queda `Aceptado — pendiente` con `T-007`, que esta sesion cierra `Implementada`. Se escribio
+  `L-007` y se cosecho (`D-014`): `Ya cubierta por LG-98`, sin subir nada al archivo global (sigue en
+  version 4, commit `9e883a9`).
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `DT-001` sigue
+  `No implementada`, ahora tambien por el cambio de esta sesion en `protocol-close/SKILL.md`. `A-001`
+  sigue sin cambios.
 
 ---
 

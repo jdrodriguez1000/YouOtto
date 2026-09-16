@@ -23,6 +23,7 @@
 | [T-004](#t-004---publicar-la-salida-real-del-control-de-cifra-adyacente-de-s-001) | Publicar la salida real del CONTROL DE CIFRA ADYACENTE de S-001 | Implementada | Media | No bloqueante | 000_preproject |
 | [T-005](#t-005---corregir-el-ancla-de-la-fila-s-001-en-el-indice-de-progressmd) | Corregir el ancla de la fila S-001 en el indice de progress.md | Implementada | Baja | No bloqueante | 000_preproject |
 | [T-006](#t-006---hacer-que-las-cercas-de-bloque-de-los-controles-admitan-sangria) | Hacer que las cercas de bloque de los controles admitan sangria | Implementada | Media | No bloqueante | 000_preproject |
+| [T-007](#t-007---anclar-criterios-de-cierre-comparando-la-salida-anclada-con-la-publicada) | Anclar criterios de cierre comparando la salida anclada con la publicada | Implementada | Media | No bloqueante | 000_preproject |
 
 ---
 
@@ -279,3 +280,51 @@ Plantilla:
   ```
 
 📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Las dos reproducen lo publicado arriba.
+
+- 🕐 **Nota 2026-09-16 (`F-005`, `T-007`):** la linea `📌` de arriba **no es exacta**: la segunda
+  orden no reproduce lo que se publico en `101db28`. Aquella salida no llevaba prefijo, y `git grep`
+  sobre un commit siempre lo antepone; a la orden le falta el `| cut -d: -f2-` que si lleva la misma
+  orden en `D-010`. El anclaje sustituyo la salida en lugar de pegar las dos. Los recuentos (4, 6, 2)
+  si se sostienen. La salida publicada, tal como estaba, y la que devuelve la orden anclada:
+
+  ```
+  $ git show 101db28:_persistence/tasks.md | awk '/^### T-006/,0' | grep -F '.claude/skills/'
+    .claude/skills/protocol-audit/SKILL.md:4
+    .claude/skills/protocol-close/SKILL.md:6
+    .claude/skills/protocol-start/SKILL.md:2
+  $ git grep -cF '/^[[:space:]]*```/' 101db28 -- .claude
+  101db28:.claude/skills/protocol-audit/SKILL.md:4
+  101db28:.claude/skills/protocol-close/SKILL.md:6
+  101db28:.claude/skills/protocol-start/SKILL.md:2
+  ```
+
+### T-007 - Anclar criterios de cierre comparando la salida anclada con la publicada
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+| Sesion | S-004 |
+
+- **Que:** atender `F-005`: nota fechada bajo el criterio de cierre de `T-006` con las dos salidas, y
+  CONTROL DE SALIDA REPRODUCIDA en el Paso 7c-bis de `protocol-close`, con su rotulo en el 7c-ter y en
+  la plantilla de la NOTA DE CIERRE, segun `D-013`.
+- **Por que:** el anclaje de `S-003` sustituyo una salida que no reproducia y afirmo que reproducia; la
+  regla de detenerse existia y se juzgaba a ojo. Verificacion contra `HEAD` (`613ef8a`) en `D-013`.
+- **Criterio de cierre:** el de `D-013`, copiado de alli por orden y no a mano.
+
+  ```
+  $ eval "$(git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -F 'salidas() {')"; for p in "101db28 2a72df8" "e222812 4b27ae4"; do set -- $p; for f in _persistence/decisions.md _persistence/tasks.md; do echo "== $1..$2 $f"; diff <(git show $1:"$f" | salidas) <(git show $2:"$f" | salidas) | grep -cE '^[<>]'; done; done
+  == 101db28..2a72df8 _persistence/decisions.md
+  0
+  == 101db28..2a72df8 _persistence/tasks.md
+  6
+  == e222812..4b27ae4 _persistence/decisions.md
+  0
+  == e222812..4b27ae4 _persistence/tasks.md
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '**CONTROL DE SALIDA REPRODUCIDA — salida:**'
+  2
+  ```

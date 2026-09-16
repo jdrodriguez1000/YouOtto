@@ -1270,8 +1270,11 @@ la seccion 8 — que es lo que esta pasada existe para ver>
 <y dentro de esa misma nota, la salida del CONTROL DE CIFRA ADYACENTE del Paso 6b, entera y con su
 orden, tambien cuando no obliga a corregir nada, con la lectura linea por linea de su condicion de
 parada>
-<🚨 los cuatro bloques van ROTULADOS con su nombre literal —`**BARRIDO DE ANCLAJE — salida:**`,
-`**CONTROL DE PROSA BORRADA — salida:**`, `**SEGUNDA PASADA anclada del Paso 2e — salida:**` y
+<y dentro de esa misma nota, la salida del CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis, entera
+y con su orden, tambien cuando sale limpia: sin ella, «reproduce» vuelve a ser una afirmacion a ojo>
+<🚨 los cinco bloques van ROTULADOS con su nombre literal —`**BARRIDO DE ANCLAJE — salida:**`,
+`**CONTROL DE PROSA BORRADA — salida:**`, `**CONTROL DE SALIDA REPRODUCIDA — salida:**`,
+`**SEGUNDA PASADA anclada del Paso 2e — salida:**` y
 `**CONTROL DE CIFRA ADYACENTE — salida:**`—, y no es cosmetica: el Paso 7c-ter los busca por esa
 cadena exacta antes de dejar commitear el anclaje. El rotulo lleva el sufijo ` — salida:` justo para
 que no lo pueda satisfacer una mencion suelta del control en la prosa del informe>
@@ -1865,25 +1868,70 @@ documentacion: la orden ejecutada literal y su salida cruda.
 que distingue «el control salio limpio» de «el control no se corrio»: sin ellas, una salida vacia y
 una ejecucion que no ocurrio se leen igual.
 
-### 7c-ter — Que la NOTA DE CIERRE lleve las cuatro salidas (obligatorio, antes de commitear el anclaje)
+#### CONTROL DE SALIDA REPRODUCIDA (obligatorio, antes de escribir la linea `📌` y de commitear el anclaje)
 
-Cuatro pasos distintos terminan diciendo «y su salida se publica en la NOTA DE CIERRE»: el barrido de
-anclaje del Paso 2d, el CONTROL DE PROSA BORRADA del 7c-bis, la SEGUNDA PASADA anclada del Paso 2e y
-el CONTROL DE CIFRA ADYACENTE del Paso 6b. **Las cuatro son reglas de redaccion, y una regla de
-redaccion sola ya fallo:** el ultimo de los cuatro se estreno escrito, corrido y sin publicar.
+🚨 **Este control existe porque la regla de detenerse ante una salida que no coincide no basto.**
+Estaba escrita justo encima y aun asi un anclaje sustituyo una salida publicada que la orden no podia
+haber producido —le faltaba un filtro que su gemela de otra entrada si llevaba— y la linea `📌`
+afirmo que reproducia. Nadie lo vio hasta la auditoria. **«Coincide» se decidia a ojo; aqui se mide.**
 
-Este paso no juzga el contenido de las cuatro salidas —eso lo hace la auditoria—. Comprueba lo unico
+**Que hace:** extrae, para cada entrada, **las lineas de salida** de los bloques que siguen a su
+«Criterio de cierre» —todo lo que hay dentro del bloque salvo las lineas `$ …`—, en el commit de la
+sesion y en el arbol ya anclado, y las compara. Anclar cambia la orden, **nunca su salida**: si la
+orden anclada contesta lo mismo, lo que devuelve es identico byte a byte a lo publicado.
+
+```bash
+salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Criterio de cierre/{c=1} /^---$/{c=0} /^[[:space:]]*```/{f=!f; next} c&&f&&!/^[[:space:]]*\$ /{sub(/^[[:space:]]+/,""); print d" | "$0}'; }
+for f in _persistence/decisions.md _persistence/tasks.md; do
+  git show HEAD:"$f" | salidas > /tmp/salida_publicada
+  salidas < "$f" > /tmp/salida_anclada
+  echo "== $f =="
+  diff /tmp/salida_publicada /tmp/salida_anclada | grep -E '^[<>]'
+done
+```
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| solo las dos lineas `== … ==` | todas las salidas ancladas son las publicadas | sigue: la linea `📌` puede decir que reproducen |
+| alguna linea `< …` o `> …` | 🚨 **esa entrada no reproduce** | **detente**: deja la salida publicada donde estaba y pega la anclada **debajo**, no en su lugar; la linea `📌` de esa entrada **no dice «reproduce»**, dice que no coincide; y va a **Sin resolver** con las dos salidas |
+| el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR`; la linea `📌` **no dice «reproduce»** |
+
+🔑 **Cuando ya pegaste las dos, el control sigue devolviendo lineas, y es lo correcto.** La salida
+anclada queda **anadida** junto a la publicada, asi que aparece como `> …`. Lo que ese resultado
+permite es commitear con la discrepancia **declarada**; lo que no permite es una linea `📌` que diga
+que reproduce.
+
+⚠️ **`HEAD` aqui es el commit de la sesion**, por la misma razon que en el CONTROL DE PROSA BORRADA.
+Y compara por entrada y en orden: una salida con las mismas lineas en otro orden **tampoco**
+reproduce, porque la orden que la publico no la devolvio asi.
+
+⛔ **No se «arregla» la orden para que coincida.** Anadirle el filtro que le falta cambia lo que se
+publico como evidencia; eso lo decide `manager` en la sesion siguiente, no este paso.
+
+🚨 **Su orden y su salida se publican en la NOTA DE CIERRE, junto al CONTROL DE PROSA BORRADA,
+tambien cuando sale limpia**, y por la misma razon: las dos lineas `== … ==` son lo que distingue
+«se corrio y salio limpio» de «no se corrio».
+
+### 7c-ter — Que la NOTA DE CIERRE lleve las cinco salidas (obligatorio, antes de commitear el anclaje)
+
+Cinco pasos distintos terminan diciendo «y su salida se publica en la NOTA DE CIERRE»: el barrido de
+anclaje del Paso 2d, el CONTROL DE PROSA BORRADA y el CONTROL DE SALIDA REPRODUCIDA del 7c-bis, la
+SEGUNDA PASADA anclada del Paso 2e y el CONTROL DE CIFRA ADYACENTE del Paso 6b. **Las cinco son
+reglas de redaccion, y una regla de redaccion sola ya fallo:** el CONTROL DE CIFRA ADYACENTE se
+estreno escrito, corrido y sin publicar.
+
+Este paso no juzga el contenido de las cinco salidas —eso lo hace la auditoria—. Comprueba lo unico
 que se puede comprobar desde fuera: **que estan**.
 
 ```bash
-for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**"; do
+for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**"; do
   grep -qF "$m" _audit/S-XXX.md || echo "FALTA en la NOTA DE CIERRE: $m"
 done
 ```
 
 | Que sale | Que significa | Que haces |
 |---|---|---|
-| nada | los cuatro rotulos estan | sigue: commitea el anclaje |
+| nada | los cinco rotulos estan | sigue: commitea el anclaje |
 | alguna linea `FALTA…` | **la NOTA DE CIERRE no lleva esa salida** | 🚨 **detente**: corre el control que falta, pega su orden y su salida cruda bajo su rotulo, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
 | el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
 
@@ -1894,8 +1942,8 @@ una incoherencia: aquel busca lineas para leerlas, este busca ausencias.
 la escribe el 7c, despues del commit sustantivo. El ultimo momento en que aun se puede anadir algo
 sin dejar una nota fechada es justo antes del commit de anclaje, y ese momento es este.
 
-⚠️ **Este control enumera casos, y eso caduca.** Reconoce cuatro rotulos porque hoy hay cuatro
-obligaciones; **un quinto paso que exija publicar su salida en la NOTA DE CIERRE tiene que anadir su
+⚠️ **Este control enumera casos, y eso caduca.** Reconoce cinco rotulos porque hoy hay cinco
+obligaciones; **un sexto paso que exija publicar su salida en la NOTA DE CIERRE tiene que anadir su
 rotulo a esta lista en la misma pasada en que nazca**, o este control seguira devolviendo vacio
 mientras la nota se queda coja. Un control que no cubre lo nuevo es peor que ninguno, porque
 tranquiliza.

@@ -26,6 +26,7 @@
 | [L-004](#l-004---un-agente-que-no-aparece-se-diagnostica-validando-su-cabecera-antes-de-suponer) | Un agente que no aparece se diagnostica validando su cabecera antes de suponer | 2026-09-15 | 000_preproject | Solo proyecto |
 | [L-005](#l-005---una-orden-escrita-al-registro-por-un-script-se-reejecuta-copiandola-del-archivo) | Una orden escrita al registro por un script se reejecuta copiandola del archivo | 2026-09-16 | 000_preproject | Ya cubierta por LG-103 |
 | [L-006](#l-006---un-criterio-que-busca-un-texto-se-excluye-a-si-mismo-del-recuento) | Un criterio que busca un texto se excluye a si mismo del recuento | 2026-09-16 | 000_preproject | Ya cubierta por LG-101 |
+| [L-007](#l-007---un-criterio-que-comparten-dos-entradas-se-copia-del-archivo-no-se-reescribe) | Un criterio que comparten dos entradas se copia del archivo, no se reescribe | 2026-09-16 | 000_preproject | Ya cubierta por LG-98 |
 
 ---
 
@@ -189,3 +190,20 @@ Plantilla:
 - **Como aplicarla:** si el ambito de la busqueda incluye el bloque del criterio, excluir las lineas
   `$ ` o anclar el patron a la forma de la linea buscada, y ejecutar el criterio antes de publicar su
   salida.
+
+### L-007 - Un criterio que comparten dos entradas se copia del archivo, no se reescribe
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+
+- **Contexto:** evaluacion de `F-005`, sobre el anclaje de `S-003`.
+- **Que ocurrio:** `T-006` declaraba como criterio de cierre «el de `D-010`» y repetia su bloque, pero
+  la segunda orden perdio el `| cut -d: -f2-` al pasar de una entrada a otra. La salida publicada era
+  la de la orden con filtro; la orden escrita no podia devolverla. El anclaje la sustituyo sin
+  detenerse y la linea `📌` afirmo que reproducia (`D-013`).
+- **Leccion:** repetir a mano un bloque de evidencia crea una segunda copia que puede divergir en un
+  detalle que no cambia el resultado a la vista, y deja de ser la misma prueba.
+- **Como aplicarla:** cuando una entrada reutiliza el criterio de otra, extraer el bloque del archivo
+  con una orden (`awk`/`sed`) y compararlo con `diff` contra el original antes de publicarlo.

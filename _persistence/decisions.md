@@ -33,6 +33,8 @@
 | [D-010](#d-010---las-cercas-de-bloque-de-los-controles-de-las-skills-admiten-sangria) | Las cercas de bloque de los controles de las skills admiten sangria | 2026-09-16 | Vigente |
 | [D-011](#d-011---firmas-del-gate-1-y-del-gate-2) | Firmas del Gate 1 y del Gate 2 | 2026-09-16 | Vigente |
 | [D-012](#d-012---cosecha-de-lecciones-de-000_preproject) | Cosecha de lecciones de 000_preproject | 2026-09-16 | Vigente |
+| [D-013](#d-013---el-anclaje-de-criterios-de-cierre-compara-la-salida-anclada-con-la-publicada) | El anclaje de criterios de cierre compara la salida anclada con la publicada | 2026-09-16 | Vigente |
+| [D-014](#d-014---cosecha-de-l-007) | Cosecha de L-007 | 2026-09-16 | Vigente |
 
 ---
 
@@ -630,3 +632,115 @@ Plantilla:
   ```
 
 📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Reproduce lo publicado arriba.
+
+### D-013 - El anclaje de criterios de cierre compara la salida anclada con la publicada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-005` (`_audit/R-003.md`): en el anclaje de `S-003` (`2a72df8`), el criterio de
+  cierre de `T-006` publicaba para su segunda orden (`git grep -cF` sobre `<hash>`) tres lineas sin
+  prefijo, que esa orden no puede devolver sobre un commit. La misma orden en `D-010` termina en
+  `| cut -d: -f2-`, y ese filtro ya estaba en `101db28`: se perdio al copiar el criterio a `T-006`. El
+  anclaje sustituyo la salida por la real y la linea `📌` afirmo que reproducia, contra la regla del
+  Paso 7c-bis de `protocol-close`, que manda detenerse y pegar las dos. El informe no lo menciona.
+- **Decision:** aceptar el hallazgo entero, y hacer las dos cosas que recomienda: (1) una nota fechada
+  bajo el bloque de `T-006` que vuelve a publicar las dos salidas y dice que la linea `📌` no era
+  exacta, sin reescribir lo commiteado; (2) un CONTROL DE SALIDA REPRODUCIDA en el Paso 7c-bis que
+  compara, entrada por entrada, las lineas de salida de los bloques de criterio de cierre del commit
+  de la sesion con las del arbol ya anclado, con su rotulo en la NOTA DE CIERRE y en la lista del
+  Paso 7c-ter. La eligio el usuario entre tres opciones.
+- **Por que:** la regla de detenerse ya estaba escrita y no se cumplio: «coincide» se juzgaba a ojo.
+  Es el mismo patron que abrio el CONTROL DE PROSA BORRADA — una regla de redaccion que falla se
+  convierte en una comparacion que devuelve lineas o no las devuelve.
+- **Alternativas descartadas:**
+  - **Solo la nota:** descartada porque corrige el registro pero deja intacto el mecanismo que
+    permitio el defecto; el siguiente anclaje depende otra vez de mirar bien.
+  - **La nota ahora y el control como `DT-XXX`:** descartada porque el control es corto, se pudo
+    probar en esta misma sesion sobre dos anclajes reales, y aplazarlo no ahorra nada.
+  - **Anadir `| cut -d: -f2-` a la orden de `T-006`:** descartada; cambia lo que se publico como
+    evidencia, que es justo lo que el 7c-bis prohibe.
+- ⚠️ **Consecuencia:** `.claude/` se aleja un poco mas del esqueleto de arranque hasta que se promueva
+  (`DT-001`).
+- **Verificacion previa**, contra `HEAD` (`613ef8a`). La salida vigente de `T-006`, el cambio que hizo
+  el anclaje, el origen del filtro de `D-010` y la regla incumplida:
+
+  ```
+  $ git show 613ef8a:_persistence/tasks.md | awk '/^### T-006/,0' | grep -E '101db28:|📌'
+    101db28:.claude/skills/protocol-audit/SKILL.md:4
+    101db28:.claude/skills/protocol-close/SKILL.md:6
+    101db28:.claude/skills/protocol-start/SKILL.md:2
+  📌 **Anclada por el Paso 7c-bis al commit `101db28`.** Las dos reproducen lo publicado arriba.
+  $ git diff 101db28 2a72df8 -- _persistence/tasks.md | grep -E '^[-+] ' | grep -v '\$ '
+  -  .claude/skills/protocol-audit/SKILL.md:4
+  -  .claude/skills/protocol-close/SKILL.md:6
+  -  .claude/skills/protocol-start/SKILL.md:2
+  +  101db28:.claude/skills/protocol-audit/SKILL.md:4
+  +  101db28:.claude/skills/protocol-close/SKILL.md:6
+  +  101db28:.claude/skills/protocol-start/SKILL.md:2
+  $ git log --format="%h %s" -S"| cut -d: -f2-" -- _persistence/decisions.md
+  101db28 S-003: firmas de los Gates (D-011), hallazgo F-004 de R-002 atendido (D-010, T-006) y cosecha de lecciones de 000_preproject (D-012)
+  $ git show 613ef8a:.claude/skills/protocol-close/SKILL.md | grep -n "Si la salida anclada NO coincide"
+  1787:🚨 **Si la salida anclada NO coincide con la publicada, te detienes.** No la sustituyes y no
+  ```
+
+- **Criterio de cierre:** a ese commit, la funcion `salidas()` escrita en la skill señala las seis
+  lineas de `T-006` en el anclaje de `S-003` y ninguna en el de `S-002`, y su rotulo aparece dos veces: en la lista del 7c-ter y en la plantilla de la NOTA DE
+  CIERRE.
+
+  ```
+  $ eval "$(git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -F 'salidas() {')"; for p in "101db28 2a72df8" "e222812 4b27ae4"; do set -- $p; for f in _persistence/decisions.md _persistence/tasks.md; do echo "== $1..$2 $f"; diff <(git show $1:"$f" | salidas) <(git show $2:"$f" | salidas) | grep -cE '^[<>]'; done; done
+  == 101db28..2a72df8 _persistence/decisions.md
+  0
+  == 101db28..2a72df8 _persistence/tasks.md
+  6
+  == e222812..4b27ae4 _persistence/decisions.md
+  0
+  == e222812..4b27ae4 _persistence/tasks.md
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '**CONTROL DE SALIDA REPRODUCIDA — salida:**'
+  2
+  ```
+
+### D-014 - Cosecha de L-007
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** al repasar la condicion de salida de `000_preproject`, la casilla 10 fallaba: `L-007`,
+  escrita en esta sesion al atender `F-005` (`D-013`), quedaba `Sin evaluar`. El usuario pidio
+  cosecharla con `protocol-harvest`. Se contrasto con los cuatro filtros de la seccion de promocion
+  de `global_lessons.md` (version 4) y con las entradas que su indice por sintoma da para «dos copias
+  del mismo documento discrepan» (`LG-08`, `LG-98`) y con `LG-103`.
+- **Decision:** `L-007` → **ya cubierta por `LG-98`** (filtro 4). Su forma general —una copia del
+  mismo bloque diverge porque nadie comprueba que siga coincidiendo con el original— es la de
+  `LG-98`, y su «como se comprueba» es la accion de `L-007`. `LG-103` (reejecutar la orden copiada
+  del archivo) habria detectado la divergencia. No sube nada al archivo global, que sigue en la
+  **version 4** (`9e883a9`); por eso no hay puerta que abrir.
+- **Por que:** la seccion de promocion pide ademas que una leccion se repita o tenga un coste
+  concreto; `L-007` es un solo caso y su coste fue reversible (una nota fechada).
+- **Alternativas descartadas:**
+  - **Enmendar `LG-98` para nombrar las copias dentro de un mismo registro:** su enunciado ya habla
+    de copias en general; no es una cara nueva, es el mismo caso en otro sitio.
+  - **`Solo proyecto`:** falso; la forma sobrevive al cambio de lenguaje y dominio (filtro 1). Lo que
+    la descarta es el filtro 4, y anotarlo con otro filtro borraria la referencia a `LG-98`.
+- **Verificacion**, sobre el repositorio de lecciones:
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show 9e883a9:global_lessons.md | grep -nE '^\| \*\*LG-98\*\*|Versión: 4' | cut -c1-90
+  26:> **Versión: 4 · 2026-09-16** · 105 lecciones · 10 bloques
+  329:| **LG-98** | **Un contrato que solo conoce una parte no es un contrato: es una suposi
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" ls-remote origin refs/heads/main | cut -c1-7
+  9e883a9
+  ```
+
+- **Criterio de cierre:** a ese commit, ninguna leccion de `000_preproject` queda `Sin evaluar`.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
+  0
+  ```

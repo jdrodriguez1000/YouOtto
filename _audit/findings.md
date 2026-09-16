@@ -26,7 +26,7 @@
 | [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Implementado |
 | [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
 | [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Implementado |
-| [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Abierto |
+| [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Aceptado — pendiente |
 
 ---
 
@@ -184,8 +184,8 @@ Plantilla:
 | Auditoria | R-003 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-007 |
 | Cerrado en | |
 
 - **Que se observo:** en `101db28`, el criterio de cierre de `T-006` publica para
@@ -197,4 +197,7 @@ Plantilla:
   devuelve `rc=1`). Comandos y salidas completos en `_audit/R-003.md`, seccion 2.
 - **Por que importa:** el registro afirma algo falso y la salida publicada original desaparecio del
   bloque sin rastro. Los recuentos (4, 6, 2) si se sostienen: por eso no es `Alta`.
-- **Que se hizo:** pendiente de evaluacion de `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`613ef8a`), con orden y salida en
+  `D-013`. El usuario eligio las dos partes de la recomendacion: nota fechada bajo el criterio de
+  cierre de `T-006` con las dos salidas, y CONTROL DE SALIDA REPRODUCIDA en el Paso 7c-bis de
+  `protocol-close`. Registrado en `T-007`.
