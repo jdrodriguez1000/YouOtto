@@ -30,7 +30,8 @@
 | [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Implementado |
 | [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
-| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Aceptado — pendiente |
+| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
+| [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Abierto |
 
 ---
 
@@ -279,9 +280,9 @@ Plantilla:
 | Auditoria | R-007 |
 | Fecha | 2026-09-16 |
 | Gravedad | Baja |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-014, D-025 |
-| Cerrado en | |
+| Cerrado en | 27c03bb (R-008) |
 
 - **Que se observo:** `git show 87d10b8:_audit/S-007.md` dice en la linea 239 que la promocion
   pendiente de tres archivos se hara «como ya viene arrastrando `DT-001` desde `S-004`/`S-005`/`S-006`».
@@ -295,3 +296,25 @@ Plantilla:
   `D-025` (la linea es la 383: el anclaje la desplazo). `S-007.md` no se reescribe; el usuario eligio
   abrir `DT-003` para el desfase con el esqueleto, que se paga con `protocol-promote`. Registrado en
   `T-014`.
+
+### F-010 - T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores
+| Campo | Valor |
+|---|---|
+| Auditoria | R-008 |
+| Fecha | 2026-09-16 |
+| Gravedad | Media |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el trabajo de `T-014` (`DT-003` abierta) y de `T-015` (punto ciego declarado en
+  el 7c-quater) esta en `27c03bb` y sus criterios reproducen, pero las dos siguen `No implementada`
+  tambien tras el anclaje `9e169f3`, que no toca `tasks.md`. La seccion 6 de `S-008.md` lo llama
+  «consistente con sesiones anteriores», y el historial lo contradice: `87d10b8` marco `T-012`
+  `Implementada` con su criterio aun en `<hash>`, igual que `081385a` (`T-008` a `T-011`) y `c07680f`
+  (`T-007`). La seccion 2 del informe y `progress.md` sugieren que el 7c-bis resolvera el estado, y el
+  7c-bis no puede tocar prosa ni estados. Comandos y salidas en `_audit/R-008.md`, seccion 2.
+- **Por que importa:** el registro presenta como pendiente trabajo hecho y verificado, sin paso que lo
+  mueva, y dos sesiones seguidas aplican criterios opuestos sin decision registrada. `Media`: no se
+  pierde trabajo, pero el estado y su justificacion son falsos contra `git`.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
