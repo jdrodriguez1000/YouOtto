@@ -30,6 +30,9 @@
 | [D-007](#d-007---dueno-y-sitio-de-evaluacion-observabilidad-y-seguridad) | Dueno y sitio de evaluacion, observabilidad y seguridad | 2026-09-15 | Vigente |
 | [D-008](#d-008---los-barridos-de-anclaje-de-protocol-close-admiten-ordenes-indentadas) | Los barridos de anclaje de protocol-close admiten ordenes indentadas | 2026-09-15 | Vigente |
 | [D-009](#d-009---se-corrige-la-cabecera-yaml-de-los-agentes-de-gate-y-de-acta) | Se corrige la cabecera YAML de los agentes de Gate y de acta | 2026-09-15 | Vigente |
+| [D-010](#d-010---las-cercas-de-bloque-de-los-controles-de-las-skills-admiten-sangria) | Las cercas de bloque de los controles de las skills admiten sangria | 2026-09-16 | Vigente |
+| [D-011](#d-011---firmas-del-gate-1-y-del-gate-2) | Firmas del Gate 1 y del Gate 2 | 2026-09-16 | Vigente |
+| [D-012](#d-012---cosecha-de-lecciones-de-000_preproject) | Cosecha de lecciones de 000_preproject | 2026-09-16 | Vigente |
 
 ---
 
@@ -457,3 +460,167 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `e222812`.** Las dos reproducen lo publicado arriba.
+
+### D-010 - Las cercas de bloque de los controles de las skills admiten sangria
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-004` (`_audit/R-002.md`): `outside()`, del CONTROL DE PROSA BORRADA de
+  `protocol-close`, solo reconoce cercas en la primera columna (`/^```/`), y `decisions.md` y
+  `tasks.md` escriben todas las suyas indentadas dentro de vinetas. Sobre el anclaje de `S-002` la
+  orden literal marca como prosa borrada nueve lineas que son ordenes sustituidas dentro de bloques.
+  El mismo patron esta en otros controles de `protocol-close`, de `protocol-audit` y de
+  `protocol-start`; este ultimo no lo cito el auditor.
+- **Decision:** sustituir `/^```/` por `/^[[:space:]]*```/` en las doce apariciones de las tres skills
+  (seis en `protocol-close`, cuatro en `protocol-audit`, dos en `protocol-start`), sin tocar nada mas.
+  La eligio el usuario entre tres opciones.
+- **Por que:** es el mismo defecto que `D-008` corrigio en otro control: el control tiene que ver el
+  registro tal como se escribe. Corregir solo `outside()` dejaria once controles con la misma ceguera,
+  que hoy no da error visible y lo dara en cuanto un bloque indentado contenga una fila o un
+  encabezado.
+- **Alternativas descartadas:**
+  - **Corregir solo `outside()` y registrar el resto como `DT-XXX`:** descartada porque deja el defecto
+    latente en once lineas para ahorrar un cambio mecanico identico.
+  - **Fijar por convencion cercas en columna cero:** descartada por el mismo motivo que en `D-008`, y
+    obligaria a reescribir las 32 cercas indentadas de `decisions.md` y `tasks.md`.
+- ⚠️ **Consecuencia:** `.claude/` se aleja un poco mas del esqueleto de arranque hasta que se promueva
+  (`DT-001`).
+- **Verificacion previa**, contra `HEAD` (`6ab7887`):
+
+  ```
+  $ for f in decisions tasks; do printf "$f col0=%s indent=%s\n" $(git show 6ab7887:_persistence/$f.md | grep -cE '^```') $(git show 6ab7887:_persistence/$f.md | grep -cE '^[[:space:]]+```'); done
+  decisions col0=0 indent=18
+  tasks col0=0 indent=14
+  $ git grep -nF '/^```/' 6ab7887 -- .claude | cut -d: -f2,3
+  .claude/skills/protocol-audit/SKILL.md:153
+  .claude/skills/protocol-audit/SKILL.md:154
+  .claude/skills/protocol-audit/SKILL.md:315
+  .claude/skills/protocol-audit/SKILL.md:316
+  .claude/skills/protocol-close/SKILL.md:218
+  .claude/skills/protocol-close/SKILL.md:219
+  .claude/skills/protocol-close/SKILL.md:256
+  .claude/skills/protocol-close/SKILL.md:257
+  .claude/skills/protocol-close/SKILL.md:1462
+  .claude/skills/protocol-close/SKILL.md:1826
+  .claude/skills/protocol-start/SKILL.md:181
+  .claude/skills/protocol-start/SKILL.md:182
+  $ outside() { awk '/^```/{f=!f; next} !f'; }; for f in _persistence/decisions.md _persistence/tasks.md; do git show e222812:"$f" | outside > a; git show 4b27ae4:"$f" | outside > b; echo "== $f =="; diff a b | grep -c '^<'; done
+  == _persistence/decisions.md ==
+  6
+  == _persistence/tasks.md ==
+  3
+  ```
+
+- **Prueba del cambio.** La `outside()` tal como queda escrita en la skill, sobre el mismo anclaje:
+
+  ```
+  $ outside() { awk '/^[[:space:]]*```/{f=!f; next} !f'; }; for f in _persistence/decisions.md _persistence/tasks.md; do git show e222812:"$f" | outside > a; git show 4b27ae4:"$f" | outside > b; echo "== $f =="; diff a b | grep '^<'; done; echo fin
+  == _persistence/decisions.md ==
+  == _persistence/tasks.md ==
+  fin
+  ```
+
+- **Criterio de cierre:** a ese commit, ninguna de las tres skills conserva la forma antigua y llevan
+  la nueva en seis, cuatro y dos lineas.
+
+  ```
+  $ git grep -nF '/^```/' <hash> -- .claude | wc -l
+  0
+  $ git grep -cF '/^[[:space:]]*```/' <hash> -- .claude | cut -d: -f2-
+  .claude/skills/protocol-audit/SKILL.md:4
+  .claude/skills/protocol-close/SKILL.md:6
+  .claude/skills/protocol-start/SKILL.md:2
+  ```
+
+### D-011 - Firmas del Gate 1 y del Gate 2
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-003` adopto los dos Gates y dejo sin fijar quien ejerce sus dos firmas, que
+  `_phases/010_prototype.md` exige registradas con su `D-XXX` antes de lanzar el Gate. `project.md`
+  nombra al usuario como patrocinador solo para el Gate 1, y sin decision que lo respalde; para el
+  Gate 2 no nombra a nadie. Verificado contra `HEAD` (`6ab7887`):
+
+  ```
+  $ git show 6ab7887:project.md | grep -nE "quien decide si se construye|quien decide si se sigue invirtiendo|como patrocinador"
+  95:construye el MVP, se replantea o se detiene es el usuario, como patrocinador**, y esa decision queda
+  $ git show 6ab7887:_persistence/decisions.md | grep -n "firma"
+  193:- ⚠️ **Lo que esta decision NO fija:** la asignacion de las firmas de cada Gate, que
+  ```
+
+- **Decision:** en los dos Gates, la **firma tecnica** (el dictamen) es del agente de Gate
+  —`gate1_auditor` en el Gate 1, `gate2_auditor` en el Gate 2— y la **firma del patrocinador** (se
+  construye o se sigue invirtiendo, se replantea o se detiene) es del **usuario**. `manager` lanza
+  cada Gate y registra la decision con su `D-XXX`, pero no firma. La eligio el usuario.
+- **Por que:** cumple la regla de las dos firmas de `_methodology/000_method.md`: la revision no vio
+  construir lo que juzga, y quien decide responde por la inversion. `manager` dirige y construye
+  el prototipo y el producto minimo, y por eso no puede ser el testigo.
+- **Alternativas descartadas:**
+  - **Firma tecnica de `manager`:** el usuario lo planteo al principio («una firma tuya») y despues
+    eligio el agente de Gate. Descartada porque quien construye no puede ser su propio testigo.
+  - **Patrocinador = el cliente del encargo, en los dos Gates o solo en uno:** el usuario eligio
+    firmar el mismo.
+- ⚠️ **Lo que esta decision NO fija:** quien firma la aprobacion del acta de cierre de cada etapa
+  (`phase_exit_auditor` emite solo la revision tecnica). Esta decision cubre los Gates y nada mas.
+- **Criterio de cierre:** a ese commit, la decision nombra a los dos agentes de Gate y al usuario como
+  patrocinador.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | awk '/^### D-011/{f=1} /^### D-012/{f=0} f' | grep -v '\$ ' | grep -cE 'gate1_auditor. en el Gate 1, .gate2_auditor. en el Gate 2|es del \*\*usuario\*\*'
+  2
+  ```
+
+### D-012 - Cosecha de lecciones de 000_preproject
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** la casilla 10 de la condicion de salida de `_phases/000_preproject.md` exige que
+  ninguna leccion de la etapa quede `Sin evaluar`. Habia cuatro, `L-001` a `L-004`. Se clasificaron
+  con los cuatro filtros de la seccion de promocion de `global_lessons.md` (version 3), y el usuario
+  aprobo la propuesta entera en la puerta de `protocol-harvest`. No hay auditoria que use el archivo
+  global como vara, porque el proyecto no adopto ese uso.
+- **Decision:**
+  - `L-001` → **promovida a `LG-105`**, en el Bloque J, con referencia en §1 («abrir un proyecto
+    nuevo»). Pasa los cuatro filtros: un solo caso, pero con coste concreto e irreversible (`D-004`).
+  - `L-003` → **ya cubierta por `LG-06`** (filtro 4). `LG-04` y `LG-22` completan el caso.
+  - `L-002` → **solo proyecto** (filtro 2): un solo caso y sin coste demostrado.
+  - `L-004` → **solo proyecto** (filtro 2): un solo caso con coste menor, y su forma de aplicarla
+    depende de YAML y de Claude Code.
+  - `L-005` → **ya cubierta por `LG-103`** y `L-006` → **ya cubierta por `LG-101`** (filtro 4).
+    Nacieron en esta misma sesion, despues de la puerta: son dos fallos corregidos al registrar
+    `D-010` y `D-011`. Se clasifican al escribirlas porque no suben nada fuera, y asi la etapa no
+    vuelve a tener lecciones `Sin evaluar`. No forman parte de lo que el usuario aprobo en la puerta.
+  - El archivo global pasa a la **version 4** (2026-09-16, 105 lecciones), con commit **`9e883a9`**
+    en `TripleS_Lessons`, subido a `origin/main`.
+- **Por que:** cierra la casilla 10 sin subir anecdotas. La seccion de promocion pide que una leccion
+  se repita, o que tenga un coste concreto, antes de subir.
+- **Alternativas descartadas:**
+  - **Dejar `L-002` y `L-004` en `Sin evaluar` hasta que se repitan:** su forma podria ser global,
+    pero `protocol-harvest` no tiene un destino «en espera» y la casilla 10 no se podria marcar.
+  - **Promover `L-003` como enmienda de `LG-06`:** `F-004` la repitio con la misma forma, sin una
+    cara nueva, asi que no anade nada.
+- **Verificacion**, sobre el commit del repositorio de lecciones:
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show 9e883a9:global_lessons.md | grep -nE '^\| \*\*LG-105\*\*|Versión: 4' | cut -c1-80
+  26:> **Versión: 4 · 2026-09-16** · 105 lecciones · 10 bloques
+  336:| **LG-105** | **Un paso de arranque que no deja rastro se salta sin que nad
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" ls-remote origin refs/heads/main | cut -c1-7
+  9e883a9
+  ```
+
+- **Criterio de cierre:** a ese commit, ninguna leccion de `000_preproject` queda `Sin evaluar`.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
+  0
+  ```

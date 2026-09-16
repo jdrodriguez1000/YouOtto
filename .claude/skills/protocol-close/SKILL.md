@@ -215,8 +215,8 @@ el dia que sea verdadera tampoco se mirara.
 ```bash
 for f in tasks decisions constraints assumptions lessons techdebt progress; do
   echo "== $f"
-  diff <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
-       <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^#{3} [A-Z]+-[0-9]+'   | grep -oE '[A-Z]+-[0-9]+' | sort -u)
+  diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
+       <(awk '/^[[:space:]]*```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^#{3} [A-Z]+-[0-9]+'   | grep -oE '[A-Z]+-[0-9]+' | sort -u)
 done
 ```
 
@@ -253,8 +253,8 @@ estado, y quien evalua un hallazgo puede cambiar uno y olvidar el otro. Esta com
 estado de cada fila con el `Estado` de su ficha:
 
 ```bash
-diff <(awk '/^```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 1); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) \
-     <(awk '/^```/{c=!c; next} c{next} /^### F-[0-9]+ /{match($0,/F-[0-9]+/); cur=substr($0,RSTART,RLENGTH); got=0} /^\| Estado \|/ && cur!="" && !got{s=$0; sub(/^\| Estado \| */,"",s); sub(/ *\|$/,"",s); print cur" "s; got=1}' _audit/findings.md | sort)
+diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 1); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) \
+     <(awk '/^[[:space:]]*```/{c=!c; next} c{next} /^### F-[0-9]+ /{match($0,/F-[0-9]+/); cur=substr($0,RSTART,RLENGTH); got=0} /^\| Estado \|/ && cur!="" && !got{s=$0; sub(/^\| Estado \| */,"",s); sub(/ *\|$/,"",s); print cur" "s; got=1}' _audit/findings.md | sort)
 ```
 
 Sin salida = cada fila y su ficha dicen lo mismo. Una pareja `<` / `>` con el mismo codigo es un
@@ -1459,7 +1459,7 @@ justo donde se teclea la cifra que ese bloque acababa de dar.
 
 ```bash
 awk '
-  /^```/ { infence = !infence; if (!infence) { since=0; armed=1 } ; next }
+  /^[[:space:]]*```/ { infence = !infence; if (!infence) { since=0; armed=1 } ; next }
   infence { next }
   armed { since++; if (since<=3 && $0 ~ /[0-9]/ && $0 !~ /^[[:space:]]*$/) print FILENAME":"NR": "$0; if (since>3) armed=0 }
 ' _audit/S-XXX.md
@@ -1823,7 +1823,7 @@ bloques de codigo** antes y despues. El anclaje solo puede **anadir** prosa (la 
 recuento). Si alguna linea de prosa desaparecio, el control la imprime.
 
 ```bash
-outside() { awk '/^```/{f=!f; next} !f'; }
+outside() { awk '/^[[:space:]]*```/{f=!f; next} !f'; }
 for f in _persistence/decisions.md _persistence/tasks.md; do
   git show HEAD:"$f" | outside > /tmp/prosa_antes
   outside < "$f" > /tmp/prosa_despues

@@ -18,10 +18,11 @@
 | Codigo | Tarea | Estado | Importancia | Urgencia | Etapa |
 |---|---|---|---|---|---|
 | [T-001](#t-001---completar-projectmd-y-montar-el-andamiaje-minimo-de-000_preproject) | Completar `project.md` y montar el andamiaje minimo de `000_preproject` | Implementada | Alta | Bloqueante | 000_preproject |
-| [T-002](#t-002---asignar-las-firmas-del-gate-1-y-del-gate-2-antes-de-cerrar-sus-etapas) | Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas | No implementada | Media | No bloqueante | 010_prototype |
+| [T-002](#t-002---asignar-las-firmas-del-gate-1-y-del-gate-2-antes-de-cerrar-sus-etapas) | Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas | Implementada | Media | No bloqueante | 010_prototype |
 | [T-003](#t-003---hacer-que-los-barridos-de-anclaje-del-cierre-vean-ordenes-indentadas) | Hacer que los barridos de anclaje del cierre vean ordenes indentadas | Implementada | Alta | No bloqueante | 000_preproject |
 | [T-004](#t-004---publicar-la-salida-real-del-control-de-cifra-adyacente-de-s-001) | Publicar la salida real del CONTROL DE CIFRA ADYACENTE de S-001 | Implementada | Media | No bloqueante | 000_preproject |
 | [T-005](#t-005---corregir-el-ancla-de-la-fila-s-001-en-el-indice-de-progressmd) | Corregir el ancla de la fila S-001 en el indice de progress.md | Implementada | Baja | No bloqueante | 000_preproject |
+| [T-006](#t-006---hacer-que-las-cercas-de-bloque-de-los-controles-admitan-sangria) | Hacer que las cercas de bloque de los controles admitan sangria | Implementada | Media | No bloqueante | 000_preproject |
 
 ---
 
@@ -148,7 +149,7 @@ Plantilla:
 ### T-002 - Asignar las firmas del Gate 1 y del Gate 2 antes de cerrar sus etapas
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 010_prototype |
@@ -160,7 +161,8 @@ Plantilla:
 - **Por que:** `D-003` adopto los dos Gates pero dejo explicitamente sin fijar esa asignacion, y
   `_phases/010_prototype.md` la exige registrada antes de lanzar el Gate 1.
 - **Criterio de cierre:** existe una `D-XXX` que nombra quien firma cada Gate, citada desde
-  `_persistence/decisions.md` (`D-003`).
+  `_persistence/decisions.md` (`D-003`). Cumplido por `D-011`: firma tecnica de `gate1_auditor` /
+  `gate2_auditor`, firma del patrocinador del usuario.
 
 ### T-003 - Hacer que los barridos de anclaje del cierre vean ordenes indentadas
 | Campo | Valor |
@@ -249,3 +251,29 @@ Plantilla:
   ```
 
 📌 **Anclada por el Paso 7c-bis al commit `e222812`.** Reproduce lo publicado arriba.
+
+### T-006 - Hacer que las cercas de bloque de los controles admitan sangria
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | report_auditor |
+| Sesion | S-003 |
+
+- **Que:** atender `F-004` sustituyendo el patron de cerca en las doce apariciones de `protocol-close`,
+  `protocol-audit` y `protocol-start`, segun `D-010`.
+- **Por que:** con la cerca en columna cero, el CONTROL DE PROSA BORRADA devuelve siempre falsos
+  positivos tras un anclaje, y el cierre tiene que detenerse o correr una orden distinta de la escrita.
+  Verificacion contra `HEAD` (`6ab7887`) en `D-010`.
+- **Criterio de cierre:** el de `D-010`.
+
+  ```
+  $ git grep -nF '/^```/' <hash> -- .claude | wc -l
+  0
+  $ git grep -cF '/^[[:space:]]*```/' <hash> -- .claude
+  .claude/skills/protocol-audit/SKILL.md:4
+  .claude/skills/protocol-close/SKILL.md:6
+  .claude/skills/protocol-start/SKILL.md:2
+  ```

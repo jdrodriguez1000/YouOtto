@@ -20,10 +20,12 @@
 
 | Codigo | Leccion | Fecha | Etapa | Portabilidad |
 |---|---|---|---|---|
-| [L-001](#l-001---el-historial-heredado-del-esqueleto-se-comprueba-antes-del-primer-push) | El historial heredado del esqueleto se comprueba antes del primer push | 2026-09-15 | 000_preproject | Sin evaluar |
-| [L-002](#l-002---un-registro-que-una-regla-cita-se-comprueba-que-existe-al-arrancar) | Un registro que una regla cita se comprueba que existe al arrancar | 2026-09-15 | 000_preproject | Sin evaluar |
-| [L-003](#l-003---un-control-con-patron-literal-se-prueba-contra-el-formato-real-del-registro) | Un control con patron literal se prueba contra el formato real del registro | 2026-09-15 | 000_preproject | Sin evaluar |
-| [L-004](#l-004---un-agente-que-no-aparece-se-diagnostica-validando-su-cabecera-antes-de-suponer) | Un agente que no aparece se diagnostica validando su cabecera antes de suponer | 2026-09-15 | 000_preproject | Sin evaluar |
+| [L-001](#l-001---el-historial-heredado-del-esqueleto-se-comprueba-antes-del-primer-push) | El historial heredado del esqueleto se comprueba antes del primer push | 2026-09-15 | 000_preproject | Promovida a LG-105 |
+| [L-002](#l-002---un-registro-que-una-regla-cita-se-comprueba-que-existe-al-arrancar) | Un registro que una regla cita se comprueba que existe al arrancar | 2026-09-15 | 000_preproject | Solo proyecto |
+| [L-003](#l-003---un-control-con-patron-literal-se-prueba-contra-el-formato-real-del-registro) | Un control con patron literal se prueba contra el formato real del registro | 2026-09-15 | 000_preproject | Ya cubierta por LG-06 |
+| [L-004](#l-004---un-agente-que-no-aparece-se-diagnostica-validando-su-cabecera-antes-de-suponer) | Un agente que no aparece se diagnostica validando su cabecera antes de suponer | 2026-09-15 | 000_preproject | Solo proyecto |
+| [L-005](#l-005---una-orden-escrita-al-registro-por-un-script-se-reejecuta-copiandola-del-archivo) | Una orden escrita al registro por un script se reejecuta copiandola del archivo | 2026-09-16 | 000_preproject | Ya cubierta por LG-103 |
+| [L-006](#l-006---un-criterio-que-busca-un-texto-se-excluye-a-si-mismo-del-recuento) | Un criterio que busca un texto se excluye a si mismo del recuento | 2026-09-16 | 000_preproject | Ya cubierta por LG-101 |
 
 ---
 
@@ -152,3 +154,38 @@ Plantilla:
   que se carga, antes de construir un supuesto sobre el entorno.
 - **Como aplicarla:** si un agente o una skill no aparece, pasar su cabecera por un parser YAML en el
   momento. Solo si sale valida tiene sentido sospechar de la carga.
+
+### L-005 - Una orden escrita al registro por un script se reejecuta copiandola del archivo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 000_preproject |
+| Origen | manager |
+
+- **Contexto:** registro de `D-010` con un script de Python que generaba la entrada.
+- **Que ocurrio:** la orden `printf "...\n"` de la verificacion previa quedo partida en dos lineas: el
+  `\n` literal se convirtio en un salto de linea real al pasar por el script. En pantalla parecia
+  correcta, y solo fallo al reejecutar las ordenes extraidas del propio archivo
+  (`unexpected EOF while looking for matching '"'`).
+- **Leccion:** una orden que pasa por una capa que interpreta escapes puede quedar escrita distinta de
+  como se tecleo, y solo se nota al ejecutarla desde donde quedo escrita.
+- **Como aplicarla:** despues de escribir una entrada con ordenes, extraer las lineas `$ ` del archivo
+  y ejecutarlas tal cual; comparar su salida con la publicada antes de dar la entrada por buena.
+
+### L-006 - Un criterio que busca un texto se excluye a si mismo del recuento
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 000_preproject |
+| Origen | manager |
+
+- **Contexto:** criterio de cierre de `D-011`, que cuenta en la propia decision las lineas que nombran
+  a los firmantes.
+- **Que ocurrio:** la orden devolvio 3 y no los 2 esperados: su propio patron, escrito en la linea
+  `$ ` del bloque, coincidia consigo mismo. Se corrigio excluyendo las lineas de orden
+  (`grep -v '\$ '`).
+- **Leccion:** un criterio que busca una cadena dentro del registro donde esta escrito cuenta tambien
+  su propia orden.
+- **Como aplicarla:** si el ambito de la busqueda incluye el bloque del criterio, excluir las lineas
+  `$ ` o anclar el patron a la forma de la linea buscada, y ejecutar el criterio antes de publicar su
+  salida.

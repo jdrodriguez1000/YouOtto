@@ -150,8 +150,8 @@ desconfianza: es la unica forma de saber si de verdad se corrieron.**
 ```bash
 for f in tasks decisions constraints assumptions lessons techdebt progress; do
   echo "== $f"
-  diff <(git show <hash>:_persistence/$f.md | awk '/^```/{c=!c; next} !c' | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
-       <(git show <hash>:_persistence/$f.md | awk '/^```/{c=!c; next} !c' | grep -oE '^#{3} [A-Z]+-[0-9]+'   | grep -oE '[A-Z]+-[0-9]+' | sort -u)
+  diff <(git show <hash>:_persistence/$f.md | awk '/^[[:space:]]*```/{c=!c; next} !c' | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
+       <(git show <hash>:_persistence/$f.md | awk '/^[[:space:]]*```/{c=!c; next} !c' | grep -oE '^#{3} [A-Z]+-[0-9]+'   | grep -oE '[A-Z]+-[0-9]+' | sort -u)
 done
 ```
 
@@ -312,8 +312,8 @@ y se cree.
 **d)** Vuelve a correr el control de coherencia sobre `findings.md`, que ahora acabas de tocar:
 
 ```bash
-diff <(awk '/^```/{c=!c; next} !c' _audit/findings.md | grep -oE '^\| \[?F-[0-9]+' | grep -oE 'F-[0-9]+' | sort -u) \
-     <(awk '/^```/{c=!c; next} !c' _audit/findings.md | grep -oE '^#{3} F-[0-9]+'   | grep -oE 'F-[0-9]+' | sort -u)
+diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -oE '^\| \[?F-[0-9]+' | grep -oE 'F-[0-9]+' | sort -u) \
+     <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -oE '^#{3} F-[0-9]+'   | grep -oE 'F-[0-9]+' | sort -u)
 ```
 
 Sin salida = indice y detalle coinciden. **Exigirselo al auditado y no cumplirlo tu seria el primer

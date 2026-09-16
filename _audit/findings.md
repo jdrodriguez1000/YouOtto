@@ -25,7 +25,7 @@
 | [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Implementado |
 | [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Implementado |
 | [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
-| [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Abierto |
+| [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Aceptado — pendiente |
 
 ---
 
@@ -157,8 +157,8 @@ Plantilla:
 | Auditoria | R-002 |
 | Fecha | 2026-09-15 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-006 |
 | Cerrado en | |
 
 - **Que se observo:** `outside()` (`.claude/skills/protocol-close/SKILL.md:1826`, Paso 7c-bis) solo
@@ -173,4 +173,6 @@ Plantilla:
   lineas tras un anclaje obliga a detenerse cada vez o a correr una orden distinta de la escrita, y
   entonces el resultado publicado no es el del control. Falsos positivos, no falsos negativos: por eso
   no es `Alta`.
-- **Que se hizo:** pendiente de evaluacion de `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`6ab7887`), con orden y salida en
+  `D-010`. El usuario eligio corregir las doce apariciones del patron en `protocol-close`,
+  `protocol-audit` y `protocol-start` (esta ultima no la citaba el hallazgo). Registrado en `T-006`.

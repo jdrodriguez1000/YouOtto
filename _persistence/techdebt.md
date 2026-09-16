@@ -21,7 +21,7 @@
 
 | Codigo | Deuda tecnica | Estado | Confirmacion | Importancia | Urgencia |
 |---|---|---|---|---|---|
-| [DT-001](#dt-001---claude-y-protocol-close-se-alejan-del-esqueleto-de-arranque) | `.claude/` y `protocol-close` se alejan del esqueleto de arranque | No implementada | Propuesta (pendiente del usuario) | Media | No bloqueante |
+| [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | No implementada | Propuesta (pendiente del usuario) | Media | No bloqueante |
 
 ---
 
@@ -85,7 +85,7 @@ Plantilla:
 - **Como se paga:** que habria que hacer.
 -->
 
-### DT-001 - `.claude/` y `protocol-close` se alejan del esqueleto de arranque
+### DT-001 - `.claude/` se aleja del esqueleto de arranque
 | Campo | Valor |
 |---|---|
 | Estado | No implementada |
@@ -95,24 +95,29 @@ Plantilla:
 | Origen | session-closer |
 | Fecha | 2026-09-15 |
 
-- **Deuda:** `D-008` amplio once patrones de `.claude/skills/protocol-close/SKILL.md` y `D-009`
+- **Deuda:** `D-008` amplio once patrones de `.claude/skills/protocol-close/SKILL.md`, `D-009`
   corrigio la `description` de `.claude/agents/gate1_auditor.md`, `gate2_auditor.md` y
-  `phase_exit_auditor.md`, sin promover ninguno de los dos cambios al esqueleto de arranque
+  `phase_exit_auditor.md`, y `D-010` (2026-09-16) sustituyo el patron de cerca de bloque en las doce
+  apariciones de `protocol-close/SKILL.md`, `protocol-audit/SKILL.md` y `protocol-start/SKILL.md` —
+  sin promover ninguno de los tres cambios al esqueleto de arranque
   (`C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS`). El Paso 2f de `protocol-close` lo
-  confirma:
+  confirma, ahora sobre seis archivos en vez de cuatro:
 
   ```
   $ diff -rq --strip-trailing-cr "C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude" .claude
   Files .../SDAI_TripleS/.claude/agents/gate1_auditor.md and .claude/agents/gate1_auditor.md differ
   Files .../SDAI_TripleS/.claude/agents/gate2_auditor.md and .claude/agents/gate2_auditor.md differ
   Files .../SDAI_TripleS/.claude/agents/phase_exit_auditor.md and .claude/agents/phase_exit_auditor.md differ
+  Files .../SDAI_TripleS/.claude/skills/protocol-audit/SKILL.md and .claude/skills/protocol-audit/SKILL.md differ
   Files .../SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  Files .../SDAI_TripleS/.claude/skills/protocol-start/SKILL.md and .claude/skills/protocol-start/SKILL.md differ
   ```
 
-- **Por que se tomo:** las dos correcciones eran urgentes para este proyecto (un hallazgo de
-  auditoria abierto y tres agentes que no cargaban); promover exige la puerta manual de
-  `protocol-promote`, que no es parte del cierre.
+- **Por que se tomo:** las tres correcciones eran urgentes para este proyecto (un hallazgo de
+  auditoria abierto en cada una de dos sesiones, y tres agentes que no cargaban); promover exige la
+  puerta manual de `protocol-promote`, que no es parte del cierre.
 - **Costo de no pagarla:** cualquier otro proyecto que parta hoy del esqueleto hereda el patron viejo
-  de `protocol-close` (ciego a ordenes indentadas) y la cabecera YAML invalida en sus tres agentes.
-- **Como se paga:** correr `protocol-promote` con la puerta del usuario para llevar los cuatro
+  de `protocol-close`/`protocol-audit`/`protocol-start` (ciego a ordenes indentadas y a cercas
+  indentadas) y la cabecera YAML invalida en sus tres agentes.
+- **Como se paga:** correr `protocol-promote` con la puerta del usuario para llevar los seis
   archivos al esqueleto de arranque.
