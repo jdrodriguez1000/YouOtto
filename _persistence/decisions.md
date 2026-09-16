@@ -1012,13 +1012,15 @@ Plantilla:
   la firma, la fecha y la decision.
 
   ```
-  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
+  $ git show 081385a:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
   0
-  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
+  $ git show 081385a:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
   430:| Quien | JD Rodriguez - Main Sponsor |
   431:| Fecha | 2026-09-16 |
   432:| Decision | ETAPA CERRADA |
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `081385a`.** Las dos reproducen lo publicado arriba.
 
 ### D-021 - La NOTA DE CIERRE publica la forma anclada de la orden del Paso 2d
 | Campo | Valor |
@@ -1115,18 +1117,20 @@ Plantilla:
   controles de fuga y de codigos siguen en cero.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Y compara texto: no reejecuta ninguna orden'
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -cF 'Y compara texto: no reejecuta ninguna orden'
   1
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'las ordenes `git diff --cached` de la prosa se traducen aqui'
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -cF 'las ordenes `git diff --cached` de la prosa se traducen aqui'
   1
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'SIN ANCLAR en la seccion 1'
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -cF 'SIN ANCLAR en la seccion 1'
   1
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '**ORDEN DEL PASO 2d ANCLADA — salida:**'
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -cF '**ORDEN DEL PASO 2d ANCLADA — salida:**'
   3
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cE 'cinco (rotulos|salidas|bloques)'
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -cE 'cinco (rotulos|salidas|bloques)'
   0
-  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 081385a -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  $ git show 081385a:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
   0
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `081385a`.** Las siete reproducen lo publicado arriba.

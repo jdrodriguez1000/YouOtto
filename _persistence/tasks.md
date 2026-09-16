@@ -385,13 +385,15 @@ Plantilla:
 - **Criterio de cierre:** el de `D-020`, copiado de alli.
 
   ```
-  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
+  $ git show 081385a:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
   0
-  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
+  $ git show 081385a:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
   430:| Quien | JD Rodriguez - Main Sponsor |
   431:| Fecha | 2026-09-16 |
   432:| Decision | ETAPA CERRADA |
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `081385a`.** Las dos reproducen lo publicado arriba.
 
 ### T-011 - Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d
 | Campo | Valor |
