@@ -24,8 +24,10 @@
 | [T-005](#t-005---corregir-el-ancla-de-la-fila-s-001-en-el-indice-de-progressmd) | Corregir el ancla de la fila S-001 en el indice de progress.md | Implementada | Baja | No bloqueante | 000_preproject |
 | [T-006](#t-006---hacer-que-las-cercas-de-bloque-de-los-controles-admitan-sangria) | Hacer que las cercas de bloque de los controles admitan sangria | Implementada | Media | No bloqueante | 000_preproject |
 | [T-007](#t-007---anclar-criterios-de-cierre-comparando-la-salida-anclada-con-la-publicada) | Anclar criterios de cierre comparando la salida anclada con la publicada | Implementada | Media | No bloqueante | 000_preproject |
-| [T-008](#t-008---declarar-en-el-paso-7c-bis-que-el-control-de-salida-reproducida-no-reejecuta) | Declarar en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta | No implementada | Baja | No bloqueante | 005_discovery |
-| [T-009](#t-009---anclar-las-ordenes-git-diff---cached-de-la-seccion-1-del-informe) | Anclar las ordenes git diff --cached de la seccion 1 del informe | No implementada | Media | No bloqueante | 005_discovery |
+| [T-008](#t-008---declarar-en-el-paso-7c-bis-que-el-control-de-salida-reproducida-no-reejecuta) | Declarar en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-009](#t-009---anclar-las-ordenes-git-diff---cached-de-la-seccion-1-del-informe) | Anclar las ordenes git diff --cached de la seccion 1 del informe | Implementada | Media | No bloqueante | 005_discovery |
+| [T-010](#t-010---firmar-la-tabla-52-del-acta-de-cierre-de-000_preproject) | Firmar la tabla 5.2 del acta de cierre de 000_preproject | Implementada | Media | No bloqueante | 005_discovery |
+| [T-011](#t-011---pedir-en-la-nota-de-cierre-la-forma-anclada-de-la-orden-del-paso-2d) | Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d | Implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -336,7 +338,7 @@ Plantilla:
 ### T-008 - Declarar en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 005_discovery |
@@ -346,13 +348,13 @@ Plantilla:
 - **Que:** escribir en el Paso 7c-bis de `protocol-close` que el control compara texto y no reejecuta
   las ordenes, y remitir a `DT-002`, segun `D-017`.
 - **Por que:** primera recomendacion sin hallazgo de `R-004`, evaluada y aceptada en `D-017`.
-- **Criterio de cierre:** el Paso 7c-bis nombra el limite y cita la deuda; la orden se fija al
-  implementarla.
+- **Criterio de cierre:** el de `D-022`, con sus ordenes ancladas y sus salidas; alli consta
+  tambien como se implemento.
 
 ### T-009 - Anclar las ordenes git diff --cached de la seccion 1 del informe
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 005_discovery |
@@ -362,4 +364,49 @@ Plantilla:
 - **Que:** que el Paso 7c de `protocol-close`, al anclar el informe, traduzca las ordenes
   `git diff --cached` de la seccion 1 a `git diff <hash>^ <hash>`, segun `D-019`.
 - **Por que:** tercera recomendacion sin hallazgo de `R-004`, evaluada y aceptada en `D-019`.
-- **Criterio de cierre:** se fija al implementarla, con su orden anclada y su salida.
+- **Criterio de cierre:** el de `D-022`, con sus ordenes ancladas y sus salidas; alli consta
+  tambien como se implemento.
+
+### T-010 - Firmar la tabla 5.2 del acta de cierre de 000_preproject
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-006 |
+
+- **Que:** atender `F-006`: escribir en la tabla 5.2 de
+  `_audit/000_preproject/005_phase_exit_record_001.md` la firma que dio el patrocinador (JD Rodriguez -
+  Main Sponsor, 2026-09-16, ETAPA CERRADA), segun `D-020`.
+- **Por que:** el acta decia que la etapa seguia abierta y `D-015` que estaba cerrada. Verificacion
+  contra `HEAD` (`673a97a`) en `D-020`.
+- **Criterio de cierre:** el de `D-020`, copiado de alli.
+
+  ```
+  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
+  0
+  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
+  430:| Quien | JD Rodriguez - Main Sponsor |
+  431:| Fecha | 2026-09-16 |
+  432:| Decision | ETAPA CERRADA |
+  ```
+
+### T-011 - Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-006 |
+
+- **Que:** atender `F-007`: que la instruccion de la NOTA DE CIERRE en la plantilla del informe de
+  `protocol-close` pida al Paso 7c la primera orden del Paso 2d en su forma anclada, con su recuento,
+  segun `D-021`.
+- **Por que:** la seccion 7 deja la forma anclada para la nota y la nota no la pide; `S-005` la
+  prometio y no la publico. Verificacion contra `HEAD` (`673a97a`) en `D-021`.
+- **Criterio de cierre:** el de `D-022`, con sus ordenes ancladas y sus salidas; alli consta
+  tambien como se implemento.

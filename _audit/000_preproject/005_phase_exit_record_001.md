@@ -427,10 +427,10 @@ Ninguna. Las 10 casillas se resolvieron con orden y salida cruda.
 
 | Campo | Valor |
 |---|---|
-| Quien | `<pendiente>` |
-| Fecha | `<pendiente>` |
-| Decision | `<pendiente>` |
-| Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |
+| Quien | JD Rodriguez - Main Sponsor |
+| Fecha | 2026-09-16 |
+| Decision | ETAPA CERRADA |
+| Donde queda registrada | `_persistence/decisions.md`, con `D-015` (decision) y `D-020` (firma escrita en esta tabla) |
 
 ---
 

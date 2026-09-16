@@ -39,6 +39,7 @@
 | [S-003](#s-003---firmas-de-los-gates-hallazgo-f-004-de-r-002-atendido-y-cosecha-de-lecciones-de-000_preproject) | Firmas de los Gates, hallazgo `F-004` de `R-002` atendido, y cosecha de lecciones de `000_preproject` | 2026-09-16 | 000_preproject |
 | [S-004](#s-004---hallazgo-f-005-de-r-003-atendido-control-de-salida-reproducida-en-el-7c-bis-y-cosecha-de-l-007) | Hallazgo `F-005` de `R-003` atendido, CONTROL DE SALIDA REPRODUCIDA en el 7c-bis, y cosecha de `L-007` | 2026-09-16 | 000_preproject |
 | [S-005](#s-005---etapa-000_preproject-cerrada-promocion-de-dt-001-y-las-tres-recomendaciones-de-r-004-evaluadas) | Etapa `000_preproject` cerrada, promocion de `DT-001`, y las tres recomendaciones de `R-004` evaluadas | 2026-09-16 | 005_discovery |
+| [S-006](#s-006---f-006-y-f-007-de-r-005-atendidos-firma-del-acta-de-000_preproject-y-t-008t-009t-011-implementadas) | `F-006` y `F-007` de `R-005` atendidos, firma del acta de `000_preproject`, y `T-008`/`T-009`/`T-011` implementadas | 2026-09-16 | 005_discovery |
 
 ---
 
@@ -70,41 +71,40 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-16 (S-005)` |
+| Ultima actualizacion | `2026-09-16 (S-006)` |
 | Salud | `En marcha` |
-| Avance de la etapa | Con `phase_exit_auditor` dictaminando **CASILLAS SATISFECHAS** (10 CUMPLE) sobre `f2b7662` (acta en `_audit/000_preproject/005_phase_exit_record_001.md`, commit `4fad4dd`), el usuario firmo `D-015`: **ETAPA CERRADA** para `000_preproject`. La etapa declarada pasa a `005_discovery`. El usuario confirmo `DT-001` y pidio pagarla en el acto: `D-016` promovio al esqueleto de arranque los seis archivos que se le habian adelantado (`.claude/agents/gate1_auditor.md`, `gate2_auditor.md`, `phase_exit_auditor.md`, y `.claude/skills/protocol-audit/SKILL.md`, `protocol-start/SKILL.md`, `protocol-close/SKILL.md`), commit `4d20ce2` en `SDAI_TripleS`, subido; `DT-001` queda `Implementada`. Se evaluaron las tres recomendaciones sin hallazgo de `R-004`: `D-017` acepta la primera (declarar el limite del CONTROL DE SALIDA REPRODUCIDA, `T-008`, y abre `DT-002`); `D-018` rechaza la segunda (inexactitud sin efecto en un informe ya auditado, `S-004.md` no se reescribe); `D-019` acepta la tercera (anclar las ordenes `git diff --cached` de la seccion 1 del informe, `T-009`) |
+| Avance de la etapa | `report_auditor` audito `S-005` en `R-005` y entrego dos hallazgos: `F-006` (el acta de `000_preproject` seguia con la firma del patrocinador en blanco mientras `D-015` daba la etapa por cerrada) y `F-007` (la seccion 7 de `S-005.md` prometia la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE y no estaba). Se aceptaron los dos: `D-020` hizo escribir la firma del patrocinador (JD Rodriguez - Main Sponsor, 2026-09-16, ETAPA CERRADA) en la tabla 5.2 del acta (`T-010`), revocando `D-015` solo en la clausula «el acta no se edita»; `D-021` hizo que la NOTA DE CIERRE de `protocol-close` exija la forma anclada de la orden del Paso 2d bajo un sexto rotulo (`T-011`). `D-022` fijo el como de `T-008`, `T-009` y `T-011`, las tres implementadas sobre `.claude/skills/protocol-close/SKILL.md`. Se escribio `L-008`. El esqueleto de arranque vuelve a quedar por detras (`.claude/skills/protocol-close/SKILL.md` difiere), pendiente de promocion con aprobacion del usuario |
 | Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa |
 
 ---
 
 ## 2. Ultimo realizado
 
-Quinta sesion de trabajo. Segun el diff: el usuario firmo `D-015`, **ETAPA CERRADA** para
-`000_preproject`, con las diez casillas de su condicion de salida `CUMPLE` (acta de
-`phase_exit_auditor` sobre `f2b7662`, commit `4fad4dd`) y `R-004` sin hallazgos. La etapa declarada
-pasa a `005_discovery`. El usuario confirmo `DT-001` y pidio pagarla en el acto: `D-016` corrio
-`protocol-promote` y llevo al esqueleto de arranque los seis archivos que se le habian adelantado en
-sesiones previas (tres agentes de Gate/acta y tres skills de protocolo), aprobados uno por uno,
-commit `4d20ce2` en `SDAI_TripleS` y subido; el cierre marca `DT-001` `Implementada` citando `D-016`.
-Se evaluaron las tres recomendaciones sin hallazgo de `R-004` (auditoria de `S-004`): `D-017` acepta
-que el CONTROL DE SALIDA REPRODUCIDA declare que compara texto y no reejecuta ordenes (`T-008`, y
-`DT-002` para la reejecucion futura); `D-018` rechaza corregir el recuento de la NOTA DE CIERRE de
-`S-004.md` porque el informe ya esta auditado y la inexactitud no tiene efecto; `D-019` acepta que el
-Paso 7c del cierre traduzca las ordenes `git diff --cached` de la seccion 1 del informe a su forma
-anclada (`T-009`).
+Sexta sesion de trabajo. Segun el diff: se evaluaron los dos hallazgos de `R-005` sobre `S-005`.
+`D-020` acepta `F-006` (firma del patrocinador en blanco en el acta de `000_preproject` mientras
+`D-015` daba la etapa por cerrada): la tabla 5.2 del acta queda con la firma **JD Rodriguez - Main
+Sponsor**, fecha 2026-09-16, **ETAPA CERRADA** (`T-010`), y `D-015` queda `Revocada por D-020` solo
+en la clausula «el acta no se edita». `D-021` acepta `F-007` (la seccion 7 de `S-005.md` prometia la
+forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no estaba): la plantilla de la NOTA DE
+CIERRE de `protocol-close` pasa a exigir esa forma anclada con su recuento bajo un sexto rotulo
+(`T-011`). `D-022` fijo el como de implementar `T-008` (`D-017`), `T-009` (`D-019`) y `T-011`
+(`D-021`) juntas sobre `.claude/skills/protocol-close/SKILL.md`, con las ordenes de sus tres
+criterios de cierre corridas contra commits ya auditados como prueba. `F-006` y `F-007` quedan
+`Aceptado — pendiente` en `_audit/findings.md`, citando `T-010`/`D-020` y `T-011`/`D-021`. Se
+escribio `L-008` (una firma que el artefacto espera se escribe en el artefacto, no solo en el
+registro).
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-005`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto es la
-clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
-`A-001` (si el historial de juegos registrados es dato de persona). Quedan abiertas `T-008` (declarar
-en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta, Baja) y `T-009` (anclar las
-ordenes `git diff --cached` de la seccion 1 del informe al Paso 7c, Media), las dos sin bloquear el
-trabajo de `005_discovery`. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las
-ordenes), confirmada y sin pagar.
+(`S-006`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto sigue siendo
+la clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
+`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque quedo por
+detras en `.claude/skills/protocol-close/SKILL.md`: promoverlo con `protocol-promote` requiere
+aprobacion del usuario, punto por punto (consecuencia anotada en `D-022`). Sigue abierta `DT-002` (el
+CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -225,6 +225,27 @@ Plantilla:
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `T-008` y
   `T-009` quedan `No implementada`, etapa `005_discovery`. `DT-002` confirmada y sin pagar. `A-001`
   sigue `Abierto`, con su disparador ya activo al entrar en `005_discovery`.
+
+### S-006 - `F-006` y `F-007` de `R-005` atendidos, firma del acta de `000_preproject`, y `T-008`/`T-009`/`T-011` implementadas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Tareas | T-008, T-009, T-010, T-011 |
+
+- **Que se hizo:** se evaluaron los dos hallazgos de `R-005` sobre `S-005`. `D-020` acepta `F-006`:
+  la tabla 5.2 del acta de `000_preproject` queda con la firma del patrocinador (JD Rodriguez - Main
+  Sponsor, 2026-09-16, ETAPA CERRADA), `T-010` `Implementada`; `D-015` queda `Revocada por D-020` solo
+  en la clausula «el acta no se edita». `D-021` acepta `F-007`: la NOTA DE CIERRE de `protocol-close`
+  pasa a exigir la forma anclada de la orden del Paso 2d con su recuento, bajo un sexto rotulo
+  `**ORDEN DEL PASO 2d ANCLADA — salida:**`, `T-011` `Implementada`. `D-022` fijo el como de `T-008`
+  (declarar que el CONTROL DE SALIDA REPRODUCIDA no reejecuta), `T-009` (traducir en el Paso 7c las
+  ordenes `git diff --cached` de la seccion 1) y `T-011`, las tres sobre
+  `.claude/skills/protocol-close/SKILL.md`; las tres quedan `Implementada`. `F-006` y `F-007` quedan
+  `Aceptado — pendiente` en `_audit/findings.md`. Se escribio `L-008`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. El esqueleto de
+  arranque vuelve a diferir en `protocol-close/SKILL.md`, pendiente de promocion con aprobacion del
+  usuario. `DT-002` sigue `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
 
 ---
 

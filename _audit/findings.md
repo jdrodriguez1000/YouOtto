@@ -27,8 +27,8 @@
 | [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
 | [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Implementado |
 | [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Implementado |
-| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Abierto |
-| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Abierto |
+| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Aceptado — pendiente |
+| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Aceptado — pendiente |
 
 ---
 
@@ -210,8 +210,8 @@ Plantilla:
 | Auditoria | R-005 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-010, D-020 |
 | Cerrado en | |
 
 - **Que se observo:** en `5884e98`, `_audit/000_preproject/005_phase_exit_record_001.md` conserva la
@@ -222,7 +222,10 @@ Plantilla:
   actual. Comandos y salidas completos en `_audit/R-005.md`, seccion 2.
 - **Por que importa:** el registro afirma dos estados a la vez para el cierre de la etapa: el acta
   dice abierta, `D-015` dice cerrada. No es `Alta` porque la decision existe y esta registrada.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado, opcion (a). Verificado vigente contra `HEAD` (`673a97a`), con orden y
+  salida en `D-020`. El patrocinador dio su firma (JD Rodriguez - Main Sponsor) y `manager` la escribio
+  en la tabla 5.2 del acta; `D-020` revoca `D-015` en la clausula «el acta no se edita». Registrado en
+  `T-010`.
 
 ### F-007 - La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta
 | Campo | Valor |
@@ -230,8 +233,8 @@ Plantilla:
 | Auditoria | R-005 |
 | Fecha | 2026-09-16 |
 | Gravedad | Baja |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-011, D-021 |
 | Cerrado en | |
 
 - **Que se observo:** `git show 2846f62:_audit/S-005.md` dice en la linea 178 «la NOTA DE CIERRE trae
@@ -240,4 +243,6 @@ Plantilla:
   lado. La cifra `14` si reproduce en forma anclada. Comandos y salidas en `_audit/R-005.md`, seccion 2.
 - **Por que importa:** el informe afirma publicada una evidencia que no esta; reproducirla exige
   reconstruir la orden. `Baja` porque la cifra se sostiene.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`673a97a`), con orden y salida en
+  `D-021`. La instruccion de la NOTA DE CIERRE no pide la forma anclada que la seccion 7 le aplaza;
+  se corrige en `protocol-close`, sin reescribir `S-005.md`. Registrado en `T-011`.

@@ -27,6 +27,7 @@
 | [L-005](#l-005---una-orden-escrita-al-registro-por-un-script-se-reejecuta-copiandola-del-archivo) | Una orden escrita al registro por un script se reejecuta copiandola del archivo | 2026-09-16 | 000_preproject | Ya cubierta por LG-103 |
 | [L-006](#l-006---un-criterio-que-busca-un-texto-se-excluye-a-si-mismo-del-recuento) | Un criterio que busca un texto se excluye a si mismo del recuento | 2026-09-16 | 000_preproject | Ya cubierta por LG-101 |
 | [L-007](#l-007---un-criterio-que-comparten-dos-entradas-se-copia-del-archivo-no-se-reescribe) | Un criterio que comparten dos entradas se copia del archivo, no se reescribe | 2026-09-16 | 000_preproject | Ya cubierta por LG-98 |
+| [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -207,3 +208,21 @@ Plantilla:
   detalle que no cambia el resultado a la vista, y deja de ser la misma prueba.
 - **Como aplicarla:** cuando una entrada reutiliza el criterio de otra, extraer el bloque del archivo
   con una orden (`awk`/`sed`) y compararlo con `diff` contra el original antes de publicarlo.
+
+### L-008 - Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+
+- **Contexto:** evaluacion de `F-006`, sobre el cierre de `000_preproject`.
+- **Que ocurrio:** la firma del patrocinador se registro en `D-015` con la nota «el acta no se edita»,
+  y la tabla 5.2 del acta quedo en `<pendiente>` bajo una cabecera que dice que, sin esa firma, la
+  etapa sigue abierta. El registro afirmo dos estados a la vez hasta que `D-020` escribio la firma en
+  el acta.
+- **Leccion:** cuando una plantilla reserva un hueco para una aprobacion, registrarla en otro sitio no
+  la sustituye: el artefacto sigue diciendo lo contrario a quien lo lea sin el registro delante.
+- **Como aplicarla:** al registrar una aprobacion o decision que un artefacto espera, rellenar el hueco
+  del artefacto en la misma pasada y citar la `D-XXX`; si se decide no hacerlo, cambiar la plantilla
+  para que el artefacto no afirme lo contrario.

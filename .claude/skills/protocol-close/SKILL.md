@@ -1215,6 +1215,8 @@ seccion — la seccion 1 y la 7 prometen lo mismo y se anclan juntas>
 <en un archivo de registro no basta con nombrar las entradas que NACEN: se nombran tambien las
 entradas YA EXISTENTES que el commit edita, con su codigo (`L-XXX (nace)`, `L-XXX (nota anadida)`)>
 <esa lista sale del diff, no de la memoria: `git diff <commit>^ <commit> -- <archivo>`>
+<si un recuento de esta seccion se escribe con `git diff --cached`, el Paso 7c lo traduce en su sitio a
+`git diff <hash>^ <hash>`: al commit de anclaje solo llega en forma de staging la orden de la lista>
 
 ## 2. Que NO se hizo, y por que
 <lo que quedo pendiente o a medias, y en que punto quedo>
@@ -1272,10 +1274,14 @@ orden, tambien cuando no obliga a corregir nada, con la lectura linea por linea 
 parada>
 <y dentro de esa misma nota, la salida del CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis, entera
 y con su orden, tambien cuando sale limpia: sin ella, «reproduce» vuelve a ser una afirmacion a ojo>
-<🚨 los cinco bloques van ROTULADOS con su nombre literal —`**BARRIDO DE ANCLAJE — salida:**`,
+<y dentro de esa misma nota, la primera orden de este Paso 2d en su forma anclada al commit y con el
+propio informe excluido, con su recuento (`… | wc -l`) y su salida cruda: esta seccion se escribe antes
+del commit y publica la orden en forma de staging, asi que la forma anclada que le exige la linea de
+arriba solo puede llegar aqui. Si el recuento anclado no es el publicado, se pegan los dos y se dice>
+<🚨 los seis bloques van ROTULADOS con su nombre literal —`**BARRIDO DE ANCLAJE — salida:**`,
 `**CONTROL DE PROSA BORRADA — salida:**`, `**CONTROL DE SALIDA REPRODUCIDA — salida:**`,
-`**SEGUNDA PASADA anclada del Paso 2e — salida:**` y
-`**CONTROL DE CIFRA ADYACENTE — salida:**`—, y no es cosmetica: el Paso 7c-ter los busca por esa
+`**SEGUNDA PASADA anclada del Paso 2e — salida:**`, `**CONTROL DE CIFRA ADYACENTE — salida:**` y
+`**ORDEN DEL PASO 2d ANCLADA — salida:**`—, y no es cosmetica: el Paso 7c-ter los busca por esa
 cadena exacta antes de dejar commitear el anclaje. El rotulo lleva el sufijo ` — salida:` justo para
 que no lo pueda satisfacer una mencion suelta del control en la prosa del informe>
 
@@ -1589,13 +1595,22 @@ juntos, en un unico commit de anclaje**:
 |---|---|---|
 | **Cabecera** del informe, campo `Commit auditado` | el **hash literal** del commit sustantivo | `git log -1 --format=%h` justo despues del commit del Paso 7 |
 | **Seccion 1** del informe, nota de cierre | la lista de archivos anclada al commit | `git show --stat --name-only --format= <hash>` |
-| **Seccion 7** del informe, nota de cierre | la **nota de anclaje** de la lista del Paso 2d — ver el recuadro de abajo | `git rev-parse --short HEAD` justo despues del commit del Paso 7 |
+| **Seccion 7** del informe, nota de cierre | la **nota de anclaje** de la lista del Paso 2d y la primera orden del Paso 2d en forma anclada, con su recuento — ver el recuadro de abajo | `git rev-parse --short HEAD` justo despues del commit del Paso 7 |
 | **`decisions.md`** y **`tasks.md`**, bloques «Criterio de cierre» de **las entradas nacidas en esta sesion** | las mismas ordenes, reejecutadas ancladas, con su salida | ver **7c-bis**, justo debajo |
 
 🚨 **Los cuatro, o ninguno.** Anclar la seccion 7 y dejar la 1 y la cabecera sin anclar es el
 defecto que ya costo dos hallazgos: el informe queda con una parte reproducible y otra que describe
 un area de staging que ya no existe, y **ninguna regla escrita dice cual manda**. Dejar la seccion 7
 sin anclar y anclar las otras tres es el mismo defecto por su otra cara, y costo un tercero.
+
+🚨 **En la seccion 1, las ordenes `git diff --cached` de la prosa se traducen aqui, no se dejan.** Un
+recuento escrito como `git diff --cached -U0 -- <archivo> | grep -c '^@@'` solo contesta mientras el
+commit no existe; en este paso se sustituye **en su sitio** por
+`git diff -U0 <hash>^ <hash> -- <archivo> | grep -c '^@@'`, que es la misma pregunta sobre el commit.
+La cifra de al lado no cambia; **si al correr la forma anclada cambia, te detienes y lo reportas**, con
+las dos cifras, igual que en el 7c-bis. ⚠️ **La unica que se queda en forma de staging es la de la
+lista de archivos** (`git diff --cached --stat --name-only`), porque su version anclada ya la pega la
+nota de cierre de la propia seccion. El 7c-quater lo comprueba.
 
 ### Que dice la nota de la seccion 7, exactamente
 
@@ -1605,14 +1620,28 @@ ancla **en su archivo de origen**, con su salida cruda pegada debajo. Copiarlas 
 crearia una tercera copia de la misma evidencia — la que nadie recomprueba, que es justo la que se
 desfasa.
 
-⚠️ **Pero un puntero solo vale si es comprobable**, y por eso la nota lleva las tres cosas:
+⚠️ **Pero un puntero solo vale si es comprobable**, y por eso la nota lleva las cuatro cosas:
 
 1. **el hash** del commit sustantivo, derivado con la orden de la tabla, nunca supuesto;
 2. **cuantas** de las ordenes listadas iban con `<hash>` y **en que archivos** quedaron ancladas,
    con **los dos barridos** de abajo y sus salidas crudas;
 3. **la frase que cierra el pendiente**: que ya no queda ninguna orden de la lista sin forma anclada,
    o cuales quedan y por que — **construida con las salidas de esos dos barridos, no recontando a
-   mano lo que la salida ya dice**.
+   mano lo que la salida ya dice**;
+4. **la primera orden del Paso 2d en su forma anclada**, bajo el rotulo
+   `**ORDEN DEL PASO 2d ANCLADA — salida:**`, con su recuento:
+
+   ```bash
+   git diff -U0 <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md" \
+     | grep -E '^\+[[:space:]]*\$ ' \
+     | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
+   ```
+
+   🔑 **Esta si se republica, y no contradice lo de arriba.** Lo que la nota no copia son las ordenes
+   **listadas**, que ya quedan ancladas en su archivo de origen. La orden que **produce** la lista no
+   tiene archivo de origen: vive solo en la seccion 7, en forma de staging, y la plantilla le exige la
+   forma anclada. Si esta nota no la trae, no la trae nadie — y la seccion 7 queda prometiendo algo
+   que no esta.
 
 🚨 **Y si la nota publica un TOTAL, ese total es la suma de los numeros por archivo que el
 CONTROL devolvio, y nada mas.** Ni una linea se anade ni se resta en prosa. Toda orden que el Paso
@@ -1880,6 +1909,13 @@ afirmo que reproducia. Nadie lo vio hasta la auditoria. **«Coincide» se decidi
 sesion y en el arbol ya anclado, y las compara. Anclar cambia la orden, **nunca su salida**: si la
 orden anclada contesta lo mismo, lo que devuelve es identico byte a byte a lo publicado.
 
+⚠️ **Y compara texto: no reejecuta ninguna orden.** Detecta que el anclaje **sustituyo** una salida
+publicada; **no** detecta una salida que la orden nunca devolvio, si se publico asi desde el principio
+y el anclaje la conservo intacta. Reejecutar de forma automatica las ordenes del registro no es gratis
+—algunas apuntan a otros repositorios, usan `eval` o dependen del estado de la maquina—, y este control
+no lo hace. Mientras no exista esa reejecucion, **esa comprobacion es de la auditoria**, no de este
+paso: que el control salga limpio no dice que las salidas sean ciertas, dice que no se tocaron.
+
 ```bash
 salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Criterio de cierre/{c=1} /^---$/{c=0} /^[[:space:]]*```/{f=!f; next} c&&f&&!/^[[:space:]]*\$ /{sub(/^[[:space:]]+/,""); print d" | "$0}'; }
 for f in _persistence/decisions.md _persistence/tasks.md; do
@@ -1912,26 +1948,27 @@ publico como evidencia; eso lo decide `manager` en la sesion siguiente, no este 
 tambien cuando sale limpia**, y por la misma razon: las dos lineas `== … ==` son lo que distingue
 «se corrio y salio limpio» de «no se corrio».
 
-### 7c-ter — Que la NOTA DE CIERRE lleve las cinco salidas (obligatorio, antes de commitear el anclaje)
+### 7c-ter — Que la NOTA DE CIERRE lleve las seis salidas (obligatorio, antes de commitear el anclaje)
 
-Cinco pasos distintos terminan diciendo «y su salida se publica en la NOTA DE CIERRE»: el barrido de
+Seis pasos distintos terminan diciendo «y su salida se publica en la NOTA DE CIERRE»: el barrido de
 anclaje del Paso 2d, el CONTROL DE PROSA BORRADA y el CONTROL DE SALIDA REPRODUCIDA del 7c-bis, la
-SEGUNDA PASADA anclada del Paso 2e y el CONTROL DE CIFRA ADYACENTE del Paso 6b. **Las cinco son
+SEGUNDA PASADA anclada del Paso 2e, el CONTROL DE CIFRA ADYACENTE del Paso 6b y la primera orden del
+Paso 2d en forma anclada. **Las seis son
 reglas de redaccion, y una regla de redaccion sola ya fallo:** el CONTROL DE CIFRA ADYACENTE se
 estreno escrito, corrido y sin publicar.
 
-Este paso no juzga el contenido de las cinco salidas —eso lo hace la auditoria—. Comprueba lo unico
+Este paso no juzga el contenido de las seis salidas —eso lo hace la auditoria—. Comprueba lo unico
 que se puede comprobar desde fuera: **que estan**.
 
 ```bash
-for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**"; do
+for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**" "**ORDEN DEL PASO 2d ANCLADA — salida:**"; do
   grep -qF "$m" _audit/S-XXX.md || echo "FALTA en la NOTA DE CIERRE: $m"
 done
 ```
 
 | Que sale | Que significa | Que haces |
 |---|---|---|
-| nada | los cinco rotulos estan | sigue: commitea el anclaje |
+| nada | los seis rotulos estan | sigue: commitea el anclaje |
 | alguna linea `FALTA…` | **la NOTA DE CIERRE no lleva esa salida** | 🚨 **detente**: corre el control que falta, pega su orden y su salida cruda bajo su rotulo, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
 | el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
 
@@ -1942,8 +1979,8 @@ una incoherencia: aquel busca lineas para leerlas, este busca ausencias.
 la escribe el 7c, despues del commit sustantivo. El ultimo momento en que aun se puede anadir algo
 sin dejar una nota fechada es justo antes del commit de anclaje, y ese momento es este.
 
-⚠️ **Este control enumera casos, y eso caduca.** Reconoce cinco rotulos porque hoy hay cinco
-obligaciones; **un sexto paso que exija publicar su salida en la NOTA DE CIERRE tiene que anadir su
+⚠️ **Este control enumera casos, y eso caduca.** Reconoce seis rotulos porque hoy hay seis
+obligaciones; **un septimo paso que exija publicar su salida en la NOTA DE CIERRE tiene que anadir su
 rotulo a esta lista en la misma pasada en que nazca**, o este control seguira devolviendo vacio
 mientras la nota se queda coja. Un control que no cubre lo nuevo es peor que ninguno, porque
 tranquiliza.
@@ -1962,7 +1999,13 @@ debajo deja de ser la que esa orden produce — aunque los archivos listados sea
 ```bash
 grep -qE '^(> )?\$ git show --stat --name-only --format= <hash>$' _audit/S-XXX.md ||
   echo "FALTA en la seccion 1: la orden prescrita por el Paso 7c (sin --format= la salida no reproduce)"
+sed -n '/^## 1\./,/^## 2\./p' _audit/S-XXX.md | grep -F 'diff --cached' | grep -vF -- '--stat --name-only' &&
+  echo "SIN ANCLAR en la seccion 1: ordenes git diff --cached que el Paso 7c tenia que traducir"
 ```
+
+🔑 **La segunda orden comprueba la traduccion del Paso 7c, y por el mismo motivo: es igualdad de
+cadenas.** Toda linea de la seccion 1 con `diff --cached` que no sea la de la lista de archivos es un
+recuento que ya no reproduce. Se imprimen las lineas y, debajo, el aviso.
 
 🚨 **El patron busca una LINEA DE ORDEN con el hash de este commit, no la cadena en cualquier sitio.**
 `<hash>` es el del commit sustantivo, el mismo que el Paso 7c escribe. Una version anterior buscaba
@@ -1973,8 +2016,9 @@ de verdad faltara. El `(> )?` admite la NOTA DE CIERRE, que se escribe citada; u
 
 | Que sale | Que significa | Que haces |
 |---|---|---|
-| nada | la seccion 1 publica la orden prescrita | sigue: commitea el anclaje |
+| nada | la seccion 1 publica la orden prescrita y no le queda ningun recuento en forma de staging | sigue: commitea el anclaje |
 | la linea `FALTA…` | **el bloque de la seccion 1 no reproduce** | 🚨 **detente**: corrige la orden publicada a la de la tabla del Paso 7c, comprueba que su salida es la pegada, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
+| lineas con `diff --cached` y la linea `SIN ANCLAR…` | **quedan recuentos sin traducir** | 🚨 **detente**: traduce cada una a `git diff <hash>^ <hash>` en su sitio, comprueba que la cifra de al lado no cambia, y vuelve a correr esto. No commitees el anclaje hasta que salga vacio |
 | el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
 
 🔑 **Por que esto se puede comprobar y otras cosas de la seccion 1 no.** La orden esta **prescrita

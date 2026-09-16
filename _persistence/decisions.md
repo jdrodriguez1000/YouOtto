@@ -35,11 +35,14 @@
 | [D-012](#d-012---cosecha-de-lecciones-de-000_preproject) | Cosecha de lecciones de 000_preproject | 2026-09-16 | Vigente |
 | [D-013](#d-013---el-anclaje-de-criterios-de-cierre-compara-la-salida-anclada-con-la-publicada) | El anclaje de criterios de cierre compara la salida anclada con la publicada | 2026-09-16 | Vigente |
 | [D-014](#d-014---cosecha-de-l-007) | Cosecha de L-007 | 2026-09-16 | Vigente |
-| [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Vigente |
+| [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Revocada por D-020 |
 | [D-016](#d-016---promocion-al-esqueleto-de-los-seis-archivos-de-dt-001) | Promocion al esqueleto de los seis archivos de DT-001 | 2026-09-16 | Vigente |
 | [D-017](#d-017---el-control-de-salida-reproducida-declara-que-no-reejecuta) | El CONTROL DE SALIDA REPRODUCIDA declara que no reejecuta | 2026-09-16 | Vigente |
 | [D-018](#d-018---no-se-corrige-el-recuento-de-la-nota-de-cierre-de-s-004) | No se corrige el recuento de la NOTA DE CIERRE de S-004 | 2026-09-16 | Vigente |
 | [D-019](#d-019---el-anclaje-traduce-las-ordenes-git-diff---cached-del-informe) | El anclaje traduce las ordenes git diff --cached del informe | 2026-09-16 | Vigente |
+| [D-020](#d-020---la-firma-del-patrocinador-se-escribe-en-el-acta-de-cierre) | La firma del patrocinador se escribe en el acta de cierre | 2026-09-16 | Vigente |
+| [D-021](#d-021---la-nota-de-cierre-publica-la-forma-anclada-de-la-orden-del-paso-2d) | La NOTA DE CIERRE publica la forma anclada de la orden del Paso 2d | 2026-09-16 | Vigente |
+| [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Vigente |
 
 ---
 
@@ -758,7 +761,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-16 |
-| Estado | Vigente |
+| Estado | Revocada por D-020 |
 | Origen | usuario |
 
 - **Contexto:** con los hallazgos `F-001` a `F-005` en `Implementado` y `R-004` sin hallazgos,
@@ -963,3 +966,167 @@ Plantilla:
   orden que ya no reproduce deja de ser evidencia aunque su cifra sea correcta.
 - **Alternativas descartadas:** **no implementarla por ser inocua en `S-004`.** La cifra de hoy es
   cierta, pero la orden no la reproduce, que es exactamente lo que el anclaje existe para evitar.
+
+### D-020 - La firma del patrocinador se escribe en el acta de cierre
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-006` de `R-005`: el acta `_audit/000_preproject/005_phase_exit_record_001.md`
+  conserva la tabla 5.2 en `<pendiente>` y su cabecera dice que, mientras falte la segunda firma, la
+  etapa sigue abierta; `D-015` da la etapa por cerrada y dice que el acta no se edita. El registro
+  afirma dos estados a la vez. Verificado vigente contra `HEAD` (`673a97a`):
+
+  ```
+  $ git show 673a97a:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE "Mientras falte|^\| (Quien|Fecha|Decision) \| .<pendiente>"
+  21:> ⛔ **Mientras falte la segunda firma, la etapa sigue abierta**, por bien que salgan las casillas.
+  430:| Quien | `<pendiente>` |
+  431:| Fecha | `<pendiente>` |
+  432:| Decision | `<pendiente>` |
+  $ git show 673a97a:_persistence/decisions.md | grep -n "el acta no se edita"
+  770:  entrada es la segunda firma que pide la seccion 5.2 del acta; el acta no se edita, porque la
+  $ git log --oneline 5884e98..673a97a -- _audit/000_preproject/
+  (sin salida)
+  ```
+
+- **Decision:** se acepta la opcion (a) de la recomendacion: el patrocinador firma en la tabla 5.2
+  del acta como **JD Rodriguez - Main Sponsor**, fecha 2026-09-16, **ETAPA CERRADA**. `manager`
+  transcribe la firma que el usuario dio literal en la conversacion; no la redacta. Revoca `D-015`
+  **solo** en la clausula «el acta no se edita»: el cierre de `000_preproject` que `D-015` firmo se
+  mantiene, con la misma fecha y el mismo contenido. Registrado en `T-010`.
+- **Por que:** la plantilla del acta y `protocol-phase-exit` situan la aprobacion en el propio acta,
+  y lo que prohiben es que la rellene el agente, no el patrocinador. Escribirla ahi cierra la
+  contradiccion en el artefacto formal sin tocar metodo ni plantilla. La seccion 5.1 y el dictamen
+  sobre `f2b7662` no se tocan.
+- **Alternativas descartadas:**
+  - **(b) Escribir el criterio de `D-015` en la plantilla y en `protocol-phase-exit`** (firma solo en
+    `decisions.md`): cambia el metodo copiable para acomodar una excepcion de este proyecto, y
+    separa otra vez `.claude/` y `_templates/` del esqueleto recien alineado en `D-016`.
+  - **Rechazar `F-006`:** la contradiccion se sostiene contra el repositorio (bloque de arriba).
+- **Clasificacion de la accion:** editar la tabla 5.2 del acta no esta en ninguna de las dos tablas
+  de `constraints.md`; `manager` la clasifica **reversible a criterio**, porque solo rellena campos
+  en blanco, no borra evidencia y queda en `git`.
+- **Criterio de cierre:** a ese commit, el acta no conserva ningun `<pendiente>` y la tabla 5.2 lleva
+  la firma, la fecha y la decision.
+
+  ```
+  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -cF '<pendiente>'
+  0
+  $ git show <hash>:_audit/000_preproject/005_phase_exit_record_001.md | grep -nE '^\| (Quien|Fecha|Decision) \| ' | tail -3
+  430:| Quien | JD Rodriguez - Main Sponsor |
+  431:| Fecha | 2026-09-16 |
+  432:| Decision | ETAPA CERRADA |
+  ```
+
+### D-021 - La NOTA DE CIERRE publica la forma anclada de la orden del Paso 2d
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-007` de `R-005`: la seccion 7 de `S-005` publica la primera orden del Paso 2d en
+  su forma de staging y dice que la NOTA DE CIERRE trae la version anclada, pero esa version no esta
+  en el informe. Verificado vigente contra `HEAD` (`673a97a`): la promesa esta y la orden anclada de la
+  seccion 7 no (la unica `git diff -U0 5884e98` del informe es otra orden, la de la linea 293). La
+  plantilla de la seccion 7 exige la forma anclada o su equivalencia al lado, pero la instruccion de la
+  NOTA DE CIERRE, que es donde el Paso 7c escribe despues del commit, no la pide:
+
+  ```
+  $ git show 673a97a:_audit/S-005.md | grep -nE "NOTA DE CIERRE trae la version anclada|git diff -U0 5884e98\^ 5884e98 -- _persistence _audit"
+  178:en su forma de staging, y la NOTA DE CIERRE trae la version anclada):
+  $ git show 673a97a:_audit/S-005.md | grep -n "git diff -U0 5884e98"
+  293:$ for f in $(git diff --name-only 5884e98^ 5884e98 -- _persistence _audit ":(exclude)_audit/S-005.md"); do n=$(git diff -U0 5884e98^ 5884e98 -- "$f" | grep -cE '^\+[[:space:]]*\$ git show <hash>:'); [ "$n" != "0" ] && echo "$f: $n"; done
+  $ git show 673a97a:.claude/skills/protocol-close/SKILL.md | grep -nF '<la orden se escribe en su forma anclada al commit y con el propio informe excluido'
+  1249:<la orden se escribe en su forma anclada al commit y con el propio informe excluido
+  $ git show 673a97a:.claude/skills/protocol-close/SKILL.md | sed -n '1258,1290p' | grep -c "Paso 2d"
+  0
+  ```
+
+- **Decision:** **se acepta** como `T-011`: la instruccion de la NOTA DE CIERRE de la plantilla del
+  informe en `protocol-close` pide que el Paso 7c pegue la primera orden del Paso 2d en su forma
+  anclada (`git diff -U0 <hash>^ <hash> -- _persistence _audit ":(exclude)_audit/S-XXX.md"`) con su
+  recuento. `_audit/S-005.md` **no se reescribe**. Lo decidio `manager`.
+- **Por que:** no es solo un descuido de `S-005`: la seccion 7 permite aplazar la forma anclada a la
+  nota, y la nota no la pide, asi que se repetira en cada cierre. Es la misma clase de hueco que
+  `D-019` (ordenes de staging sin su forma anclada), y va al mismo archivo.
+- **Alternativas descartadas:**
+  - **Ampliar `T-009`:** mezclaria dos hallazgos en una tarea ya definida por `D-019`; con tareas
+    separadas cada `F-NNN` se cierra contra su propio criterio.
+  - **Nota fechada en `S-005.md`:** el informe es del cierre y ya esta auditado (mismo criterio que
+    `D-018`); la cifra `14` ya reproduce en forma anclada segun `R-005`.
+- ⚠️ **Consecuencia:** `T-008`, `T-009` y `T-011` tocan `protocol-close`; conviene hacerlas en la misma
+  sesion y promoverlas juntas al esqueleto (ver `D-017`).
+
+### D-022 - Como se implementan T-008, T-009 y T-011 en protocol-close
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario pidio hacer juntas `T-008` (`D-017`), `T-009` (`D-019`) y `T-011`
+  (`D-021`), las tres sobre `.claude/skills/protocol-close/SKILL.md`. Las tres decisiones fijaban el
+  que; al implementarlas hubo que elegir el como en tres puntos.
+- **Decision:**
+  1. **`T-008`:** el CONTROL DE SALIDA REPRODUCIDA declara en un parrafo `⚠️` que compara texto y no
+     reejecuta, y que esa comprobacion es de la auditoria. **No cita `DT-002`**, aunque `T-008` lo
+     pedia: la skill es copiable y el Paso 1c de `protocol-close` prohibe codigos instanciados en
+     `.claude/`. El puntero va en la direccion contraria: `DT-002` ya nombra el control.
+  2. **`T-009`:** el Paso 7c traduce **en su sitio** las ordenes `git diff --cached` de la prosa de la
+     seccion 1 a `git diff <hash>^ <hash>`, salvo la de la lista de archivos, que conserva su forma
+     de staging porque su version anclada ya va en la nota. El 7c-quater gana una segunda orden que
+     lo comprueba (`SIN ANCLAR en la seccion 1`).
+  3. **`T-011`:** la nota de la seccion 7 lleva una cuarta cosa, la primera orden del Paso 2d anclada
+     con su recuento, bajo un **sexto rotulo** `**ORDEN DEL PASO 2d ANCLADA — salida:**` que el
+     7c-ter exige, como el propio 7c-ter pide para todo paso nuevo que publique en la nota.
+- **Por que:** cada una convierte una regla de redaccion en algo que se comprueba con igualdad de
+  cadenas, que es el patron que el protocolo ya usa donde una regla escrita fallo.
+- **Alternativas descartadas:**
+  - **`T-009` en la nota, sin tocar la prosa:** republicaria cada recuento dos veces, y la copia de
+    staging seguiria sin reproducir.
+  - **`T-011` sin rotulo nuevo:** seria otra regla de redaccion sola, que es exactamente como nacio
+    `F-007`.
+  - **Citar `DT-002` en la skill:** rompe el control de codigos instanciados del Paso 1c.
+- **Prueba de los controles nuevos sobre informes ya commiteados.** La orden de `T-011` reproduce el
+  `14` que `R-005` obtuvo sobre `5884e98`; el control de `T-009` habria detenido los anclajes de
+  `S-004` y `S-005`; y el 7c-ter con seis rotulos marca la ausencia en `S-005`, que es `F-007`:
+
+  ```
+  $ git diff -U0 5884e98^ 5884e98 -- _persistence _audit ":(exclude)_audit/S-005.md" | grep -E '^\+[[:space:]]*\$ ' | grep -vE 'git (show|grep|log|diff) [0-9a-f]{7,40}' | wc -l
+  14
+  $ for c in 74749f7:_audit/S-004.md 2846f62:_audit/S-005.md; do echo "== $c"; git show $c | sed -n '/^## 1\./,/^## 2\./p' | grep -F 'diff --cached' | grep -vF -- '--stat --name-only' | wc -l; done
+  == 74749f7:_audit/S-004.md
+  2
+  == 2846f62:_audit/S-005.md
+  3
+  $ for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**" "**ORDEN DEL PASO 2d ANCLADA — salida:**"; do git show 2846f62:_audit/S-005.md | grep -qF "$m" || echo "FALTA en la NOTA DE CIERRE: $m"; done
+  FALTA en la NOTA DE CIERRE: **ORDEN DEL PASO 2d ANCLADA — salida:**
+  ```
+
+- ⚠️ **Consecuencia:** `.claude/` vuelve a separarse del esqueleto de arranque. La promocion la hace
+  `manager` con `protocol-promote` y escribe fuera del repositorio, asi que espera la aprobacion del
+  usuario.
+- **Criterio de cierre:** a ese commit, la skill declara el limite del control (`T-008`), traduce y
+  comprueba las ordenes de la seccion 1 (`T-009`), exige el sexto rotulo en la plantilla, en la nota y
+  en el 7c-ter (`T-011`), no le queda ninguna mencion a cinco rotulos, salidas o bloques, y los
+  controles de fuga y de codigos siguen en cero.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Y compara texto: no reejecuta ninguna orden'
+  1
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'las ordenes `git diff --cached` de la prosa se traducen aqui'
+  1
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'SIN ANCLAR en la seccion 1'
+  1
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '**ORDEN DEL PASO 2d ANCLADA — salida:**'
+  3
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cE 'cinco (rotulos|salidas|bloques)'
+  0
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  ```
