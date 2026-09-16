@@ -27,8 +27,9 @@
 | [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
 | [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Implementado |
 | [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Implementado |
-| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Aceptado — pendiente |
-| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Aceptado — pendiente |
+| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Implementado |
+| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
+| [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Abierto |
 
 ---
 
@@ -210,9 +211,9 @@ Plantilla:
 | Auditoria | R-005 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-010, D-020 |
-| Cerrado en | |
+| Cerrado en | 081385a (R-006) |
 
 - **Que se observo:** en `5884e98`, `_audit/000_preproject/005_phase_exit_record_001.md` conserva la
   tabla 5.2 con `Quien`, `Fecha` y `Decision` en `<pendiente>` y su cabecera dice «Mientras falte la
@@ -233,9 +234,9 @@ Plantilla:
 | Auditoria | R-005 |
 | Fecha | 2026-09-16 |
 | Gravedad | Baja |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-011, D-021 |
-| Cerrado en | |
+| Cerrado en | 081385a (R-006) |
 
 - **Que se observo:** `git show 2846f62:_audit/S-005.md` dice en la linea 178 «la NOTA DE CIERRE trae
   la version anclada», y la orden anclada `git diff -U0 5884e98^ 5884e98 -- _persistence _audit ...`
@@ -246,3 +247,24 @@ Plantilla:
 - **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`673a97a`), con orden y salida en
   `D-021`. La instruccion de la NOTA DE CIERRE no pide la forma anclada que la seccion 7 le aplaza;
   se corrige en `protocol-close`, sin reescribir `S-005.md`. Registrado en `T-011`.
+
+### F-008 - El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual
+| Campo | Valor |
+|---|---|
+| Auditoria | R-006 |
+| Fecha | 2026-09-16 |
+| Gravedad | Media |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** la segunda orden del Paso 7c-quater de `protocol-close` (T-009, D-022) busca
+  `diff --cached` en cualquier linea de la seccion 1. Corrida literal sobre `_audit/S-006.md` en
+  `d420647` imprime una linea de prosa y `SIN ANCLAR en la seccion 1: ...`; la tabla del paso manda
+  detenerse y no commitear el anclaje, y `d420647` se commiteo sin que el informe mencione la salida.
+  La prueba de D-022 sobre S-005 (cifra 3) ya contaba 2 lineas de prosa. Comandos y salidas completos
+  en `_audit/R-006.md`, secciones 1.6 y 2.
+- **Por que importa:** el control da falso positivo en su primera ejecucion real y el cierre siguio
+  sin publicarlo; un control que salta siempre se ignora. `Media`, no `Alta`: la seccion 1 de S-006
+  no conserva ordenes de staging reales, asi que ninguna cifra es falsa.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
