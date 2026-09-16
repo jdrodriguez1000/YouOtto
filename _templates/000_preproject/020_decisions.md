@@ -30,12 +30,17 @@
 | Campo | Valores posibles |
 |---|---|
 | Codigo | `D-XXX`, correlativo, no se reutiliza |
-| Estado | `Vigente` / `Revocada por D-XXX` |
+| Estado | `Vigente` / `Revocada en parte por D-XXX` / `Revocada por D-XXX` |
 | Origen | `usuario` / `manager` / `report_auditor` |
 
 🚨 **Una decision no se borra ni se reescribe: se revoca.** La entrada antigua se queda con
 `Revocada por D-XXX` en su estado, y la nueva explica que cambio y por que. El historial de por que
 se penso distinto en su momento es parte del registro.
+
+🚨 **Si la nueva solo revoca una parte, el estado lo dice: `Revocada en parte por D-XXX`.** La
+antigua sigue rigiendo en lo demas, y la nueva nombra **que punto** revoca. Escribir `Revocada por`
+a secas hace que quien lee solo el indice entienda revocado lo que sigue en pie — y el indice es lo
+que lee el arranque. Si mas tarde otra la revoca entera, el estado pasa a `Revocada por D-XXX`.
 
 🚨 **Toda decision que verifica algo antes de aceptarlo lleva comando y salida cruda.** No se
 escribe «se comprobo que…» de memoria: va el comando ejecutado y su salida literal.

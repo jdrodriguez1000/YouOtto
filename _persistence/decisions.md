@@ -35,14 +35,16 @@
 | [D-012](#d-012---cosecha-de-lecciones-de-000_preproject) | Cosecha de lecciones de 000_preproject | 2026-09-16 | Vigente |
 | [D-013](#d-013---el-anclaje-de-criterios-de-cierre-compara-la-salida-anclada-con-la-publicada) | El anclaje de criterios de cierre compara la salida anclada con la publicada | 2026-09-16 | Vigente |
 | [D-014](#d-014---cosecha-de-l-007) | Cosecha de L-007 | 2026-09-16 | Vigente |
-| [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Revocada por D-020 |
+| [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Revocada en parte por D-020 |
 | [D-016](#d-016---promocion-al-esqueleto-de-los-seis-archivos-de-dt-001) | Promocion al esqueleto de los seis archivos de DT-001 | 2026-09-16 | Vigente |
 | [D-017](#d-017---el-control-de-salida-reproducida-declara-que-no-reejecuta) | El CONTROL DE SALIDA REPRODUCIDA declara que no reejecuta | 2026-09-16 | Vigente |
 | [D-018](#d-018---no-se-corrige-el-recuento-de-la-nota-de-cierre-de-s-004) | No se corrige el recuento de la NOTA DE CIERRE de S-004 | 2026-09-16 | Vigente |
 | [D-019](#d-019---el-anclaje-traduce-las-ordenes-git-diff---cached-del-informe) | El anclaje traduce las ordenes git diff --cached del informe | 2026-09-16 | Vigente |
 | [D-020](#d-020---la-firma-del-patrocinador-se-escribe-en-el-acta-de-cierre) | La firma del patrocinador se escribe en el acta de cierre | 2026-09-16 | Vigente |
 | [D-021](#d-021---la-nota-de-cierre-publica-la-forma-anclada-de-la-orden-del-paso-2d) | La NOTA DE CIERRE publica la forma anclada de la orden del Paso 2d | 2026-09-16 | Vigente |
-| [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Vigente |
+| [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Revocada en parte por D-023 |
+| [D-023](#d-023---el-control-sin-anclar-del-7c-quater-solo-mira-lineas-de-orden) | El control SIN ANCLAR del 7c-quater solo mira lineas de orden | 2026-09-16 | Vigente |
+| [D-024](#d-024---estado-propio-para-la-decision-revocada-en-parte) | Estado propio para la decision revocada en parte | 2026-09-16 | Vigente |
 
 ---
 
@@ -51,12 +53,17 @@
 | Campo | Valores posibles |
 |---|---|
 | Codigo | `D-XXX`, correlativo, no se reutiliza |
-| Estado | `Vigente` / `Revocada por D-XXX` |
+| Estado | `Vigente` / `Revocada en parte por D-XXX` / `Revocada por D-XXX` |
 | Origen | `usuario` / `manager` / `report_auditor` |
 
 🚨 **Una decision no se borra ni se reescribe: se revoca.** La entrada antigua se queda con
 `Revocada por D-XXX` en su estado, y la nueva explica que cambio y por que. El historial de por que
 se penso distinto en su momento es parte del registro.
+
+🚨 **Si la nueva solo revoca una parte, el estado lo dice: `Revocada en parte por D-XXX`.** La
+antigua sigue rigiendo en lo demas, y la nueva nombra **que punto** revoca. Escribir `Revocada por`
+a secas hace que quien lee solo el indice entienda revocado lo que sigue en pie — y el indice es lo
+que lee el arranque. Si mas tarde otra la revoca entera, el estado pasa a `Revocada por D-XXX`.
 
 🚨 **Toda decision que verifica algo antes de aceptarlo lleva comando y salida cruda.** No se
 escribe «se comprobo que…» de memoria: va el comando ejecutado y su salida literal.
@@ -761,7 +768,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-16 |
-| Estado | Revocada por D-020 |
+| Estado | Revocada en parte por D-020 |
 | Origen | usuario |
 
 - **Contexto:** con los hallazgos `F-001` a `F-005` en `Implementado` y `R-004` sin hallazgos,
@@ -1066,7 +1073,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-16 |
-| Estado | Vigente |
+| Estado | Revocada en parte por D-023 |
 | Origen | usuario |
 
 - **Contexto:** el usuario pidio hacer juntas `T-008` (`D-017`), `T-009` (`D-019`) y `T-011`
@@ -1134,3 +1141,114 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `081385a`.** Las siete reproducen lo publicado arriba.
+
+### D-023 - El control SIN ANCLAR del 7c-quater solo mira lineas de orden
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-008` de `R-006`: la segunda orden del Paso 7c-quater de `protocol-close`, que nacio
+  en `D-022` (punto 2), busca `diff --cached` en cualquier linea de la seccion 1, y salta con la prosa
+  que describe el propio control. Verificado vigente contra `HEAD` (`efbc8d5`), corriendo la orden
+  literal sobre una copia del informe en el scratchpad:
+
+  ```
+  $ git show efbc8d5:_audit/S-006.md > S-006.md
+  $ sed -n '/^## 1\./,/^## 2\./p' S-006.md | grep -F 'diff --cached' | grep -vF -- '--stat --name-only' && echo "SIN ANCLAR en la seccion 1: ordenes git diff --cached que el Paso 7c tenia que traducir"
+    por el Paso 1c); el Paso 7c traduce **en su sitio** las ordenes `git diff --cached` de la prosa de
+  SIN ANCLAR en la seccion 1: ordenes git diff --cached que el Paso 7c tenia que traducir
+  ```
+
+- **Decision:** **se acepta** como `T-012`, a peticion del usuario. La segunda orden del 7c-quater
+  solo cuenta **lineas de orden**: una linea que empieza por `$ git diff --cached` (con sangria o cita
+  opcionales) o una orden entre comillas invertidas que empieza por `git diff --cached` y lleva una
+  tuberia dentro. La skill declara la regla, su origen y su limite. **Revoca en parte `D-022`**: solo
+  el patron de su punto 2; la traduccion del Paso 7c y la existencia del control siguen en pie.
+- **Por que:** un control que salta con prosa se ignora, y eso es lo que paso en su primera ejecucion
+  real. La tuberia es lo que distingue un recuento (lo que deja de reproducir) de una mencion.
+- **Alternativas descartadas:**
+  - **Exigir solo lineas `$ `:** no veria el recuento en prosa de `S-004`, que es justo el caso que
+    `D-019` queria cubrir.
+  - **Que la tabla mande publicar la salida en «Sin resolver» y seguir:** trata el sintoma; con el
+    falso positivo quitado, la parada de la tabla vuelve a ser creible y se conserva.
+  - **Nota fechada en `S-006.md`:** el informe es del cierre y esta auditado (mismo criterio que
+    `D-018`); `R-006` ya dejo escrito que ninguna cifra de su seccion 1 es falsa.
+- **Prueba sobre los tres informes ya commiteados.** El patron nuevo encuentra las dos ordenes reales
+  de `S-004` (un recuento en prosa y una linea `$ `) y nada en `S-005` ni en `S-006`. ⚠️ **Corrige la
+  prueba de `D-022`:** alli `S-005` daba `3`, y las tres eran menciones sin recuento, no ordenes; la
+  cifra de `D-022` no se reescribe.
+
+  ```
+  $ for c in 74749f7:_audit/S-004.md 2846f62:_audit/S-005.md efbc8d5:_audit/S-006.md; do echo "== $c"; git show $c | sed -n '/^## 1\./,/^## 2\./p' | grep -E '^[[:space:]]*(> )?\$ git diff --cached|`git diff --cached[^`]*\|' | grep -vF -- '--stat --name-only' | wc -l; done
+  == 74749f7:_audit/S-004.md
+  2
+  == 2846f62:_audit/S-005.md
+  0
+  == efbc8d5:_audit/S-006.md
+  0
+  ```
+
+- ⚠️ **Consecuencia:** `.claude/` se separa un poco mas del esqueleto; la promocion sigue pendiente de
+  aprobacion del usuario, como en `D-022`.
+- **Criterio de cierre:** a ese commit, el 7c-quater declara la regla de linea de orden, no le queda
+  el patron suelto, y los controles de fuga y de codigos siguen en cero.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Linea de orden significa una de dos formas'
+  1
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF "grep -F 'diff --cached'"
+  0
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  ```
+
+### D-024 - Estado propio para la decision revocada en parte
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** recomendacion sin hallazgo de `R-006` (seccion 5): el vocabulario de `Estado` solo
+  tenia `Vigente` / `Revocada por D-XXX`, y el indice leia «Etapa 000_preproject cerrada | Revocada
+  por D-020» aunque `D-020` solo revoco «el acta no se edita» y la etapa sigue cerrada. `D-023` vuelve a
+  necesitarlo sobre `D-022`. Verificado contra `HEAD` (`efbc8d5`):
+
+  ```
+  $ git show efbc8d5:_persistence/decisions.md | grep -oE "^\| Estado \| .*" | sort | uniq -c
+        1 | Estado | Revocada por D-020 |
+       22 | Estado | Vigente |
+        1 | Estado | `Vigente` / `Revocada por D-XXX` |
+  ```
+
+- **Decision:** el usuario elige un estado nuevo, `Revocada en parte por D-XXX`, en las convenciones
+  de `decisions.md` y en su plantilla `_templates/000_preproject/020_decisions.md`, con una regla que
+  pide a la nueva nombrar que punto revoca. `protocol-start` declara que ese estado **no es cerrado** y
+  que se citan las dos. Se aplica a `D-015` (por `D-020`) y a `D-022` (por `D-023`), indice y ficha.
+- **Por que:** el indice es lo que lee el arranque; una revocacion parcial escrita como total le hace
+  reportar como revocado lo que rige.
+- **Alternativas descartadas:**
+  - **Nota en la ficha, sin estado nuevo:** cambio minimo, pero quien lee solo el indice sigue sin
+    verlo, que es el problema de partida.
+  - **Dejar `Vigente` y explicarlo en la nueva:** esconde la revocacion al indice por el lado contrario.
+- ⚠️ **Consecuencia:** toca dos archivos copiables (`_templates/`, `.claude/`); se suman a la promocion
+  pendiente de `D-022`.
+- **Criterio de cierre:** a ese commit, la plantilla y el registro ofrecen el estado nuevo con su regla,
+  `protocol-start` lo declara no cerrado, y `D-015` y `D-022` lo llevan en indice y ficha, sin que quede
+  ninguna revocacion total en el registro.
+
+  ```
+  $ git show <hash>:_templates/000_preproject/020_decisions.md | grep -cF 'Revocada en parte por D-XXX'
+  2
+  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF 'Revocada en parte por D-XXX` no es cerrada'
+  1
+  $ git show <hash>:_persistence/decisions.md | grep -E '^\| .*\| Revocada (en parte )?por D-[0-9]+ \|$'
+  | [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Revocada en parte por D-020 |
+  | [D-022](#d-022---como-se-implementan-t-008-t-009-y-t-011-en-protocol-close) | Como se implementan T-008, T-009 y T-011 en protocol-close | 2026-09-16 | Revocada en parte por D-023 |
+  | Estado | Revocada en parte por D-020 |
+  | Estado | Revocada en parte por D-023 |
+  ```

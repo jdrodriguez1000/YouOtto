@@ -339,6 +339,10 @@ unico que la desmiente es su campo `Estado`.
 Antes de citar el porque de una decision: **mira su estado**, y si esta revocada, **cita la que la
 revoco**, no la revocada.
 
+⚠️ **`Revocada en parte por D-XXX` no es cerrada**, y por eso el grep de arriba no la devuelve: la
+antigua sigue rigiendo salvo en el punto que la nueva nombra. Se citan **las dos**, y lo revocado se
+lee en la nueva.
+
 ---
 
 ## Paso 3 — Reporte en pantalla

@@ -29,7 +29,7 @@
 | [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Implementado |
 | [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Implementado |
 | [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
-| [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Abierto |
+| [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Aceptado — pendiente |
 
 ---
 
@@ -254,8 +254,8 @@ Plantilla:
 | Auditoria | R-006 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-012, D-023 |
 | Cerrado en | |
 
 - **Que se observo:** la segunda orden del Paso 7c-quater de `protocol-close` (T-009, D-022) busca
@@ -267,4 +267,7 @@ Plantilla:
 - **Por que importa:** el control da falso positivo en su primera ejecucion real y el cierre siguio
   sin publicarlo; un control que salta siempre se ignora. `Media`, no `Alta`: la seccion 1 de S-006
   no conserva ordenes de staging reales, asi que ninguna cifra es falsa.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`efbc8d5`), con orden y salida en
+  `D-023`. La segunda orden del 7c-quater solo cuenta lineas de orden (`$ git diff --cached` o una
+  orden entre comillas invertidas con tuberia); probada sobre `S-004`, `S-005` y `S-006`. `S-006.md`
+  no se reescribe. Registrado en `T-012`.

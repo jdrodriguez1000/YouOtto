@@ -28,6 +28,8 @@
 | [T-009](#t-009---anclar-las-ordenes-git-diff---cached-de-la-seccion-1-del-informe) | Anclar las ordenes git diff --cached de la seccion 1 del informe | Implementada | Media | No bloqueante | 005_discovery |
 | [T-010](#t-010---firmar-la-tabla-52-del-acta-de-cierre-de-000_preproject) | Firmar la tabla 5.2 del acta de cierre de 000_preproject | Implementada | Media | No bloqueante | 005_discovery |
 | [T-011](#t-011---pedir-en-la-nota-de-cierre-la-forma-anclada-de-la-orden-del-paso-2d) | Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-012](#t-012---acotar-el-control-sin-anclar-del-7c-quater-a-lineas-de-orden) | Acotar el control SIN ANCLAR del 7c-quater a lineas de orden | Implementada | Media | No bloqueante | 005_discovery |
+| [T-013](#t-013---anadir-el-estado-de-decision-revocada-en-parte) | Anadir el estado de decision revocada en parte | Implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -348,6 +350,9 @@ Plantilla:
 - **Que:** escribir en el Paso 7c-bis de `protocol-close` que el control compara texto y no reejecuta
   las ordenes, y remitir a `DT-002`, segun `D-017`.
 - **Por que:** primera recomendacion sin hallazgo de `R-004`, evaluada y aceptada en `D-017`.
+- **Nota (2026-09-16, S-007):** se implemento **sin** remitir a `DT-002`, por decision de `D-022`
+  (punto 1): la skill es copiable y no admite codigos instanciados; el puntero va de `DT-002` al
+  control. El «Que» no se reescribe; la tarea no esta incumplida en ese punto.
 - **Criterio de cierre:** el de `D-022`, con sus ordenes ancladas y sus salidas; alli consta
   tambien como se implemento.
 
@@ -412,3 +417,34 @@ Plantilla:
   prometio y no la publico. Verificacion contra `HEAD` (`673a97a`) en `D-021`.
 - **Criterio de cierre:** el de `D-022`, con sus ordenes ancladas y sus salidas; alli consta
   tambien como se implemento.
+
+### T-012 - Acotar el control SIN ANCLAR del 7c-quater a lineas de orden
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-007 |
+
+- **Que:** atender `F-008`: que la segunda orden del Paso 7c-quater de `protocol-close` solo cuente
+  lineas de orden en forma de staging, no la cadena en la prosa, segun `D-023`.
+- **Por que:** el control dio falso positivo en su primera ejecucion real y el cierre siguio sin
+  publicarlo. Verificacion contra `HEAD` (`efbc8d5`) en `D-023`.
+- **Criterio de cierre:** el de `D-023`, con sus ordenes ancladas y sus salidas.
+
+### T-013 - Anadir el estado de decision revocada en parte
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | usuario |
+| Sesion | S-007 |
+
+- **Que:** anadir `Revocada en parte por D-XXX` a las convenciones de `decisions.md` y de su
+  plantilla, declararlo no cerrado en `protocol-start` y aplicarlo a `D-015` y `D-022`, segun `D-024`.
+- **Por que:** recomendacion sin hallazgo de `R-006`; el usuario eligio el estado nuevo.
+- **Criterio de cierre:** el de `D-024`, con sus ordenes ancladas y sus salidas.

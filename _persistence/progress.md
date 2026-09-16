@@ -40,6 +40,7 @@
 | [S-004](#s-004---hallazgo-f-005-de-r-003-atendido-control-de-salida-reproducida-en-el-7c-bis-y-cosecha-de-l-007) | Hallazgo `F-005` de `R-003` atendido, CONTROL DE SALIDA REPRODUCIDA en el 7c-bis, y cosecha de `L-007` | 2026-09-16 | 000_preproject |
 | [S-005](#s-005---etapa-000_preproject-cerrada-promocion-de-dt-001-y-las-tres-recomendaciones-de-r-004-evaluadas) | Etapa `000_preproject` cerrada, promocion de `DT-001`, y las tres recomendaciones de `R-004` evaluadas | 2026-09-16 | 005_discovery |
 | [S-006](#s-006---f-006-y-f-007-de-r-005-atendidos-firma-del-acta-de-000_preproject-y-t-008t-009t-011-implementadas) | `F-006` y `F-007` de `R-005` atendidos, firma del acta de `000_preproject`, y `T-008`/`T-009`/`T-011` implementadas | 2026-09-16 | 005_discovery |
+| [S-007](#s-007---f-008-de-r-006-atendido-y-nuevo-estado-revocada-en-parte-para-decisions) | `F-008` de `R-006` atendido (control del 7c-quater acotado a lineas de orden), y nuevo estado `Revocada en parte por D-XXX` para `decisions.md` | 2026-09-16 | 005_discovery |
 
 ---
 
@@ -71,40 +72,41 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-16 (S-006)` |
+| Ultima actualizacion | `2026-09-16 (S-007)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito `S-005` en `R-005` y entrego dos hallazgos: `F-006` (el acta de `000_preproject` seguia con la firma del patrocinador en blanco mientras `D-015` daba la etapa por cerrada) y `F-007` (la seccion 7 de `S-005.md` prometia la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE y no estaba). Se aceptaron los dos: `D-020` hizo escribir la firma del patrocinador (JD Rodriguez - Main Sponsor, 2026-09-16, ETAPA CERRADA) en la tabla 5.2 del acta (`T-010`), revocando `D-015` solo en la clausula «el acta no se edita»; `D-021` hizo que la NOTA DE CIERRE de `protocol-close` exija la forma anclada de la orden del Paso 2d bajo un sexto rotulo (`T-011`). `D-022` fijo el como de `T-008`, `T-009` y `T-011`, las tres implementadas sobre `.claude/skills/protocol-close/SKILL.md`. Se escribio `L-008`. El esqueleto de arranque vuelve a quedar por detras (`.claude/skills/protocol-close/SKILL.md` difiere), pendiente de promocion con aprobacion del usuario |
+| Avance de la etapa | `report_auditor` audito `S-006` en `R-006` y entrego `F-008`: la segunda orden del Paso 7c-quater de `protocol-close` buscaba `diff --cached` en cualquier linea de la seccion 1 y saltaba con la prosa que describe el propio control, y el anclaje de `S-006` se commiteo igual sin publicar la parada. Se acepto con `D-023`: el control solo cuenta ahora **lineas de orden** en forma de staging (una linea `$ git diff --cached...` o una orden entre comillas invertidas con tuberia), probado contra `S-004`, `S-005` y `S-006` (`T-012`, `Implementada`). Ademas, por peticion del usuario ante una recomendacion sin hallazgo de `R-006`, `D-024` anadio el estado `Revocada en parte por D-XXX` a `decisions.md` (indice, convenciones y plantilla) y lo aplico a `D-015` y `D-022`, cuyas revocaciones eran parciales y estaban escritas como totales; `protocol-start` declara que ese estado no es cerrado (`T-013`, `Implementada`). `F-008` queda `Aceptado — pendiente` en `_audit/findings.md`, citando `T-012`/`D-023`. Se escribio `L-009`. El esqueleto de arranque sigue por detras en tres archivos (`protocol-close/SKILL.md`, `protocol-start/SKILL.md`, `_templates/000_preproject/020_decisions.md`), pendiente de promocion con aprobacion del usuario |
 | Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa |
 
 ---
 
 ## 2. Ultimo realizado
 
-Sexta sesion de trabajo. Segun el diff: se evaluaron los dos hallazgos de `R-005` sobre `S-005`.
-`D-020` acepta `F-006` (firma del patrocinador en blanco en el acta de `000_preproject` mientras
-`D-015` daba la etapa por cerrada): la tabla 5.2 del acta queda con la firma **JD Rodriguez - Main
-Sponsor**, fecha 2026-09-16, **ETAPA CERRADA** (`T-010`), y `D-015` queda `Revocada por D-020` solo
-en la clausula «el acta no se edita». `D-021` acepta `F-007` (la seccion 7 de `S-005.md` prometia la
-forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no estaba): la plantilla de la NOTA DE
-CIERRE de `protocol-close` pasa a exigir esa forma anclada con su recuento bajo un sexto rotulo
-(`T-011`). `D-022` fijo el como de implementar `T-008` (`D-017`), `T-009` (`D-019`) y `T-011`
-(`D-021`) juntas sobre `.claude/skills/protocol-close/SKILL.md`, con las ordenes de sus tres
-criterios de cierre corridas contra commits ya auditados como prueba. `F-006` y `F-007` quedan
-`Aceptado — pendiente` en `_audit/findings.md`, citando `T-010`/`D-020` y `T-011`/`D-021`. Se
-escribio `L-008` (una firma que el artefacto espera se escribe en el artefacto, no solo en el
-registro).
+Septima sesion de trabajo. Segun el diff: se evaluo `F-008` de `R-006` sobre `S-006` (el control
+`SIN ANCLAR` del Paso 7c-quater saltaba con una linea de prosa que citaba `diff --cached` y el
+anclaje de `S-006` se commiteo sin publicar la parada). `D-023` acota la segunda orden del
+7c-quater a **lineas de orden** en forma de staging (una linea `$ git diff --cached...`, o una orden
+entre comillas invertidas con tuberia), probado sobre `S-004` (2 lineas reales), `S-005` (0) y
+`S-006` (0); revoca en parte `D-022` (solo su punto 2, el patron suelto). `F-008` queda
+`Aceptado — pendiente` en `_audit/findings.md`, citando `T-012`/`D-023`. Aparte, sobre una
+recomendacion sin hallazgo de `R-006` (el indice de `decisions.md` leia `D-015` y `D-022` como
+revocadas del todo cuando solo lo estaban en parte), el usuario eligio anadir el estado
+`Revocada en parte por D-XXX` (`D-024`): se sumo a las convenciones y a la plantilla de
+`decisions.md`, `protocol-start` declara que ese estado no es cerrado, y se aplico a `D-015` (por
+`D-020`) y a `D-022` (por `D-023`), indice y ficha. Se escribio `L-009` (un control nuevo se prueba
+tambien sobre el texto que lo describe).
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-006`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto sigue siendo
+(`S-007`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto sigue siendo
 la clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
-`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque quedo por
-detras en `.claude/skills/protocol-close/SKILL.md`: promoverlo con `protocol-promote` requiere
-aprobacion del usuario, punto por punto (consecuencia anotada en `D-022`). Sigue abierta `DT-002` (el
-CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
+`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque sigue por
+detras en `.claude/skills/protocol-close/SKILL.md`, `.claude/skills/protocol-start/SKILL.md` y
+`_templates/000_preproject/020_decisions.md`: promoverlo con `protocol-promote` requiere aprobacion
+del usuario, punto por punto. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta
+las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -246,6 +248,25 @@ Plantilla:
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. El esqueleto de
   arranque vuelve a diferir en `protocol-close/SKILL.md`, pendiente de promocion con aprobacion del
   usuario. `DT-002` sigue `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
+
+### S-007 - `F-008` de `R-006` atendido, y nuevo estado `Revocada en parte por D-XXX` para `decisions.md`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Tareas | T-012, T-013 |
+
+- **Que se hizo:** se acepto `F-008` de `R-006` con `D-023`: la segunda orden del Paso 7c-quater de
+  `protocol-close` pasa a contar solo **lineas de orden** en forma de staging, no cualquier mencion
+  de `diff --cached`; probada contra `S-004`, `S-005` y `S-006`. Revoca en parte `D-022` (solo su
+  punto 2). `F-008` queda `Aceptado — pendiente`, citando `T-012`/`D-023`. Ademas, por una
+  recomendacion sin hallazgo de `R-006`, el usuario eligio anadir el estado
+  `Revocada en parte por D-XXX` a `decisions.md` (`D-024`): convenciones, plantilla,
+  `protocol-start` (declara que no es estado cerrado), y aplicado a `D-015` y `D-022`. Se escribio
+  `L-009`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. El esqueleto
+  de arranque sigue por detras en tres archivos, pendiente de promocion con aprobacion del usuario.
+  `DT-002` sigue `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
 
 ---
 

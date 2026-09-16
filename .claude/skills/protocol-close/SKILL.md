@@ -1999,13 +1999,23 @@ debajo deja de ser la que esa orden produce — aunque los archivos listados sea
 ```bash
 grep -qE '^(> )?\$ git show --stat --name-only --format= <hash>$' _audit/S-XXX.md ||
   echo "FALTA en la seccion 1: la orden prescrita por el Paso 7c (sin --format= la salida no reproduce)"
-sed -n '/^## 1\./,/^## 2\./p' _audit/S-XXX.md | grep -F 'diff --cached' | grep -vF -- '--stat --name-only' &&
+sed -n '/^## 1\./,/^## 2\./p' _audit/S-XXX.md |
+  grep -E '^[[:space:]]*(> )?\$ git diff --cached|`git diff --cached[^`]*\|' | grep -vF -- '--stat --name-only' &&
   echo "SIN ANCLAR en la seccion 1: ordenes git diff --cached que el Paso 7c tenia que traducir"
 ```
 
 🔑 **La segunda orden comprueba la traduccion del Paso 7c, y por el mismo motivo: es igualdad de
-cadenas.** Toda linea de la seccion 1 con `diff --cached` que no sea la de la lista de archivos es un
-recuento que ya no reproduce. Se imprimen las lineas y, debajo, el aviso.
+cadenas.** Toda **linea de orden** de la seccion 1 en forma de staging que no sea la de la lista de
+archivos es un recuento que ya no reproduce. Se imprimen las lineas y, debajo, el aviso.
+
+🚨 **Linea de orden significa una de dos formas, y ninguna otra:** una linea de bloque que empieza por
+`$ git diff --cached`, o una orden entre comillas invertidas que empieza por `git diff --cached` y
+lleva una tuberia dentro — que es como se escribe un recuento en la prosa. La cadena suelta no
+cuenta. **Esta regla nacio de un defecto real:** una version anterior buscaba `diff --cached` en
+cualquier linea, y la prosa que describe este mismo control lo disparo en su primera ejecucion real;
+un control que salta siempre acaba ignorandose, y asi ocurrio. ⚠️ **El limite es el reverso:** una
+orden de staging citada en prosa sin tuberia no se detecta — pero sin tuberia tampoco hay recuento
+al lado que pueda dejar de reproducir.
 
 🚨 **El patron busca una LINEA DE ORDEN con el hash de este commit, no la cadena en cualquier sitio.**
 `<hash>` es el del commit sustantivo, el mismo que el Paso 7c escribe. Una version anterior buscaba

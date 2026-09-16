@@ -28,6 +28,7 @@
 | [L-006](#l-006---un-criterio-que-busca-un-texto-se-excluye-a-si-mismo-del-recuento) | Un criterio que busca un texto se excluye a si mismo del recuento | 2026-09-16 | 000_preproject | Ya cubierta por LG-101 |
 | [L-007](#l-007---un-criterio-que-comparten-dos-entradas-se-copia-del-archivo-no-se-reescribe) | Un criterio que comparten dos entradas se copia del archivo, no se reescribe | 2026-09-16 | 000_preproject | Ya cubierta por LG-98 |
 | [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -226,3 +227,20 @@ Plantilla:
 - **Como aplicarla:** al registrar una aprobacion o decision que un artefacto espera, rellenar el hueco
   del artefacto en la misma pasada y citar la `D-XXX`; si se decide no hacerlo, cambiar la plantilla
   para que el artefacto no afirme lo contrario.
+
+### L-009 - Un control nuevo se prueba tambien sobre el texto que lo describe
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+
+- **Contexto:** evaluacion de `F-008`, sobre el control `SIN ANCLAR` del 7c-quater.
+- **Que ocurrio:** el control se probo contra informes viejos, y su prueba ya contaba prosa como si
+  fueran ordenes. En su primera ejecucion real salto con la frase del propio informe que lo describia,
+  y el cierre siguio adelante ignorando la parada.
+- **Leccion:** un control por cadena que se anuncia en prosa se encuentra a si mismo; y un control que
+  salta con falsos positivos se aprende a ignorar desde la primera vez.
+- **Como aplicarla:** al crear un control por `grep`, correrlo tambien sobre un texto que lo mencione
+  (el informe o la decision que lo introduce) y mirar **las lineas** que devuelve, no solo la cifra;
+  acotar el patron a la forma sintactica de lo que se busca, no a la cadena.
