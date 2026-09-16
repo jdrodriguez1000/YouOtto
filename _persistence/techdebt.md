@@ -21,7 +21,8 @@
 
 | Codigo | Deuda tecnica | Estado | Confirmacion | Importancia | Urgencia |
 |---|---|---|---|---|---|
-| [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | No implementada | Propuesta (pendiente del usuario) | Media | No bloqueante |
+| [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | Implementada | Confirmada | Media | No bloqueante |
+| [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
 
 ---
 
@@ -88,8 +89,8 @@ Plantilla:
 ### DT-001 - `.claude/` se aleja del esqueleto de arranque
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
-| Confirmacion | Propuesta (pendiente del usuario) |
+| Estado | Implementada |
+| Confirmacion | Confirmada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Origen | session-closer |
@@ -121,3 +122,47 @@ Plantilla:
   indentadas) y la cabecera YAML invalida en sus tres agentes.
 - **Como se paga:** correr `protocol-promote` con la puerta del usuario para llevar los seis
   archivos al esqueleto de arranque.
+
+🕐 **Nota 2026-09-16 — confirmada por el usuario, y su alcance crecio.** El usuario la confirmo al
+evaluarla y pidio pagarla en el acto con `protocol-promote`, con la condicion expresa de que todo lo
+que suba al esqueleto sea agnostico. La descripcion de arriba se quedo corta: `D-013` (`S-004`)
+tambien cambio `protocol-close/SKILL.md` sin promoverse. Siguen siendo los mismos seis archivos,
+medido contra el esqueleto en `707d572`:
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; diff --strip-trailing-cr "$ESQ/.claude/skills/protocol-close/SKILL.md" .claude/skills/protocol-close/SKILL.md | grep '^>' | grep -c 'SALIDA REPRODUCIDA'
+  5
+  ```
+
+🕐 **Nota 2026-09-16 (cierre de S-005) — pagada: `D-016` promovio los seis archivos, y la orden de
+arriba ya no reproduce.** El comando de la nota anterior se corrio antes de que `D-016` ejecutara
+`protocol-promote`; el esqueleto local ya esta en el commit `4d20ce2` (que incluye la promocion), asi
+que reejecutarlo hoy da `0`, no `5`. No se corrige el numero de la nota anterior porque describe un
+estado real de ese momento de la sesion; queda con esta nota fechada al lado, como pide el Paso 2d de
+`protocol-close`. Estado de la deuda: **Implementada**, con `D-016` como evidencia.
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; diff --strip-trailing-cr "$ESQ/.claude/skills/protocol-close/SKILL.md" .claude/skills/protocol-close/SKILL.md | grep '^>' | grep -c 'SALIDA REPRODUCIDA'
+  0
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "exit=$?"
+  exit=0
+  ```
+
+### DT-002 - El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Confirmacion | Confirmada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Origen | report_auditor |
+| Fecha | 2026-09-16 |
+
+- **Deuda:** el control del Paso 7c-bis compara el texto de la salida publicada con el de la anclada,
+  sin reejecutar la orden; una salida pegada que la orden no devuelve pasa limpia (`R-004`, `D-017`).
+- **Por que se tomo:** reejecutar ordenes del registro de forma automatica es caro y puede tocar otros
+  repositorios o depender del estado de la maquina; declarar el limite (`T-008`) cuesta poco.
+- **Costo de no pagarla:** la reproduccion de una salida anclada sigue dependiendo de que quien ancla
+  la pegue de una ejecucion real; solo la auditoria lo detecta despues.
+- **Como se paga:** definir que ordenes son reejecutables sin efectos fuera del repositorio y hacer
+  que el control las reejecute y compare la salida.

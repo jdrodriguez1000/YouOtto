@@ -24,6 +24,8 @@
 | [T-005](#t-005---corregir-el-ancla-de-la-fila-s-001-en-el-indice-de-progressmd) | Corregir el ancla de la fila S-001 en el indice de progress.md | Implementada | Baja | No bloqueante | 000_preproject |
 | [T-006](#t-006---hacer-que-las-cercas-de-bloque-de-los-controles-admitan-sangria) | Hacer que las cercas de bloque de los controles admitan sangria | Implementada | Media | No bloqueante | 000_preproject |
 | [T-007](#t-007---anclar-criterios-de-cierre-comparando-la-salida-anclada-con-la-publicada) | Anclar criterios de cierre comparando la salida anclada con la publicada | Implementada | Media | No bloqueante | 000_preproject |
+| [T-008](#t-008---declarar-en-el-paso-7c-bis-que-el-control-de-salida-reproducida-no-reejecuta) | Declarar en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-009](#t-009---anclar-las-ordenes-git-diff---cached-de-la-seccion-1-del-informe) | Anclar las ordenes git diff --cached de la seccion 1 del informe | No implementada | Media | No bloqueante | 005_discovery |
 
 ---
 
@@ -330,3 +332,34 @@ Plantilla:
   ```
 
 📌 **Anclada por el Paso 7c-bis al commit `c07680f`.** Las dos reproducen lo publicado arriba.
+
+### T-008 - Declarar en el Paso 7c-bis que el CONTROL DE SALIDA REPRODUCIDA no reejecuta
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-005 |
+
+- **Que:** escribir en el Paso 7c-bis de `protocol-close` que el control compara texto y no reejecuta
+  las ordenes, y remitir a `DT-002`, segun `D-017`.
+- **Por que:** primera recomendacion sin hallazgo de `R-004`, evaluada y aceptada en `D-017`.
+- **Criterio de cierre:** el Paso 7c-bis nombra el limite y cita la deuda; la orden se fija al
+  implementarla.
+
+### T-009 - Anclar las ordenes git diff --cached de la seccion 1 del informe
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-005 |
+
+- **Que:** que el Paso 7c de `protocol-close`, al anclar el informe, traduzca las ordenes
+  `git diff --cached` de la seccion 1 a `git diff <hash>^ <hash>`, segun `D-019`.
+- **Por que:** tercera recomendacion sin hallazgo de `R-004`, evaluada y aceptada en `D-019`.
+- **Criterio de cierre:** se fija al implementarla, con su orden anclada y su salida.

@@ -35,6 +35,11 @@
 | [D-012](#d-012---cosecha-de-lecciones-de-000_preproject) | Cosecha de lecciones de 000_preproject | 2026-09-16 | Vigente |
 | [D-013](#d-013---el-anclaje-de-criterios-de-cierre-compara-la-salida-anclada-con-la-publicada) | El anclaje de criterios de cierre compara la salida anclada con la publicada | 2026-09-16 | Vigente |
 | [D-014](#d-014---cosecha-de-l-007) | Cosecha de L-007 | 2026-09-16 | Vigente |
+| [D-015](#d-015---etapa-000_preproject-cerrada) | Etapa 000_preproject cerrada | 2026-09-16 | Vigente |
+| [D-016](#d-016---promocion-al-esqueleto-de-los-seis-archivos-de-dt-001) | Promocion al esqueleto de los seis archivos de DT-001 | 2026-09-16 | Vigente |
+| [D-017](#d-017---el-control-de-salida-reproducida-declara-que-no-reejecuta) | El CONTROL DE SALIDA REPRODUCIDA declara que no reejecuta | 2026-09-16 | Vigente |
+| [D-018](#d-018---no-se-corrige-el-recuento-de-la-nota-de-cierre-de-s-004) | No se corrige el recuento de la NOTA DE CIERRE de S-004 | 2026-09-16 | Vigente |
+| [D-019](#d-019---el-anclaje-traduce-las-ordenes-git-diff---cached-del-informe) | El anclaje traduce las ordenes git diff --cached del informe | 2026-09-16 | Vigente |
 
 ---
 
@@ -748,3 +753,213 @@ Plantilla:
   ```
 
 📌 **Anclada por el Paso 7c-bis al commit `c07680f`.** Reproduce lo publicado arriba.
+
+### D-015 - Etapa 000_preproject cerrada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** con los hallazgos `F-001` a `F-005` en `Implementado` y `R-004` sin hallazgos,
+  `manager` repaso una por una las diez casillas de la condicion de salida de
+  `_phases/000_preproject.md` sobre `f2b7662` (arbol limpio). Despues lanzo `phase_exit_auditor`, que
+  dejo el acta `_audit/000_preproject/005_phase_exit_record_001.md` (commit `4fad4dd`) con dictamen
+  **CASILLAS SATISFECHAS**: 10 CUMPLE, 0 NO CUMPLE, 0 NO COMPROBABLE.
+- **Decision:** el usuario, como patrocinador, firma **ETAPA CERRADA** para `000_preproject`. Esta
+  entrada es la segunda firma que pide la seccion 5.2 del acta; el acta no se edita, porque la
+  escribio el agente y su dictamen es sobre `f2b7662`.
+- **Por que:** las dos firmas coinciden: la revision tecnica independiente dio las diez casillas
+  satisfechas, y el patrocinador acepta el andamio como suficiente para empezar el producto.
+- **Alternativas descartadas:** **ETAPA NO CERRADA**. No habia casilla sin cumplir ni hallazgo abierto
+  que la sostuviera.
+- **Consecuencia:** la etapa siguiente declarada es `005_discovery`. Al arrancarla se activa el
+  disparador de `A-001`, y la diferencia `005_discovery/` del Paso 2c (`D-002`) tiene que
+  desaparecer con su primer artefacto.
+- **Verificacion previa de `manager`**, contra `HEAD` (`f2b7662`) con el arbol limpio. Las ordenes
+  van por casilla en este orden: 1, 2, 3, 8, 7 (fuga), 7 (codigos), 5 y 10. Las casillas 4, 6 y 9 se
+  comprobaron leyendo el tablero, `git log` y `D-005`, y constan con su orden en el acta:
+
+  ```
+  $ diff <(git ls-tree -d --name-only f2b7662 | sed 's|$|/|' | sort) <(git show f2b7662:project.md | sed -n '/^## Carpetas propias/,/^## /p' | grep -oE '^\| `[^`]+/`' | tr -d '|` ' | sort)
+  1a2
+  > 005_discovery/
+  8a10
+  > temporal/
+  $ git ls-tree --name-only f2b7662 -- .claude/agents/ | wc -l
+  6
+  $ for f in tasks decisions constraints assumptions lessons techdebt progress; do diff <(git show f2b7662:_persistence/$f.md | awk '/^[[:space:]]*```/{c=!c; next} !c' | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) <(git show f2b7662:_persistence/$f.md | awk '/^[[:space:]]*```/{c=!c; next} !c' | grep -oE '^#{3} [A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u); done | wc -l
+  0
+  $ git show f2b7662:_audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | grep -vc '| Implementado |'
+  0
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" f2b7662 -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' f2b7662 -- _phases _workflow | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  $ git grep -c 'SIN COMPROBAR' f2b7662 -- '_audit/S-*.md' | wc -l
+  0
+  $ git show f2b7662:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
+  0
+  ```
+
+  Las dos diferencias del primer control tienen su razon escrita: `005_discovery/` en `D-002` y
+  `temporal/` en la tabla «Carpetas propias» de `project.md` (excluida en `.gitignore`).
+
+### D-016 - Promocion al esqueleto de los seis archivos de DT-001
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario evaluo `DT-001`, la confirmo y pidio pagarla en el acto con
+  `protocol-promote`, con una condicion expresa: todo lo que suba al esqueleto tiene que ser
+  agnostico. Los tres disparadores se cumplian: lo pidio el usuario, las seis areas estaban limpias y
+  subidas en `4fad4dd` (sin `ahead`), y no habia auditoria en curso.
+- **Decision:** se promueven los seis archivos, aprobados uno por uno por el usuario:
+  `.claude/agents/gate1_auditor.md`, `gate2_auditor.md`, `phase_exit_auditor.md` (`D-009`), y
+  `.claude/skills/protocol-audit/SKILL.md`, `protocol-start/SKILL.md` y `protocol-close/SKILL.md`
+  (`D-008`, `D-010`, `D-013`). No se dejo ninguno fuera. Hash de origen `4fad4dd`; commit del
+  esqueleto `4d20ce2`, subido.
+- **Por que:** los seis corrigen defectos del propio esqueleto: tres agentes que no cargaban por la
+  cabecera YAML y controles que no veian ordenes ni cercas con sangria. Un proyecto que clonara
+  `707d572` los heredaba.
+- **Alternativas descartadas:** **confirmar la deuda y promover mas adelante.** Con la etapa recien
+  cerrada el metodo estaba auditado sin hallazgos abiertos; esperar a `005_discovery` acumulaba mas
+  desfase en la misma puerta.
+- **Hallazgos:** ninguno. Nada existia solo en el esqueleto.
+- **Comprobacion del supuesto del Paso 2:** se leyeron las 40 lineas que la promocion borra (1, 1, 1,
+  4, 2 y 31). Todas eran versiones anteriores de patrones y parrafos ya reescritos aqui; ninguna era
+  algo que un proyecto generico necesitara.
+- **Final de linea:** los tres agentes eran CRLF aqui y LF en el esqueleto, y se copiaron como LF; las
+  tres skills eran LF en los dos y se copiaron byte a byte.
+- **Verificacion.** Controles de agnosticismo sobre el origen, antes de la puerta. El tercero es el
+  barrido ensanchado; su unica linea es la palabra comun «USUARIOS», no un dato propio, en un archivo
+  que no se promovio:
+
+  ```
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 4fad4dd -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' 4fad4dd -- _phases _workflow | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  $ git grep -nE 'USUARIO|jdrodriguez|gmail|TripleS|Triple S|RaidomAI|[A-Z]:[\/]|/Users/|/home/|Documents[\/]|[Gg]it[Hh]ub|gitlab|bitbucket|https?://' 4fad4dd -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  4fad4dd:_templates/010_prototype/025_business_validation.md:14:> 🚨 **SESION APARTE, CON EL PATROCINADOR, SIN USUARIOS DELANTE.**
+  ```
+
+  El commit del esqueleto y su remoto:
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS" show --stat --format='%h %s' 4d20ce2 | tail -7
+   .claude/agents/gate1_auditor.md        |   2 +-
+   .claude/agents/gate2_auditor.md        |   2 +-
+   .claude/agents/phase_exit_auditor.md   |   2 +-
+   .claude/skills/protocol-audit/SKILL.md |   8 +--
+   .claude/skills/protocol-close/SKILL.md | 115 ++++++++++++++++++++++++---------
+   .claude/skills/protocol-start/SKILL.md |   4 +-
+   6 files changed, 93 insertions(+), 40 deletions(-)
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS" ls-remote origin refs/heads/main | cut -c1-7
+  4d20ce2
+  ```
+
+  Barrido del Paso 1 despues de promover (sin salida: el desfase cerro) y Paso 1b sobre el commit del
+  esqueleto:
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "exit=$?"
+  exit=0
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff --strip-trailing-cr <(git -C "$ESQ" show 4d20ce2:_templates/000_preproject/$t) <(git -C "$ESQ" show 4d20ce2:$c) | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+- ⚠️ **El barrido de despues compara con el arbol de trabajo**, que en las seis areas es identico a
+  `4fad4dd` (sin cambios sin commitear alli). El cambio de `DT-001` a `Implementada` lo registra el
+  cierre, con este `D-016` como evidencia.
+
+### D-017 - El CONTROL DE SALIDA REPRODUCIDA declara que no reejecuta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** primera recomendacion sin hallazgo de `R-004` (seccion 5): el CONTROL DE SALIDA
+  REPRODUCIDA del Paso 7c-bis compara el **texto** de la salida antes y despues del anclaje y no
+  reejecuta la orden. Detecta que se sustituya una salida, pero no que se pegue una salida que la
+  orden no devuelve. Verificado contra `HEAD` (`4fad4dd`): la funcion solo extrae texto con `awk`.
+
+  ```
+  $ git show 4fad4dd:.claude/skills/protocol-close/SKILL.md | grep -nE 'salidas\(\)' | cut -c1-60
+  1884:salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Crite
+  ```
+
+- **Decision:** la recomendacion **es correcta**. Se acepta en dos partes: el Paso 7c-bis declara por
+  escrito lo que el control detecta y lo que no (`T-008`), y reejecutar las ordenes ancladas se deja
+  como deuda (`DT-002`). Lo decidio el usuario al evaluar las tres recomendaciones.
+- **Por que:** un control que no declara su limite se lee como si cubriera mas de lo que cubre.
+  Reejecutar de forma automatica ordenes del registro no es gratis: algunas apuntan a otros
+  repositorios, usan `eval` o dependen del estado de la maquina.
+- **Alternativas descartadas:**
+  - **Implementar ya la reejecucion:** caro y con riesgo de ejecutar ordenes con efectos fuera del
+    repositorio; se deja para cuando haya un criterio de que ordenes son reejecutables.
+  - **No hacer nada:** el limite quedaria solo en una auditoria, sin rastro en el protocolo.
+- ⚠️ **Consecuencia:** cambiar `protocol-close` vuelve a separar `.claude/` del esqueleto, recien
+  alineado en `D-016`. Conviene hacer `T-008` y `T-009` en la misma sesion y promoverlas juntas.
+
+### D-018 - No se corrige el recuento de la NOTA DE CIERRE de S-004
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** segunda recomendacion sin hallazgo de `R-004`: la NOTA DE CIERRE de `S-004` habla de
+  «cuatro» ordenes no anclables (2, 3, 8, 9) cuando la tabla del Paso 2d marca tambien la 6. Verificado
+  contra `HEAD` (`4fad4dd`):
+
+  ```
+  $ git show 4fad4dd:_audit/S-004.md | grep -nF '(2, 3, 8, 9)' | cut -c1-60
+  249:Las cuatro marcadas «no anclable todavia» (2, 3, 8, 9)
+  258:todavia» arriba (2, 3, 8, 9) son, en realidad, dos orde
+  ```
+
+- **Decision:** **no se implementa.** La recomendacion es cierta, pero no tiene efecto: el propio
+  auditor dice que el desglose posterior cuenta 5 y que el registro no cambia. Lo decidio el usuario.
+- **Por que:** `_audit/S-004.md` es un informe ya entregado y auditado; los informes no se reescriben,
+  y una nota fechada para una inexactitud de redaccion sin efecto aporta ruido, no evidencia.
+- **Alternativas descartadas:** **nota fechada en `S-004.md`.** El archivo es del cierre, no de
+  `manager`, y la inexactitud ya queda registrada en `R-004` y en esta entrada.
+
+### D-019 - El anclaje traduce las ordenes git diff --cached del informe
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** tercera recomendacion sin hallazgo de `R-004`: la seccion 1 del informe anclado de
+  `S-004` conserva `git diff --cached -U0 …` como orden de los recuentos de hunks, que solo tiene
+  sentido antes del commit; anclada seria `git diff -U0 c07680f^ c07680f`. Verificado contra `HEAD`
+  (`4fad4dd`): la plantilla del informe ya pide anclar la **lista** de archivos, pero no dice nada de
+  las ordenes `--cached` escritas en linea en la prosa de la seccion 1.
+
+  ```
+  $ git show 4fad4dd:_audit/S-004.md | grep -c -- 'diff --cached'
+  9
+  ```
+
+- **Decision:** **se acepta** como `T-009`: el Paso 7c del cierre, al anclar el informe, traduce toda
+  orden `git diff --cached` de la seccion 1 a su forma anclada `git diff <hash>^ <hash>`. Lo decidio el
+  usuario.
+- **Por que:** no es un descuido de `S-004`, es un hueco del metodo: se repetira en cada cierre. Una
+  orden que ya no reproduce deja de ser evidencia aunque su cifra sea correcta.
+- **Alternativas descartadas:** **no implementarla por ser inocua en `S-004`.** La cifra de hoy es
+  cierta, pero la orden no la reproduce, que es exactamente lo que el anclaje existe para evitar.
