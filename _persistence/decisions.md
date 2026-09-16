@@ -691,7 +691,7 @@ Plantilla:
   CIERRE.
 
   ```
-  $ eval "$(git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -F 'salidas() {')"; for p in "101db28 2a72df8" "e222812 4b27ae4"; do set -- $p; for f in _persistence/decisions.md _persistence/tasks.md; do echo "== $1..$2 $f"; diff <(git show $1:"$f" | salidas) <(git show $2:"$f" | salidas) | grep -cE '^[<>]'; done; done
+  $ eval "$(git show c07680f:.claude/skills/protocol-close/SKILL.md | grep -F 'salidas() {')"; for p in "101db28 2a72df8" "e222812 4b27ae4"; do set -- $p; for f in _persistence/decisions.md _persistence/tasks.md; do echo "== $1..$2 $f"; diff <(git show $1:"$f" | salidas) <(git show $2:"$f" | salidas) | grep -cE '^[<>]'; done; done
   == 101db28..2a72df8 _persistence/decisions.md
   0
   == 101db28..2a72df8 _persistence/tasks.md
@@ -700,9 +700,11 @@ Plantilla:
   0
   == e222812..4b27ae4 _persistence/tasks.md
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF '**CONTROL DE SALIDA REPRODUCIDA — salida:**'
+  $ git show c07680f:.claude/skills/protocol-close/SKILL.md | grep -cF '**CONTROL DE SALIDA REPRODUCIDA — salida:**'
   2
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `c07680f`.** Las dos reproducen lo publicado arriba.
 
 ### D-014 - Cosecha de L-007
 | Campo | Valor |
@@ -741,6 +743,8 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, ninguna leccion de `000_preproject` queda `Sin evaluar`.
 
   ```
-  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
+  $ git show c07680f:_persistence/lessons.md | grep -E '^\| \[L-' | grep '000_preproject' | grep -c 'Sin evaluar'
   0
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `c07680f`.** Reproduce lo publicado arriba.
