@@ -828,7 +828,8 @@ Y cada tarea lleva ademas **Importancia** (`Alta` / `Media` / `Baja`) y **Urgenc
   el commit de esta sesion y su criterio de cierre reproduce, pasa a `Implementada` en este mismo
   commit, aunque las ordenes de ese criterio lleven todavia `<hash>`. El Paso 7c-bis solo publica la
   evidencia y no puede tocar estados: una tarea que se deja pendiente «hasta el anclaje» no la mueve
-  nadie.
+  nadie. Y al reves: si el trabajo esta en el diff pero su criterio de cierre no reproduce, la tarea
+  **sigue en `No implementada`**, por hecho que parezca el trabajo.
 - Lo que quedo a medias **sigue en `No implementada`**, y su entrada de detalle dice **en que punto
   quedo**. No existe un estado intermedio: media tarea no es una tarea hecha.
 - `Cancelada` y `Suspendida` **requieren razon registrada** en la entrada. Si no tienes la razon,

@@ -31,6 +31,7 @@
 | [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -281,3 +282,23 @@ Plantilla:
   el: la reconstruye cada vez, y puede reconstruirla al reves con total seguridad.
 - **Como aplicarla:** cuando un agente en frio aplica bien un criterio varias veces sin que este
   escrito, escribirlo en el paso de su skill que lo usa, no solo en `decisions.md`, que ese paso no lee.
+
+### L-012 - La promocion va al principio de la sesion, antes de tocar el andamiaje
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | usuario |
+
+- **Contexto:** `D-030` y `D-032`. El usuario lo describio como un circulo vicioso.
+- **Que ocurrio:** en la misma sesion se corregia el andamiaje por una recomendacion de auditoria y
+  luego se intentaba promover. `protocol-promote` exige las seis areas limpias y subidas, asi que la
+  correccion sin commitear bloqueaba la promocion. Cerrar y auditar para desbloquearla dejaba nuevos
+  puntos, y la sesion siguiente repetia el orden. Se salio promoviendo desde el ultimo commit auditado
+  con la correccion retirada un momento del arbol.
+- **Leccion:** para promover no hace falta una auditoria sin puntos. Hace falta un arbol limpio, y
+  eso solo pasa al principio de la sesion, antes de editar nada del andamiaje.
+- **Como aplicarla:** si hay desfase con el esqueleto que promover, se promueve **lo primero de la
+  sesion**, justo despues del arranque y antes de atender correcciones que toquen las seis areas.
+  Las correcciones van despues y suben en el lote siguiente. Si ya se edito algo, se retira del arbol
+  guardandolo aparte, se promueve desde `HEAD` y se repone.

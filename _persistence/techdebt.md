@@ -23,7 +23,8 @@
 |---|---|---|---|---|---|
 | [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | Implementada | Confirmada | Media | No bloqueante |
 | [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
-| [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | No implementada | Confirmada | Media | No bloqueante |
+| [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | Implementada | Confirmada | Alta | No bloqueante |
+| [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | No implementada | Propuesta (pendiente del usuario) | Baja | No bloqueante |
 
 ---
 
@@ -171,9 +172,9 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
 ### DT-003 - El andamiaje vuelve a alejarse del esqueleto de arranque
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Confirmacion | Confirmada |
-| Importancia | Media |
+| Importancia | Alta |
 | Urgencia | No bloqueante |
 | Origen | report_auditor |
 | Fecha | 2026-09-16 |
@@ -199,3 +200,38 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
   salta con prosa, un estado de decision de menos y un limite del 7c-quater sin declarar.
 - **Como se paga:** correr `protocol-promote` con la puerta del usuario para llevar los archivos que
   difieran al esqueleto de arranque.
+- 🕐 **Nota 2026-09-16 (`R-009`, `D-030`):** la Importancia pasa de `Media` a `Alta`. Lleva tres
+  sesiones creciendo, y `D-028` vuelve a tocar `protocol-close/SKILL.md`. La promocion va antes de la
+  clasificacion de actores (`T-019`).
+- 🕐 **Nota 2026-09-16 (`D-032`): pagada, estado al 2026-09-16.** Los tres archivos se promovieron
+  desde `95c5cfd` al commit `447c2a0` del esqueleto, y la copia de la raiz `_persistence/decisions.md`
+  se regenero. El barrido del Paso 1 salio vacio despues de promover. Queda fuera a proposito la frase
+  de `D-028`, sin commitear al promover: el cierre la vera como desfase nuevo, y no es esta deuda.
+  La evidencia esta en `D-032`. **Ver `DT-004`.**
+
+### DT-004 - La frase de `D-028` quedo fuera de la promocion de `D-032`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Confirmacion | Propuesta (pendiente del usuario) |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Origen | session-closer |
+| Fecha | 2026-09-16 |
+
+- **Deuda:** `D-032` promovio `.claude/skills/protocol-close/SKILL.md` desde el commit `95c5cfd`, antes
+  de que la frase de `D-028` (Paso 4: el caso del criterio que no reproduce) se commiteara. El Paso 2f
+  de este cierre lo confirma sobre el arbol de trabajo, con la frase ya repuesta:
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; diff -rq --strip-trailing-cr "$ESQ/.claude" .claude
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  ```
+
+- **Por que se tomo:** `D-032` (con su `L-012`) elige promover desde el ultimo commit auditado para no
+  bloquear `protocol-promote` con trabajo en curso; eso deja fuera, a proposito, lo que se escribio
+  despues de ese commit.
+- **Costo de no pagarla:** un proyecto que parta hoy del esqueleto no tiene declarado en el Paso 4 de
+  `protocol-close` el caso del criterio que no reproduce.
+- **Como se paga:** correr `protocol-promote` de nuevo, ya con la frase de `D-028` commiteada, para
+  llevarla al esqueleto de arranque.

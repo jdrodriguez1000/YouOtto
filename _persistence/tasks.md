@@ -33,6 +33,9 @@
 | [T-014](#t-014---abrir-la-deuda-del-desfase-con-el-esqueleto-de-arranque) | Abrir la deuda del desfase con el esqueleto de arranque | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-015](#t-015---declarar-en-el-7c-quater-el-punto-ciego-de-la-orden-partida) | Declarar en el 7c-quater el punto ciego de la orden partida | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-016](#t-016---fijar-que-el-estado-de-una-tarea-lo-decide-el-diff-y-no-el-anclaje) | Fijar que el estado de una tarea lo decide el diff y no el anclaje | Implementada | Media | No bloqueante | 005_discovery |
+| [T-017](#t-017---declarar-en-el-paso-4-el-caso-del-criterio-que-no-reproduce) | Declarar en el Paso 4 el caso del criterio que no reproduce | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-018](#t-018---completar-d-027-con-los-criterios-sin-anclar-de-sus-precedentes) | Completar D-027 con los criterios sin anclar de sus precedentes | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-019](#t-019---promover-al-esqueleto-de-arranque-lo-que-difiere-en-dt-003) | Promover al esqueleto de arranque lo que difiere en DT-003 | Implementada | Alta | No bloqueante | 005_discovery |
 
 ---
 
@@ -503,3 +506,51 @@ Plantilla:
 - **Por que:** `S-008` dejo dos tareas hechas en `No implementada` con un criterio que contradice a
   `S-004`, `S-006` y `S-007`, y ningun paso las movia. Verificacion contra `HEAD` (`f0c1a74`) en `D-027`.
 - **Criterio de cierre:** el de `D-027`, con sus ordenes ancladas y sus salidas.
+
+### T-017 - Declarar en el Paso 4 el caso del criterio que no reproduce
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-010 |
+
+- **Que:** anadir al bullet del Paso 4 de `protocol-close` que una tarea con su trabajo en el diff y
+  un criterio que no reproduce sigue en `No implementada`, segun `D-028`.
+- **Por que:** primera recomendacion sin hallazgo de `R-009`, evaluada y aceptada en `D-028`.
+- **Criterio de cierre:** el de `D-028`, con sus ordenes ancladas y sus salidas.
+
+### T-018 - Completar D-027 con los criterios sin anclar de sus precedentes
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-010 |
+
+- **Que:** anadir debajo de `D-027` una nota fechada con la orden que muestra que los criterios de
+  `S-004`, `S-006` y `S-007` seguian con `<hash>` en su commit de sesion, segun `D-029`.
+- **Por que:** segunda recomendacion sin hallazgo de `R-009`, evaluada y aceptada en `D-029`.
+- **Criterio de cierre:** el de `D-029`, con sus ordenes ancladas y sus salidas.
+
+### T-019 - Promover al esqueleto de arranque lo que difiere en DT-003
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-010 |
+
+- **Que:** correr `protocol-promote`, con la aprobacion del usuario punto por punto, para llevar al
+  esqueleto de arranque los archivos del andamiaje que difieren, incluida la frase de `D-028`. Paga
+  `DT-003`.
+- **Por que:** tercera recomendacion sin hallazgo de `R-009`, aceptada en `D-030`: va antes de la
+  clasificacion de actores.
+- **Criterio de cierre:** el de `D-032`, con sus ordenes ancladas y sus salidas. El commit del
+  esqueleto es `447c2a0`.

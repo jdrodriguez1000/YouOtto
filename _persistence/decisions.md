@@ -48,6 +48,11 @@
 | [D-025](#d-025---f-009-se-acepta-y-el-desfase-con-el-esqueleto-abre-su-propia-deuda) | F-009 se acepta y el desfase con el esqueleto abre su propia deuda | 2026-09-16 | Vigente |
 | [D-026](#d-026---el-7c-quater-declara-que-no-ve-una-orden-partida-en-dos-lineas) | El 7c-quater declara que no ve una orden partida en dos lineas | 2026-09-16 | Vigente |
 | [D-027](#d-027---el-estado-de-una-tarea-lo-decide-el-diff-no-el-anclaje) | El estado de una tarea lo decide el diff, no el anclaje | 2026-09-16 | Vigente |
+| [D-028](#d-028---el-paso-4-declara-tambien-el-caso-del-criterio-que-no-reproduce) | El Paso 4 declara tambien el caso del criterio que no reproduce | 2026-09-16 | Vigente |
+| [D-029](#d-029---d-027-se-completa-con-los-criterios-sin-anclar-de-sus-precedentes) | D-027 se completa con los criterios sin anclar de sus precedentes | 2026-09-16 | Vigente |
+| [D-030](#d-030---la-promocion-de-dt-003-pasa-a-alta-y-va-antes-que-los-actores) | La promocion de DT-003 pasa a Alta y va antes que los actores | 2026-09-16 | Vigente |
+| [D-031](#d-031---no-se-corrige-el-orden-de-los-hashes-de-la-seccion-3-de-s-009) | No se corrige el orden de los hashes de la seccion 3 de S-009 | 2026-09-16 | Vigente |
+| [D-032](#d-032---promocion-al-esqueleto-de-los-tres-archivos-de-dt-003) | Promocion al esqueleto de los tres archivos de DT-003 | 2026-09-16 | Vigente |
 
 ---
 
@@ -1436,4 +1441,283 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `8509c18`.** Las seis reproducen lo publicado arriba.
+
+- 🕐 **Nota 2026-09-16 (`R-009`, `D-029`):** la orden de precedentes de arriba muestra que las tareas
+  estaban en `Implementada` en el commit de su sesion, pero no que el criterio de su decision siguiera
+  sin anclar en ese commit; esa mitad la aportaba `R-008`. Ordenes con `<hash>` en el criterio de la
+  decision de cada sesion, en su commit de sesion y en su commit de anclaje:
+
+  ```
+  $ for p in "c07680f 74749f7 D-013 D-014" "081385a d420647 D-022 D-023" "87d10b8 ee59542 D-023 D-024"; do set -- $p; for c in $1 $2; do echo "== $c $3 $(git show $c:_persistence/decisions.md | sed -n "/^### $3 /,/^### $4 /p" | grep -cE '^[[:space:]]*\$ .*<hash>')"; done; done
+  == c07680f D-013 2
+  == 74749f7 D-013 0
+  == 081385a D-022 7
+  == d420647 D-022 0
+  == 87d10b8 D-023 4
+  == ee59542 D-023 0
+  ```
+
+  En los tres precedentes, la tarea paso a `Implementada` con su criterio todavia en `<hash>`, y el
+  anclaje llego en el commit siguiente. La prosa de arriba no se reescribe.
+
+### D-028 - El Paso 4 declara tambien el caso del criterio que no reproduce
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** primera recomendacion sin hallazgo de `R-009` (seccion 5): el bullet que `D-027` anadio
+  al Paso 4 de `protocol-close` solo enuncia el caso positivo. El contrario —trabajo en el diff,
+  criterio que no reproduce— se deduce de los bullets vecinos, pero no esta escrito. Verificado contra
+  `HEAD` (`95c5cfd`):
+
+  ```
+  $ git show 95c5cfd:.claude/skills/protocol-close/SKILL.md | grep -nF -A5 'El estado lo decide la evidencia del diff'
+  827:- 🚨 **El estado lo decide la evidencia del diff, no el anclaje.** Si el trabajo de una tarea esta en
+  828-  el commit de esta sesion y su criterio de cierre reproduce, pasa a `Implementada` en este mismo
+  829-  commit, aunque las ordenes de ese criterio lleven todavia `<hash>`. El Paso 7c-bis solo publica la
+  830-  evidencia y no puede tocar estados: una tarea que se deja pendiente «hasta el anclaje» no la mueve
+  831-  nadie.
+  832-- Lo que quedo a medias **sigue en `No implementada`**, y su entrada de detalle dice **en que punto
+  $ git show 95c5cfd:.claude/skills/protocol-close/SKILL.md | grep -cF 'no reproduce, sigue'
+  0
+  ```
+
+- **Decision:** el usuario elige **aceptarla**: una frase al final del mismo bullet, «si el trabajo
+  esta en el diff pero su criterio de cierre no reproduce, la tarea sigue en `No implementada`».
+  `T-017`.
+- **Por que:** el closer arranca en frio; que la regla se lea en un solo bullet evita que dependa de
+  combinar tres. Cuesta una frase.
+- **Alternativas descartadas:**
+  - **No tocarla:** los bullets vecinos ya lo resuelven en la practica (`R-009`, seccion 1.7), pero
+    la duda la declaro el propio informe de `S-009`: no es obvia para quien lee.
+- ⚠️ **Consecuencia:** `protocol-close/SKILL.md` se aleja otra vez del esqueleto; entra en `DT-003`,
+  cuya promocion va justo despues (`D-030`).
+- **Criterio de cierre:** a ese commit, el Paso 4 declara el caso contrario, y los controles de fuga y
+  de codigos siguen en cero.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'no reproduce, la tarea'
+  1
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  ```
+
+### D-029 - D-027 se completa con los criterios sin anclar de sus precedentes
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** segunda recomendacion sin hallazgo de `R-009` (seccion 5): la orden de precedentes de
+  `D-027` muestra el estado de las tareas, pero no que su criterio siguiera con `<hash>` en ese commit.
+  La decision depende de `R-008` para sostenerse.
+- **Decision:** el usuario elige **aceptarla como nota fechada** debajo de `D-027`, con la orden
+  anclada a los commits de sesion y de anclaje de `S-004`, `S-006` y `S-007` y su salida cruda. `T-018`.
+- **Por que:** una decision que se apoya en una auditoria para sostenerse no es auditable sola. La
+  nota corrige sin reescribir, como manda este archivo.
+- **Alternativas descartadas:**
+  - **Reescribir el bloque de precedentes de `D-027`:** una decision no se reescribe.
+  - **Descartarla:** la prueba ya existe en `R-008`, pero repartida entre dos archivos.
+- **Criterio de cierre:** a ese commit, la nota esta debajo de `D-027`. Su propia orden no necesita
+  anclaje: ya apunta a commits que existen.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-027 /,/^### D-028 /p' | grep -c '🕐 \*\*Nota 2026-09-16 (`R-009`, `D-029`)'
+  1
+  ```
+
+### D-030 - La promocion de DT-003 pasa a Alta y va antes que los actores
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** tercera recomendacion sin hallazgo de `R-009` (seccion 5): `DT-003` lleva tres sesiones
+  seguidas creciendo (`S-007`, `S-008`, `S-009`), y `D-028` la hace crecer otra vez. Desfase medido
+  sobre el arbol de `HEAD` (`95c5cfd`), extraido al scratchpad, contra el esqueleto en `4d20ce2`:
+
+  ```
+  $ git log --format='%h %s' -- .claude/skills/protocol-close/SKILL.md | head -3
+  8509c18 S-009: F-010 de R-008 atendido (D-027, T-014/T-015 pasan a Implementada)
+  27c03bb S-008: F-009 de R-007 atendido (D-025, abre DT-003), y el 7c-quater declara el punto ciego de la orden partida (D-026)
+  87d10b8 S-007: F-008 de R-006 atendido (D-023), y nuevo estado Revocada en parte por D-XXX (D-024)
+  $ git archive 95c5cfd | tar -x -C "$T"; (cd "$T" && for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md)
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-start/SKILL.md and .claude/skills/protocol-start/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/_templates/000_preproject/020_decisions.md and _templates/000_preproject/020_decisions.md differ
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`, `T` = carpeta `t95c5cfd` del
+  scratchpad de la sesion.)
+
+- **Decision:** el usuario elige **subir `DT-003` a Importancia `Alta` y promover ya**: la promocion
+  con `protocol-promote` va despues de `D-028` y antes de la clasificacion de actores. `T-019`. La
+  urgencia sigue en `No bloqueante`: no bloquea el producto.
+- **Por que:** cada sesion que pasa suma diferencias a los mismos archivos, y la promocion se vuelve
+  mas cara de revisar punto por punto. Hacerla despues de `D-028` permite que la frase nueva viaje en
+  la misma pasada.
+- **Alternativas descartadas:**
+  - **Subir a `Alta` sin fecha:** los actores irian antes y el desfase seguiria creciendo.
+  - **Dejarla en `Media`:** es lo que ha dejado crecer la deuda tres sesiones.
+- **Criterio de cierre:** a ese commit, `DT-003` esta en `Alta` en indice y ficha, y `T-019` existe
+  con Importancia `Alta`. Su estado no se fija aqui: lo decide el cierre.
+
+  ```
+  $ git show <hash>:_persistence/techdebt.md | grep -E '^\| \[DT-003\]' | grep -c '| Alta | No bloqueante |'
+  1
+  $ git show <hash>:_persistence/techdebt.md | sed -n '/^### DT-003 /,$p' | grep -c '^| Importancia | Alta |$'
+  1
+  $ git show <hash>:_persistence/tasks.md | grep -E '^\| \[T-019\]' | grep -c '| Alta | No bloqueante |'
+  1
+  ```
+
+- 🕐 **Nota 2026-09-16 (`D-032`):** el orden «despues de `D-028`» era imposible. `protocol-promote`
+  exige las seis areas limpias y subidas, y la frase de `D-028` estaba sin commitear, asi que la
+  promocion quedaba bloqueada hasta cerrar y auditar la sesion. Esa espera es la que el usuario ha
+  vivido como un circulo. La frase se retiro del arbol, se promovio desde `95c5cfd` y se repuso. Viaja
+  en la promocion siguiente. Ver `L-012`.
+
+### D-031 - No se corrige el orden de los hashes de la seccion 3 de S-009
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** cuarta recomendacion sin hallazgo de `R-009` (seccion 5): la seccion 3 de `S-009`
+  escribe los hashes en orden inverso a las sesiones. Verificado contra `HEAD` (`95c5cfd`):
+
+  ```
+  $ git show 95c5cfd:_audit/S-009.md | sed -n '47p'
+    contra los precedentes de `S-004`/`S-006`/`S-007` (`87d10b8`, `081385a`, `c07680f`), la decision,
+  ```
+
+  `87d10b8` es `S-007` y `c07680f` es `S-004` (ver `git log` en `D-030` y la nota de `D-027`).
+- **Decision:** el usuario elige **no corregirlo**. Sin tarea.
+- **Por que:** el informe ya esta auditado, y reescribirlo haria que `R-009` describiera un estado que
+  ya no existe. `D-027` etiqueta bien cada hash, y el propio auditor dice que no induce a error. Mismo
+  criterio que `D-018`.
+- **Alternativas descartadas:**
+  - **Nota fechada en `S-009`:** anade un cambio a un informe auditado por una errata que no engana.
+- **Criterio de cierre:** a ese commit, la linea sigue intacta.
+
+  ```
+  $ git show <hash>:_audit/S-009.md | sed -n '47p'
+    contra los precedentes de `S-004`/`S-006`/`S-007` (`87d10b8`, `081385a`, `c07680f`), la decision,
+  ```
+
+### D-032 - Promocion al esqueleto de los tres archivos de DT-003
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-030` pedia promover ya. El primer intento se paro en el Paso 0 de
+  `protocol-promote`: `.claude/skills/protocol-close/SKILL.md` tenia sin commitear la frase de `D-028`.
+  El usuario senalo que eso lo metia en un circulo (corregir, cerrar, auditar, y otra vez bloqueado) y
+  aprobo retirar la frase del arbol, promover desde el ultimo commit auditado y reponerla despues. La
+  frase se guardo como parche en el scratchpad y se retiro con `git checkout` sobre ese archivo. Con
+  eso se cumplian los tres disparadores: lo pidio el usuario, las seis areas estaban limpias y
+  subidas en `95c5cfd` y `R-009` ya habia terminado.
+
+  ```
+  $ git status --short -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  $ git status -sb | head -1
+  ## main...origin/main
+  $ git rev-parse --short HEAD; git rev-parse --short origin/main
+  95c5cfd
+  95c5cfd
+  ```
+
+- **Decision:** el usuario aprueba los cuatro, uno por uno: `.claude/skills/protocol-close/SKILL.md`
+  (78 lineas entran, 16 se borran), `.claude/skills/protocol-start/SKILL.md` (4 entran, 0 se borran),
+  `_templates/000_preproject/020_decisions.md` (6 entran, 1 se borra) y la copia de la raiz
+  `_persistence/decisions.md` del esqueleto, regenerada desde esa plantilla (6 entran, 1 se borra). No
+  se dejo ninguno. Hash de origen `95c5cfd`; commit del esqueleto `447c2a0`, subido. **Se deja fuera la
+  frase de `D-028`**, que no esta en ningun commit: va en la promocion siguiente.
+- **Por que:** paga `DT-003`. Un proyecto que clonara `4d20ce2` heredaba el control SIN ANCLAR que
+  salta con la prosa, un estado de decision de menos y limites sin declarar. Promover desde el commit
+  auditado rompe el circulo sin saltarse el disparador.
+- **Alternativas descartadas:**
+  - **Cerrar la sesion, auditar y promover en la siguiente:** es el circulo. Cada sesion que corrige
+    el andamiaje antes de promover vuelve a bloquear la promocion.
+  - **Promover tambien la frase sin commitear:** el esqueleto tendria una version sin procedencia, y
+    esta decision no podria citar su hash.
+- **Hallazgos:** ninguno. Nada existia solo en el esqueleto.
+- **Comprobacion del supuesto del Paso 2:** se leyeron las 17 lineas que borran los candidatos (16 y
+  1) y la unica que solo tenia la copia de la raiz. Todas eran versiones anteriores de lineas ya
+  reescritas aqui («cinco» por «seis», «tres cosas» por «cuatro», la fila del Paso 7 ampliada, el
+  estado sin «en parte»). Ninguna era algo que un proyecto generico necesitara.
+- **Final de linea:** los cuatro eran LF en el esqueleto. Se copio desde el blob
+  (`git show 95c5cfd:<archivo>`, 0 retornos de carro), no desde el arbol de trabajo, que por
+  `autocrlf` tenia `protocol-close` en CRLF (`CR=2202`).
+- **Verificacion.** Controles de agnosticismo sobre el origen, antes de la puerta. En el barrido
+  ensanchado, una primera pasada con `-i` dio 19 lineas: todas eran la palabra comun «usuario». La
+  pasada que distingue mayusculas:
+
+  ```
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 95c5cfd -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' 95c5cfd -- _phases _workflow | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  $ git grep -nE "USUARIO|jdrodriguez|gmail|SDAI_TripleS|TripleS|Triple S|[A-Z]:[/\\\\]|/Users/|AppData" 95c5cfd -- .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md _templates/000_preproject/020_decisions.md | wc -l
+  0
+  ```
+
+  El commit del esqueleto, su remoto y la identidad de los blobs con el origen:
+
+  ```
+  $ ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"; git -C "$ESQ" show --stat --format='%h %s' 447c2a0 | tail -5
+   .claude/skills/protocol-close/SKILL.md     | 92 +++++++++++++++++++++++++-----
+   .claude/skills/protocol-start/SKILL.md     |  4 ++
+   _persistence/decisions.md                  |  7 ++-
+   _templates/000_preproject/020_decisions.md |  7 ++-
+   4 files changed, 93 insertions(+), 17 deletions(-)
+  $ git -C "$ESQ" ls-remote origin refs/heads/main | cut -c1-7
+  447c2a0
+  $ for f in .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md _templates/000_preproject/020_decisions.md; do [ "$(git rev-parse 95c5cfd:$f)" = "$(git -C "$ESQ" rev-parse 447c2a0:$f)" ] && echo "igual $f" || echo "DISTINTO $f"; done
+  igual .claude/skills/protocol-close/SKILL.md
+  igual .claude/skills/protocol-start/SKILL.md
+  igual _templates/000_preproject/020_decisions.md
+  ```
+
+  Barrido del Paso 1 despues de promover y antes de reponer la frase de `D-028` (sin salida: el
+  desfase cerro), y Paso 1b sobre el commit del esqueleto:
+
+  ```
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "fin P1"
+  fin P1
+  $ for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff <(git -C "$ESQ" show 447c2a0:_templates/000_preproject/$t) <(git -C "$ESQ" show 447c2a0:$c) | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+  ⚠️ Al reponer la frase de `D-028`, el Paso 1 vuelve a dar una linea (`protocol-close/SKILL.md`
+  differ). Es el desfase conocido y a proposito de la frase que no se promovio.
+- **Criterio de cierre:** a ese commit, `DT-003` esta en `Implementada` en indice y ficha, y la frase
+  de `D-028` sigue en la skill.
+
+  ```
+  $ git show <hash>:_persistence/techdebt.md | grep -E '^\| \[DT-003\]' | grep -c '| Implementada |'
+  1
+  $ git show <hash>:_persistence/techdebt.md | sed -n '/^### DT-003 /,$p' | grep -c '^| Estado | Implementada |$'
+  1
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'no reproduce, la tarea'
+  1
+  ```
 
