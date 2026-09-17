@@ -1421,16 +1421,19 @@ Plantilla:
   los controles de fuga y de codigos siguen en cero.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'El estado lo decide la evidencia del diff'
+  $ git show 8509c18:.claude/skills/protocol-close/SKILL.md | grep -cF 'El estado lo decide la evidencia del diff'
   1
-  $ git show <hash>:_persistence/tasks.md | grep -E '^\| \[T-01[456]\]' | grep -c '| Implementada |'
+  $ git show 8509c18:_persistence/tasks.md | grep -E '^\| \[T-01[456]\]' | grep -c '| Implementada |'
   3
-  $ git show <hash>:_persistence/tasks.md | grep -A3 -E '^### T-01[456] ' | grep -c '^| Estado | Implementada |$'
+  $ git show 8509c18:_persistence/tasks.md | grep -A3 -E '^### T-01[456] ' | grep -c '^| Estado | Implementada |$'
   3
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-010\].*\| Aceptado — pendiente \|$|^\| Estado \| Aceptado — pendiente \|$'
+  $ git show 8509c18:_audit/findings.md | grep -cE '^\| \[F-010\].*\| Aceptado — pendiente \|$|^\| Estado \| Aceptado — pendiente \|$'
   2
-  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 8509c18 -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  $ git show 8509c18:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
   0
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `8509c18`.** Las seis reproducen lo publicado arriba.
+
