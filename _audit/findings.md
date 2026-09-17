@@ -32,7 +32,8 @@
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
-| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Aceptado — pendiente |
+| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Implementado |
+| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Abierto |
 
 ---
 
@@ -329,9 +330,9 @@ Plantilla:
 | Auditoria | R-010 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-020, D-034 |
-| Cerrado en | |
+| Cerrado en | 079b0a4 (R-012) |
 
 - **Que se observo:** en `a61e453`, el «Que» de `T-019` incluye la frase de `D-028` en la promocion al
   esqueleto y la tarea esta `Implementada`; `D-032`, en el mismo commit, dice que esa frase se dejo fuera,
@@ -346,3 +347,24 @@ Plantilla:
   `D-034`. Se elige la opcion (a): nota fechada en `T-019` que saca la frase de `D-028` de su alcance y
   remite a `D-032`/`DT-004`, con la comparacion de blobs contra el esqueleto. `T-019` sigue
   `Implementada`. Registrado en `T-020`.
+
+### F-013 - El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara
+| Campo | Valor |
+|---|---|
+| Auditoria | R-012 |
+| Fecha | 2026-09-16 |
+| Gravedad | Media |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el commit de anclaje `fdfca7b` dejo la seccion 7 de `S-011.md` con el marcador
+  `NOTA DE CIERRE: <se completa en el Paso 7c-bis, despues del commit>`, y el control del Paso 7c-ter
+  sobre `fdfca7b` devuelve las seis lineas `FALTA en la NOTA DE CIERRE`. El Paso 7c pide los cuatro
+  sitios «en un unico commit de anclaje» y el 7c-ter prohibe commitear el anclaje hasta que salga
+  vacio. La nota entro en un tercer commit, `1358c3c`, y dice «commit de anclaje `fdfca7b`» sin nombrar
+  `1358c3c` ni el fallo. Comandos y salidas en `_audit/R-012.md`, seccion 2.
+- **Por que importa:** se salto la puerta que existe para impedir un anclaje con la nota coja, y el
+  informe apunta a un commit donde la nota no esta. Las salidas de la nota reproducen: no hay datos
+  falsos, solo una puerta saltada y un puntero equivocado. `Media`.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
