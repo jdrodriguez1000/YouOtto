@@ -1777,9 +1777,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-033\]|### D-033 )'
+  $ git show 079b0a4:_persistence/decisions.md | grep -cE '^(\| \[D-033\]|### D-033 )'
   2
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `079b0a4`.** Reproduce lo publicado arriba.
 
 ### D-034 - F-011 se acepta con una nota fechada en T-019
 | Campo | Valor |
@@ -1821,11 +1823,13 @@ Plantilla:
   y `F-011` esta `Aceptado — pendiente` en indice y ficha.
 
   ```
-  $ git show <hash>:_persistence/tasks.md | sed -n '/^### T-019 /,/^### T-020 /p' | grep -cE '🕐 \*\*Nota 2026-09-16 \(`F-011`, `D-034`\)|^\| Estado \| Implementada \|$'
+  $ git show 079b0a4:_persistence/tasks.md | sed -n '/^### T-019 /,/^### T-020 /p' | grep -cE '🕐 \*\*Nota 2026-09-16 \(`F-011`, `D-034`\)|^\| Estado \| Implementada \|$'
   2
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-011\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-020, D-034 \|$'
+  $ git show 079b0a4:_audit/findings.md | grep -cE '^\| \[F-011\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-020, D-034 \|$'
   2
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `079b0a4`.** Las dos reproducen lo publicado arriba.
 
 ### D-035 - Promocion al esqueleto de la frase de D-028
 | Campo | Valor |
@@ -1918,9 +1922,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, `DT-004` esta `Implementada` y `Confirmada` en indice y ficha.
 
   ```
-  $ git show <hash>:_persistence/techdebt.md | grep -E '^\| \[DT-004\]' | grep -c '| Implementada | Confirmada |'
+  $ git show 079b0a4:_persistence/techdebt.md | grep -E '^\| \[DT-004\]' | grep -c '| Implementada | Confirmada |'
   1
-  $ git show <hash>:_persistence/techdebt.md | sed -n '/^### DT-004 /,$p' | grep -cE '^\| (Estado \| Implementada|Confirmacion \| Confirmada) \|$'
+  $ git show 079b0a4:_persistence/techdebt.md | sed -n '/^### DT-004 /,$p' | grep -cE '^\| (Estado \| Implementada|Confirmacion \| Confirmada) \|$'
   2
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `079b0a4`.** Las dos reproducen lo publicado arriba.
 
