@@ -1506,6 +1506,8 @@ Plantilla:
   0
   ```
 
+📌 **Ancladas por el Paso 7c-bis al commit `a61e453`.** Las tres reproducen lo publicado arriba.
+
 ### D-029 - D-027 se completa con los criterios sin anclar de sus precedentes
 | Campo | Valor |
 |---|---|
@@ -1530,6 +1532,8 @@ Plantilla:
   $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-027 /,/^### D-028 /p' | grep -c '🕐 \*\*Nota 2026-09-16 (`R-009`, `D-029`)'
   1
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `a61e453`.** Reproduce lo publicado arriba.
 
 ### D-030 - La promocion de DT-003 pasa a Alta y va antes que los actores
 | Campo | Valor |
@@ -1577,6 +1581,8 @@ Plantilla:
   1
   ```
 
+📌 **Ancladas por el Paso 7c-bis al commit `a61e453`.** Las tres reproducen lo publicado arriba.
+
 - 🕐 **Nota 2026-09-16 (`D-032`):** el orden «despues de `D-028`» era imposible. `protocol-promote`
   exige las seis areas limpias y subidas, y la frase de `D-028` estaba sin commitear, asi que la
   promocion quedaba bloqueada hasta cerrar y auditar la sesion. Esa espera es la que el usuario ha
@@ -1611,6 +1617,8 @@ Plantilla:
   $ git show <hash>:_audit/S-009.md | sed -n '47p'
     contra los precedentes de `S-004`/`S-006`/`S-007` (`87d10b8`, `081385a`, `c07680f`), la decision,
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `a61e453`.** Reproduce lo publicado arriba.
 
 ### D-032 - Promocion al esqueleto de los tres archivos de DT-003
 | Campo | Valor |
@@ -1720,4 +1728,6 @@ Plantilla:
   $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'no reproduce, la tarea'
   1
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `a61e453`.** Las tres reproducen lo publicado arriba.
 
