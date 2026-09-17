@@ -3637,11 +3637,13 @@ Plantilla:
   que queda cumplido tambien el criterio que `D-062` dejo pendiente.
 
   ```
-  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  $ git show a0949c5:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
   0
-  $ git show <hash>:_persistence/lessons.md | grep -cF 'Promovida a LG-32'
+  $ git show a0949c5:_persistence/lessons.md | grep -cF 'Promovida a LG-32'
   1
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `a0949c5`.** Las dos reproducen lo publicado arriba.
 
 ### D-064 - F-020 se acepta y se corrige hacia adelante: en los copiables y por nota en el artefacto
 | Campo | Valor |
@@ -3719,16 +3721,30 @@ Plantilla:
   nota y el de la cifra en disputa.
 
   ```
-  $ git show <hash>:_phases/005_discovery.md | sed -n '/^## 6. Condicion de salida/,/^## 7/p' | grep -c '^- \[ \]'
+  $ git show a0949c5:_phases/005_discovery.md | sed -n '/^## 6. Condicion de salida/,/^## 7/p' | grep -c '^- \[ \]'
   7
-  $ git show <hash>:_workflow/005_discovery.md | sed -n '/^## 5\./,/^## 6\./p' | grep -c '^| '
+  $ git show a0949c5:_workflow/005_discovery.md | sed -n '/^## 5\./,/^## 6\./p' | grep -c '^| '
   8
-  $ git show <hash>:_templates/005_discovery/015_stakeholders.md | grep -c 'siete condiciones de salida'
+  $ git show a0949c5:_templates/005_discovery/015_stakeholders.md | grep -c 'siete condiciones de salida'
   1
-  $ git grep -n "seis condiciones de salida\|seis casillas\|Cuatro de las seis" <hash> -- 005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md
-  <hash>:005_discovery/015_stakeholders.md:115:- [x] **Los interesados estan identificados** - es una de las seis condiciones de salida de la etapa.
-  <hash>:_workflow/005_discovery.md:119:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
+  $ git grep -n "seis condiciones de salida\|seis casillas\|Cuatro de las seis" a0949c5 -- 005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md
+  a0949c5:005_discovery/015_stakeholders.md:115:- [x] **Los interesados estan identificados** - es una de las seis condiciones de salida de la etapa.
+  a0949c5:_workflow/005_discovery.md:119:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
   ```
+
+  🚨 **Ancladas por el Paso 7c-bis al commit `a0949c5`, y las tres primeras reproducen; la cuarta orden
+  (`git grep`) no.** Reejecutada, devuelve el mismo archivo y linea pero con el guion largo `—` real del
+  archivo en vez del guion corto `-` publicado arriba (la publicacion de esta entrada lo transcribio
+  distinto del original):
+
+  ```
+  $ git grep -n "seis condiciones de salida\|seis casillas\|Cuatro de las seis" a0949c5 -- 005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md
+  a0949c5:005_discovery/015_stakeholders.md:115:- [x] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+  a0949c5:_workflow/005_discovery.md:119:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
+  ```
+
+  No se sustituye la salida publicada ni se corrige: queda declarado aqui. Ver «Sin resolver» del
+  informe de esta sesion.
 
 ### D-065 - L-017 no sube: ya cubierta por LG-85, tercera pasada de la cosecha de 005_discovery
 | Campo | Valor |
@@ -3774,11 +3790,13 @@ Plantilla:
   `L-017` consta con su destino.
 
   ```
-  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  $ git show a0949c5:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
   0
-  $ git show <hash>:_persistence/lessons.md | grep -cF 'Ya cubierta por LG-85'
+  $ git show a0949c5:_persistence/lessons.md | grep -cF 'Ya cubierta por LG-85'
   1
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `a0949c5`.** Las dos reproducen lo publicado arriba.
 
 ### D-066 - Se cierra el artefacto de necesidades
 | Campo | Valor |
@@ -3849,15 +3867,17 @@ Plantilla:
   cuerpo no tiene huecos y la guia no esta.
 
   ```
-  $ git show <hash>:005_discovery/005_needs.md | grep -c 'Guia de llenado'
+  $ git show a0949c5:005_discovery/005_needs.md | grep -c 'Guia de llenado'
   3
-  $ git show <hash>:005_discovery/005_needs.md | sed -n '1,/^## 4. Comprobacion/p' | grep -c "<"
+  $ git show a0949c5:005_discovery/005_needs.md | sed -n '1,/^## 4. Comprobacion/p' | grep -c "<"
   0
-  $ git show <hash>:005_discovery/005_needs.md | grep -c "^### N-00"
+  $ git show a0949c5:005_discovery/005_needs.md | grep -c "^### N-00"
   4
   ```
 
   📌 El primero devuelve `3`, no `0`, y son las tres lineas de §4 declaradas arriba.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `a0949c5`.** Las tres reproducen lo publicado arriba.
 
 ### D-067 - L-018 no sube: ya cubierta por LG-101, cuarta pasada de la cosecha de 005_discovery
 | Campo | Valor |
@@ -3900,11 +3920,13 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, ninguna leccion de `005_discovery` sigue `Sin evaluar`.
 
   ```
-  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  $ git show a0949c5:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
   0
-  $ git show <hash>:_persistence/lessons.md | grep -cE '^\| \[L-018\].*Ya cubierta por LG-101'
+  $ git show a0949c5:_persistence/lessons.md | grep -cE '^\| \[L-018\].*Ya cubierta por LG-101'
   1
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `a0949c5`.** Las dos reproducen lo publicado arriba.
 
   📌 **La segunda orden va anclada a `L-018`, y no es cosmetica.** Escrita como
   `grep -cF 'Ya cubierta por LG-101'` devolvia `3`, no `1`: ese valor ya lo llevan dos lecciones
