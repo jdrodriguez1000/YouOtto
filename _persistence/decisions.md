@@ -3281,11 +3281,13 @@ Plantilla:
   cita su tarea en indice y ficha.
 
   ```
-  $ git show <hash>:_persistence/tasks.md | sed -n '/^### T-029 /,/^### T-030 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-019`, `D-059`\)|^\s*\$ git show e18bf5b:005_discovery/005_needs.md \| grep -c'
+  $ git show 205b1f2:_persistence/tasks.md | sed -n '/^### T-029 /,/^### T-030 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-019`, `D-059`\)|^\s*\$ git show e18bf5b:005_discovery/005_needs.md \| grep -c'
   2
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-019\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-034, D-059 \|$'
+  $ git show 205b1f2:_audit/findings.md | grep -cE '^\| \[F-019\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-034, D-059 \|$'
   2
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `205b1f2`.** Las dos reproducen lo publicado arriba.
 
 - **Tarea:** `T-034`.
 
@@ -3355,15 +3357,17 @@ Plantilla:
   conserva la seccion «Guia de llenado» fuera de su comprobacion.
 
   ```
-  $ git show <hash>:005_discovery/010_actors.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
+  $ git show 205b1f2:005_discovery/010_actors.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
   2
-  $ git show <hash>:005_discovery/015_stakeholders.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
+  $ git show 205b1f2:005_discovery/015_stakeholders.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
   2
-  $ git show <hash>:005_discovery/010_actors.md | grep -c '^## Guia de llenado'
+  $ git show 205b1f2:005_discovery/010_actors.md | grep -c '^## Guia de llenado'
   0
-  $ git show <hash>:005_discovery/015_stakeholders.md | grep -c '^## Guia de llenado'
+  $ git show 205b1f2:005_discovery/015_stakeholders.md | grep -c '^## Guia de llenado'
   0
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `205b1f2`.** Las cuatro reproducen lo publicado arriba.
 
 - **Necesidades:** `N-001`, `N-002`, `N-003`, `N-004`. **Interesados:** `I-001`, `I-002`.
 
@@ -3425,11 +3429,13 @@ Plantilla:
   `_phases/005_discovery.md` §6 tiene donde apoyarse.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-061 /,$p' | grep -cE '^  1\. \*\*Objetivo del proyecto\.\*\*|^  2\. \*\*Alcance del proyecto: las cuatro necesidades\.\*\*|^  3\. \*\*Alcance del prototipo: solo lo que la hipotesis mide\.\*\*'
+  $ git show 205b1f2:_persistence/decisions.md | sed -n '/^### D-061 /,$p' | grep -cE '^  1\. \*\*Objetivo del proyecto\.\*\*|^  2\. \*\*Alcance del proyecto: las cuatro necesidades\.\*\*|^  3\. \*\*Alcance del prototipo: solo lo que la hipotesis mide\.\*\*'
   3
-  $ git show <hash>:_persistence/decisions.md | grep -c '^| \[D-061\](#d-061---objetivo-y-alcance-del-proyecto)'
+  $ git show 205b1f2:_persistence/decisions.md | grep -c '^| \[D-061\](#d-061---objetivo-y-alcance-del-proyecto)'
   1
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `205b1f2`.** Las dos reproducen lo publicado arriba.
 
 - **Necesidades:** `N-001`, `N-002`, `N-003`, `N-004`. **Interesados:** `I-001`, `I-002`.
 
@@ -3511,4 +3517,24 @@ Plantilla:
   $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show a9ed27b:global_lessons.md | grep -cF 'y un bloqueo, con la puerta tapiada'
   1
   ```
+
+  🚨 **CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis: la primera NO coincide.** Anclada al commit
+  `205b1f2`, la primera orden devuelve `1`, no `0`:
+
+  ```
+  $ git show 205b1f2:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  1
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show a9ed27b:global_lessons.md | grep -cE '^\| \*\*LG-10[6789]\*\*'
+  4
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show a9ed27b:global_lessons.md | grep -cF 'y un bloqueo, con la puerta tapiada'
+  1
+  ```
+
+  📌 **Diagnostico, no anclaje limpio.** Este criterio de cierre **no se cumple todavia**: `L-016`,
+  escrita en esta misma sesion (`session-closer`, `S-016`) para declarar el defecto del mensaje del
+  commit `a9ed27b`, queda ella misma `Sin evaluar` en `lessons.md`. El criterio de `D-062` exigia
+  «ninguna leccion de la etapa sigue `Sin evaluar`», y esa condicion la rompe una leccion que la propia
+  sesion de la cosecha origino despues del barrido. No se reescribe la salida publicada (`0`); la
+  discrepancia queda declarada aqui, y `D-062` sigue `Vigente` pero su criterio de cierre pendiente
+  hasta que `L-016` se evalue. Ver `T-035` en `tasks.md` y «Sin resolver» del informe de `S-016`.
 
