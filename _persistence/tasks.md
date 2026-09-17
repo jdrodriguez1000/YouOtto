@@ -30,8 +30,9 @@
 | [T-011](#t-011---pedir-en-la-nota-de-cierre-la-forma-anclada-de-la-orden-del-paso-2d) | Pedir en la NOTA DE CIERRE la forma anclada de la orden del Paso 2d | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-012](#t-012---acotar-el-control-sin-anclar-del-7c-quater-a-lineas-de-orden) | Acotar el control SIN ANCLAR del 7c-quater a lineas de orden | Implementada | Media | No bloqueante | 005_discovery |
 | [T-013](#t-013---anadir-el-estado-de-decision-revocada-en-parte) | Anadir el estado de decision revocada en parte | Implementada | Baja | No bloqueante | 005_discovery |
-| [T-014](#t-014---abrir-la-deuda-del-desfase-con-el-esqueleto-de-arranque) | Abrir la deuda del desfase con el esqueleto de arranque | No implementada | Baja | No bloqueante | 005_discovery |
-| [T-015](#t-015---declarar-en-el-7c-quater-el-punto-ciego-de-la-orden-partida) | Declarar en el 7c-quater el punto ciego de la orden partida | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-014](#t-014---abrir-la-deuda-del-desfase-con-el-esqueleto-de-arranque) | Abrir la deuda del desfase con el esqueleto de arranque | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-015](#t-015---declarar-en-el-7c-quater-el-punto-ciego-de-la-orden-partida) | Declarar en el 7c-quater el punto ciego de la orden partida | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-016](#t-016---fijar-que-el-estado-de-una-tarea-lo-decide-el-diff-y-no-el-anclaje) | Fijar que el estado de una tarea lo decide el diff y no el anclaje | Implementada | Media | No bloqueante | 005_discovery |
 
 ---
 
@@ -454,7 +455,7 @@ Plantilla:
 ### T-014 - Abrir la deuda del desfase con el esqueleto de arranque
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 005_discovery |
@@ -466,11 +467,13 @@ Plantilla:
 - **Por que:** el informe atribuia el desfase a `DT-001`, que esta pagada, y el desfase no tenia
   ninguna deuda abierta. Verificacion contra `HEAD` (`3aa301c`) en `D-025`.
 - **Criterio de cierre:** el de `D-025`, con sus ordenes ancladas y sus salidas.
+- 🕐 **Nota 2026-09-16 (`F-010`, `T-016`):** pasa a `Implementada`. Su trabajo esta en `27c03bb` y
+  el criterio de `D-025` reproduce; quedo en `No implementada` por un criterio que `D-027` descarta.
 
 ### T-015 - Declarar en el 7c-quater el punto ciego de la orden partida
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 005_discovery |
@@ -481,3 +484,22 @@ Plantilla:
   comillas invertidas partida en dos lineas no se detecta, segun `D-026`.
 - **Por que:** recomendacion sin hallazgo de `R-007` (seccion 5); el usuario eligio declararlo.
 - **Criterio de cierre:** el de `D-026`, con sus ordenes ancladas y sus salidas.
+- 🕐 **Nota 2026-09-16 (`F-010`, `T-016`):** pasa a `Implementada`. Su trabajo esta en `27c03bb` y
+  el criterio de `D-026` reproduce; quedo en `No implementada` por un criterio que `D-027` descarta.
+
+### T-016 - Fijar que el estado de una tarea lo decide el diff y no el anclaje
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-009 |
+
+- **Que:** atender `F-010`: escribir en el Paso 4 de `protocol-close` que una tarea con su trabajo en
+  el commit de la sesion pasa a `Implementada` sin esperar al anclaje, y mover `T-014` y `T-015`,
+  segun `D-027`.
+- **Por que:** `S-008` dejo dos tareas hechas en `No implementada` con un criterio que contradice a
+  `S-004`, `S-006` y `S-007`, y ningun paso las movia. Verificacion contra `HEAD` (`f0c1a74`) en `D-027`.
+- **Criterio de cierre:** el de `D-027`, con sus ordenes ancladas y sus salidas.

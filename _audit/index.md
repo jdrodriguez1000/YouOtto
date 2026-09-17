@@ -26,6 +26,7 @@
 | `S-006.md` | S-006 | 2026-09-16 | 081385a | `R-006.md` | Con hallazgos (1) | F-008 |
 | `S-007.md` | S-007 | 2026-09-16 | 87d10b8 | `R-007.md` | Con hallazgos (1) | F-009 |
 | `S-008.md` | S-008 | 2026-09-16 | 27c03bb | `R-008.md` | Con hallazgos (1) | F-010 |
+| `S-009.md` | S-009 | 2026-09-16 | Pendiente | Pendiente | Pendiente | - |
 
 ---
 

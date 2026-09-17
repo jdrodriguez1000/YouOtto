@@ -47,6 +47,7 @@
 | [D-024](#d-024---estado-propio-para-la-decision-revocada-en-parte) | Estado propio para la decision revocada en parte | 2026-09-16 | Vigente |
 | [D-025](#d-025---f-009-se-acepta-y-el-desfase-con-el-esqueleto-abre-su-propia-deuda) | F-009 se acepta y el desfase con el esqueleto abre su propia deuda | 2026-09-16 | Vigente |
 | [D-026](#d-026---el-7c-quater-declara-que-no-ve-una-orden-partida-en-dos-lineas) | El 7c-quater declara que no ve una orden partida en dos lineas | 2026-09-16 | Vigente |
+| [D-027](#d-027---el-estado-de-una-tarea-lo-decide-el-diff-no-el-anclaje) | El estado de una tarea lo decide el diff, no el anclaje | 2026-09-16 | Vigente |
 
 ---
 
@@ -1350,3 +1351,86 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `27c03bb`.** Las tres reproducen lo publicado arriba.
+
+### D-027 - El estado de una tarea lo decide el diff, no el anclaje
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-010` de `R-008`: `S-008` dejo `T-014` y `T-015` en `No implementada` con su trabajo
+  en `27c03bb`, «hasta que el 7c-bis ancle la evidencia», y lo llamo practica de sesiones anteriores.
+  El historial dice lo contrario, y el 7c-bis no puede tocar estados. Verificado vigente contra `HEAD`
+  (`f0c1a74`):
+
+  ```
+  $ git show f0c1a74:_persistence/tasks.md | grep -E '^\| \[T-01[45]\]' | grep -o 'No implementada'
+  No implementada
+  No implementada
+  ```
+
+  Precedentes, en los commits de sesion de `S-007`, `S-006` y `S-004`:
+
+  ```
+  $ for c in 87d10b8 081385a c07680f; do echo "== $c"; git show $c:_persistence/tasks.md | grep -E '^\| \[T-0(0[7-9]|1[0-3])\]' | awk -F'|' '{print $2,$4}' | sed 's/(#[^)]*)//'; done
+  == 87d10b8
+   [T-007]   Implementada 
+   [T-008]   Implementada 
+   [T-009]   Implementada 
+   [T-010]   Implementada 
+   [T-011]   Implementada 
+   [T-012]   Implementada 
+   [T-013]   Implementada 
+  == 081385a
+   [T-007]   Implementada 
+   [T-008]   Implementada 
+   [T-009]   Implementada 
+   [T-010]   Implementada 
+   [T-011]   Implementada 
+  == c07680f
+   [T-007]   Implementada 
+  ```
+
+  Y los criterios de `D-025` y `D-026`, ya anclados, siguen reproduciendo lo publicado:
+
+  ```
+  $ git show 27c03bb:_persistence/techdebt.md | grep -cE '^(\| \[DT-003\].*\| No implementada \||### DT-003 )'; git show 27c03bb:_audit/findings.md | grep -cE '^\| \[F-009\].*\| Aceptado — pendiente \|$|^\| Estado \| Aceptado — pendiente \|$'; git show 27c03bb:.claude/skills/protocol-close/SKILL.md | grep -cF 'partida en dos lineas'; git grep -nE "YouOtto|Company_TripleS|github.com" 27c03bb -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l; git show 27c03bb:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  2
+  2
+  1
+  0
+  0
+  ```
+
+- **Decision:** el usuario elige **aceptarlo con el criterio de `S-004`/`S-006`/`S-007`**: una tarea
+  cuyo trabajo esta en el commit de su sesion y cuyo criterio reproduce pasa a `Implementada` en ese
+  mismo commit; el anclaje solo publica la evidencia. Y elige **escribirlo en el Paso 4 de
+  `protocol-close`**. `T-014` y `T-015` pasan a `Implementada`, con nota fechada. `S-008.md` no se
+  reescribe. Como `T-016`.
+- **Por que:** el hallazgo se sostiene contra el registro. El 7c-bis tiene prohibido tocar estados,
+  asi que esperar al anclaje deja la tarea pendiente para siempre; y el closer arranca en frio y no
+  lee `decisions.md` en el Paso 4, asi que la regla tiene que estar donde la lee.
+- **Alternativas descartadas:**
+  - **Solo decision y tareas, sin tocar la skill:** el cierre puede volver a inventarse el criterio.
+  - **Esperar al anclaje:** exige un paso nuevo despues del 7c-bis que mueva estados, y contradice
+    tres sesiones de practica (`PI-2`).
+- ⚠️ **Consecuencia:** `protocol-close/SKILL.md` se aleja otra vez del esqueleto; entra en `DT-003`.
+- **Criterio de cierre:** a ese commit, el Paso 4 declara el criterio, `T-014`, `T-015` y `T-016`
+  estan en `Implementada` en indice y ficha, `F-010` dice `Aceptado — pendiente` en fila y ficha, y
+  los controles de fuga y de codigos siguen en cero.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'El estado lo decide la evidencia del diff'
+  1
+  $ git show <hash>:_persistence/tasks.md | grep -E '^\| \[T-01[456]\]' | grep -c '| Implementada |'
+  3
+  $ git show <hash>:_persistence/tasks.md | grep -A3 -E '^### T-01[456] ' | grep -c '^| Estado | Implementada |$'
+  3
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-010\].*\| Aceptado — pendiente \|$|^\| Estado \| Aceptado — pendiente \|$'
+  2
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" <hash> -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -noE '\b[A-Z]{1,2}-[0-9]+\b' | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  ```

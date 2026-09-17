@@ -42,6 +42,7 @@
 | [S-006](#s-006---f-006-y-f-007-de-r-005-atendidos-firma-del-acta-de-000_preproject-y-t-008t-009t-011-implementadas) | `F-006` y `F-007` de `R-005` atendidos, firma del acta de `000_preproject`, y `T-008`/`T-009`/`T-011` implementadas | 2026-09-16 | 005_discovery |
 | [S-007](#s-007---f-008-de-r-006-atendido-y-nuevo-estado-revocada-en-parte-para-decisions) | `F-008` de `R-006` atendido (control del 7c-quater acotado a lineas de orden), y nuevo estado `Revocada en parte por D-XXX` para `decisions.md` | 2026-09-16 | 005_discovery |
 | [S-008](#s-008---f-009-de-r-007-atendido-dt-003-abierta-y-el-7c-quater-declara-el-punto-ciego-de-la-orden-partida) | `F-009` de `R-007` atendido (abre `DT-003`), y el 7c-quater declara el punto ciego de la orden partida en dos lineas | 2026-09-16 | 005_discovery |
+| [S-009](#s-009---f-010-de-r-008-atendido-d-027-el-estado-de-una-tarea-lo-decide-el-diff-no-el-anclaje) | `F-010` de `R-008` atendido (`D-027`: el estado de una tarea lo decide el diff, no el anclaje), `T-014`/`T-015` pasan a `Implementada` | 2026-09-16 | 005_discovery |
 
 ---
 
@@ -73,40 +74,39 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-16 (S-008)` |
+| Ultima actualizacion | `2026-09-16 (S-009)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito `S-007` en `R-007` y entrego `F-009`: la seccion 9 de `S-007.md` atribuia la promocion pendiente de tres archivos a `DT-001`, que ya esta `Implementada` (pagada por `D-016`). El usuario acepto el hallazgo (`D-025`): `S-007.md` no se reescribe, y se abre una deuda propia, `DT-003` (`No implementada`, `Confirmada`), para el desfase actual con el esqueleto (tres archivos: `protocol-close/SKILL.md`, `protocol-start/SKILL.md`, `_templates/000_preproject/020_decisions.md`); `F-009` queda `Aceptado — pendiente` citando `T-014`/`D-025`. Ademas, sobre una recomendacion sin hallazgo de `R-007` (seccion 5: el patron del control SIN ANCLAR del 7c-quater no ve una orden entre comillas invertidas partida en dos lineas, con la tuberia en la segunda), el usuario eligio declararlo en el parrafo de limite del propio paso (`D-026`, `T-015`), sin ampliar el patron. Esa misma edicion de `protocol-close/SKILL.md` vuelve a alejar el andamiaje del esqueleto, y queda registrada dentro de `DT-003`. Se escribio `L-010` (la prueba de que un control no detecta algo necesita su caso positivo al lado, tras una primera prueba mal construida) |
+| Avance de la etapa | `report_auditor` audito `S-008` en `R-008` y entrego `F-010`: `T-014` y `T-015` quedaban `No implementada` con su trabajo ya en el diff de `27c03bb`, y el informe de `S-008` lo presentaba como la practica de sesiones anteriores, cuando `S-004`, `S-006` y `S-007` habian marcado `Implementada` en el mismo commit el trabajo que su criterio de cierre respaldaba. El usuario acepta el hallazgo con el criterio de esas tres sesiones (`D-027`): una tarea cuyo trabajo esta en el commit de su sesion y cuyo criterio de cierre reproduce pasa a `Implementada` en ese mismo commit, sin esperar al anclaje del Paso 7c-bis (que no puede tocar estados); y esa regla se escribe en el Paso 4 de `protocol-close/SKILL.md`, no solo en `decisions.md`, porque el cierre arranca en frio y no lee el registro de decisiones al escribir tareas. `T-014` y `T-015` pasan a `Implementada` con nota fechada (`T-016`); `S-008.md` no se reescribe. `F-010` queda `Aceptado — pendiente`, citando `T-016`/`D-027`. Se escribio `L-011`: una practica repetida que no esta escrita donde el agente trabaja no es una regla para el. La edicion de `protocol-close/SKILL.md` vuelve a alejar el andamiaje del esqueleto, dentro de la misma `DT-003` ya abierta (mismos tres archivos) |
 | Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa |
 
 ---
 
 ## 2. Ultimo realizado
 
-Octava sesion de trabajo. Segun el diff: se evaluo `F-009` de `R-007` sobre `S-007` (la seccion 9 de
-`S-007.md` atribuia el desfase con el esqueleto a `DT-001`, ya `Implementada`). El usuario acepta el
-hallazgo con `D-025`: no se reescribe `S-007.md`; se abre `DT-003` (`No implementada`, `Confirmada`,
-`Media`) para el desfase actual (los mismos tres archivos que ya senalaba `S-007`), verificado
-vigente contra `HEAD` (`3aa301c`). `F-009` queda `Aceptado — pendiente`, citando `T-014`/`D-025`.
-Aparte, sobre una recomendacion sin hallazgo de `R-007` (seccion 5: el patron del control SIN ANCLAR
-del 7c-quater es ciego a una orden partida en dos lineas con la tuberia en la segunda), el usuario
-eligio declararlo con una frase en el parrafo de limite de `protocol-close` (`D-026`, `T-015`), sin
-tocar el patron. Se probo el punto ciego con dos archivos de prueba en el scratchpad que solo
-difieren en donde cae la tuberia (`0` partida, `1` en una linea), y se escribio `L-010`: la primera
-prueba tenia la tuberia al final de la primera linea y el control si la detectaba, asi que no
-probaba lo que decia probar.
+Novena sesion de trabajo. Segun el diff: se evaluo `F-010` de `R-008` sobre `S-008` (`T-014` y
+`T-015` quedaban `No implementada` con su trabajo ya en `27c03bb`, y el informe lo llamaba practica
+de sesiones anteriores, contradicho por `S-004`/`S-006`/`S-007`, verificados contra `HEAD` en
+`D-027`). El usuario acepta el hallazgo con el criterio de esas tres sesiones: una tarea con su
+trabajo en el commit de su sesion y su criterio de cierre reproducido pasa a `Implementada` en ese
+mismo commit, y esa regla se escribe en el Paso 4 de `protocol-close/SKILL.md` para que el cierre,
+que arranca en frio, no tenga que reconstruirla. `T-014` y `T-015` pasan a `Implementada` con nota
+fechada; nace `T-016` que registra el propio arreglo. `F-010` queda `Aceptado — pendiente` en fila y
+en ficha de `_audit/findings.md`, citando `T-016`/`D-027`. Se escribio `L-011`: una practica repetida
+que no esta escrita donde el agente trabaja no es una regla para el.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-008`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto sigue siendo
+(`S-009`). Con la etapa `005_discovery` recien declarada, el primer trabajo de producto sigue siendo
 la clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
 `A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque sigue
 por detras en los mismos tres archivos de siempre (`protocol-close/SKILL.md`,
-`protocol-start/SKILL.md`, `_templates/000_preproject/020_decisions.md`), ahora bajo `DT-003`:
-promoverlo con `protocol-promote` requiere aprobacion del usuario, punto por punto. Sigue abierta
-`DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
+`protocol-start/SKILL.md`, `_templates/000_preproject/020_decisions.md`), ahora un poco mas por la
+edicion de esta sesion, bajo `DT-003`: promoverlo con `protocol-promote` requiere aprobacion del
+usuario, punto por punto. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las
+ordenes), confirmada y sin pagar.
 
 ---
 
@@ -286,6 +286,26 @@ Plantilla:
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `T-014` y
   `T-015` quedan `No implementada` (su criterio de cierre se ancla en el Paso 7c-bis de este mismo
   cierre). `DT-002` y `DT-003` confirmadas y sin pagar. `A-001` sigue `Abierto`.
+
+### S-009 - `F-010` de `R-008` atendido (`D-027`: el estado de una tarea lo decide el diff, no el anclaje)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Tareas | T-016 |
+
+- **Que se hizo:** se acepto `F-010` de `R-008` (`T-014` y `T-015` quedaban `No implementada` con su
+  trabajo ya en el diff de `27c03bb`, contra la practica de `S-004`/`S-006`/`S-007`, verificado
+  vigente contra `HEAD` en `D-027`). El usuario elige el criterio de esas tres sesiones: una tarea
+  cuyo trabajo esta en el commit de su sesion y cuyo criterio de cierre reproduce pasa a
+  `Implementada` en ese mismo commit, sin esperar al anclaje del Paso 7c-bis; y escribirlo en el
+  Paso 4 de `protocol-close/SKILL.md`. `T-014` y `T-015` pasan a `Implementada` con nota fechada;
+  nace `T-016`. `F-010` queda `Aceptado — pendiente`, citando `T-016`/`D-027`, en fila y en ficha de
+  `_audit/findings.md`. `S-008.md` no se reescribe. Se escribio `L-011`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. Las ordenes
+  del criterio de cierre de `D-027` se anclan en el Paso 7c-bis de este mismo cierre. `DT-002` y
+  `DT-003` siguen `No implementada`, confirmadas y sin pagar (`DT-003` crece con la edicion de esta
+  sesion a `protocol-close/SKILL.md`, mismos tres archivos). `A-001` sigue `Abierto`.
 
 ---
 

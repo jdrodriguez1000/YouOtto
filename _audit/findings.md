@@ -31,7 +31,7 @@
 | [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
-| [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Abierto |
+| [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Aceptado — pendiente |
 
 ---
 
@@ -303,8 +303,8 @@ Plantilla:
 | Auditoria | R-008 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-016, D-027 |
 | Cerrado en | |
 
 - **Que se observo:** el trabajo de `T-014` (`DT-003` abierta) y de `T-015` (punto ciego declarado en
@@ -317,4 +317,7 @@ Plantilla:
 - **Por que importa:** el registro presenta como pendiente trabajo hecho y verificado, sin paso que lo
   mueva, y dos sesiones seguidas aplican criterios opuestos sin decision registrada. `Media`: no se
   pierde trabajo, pero el estado y su justificacion son falsos contra `git`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`f0c1a74`), con orden y salida en
+  `D-027`. El usuario eligio el criterio de `S-004`/`S-006`/`S-007` (el estado lo decide el diff, no el
+  anclaje) y escribirlo en el Paso 4 de `protocol-close`; `T-014` y `T-015` pasan a `Implementada`.
+  `S-008.md` no se reescribe. Registrado en `T-016`.

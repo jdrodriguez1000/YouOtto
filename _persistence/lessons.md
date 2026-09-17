@@ -30,6 +30,7 @@
 | [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -263,3 +264,20 @@ Plantilla:
   prueba mal construida.
 - **Como aplicarla:** al afirmar que un control no detecta algo, correrlo sobre dos entradas que solo
   difieran en el rasgo del punto ciego, mostrar las entradas (`cat`) y publicar las dos salidas juntas.
+
+### L-011 - Una regla que un agente en frio necesita se escribe en el paso que lee
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+
+- **Contexto:** `F-010` de `R-008`, atendido con `D-027`.
+- **Que ocurrio:** los cierres de `S-004`, `S-006` y `S-007` marcaron `Implementada` las tareas con su trabajo en el commit,
+  pero esa practica no estaba escrita en el Paso 4 de `protocol-close`. El cierre de `S-008`, que
+  arranca en frio, aplico el criterio contrario («esperar al anclaje») y lo presento como la practica
+  de siempre; ningun paso posterior podia mover el estado.
+- **Leccion:** una practica repetida que no esta escrita donde el agente trabaja no es una regla para
+  el: la reconstruye cada vez, y puede reconstruirla al reves con total seguridad.
+- **Como aplicarla:** cuando un agente en frio aplica bien un criterio varias veces sin que este
+  escrito, escribirlo en el paso de su skill que lo usa, no solo en `decisions.md`, que ese paso no lee.
