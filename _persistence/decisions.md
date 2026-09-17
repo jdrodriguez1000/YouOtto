@@ -2677,9 +2677,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, los dos hallazgos citan su tarea en indice y ficha.
 
   ```
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-01[67]\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-03[01], D-046 \|$'
+  $ git show 91562b7:_audit/findings.md | grep -cE '^\| \[F-01[67]\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-03[01], D-046 \|$'
   4
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `91562b7`.** Reproduce lo publicado arriba.
 
 ### D-047 - R-014 y F-015 quedan retirados por la auditoria revertida
 | Campo | Valor |
@@ -2724,9 +2726,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-047\]|### D-047 )'
+  $ git show 91562b7:_persistence/decisions.md | grep -cE '^(\| \[D-047\]|### D-047 )'
   2
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `91562b7`.** Reproduce lo publicado arriba.
 
 ### D-048 - El agente de cierre solo puede invocar protocol-close
 | Campo | Valor |
@@ -2797,11 +2801,13 @@ Plantilla:
   test.
 
   ```
-  $ git show <hash>:.claude/agents/session-closer.md | grep -cF 'command: node .claude/hooks/allow-only-skill.js protocol-close'
+  $ git show 91562b7:.claude/agents/session-closer.md | grep -cF 'command: node .claude/hooks/allow-only-skill.js protocol-close'
   1
-  $ git ls-tree --name-only <hash> .claude/hooks/ | wc -l
+  $ git ls-tree --name-only 91562b7 .claude/hooks/ | wc -l
   2
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `91562b7`.** Las dos reproducen lo publicado arriba.
 
 - 🕐 **Nota 2026-09-17 (`A-006`):** el limite 3 queda resuelto: `A-006` esta `Confirmado` en la misma
   sesion, con la salida de `hook-probe`, y ese agente temporal se borro. El limite 2 se escribio antes de
