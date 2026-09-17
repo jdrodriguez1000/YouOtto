@@ -113,6 +113,18 @@ El rastro de las personas que se consideraron y donde aterrizaron. Existe porque
 ## 6. Comprobacion antes de cerrar este archivo
 
 - [x] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+
+  📌 **NOTA 2026-09-17 — la cifra de la linea de arriba es falsa y no se reescribe.** La etapa
+  enumera **siete** condiciones de salida, no seis. La frase llego asi desde la plantilla del
+  esqueleto y este archivo la copio; el defecto no cambia nada de lo comprobado — las siete
+  casillas se evaluaron una por una de todos modos. **La linea se deja tal cual** porque este
+  artefacto esta `CERRADO` y ya auditado: se corrige por esta declaracion, no reescribiendola.
+  La plantilla y el reparto si quedaron corregidos hacia adelante.
+
+  ```
+  $ sed -n '/^## 6. Condicion de salida/,/^## 7/p' _phases/005_discovery.md | grep -c '^- \[ \]'
+  7
+  ```
 - [x] Cada uno dice **que aporta** y **que puede bloquear**; ninguna de las dos vacia.
 - [x] Los que pueden bloquear tienen **ficha**, con el momento en que bloquean.
 - [x] Ningun interesado esta aqui solo porque «hay que tenerlo contento».

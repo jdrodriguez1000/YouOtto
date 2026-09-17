@@ -39,7 +39,7 @@
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado |
 | [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Implementado |
-| [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Abierto |
+| [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Aceptado — pendiente (`T-036`, `D-064`) |
 
 ---
 
@@ -515,8 +515,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-036` y `D-064` |
 | Cerrado en | |
 
 - **Que se observo:** el commit `205b1f2` cierra `005_discovery/015_stakeholders.md` y marca `[x]` una
@@ -545,4 +545,12 @@ Plantilla:
   arranque con esa plantilla heredara la misma frase falsa. `Baja` porque ningun control lee ese numero y
   las siete casillas se evaluaron una por una de todos modos; `No bloqueante` porque nada de lo que se
   haga despues depende de la cifra — pero tampoco desaparece sola.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** **aceptado y corregido** (`D-064`, `T-036` → `Implementada`). Verificado contra
+  `HEAD` antes de tratarlo: la etapa enumera siete casillas. **El hallazgo se sostiene y se quedo
+  corto:** citaba dos sitios y el barrido propio devolvio tres — se le escapo `_workflow/005_discovery.md`,
+  que ademas de publicar la cifra mal **le faltaba la septima fila entera** de su tabla de reparto, la de
+  la casilla de la cosecha. Corregidos hacia adelante la plantilla y el reparto (cifra + fila que
+  faltaba); el artefacto `CERRADO` se corrigio **por nota fechada, sin reescribir**. Queda sin tocar y con
+  su deuda (`DT-005`) la cifra «Cuatro de las seis llevan juicio» de la linea 119 del mismo archivo de
+  reparto, cuya lectura no esta clara y afecta tambien a otra etapa. Leccion registrada: `L-017`.
+  **`Estado` lo cierra una auditoria posterior, no esta entrada.**

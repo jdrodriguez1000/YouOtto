@@ -50,6 +50,7 @@
 | [S-014](#s-014---f-016-y-f-017-de-r-015-aceptados-y-aplazados-d-046-r-014f-015-retirados-d-047-y-el-agente-de-cierre-solo-puede-invocar-protocol-close-d-048) | `F-016` y `F-017` de `R-015` aceptados y aplazados (`D-046`), `R-014`/`F-015` retirados (`D-047`), y el agente de cierre solo puede invocar `protocol-close` (`D-048`) | 2026-09-17 | 005_discovery |
 | [S-015](#s-015---f-018-de-r-016-aceptado-y-corregido-d-049-t-032-verificada-con-la-sonda-hook-probe-d-050-y-pasos-1-a-7-de-005_discovery-con-el-patrocinador) | `F-018` de `R-016` aceptado y corregido (`D-049`), `T-032` verificada con la sonda `hook-probe` (`D-050`), y Pasos 1 a 7 de `005_discovery` con el patrocinador (`D-051`..`D-058`) | 2026-09-17 | 005_discovery |
 | [S-016](#s-016---f-019-de-r-017-aceptado-y-corregido-d-059-cierre-de-010_actors-y-015_stakeholders-d-060-alcance-y-objetivo-del-proyecto-d-061-y-cosecha-de-005_discovery-d-062) | `F-019` de `R-017` aceptado y corregido (`D-059`), cierre de `010_actors.md`/`015_stakeholders.md` (`D-060`), alcance y objetivo del proyecto (`D-061`), y cosecha de `005_discovery` (`D-062`) | 2026-09-17 | 005_discovery |
+| [S-017](#s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018-d-063d-065d-067-y-se-cierra-005_needsmd-d-066) | `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`) | 2026-09-17 | 005_discovery |
 
 ---
 
@@ -81,44 +82,40 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-17 (S-016)` |
+| Ultima actualizacion | `2026-09-17 (S-017)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito el commit de `S-015` (`eda6314`) en `R-017` y entrego `F-019`, `Media`/`No bloqueante`. Se acepto y, por decision del usuario, se corrigio en la misma sesion (`D-059`, `T-034` → `Implementada`): nota fechada en `T-029` con la orden anclada a `e18bf5b` y su salida real (`5`, no `4`); la cifra publicada no se reescribe. Por decision del usuario, se cerraron `010_actors.md` y `015_stakeholders.md` (`D-060`): pasan de `BORRADOR` a `CERRADO`, se borra su «Guia de llenado» y se marcan sus comprobaciones. El patrocinador (`I-001`) definio objetivo y alcance del proyecto (`D-061`): las cuatro necesidades `N-001`-`N-004` entran al alcance del producto (la aplicacion guarda las apuestas jugadas y lee el sitio oficial de Baloto), pero el alcance del prototipo sigue siendo solo `N-001`/`N-002`, lo unico que mide la hipotesis sellada; `A-008` sube de importancia por nota. Se hizo la cosecha de `005_discovery` (`D-062`, `protocol-harvest`): de ocho lecciones, cuatro suben (`LG-106`, `LG-107`, `LG-108`, `LG-109`) y una enmienda (`LG-22`); tres no suben por estar ya cubiertas; commit `a9ed27b` en el repositorio de lecciones, subido a `origin/main` — con un defecto declarado y no reescrito: el mensaje de ese commit dice «no suben cuatro» y lista solo tres (`L-016`). De las siete casillas de la condicion de salida de la etapa (`_phases/005_discovery.md` §6), la septima **no se cumple todavia**: `L-016`, nacida en esta misma sesion, queda `Sin evaluar` — verificado con `grep -E '^\| \[L-' _persistence/lessons.md \| grep '005_discovery' \| grep -c 'Sin evaluar'` → `1` |
-| Bloqueos activos | La condicion de salida de `005_discovery` (`_phases/005_discovery.md` §6) sigue sin cumplirse: su septima casilla exige que ninguna leccion de la etapa quede `Sin evaluar`, y `L-016` (nacida esta sesion) lo esta. `T-032` (Alta, No bloqueante) sigue abierta: `A-007` confirma los dos casos del hook dentro del agente, pero el criterio de cierre literal («tras reiniciar Claude Code») no se probo asi. `005_needs.md` sigue `BORRADOR`. `A-004`, `A-005` y `A-008` (abiertos): revision del patrocinador antes de registrar, acceso a personas que conocen el proceso real, y permiso de Baloto para leer su historico — este ultimo ahora en el camino critico del producto, no solo del prototipo (`D-061`). `DT-002` sigue `No implementada`, confirmada y sin pagar. `T-035` (nueva, Baja/No bloqueante, `Origen: session-closer`): el barrido del Paso 1 de `protocol-harvest` que cita `D-062` publica `8` donde la misma orden, sobre el commit de esta sesion, devuelve `1` — no esta anclado ni fechado como snapshot |
+| Avance de la etapa | `report_auditor` audito el commit de `S-016` (`205b1f2`) en `R-018` y entrego `F-020`, `Baja`/`No bloqueante`. Verificado vigente contra `HEAD` y aceptado, y **se quedaba corto**: el barrido propio con ambito mas ancho encontro un tercer archivo (`_workflow/005_discovery.md`) al que ademas le faltaba una fila entera en su tabla de reparto — la de la casilla de la cosecha (`L-017`). Corregido con `D-064`/`T-036`: la plantilla y la cifra del reparto pasan de `seis` a `siete`, se anade la septima fila a `_workflow/005_discovery.md`, y el artefacto `CERRADO` (`015_stakeholders.md`) se corrige por nota fechada, sin reescribir. Queda declarada y sin pagar una segunda cifra derivada que tampoco cuadra («Cuatro de las seis llevan juicio») — `DT-005`, `Sin confirmar`. Tres pasadas mas de `protocol-harvest` sobre las lecciones nacidas hoy: `L-016` sube como **enmienda de `LG-32`** (`D-063`, version 6 del archivo global, commit `b1915d3` subido); `L-017` y `L-018` **no suben**, `Ya cubierta por LG-85` y `Ya cubierta por LG-101` (`D-065`, `D-067`). Se cierra `005_discovery/005_needs.md` (`D-066`): `BORRADOR` → `CERRADO`, guia de llenado borrada, nueve comprobaciones marcadas. Con eso, **las siete casillas de la condicion de salida de la etapa** (`_phases/005_discovery.md` §6) quedan cumplidas: ninguna leccion de `005_discovery` sigue `Sin evaluar` (verificado, `0`), y los cuatro artefactos de la etapa estan `CERRADO`/`CERRADO`/`CERRADO`/`SELLADA` |
+| Bloqueos activos | Ninguno bloquea la condicion de salida de `005_discovery`: sus siete casillas estan cumplidas, pendiente de que se corra el acta de cierre de etapa (`protocol-phase-exit`), que este cierre no ejecuta. `T-032` (Alta, No bloqueante) sigue abierta: `A-007` confirma los dos casos del hook dentro del agente, pero el criterio de cierre literal («tras reiniciar Claude Code») no se probo asi. `A-004`, `A-005` y `A-008` (abiertos): revision del patrocinador antes de registrar, acceso a personas que conocen el proceso real, y permiso de Baloto para leer su historico — en el camino critico del producto. `DT-002` y `DT-005` siguen `No implementada`, sin pagar. `T-035` (Baja, No bloqueante, `Origen: session-closer`) sigue abierta: la cifra `8` del barrido del Paso 1 de `D-062` no reproduce sobre el commit de esa sesion. Nace `T-037` (`Origen: session-closer`, esta sesion): dos ordenes de `D-064` — Contexto, no Criterio de cierre — publican una cifra tomada **antes** de la propia correccion de la misma decision, y hoy ya no reproducen (`3`→`2` lineas, y `7`→`8` filas) |
 
 ---
 
 ## 2. Ultimo realizado
 
-Dieciseis sesiones de trabajo. Segun el diff: se acepto y corrigio `F-019`/`D-059` (nota fechada en
-`T-029`, anclada a `e18bf5b`, con la salida real `5`; `T-034` pasa a `Implementada`). Por decision del
-usuario se cerraron `010_actors.md` y `015_stakeholders.md` (`D-060`): `BORRADOR` → `CERRADO`, guia de
-llenado borrada, comprobaciones marcadas. El patrocinador definio objetivo y alcance del proyecto
-(`D-061`): alcance del producto = las cuatro necesidades (guarda apuestas jugadas, lee el sitio de
-Baloto); alcance del prototipo = solo lo que la hipotesis sellada mide (`N-001`, `N-002`); nota en
-`A-008`, que sube de importancia sin cambiar de estado ni disparador. Se hizo la cosecha de
-`005_discovery` (`D-062`, `protocol-harvest`): `L-008` → `LG-106`, `L-011` → `LG-107`, `L-012` →
-`LG-108`, `L-014` → `LG-109`; `L-015` enmienda `LG-22`; `L-009`, `L-010`, `L-013` ya cubiertas; commit
-`a9ed27b` en `TripleS_Lessons`, subido, con un defecto de redaccion en su propio mensaje declarado por
-`L-016` (nueva, `Sin evaluar`) en vez de reescrito.
+Diecisiete sesiones de trabajo. Segun el diff: se acepto `F-020`/`D-064` y se corrigio hacia adelante
+(plantilla y reparto de `005_discovery` de `seis` a `siete` condiciones de salida, mas la septima fila
+que faltaba en la tabla del reparto) y por nota fechada en el artefacto `CERRADO`; queda declarada y
+sin tocar `DT-005`. Tres pasadas mas de `protocol-harvest`: `L-016` sube como enmienda de `LG-32`
+(`D-063`, commit `b1915d3` en `TripleS_Lessons`, subido); `L-017` y `L-018` no suben, ya cubiertas por
+`LG-85` y `LG-101` (`D-065`, `D-067`). Se cierra `005_discovery/005_needs.md` (`D-066`): `BORRADOR` →
+`CERRADO`. Con eso, las siete casillas de la condicion de salida de `005_discovery` quedan cumplidas.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-016`). La etapa `005_discovery` **sigue sin cerrar**: falta evaluar y, si corresponde, cosechar
-`L-016` para que la septima casilla de su condicion de salida (`_phases/005_discovery.md` §6) se
-cumpla — es la unica de las siete que sigue pendiente. `T-035` (nueva): anclar o fechar la cifra del
-barrido de `D-062` que ya no reproduce. `T-032` (Alta, No bloqueante) sigue abierta: decidir si
-`D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code», y en tal caso
-reescribirlo. `T-030` y `T-031` (Baja, No bloqueante) siguen siendo las notas pendientes de
-`F-016`/`F-017`. `A-004`, `A-005` y `A-008` (abiertos): revision del patrocinador antes de registrar,
-acceso a personas que conocen el proceso real, y permiso de Baloto para leer su historico — ahora
-condicion del producto, no solo del prototipo (`D-061`). El esqueleto de arranque vuelve a diferir en
-`.claude/agents/session-closer.md` y en `.claude/hooks/` entero, verificado en el Paso 2f de este
-cierre: pendiente de promocion con aprobacion del usuario. Sigue abierta `DT-002` (el CONTROL DE
-SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
+(`S-017`). La etapa `005_discovery` tiene **sus siete casillas de condicion de salida cumplidas**:
+el siguiente paso de fondo es correr el acta de cierre de etapa (`protocol-phase-exit`), que este
+cierre no ejecuta. `T-037` (nueva, `Origen: session-closer`): dos ordenes del bloque «Contexto» de
+`D-064` no reproducen hoy porque describen el estado previo a la correccion de esa misma decision;
+anclarlas a `205b1f2` o fecharlas como snapshot. `T-035` sigue abierta con el mismo pendiente sobre
+`D-062`. `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio
+literal de «tras reiniciar Claude Code». `T-030`, `T-031` y `T-033` (Baja, No bloqueante) siguen
+pendientes. `A-004`, `A-005` y `A-008` (abiertos) siguen igual. El esqueleto de arranque vuelve a
+diferir en `.claude/agents/session-closer.md`, `.claude/hooks/`, y ahora tambien en
+`_templates/005_discovery/015_stakeholders.md` y `_workflow/005_discovery.md` por los cambios de
+`D-064`: pendiente de promocion con aprobacion del usuario. `DT-002` y `DT-005` siguen
+`No implementada`, sin pagar.
 
 ---
 
@@ -525,6 +522,43 @@ Plantilla:
   producto. El esqueleto de arranque sigue diferendo en `.claude/agents/session-closer.md` y
   `.claude/hooks/`. `DT-002` sigue `No implementada`, confirmada y sin pagar. Falta lanzar
   `report_auditor` sobre el commit de esta sesion.
+
+### S-017 - `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Tareas | T-036, T-037 |
+
+- **Que se hizo:** `report_auditor` audito el commit de `S-016` (`205b1f2`) en `R-018` y entrego
+  `F-020` (`Baja`/`No bloqueante`): `015_stakeholders.md`, ya `CERRADO`, afirma «seis condiciones de
+  salida» donde la etapa enumera siete. Verificado vigente contra `HEAD` y aceptado con `D-064`; el
+  barrido propio, con ambito mas ancho que el del hallazgo, encontro un **tercer** archivo que el
+  hallazgo no citaba (`_workflow/005_discovery.md`), al que ademas **le faltaba la septima fila
+  entera** de su tabla de reparto — la de la casilla de la cosecha (`L-017`). Corregido distinto segun
+  el tipo de archivo: la plantilla y la cifra del reparto, `seis` → `siete`; se anade la fila que
+  faltaba; el artefacto `CERRADO` se corrige por nota fechada, sin reescribir (`T-036` →
+  `Implementada`). Queda declarada y sin tocar una segunda cifra derivada que tampoco cuadra bajo
+  ninguna lectura comprobable («Cuatro de las seis llevan juicio») — `DT-005`, `Sin confirmar`. Ademas
+  de `L-017`, se hicieron dos pasadas mas de `protocol-harvest`, cada una en la misma pasada en que
+  nacio la leccion: `L-016` sube como **enmienda de `LG-32`** (`D-063`, version 6 del archivo global,
+  commit `b1915d3` en `TripleS_Lessons`, subido a `origin/main`); `L-018` no sube, `Ya cubierta por
+  LG-101` (`D-067`). Se cierra `005_discovery/005_needs.md` (`D-066`): `BORRADOR` → `CERRADO`, sus
+  nueve comprobaciones marcadas, la «Guia de llenado» borrada. Con eso, **las siete casillas de la
+  condicion de salida de `005_discovery`** (`_phases/005_discovery.md` §6) quedan cumplidas:
+  ninguna leccion de la etapa sigue `Sin evaluar` (verificado, `0`), y los cuatro artefactos estan
+  `CERRADO`/`CERRADO`/`CERRADO`/`SELLADA`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion, y correr el
+  acta de cierre de etapa (`protocol-phase-exit`), que este cierre no ejecuta. Nace `T-037`
+  (`Origen: session-closer`): dos ordenes del bloque «Contexto» de `D-064` —no de su «Criterio de
+  cierre»— publican una cifra tomada **antes** de que la propia decision corrigiera el archivo que
+  miden, y hoy ya no reproducen sobre el arbol de trabajo (`3`→`2` lineas en el barrido de los tres
+  sitios afectados; `7`→`8` filas en la tabla del reparto). `T-035` sigue abierta con el mismo
+  pendiente en `D-062`. `T-032` (Alta, No bloqueante) sigue igual. `T-030`, `T-031` y `T-033` (Baja,
+  No bloqueante) siguen pendientes. `A-004`, `A-005` y `A-008` siguen `Abierto`. El esqueleto de
+  arranque vuelve a diferir en `.claude/agents/session-closer.md`, `.claude/hooks/`, y ahora tambien
+  en `_templates/005_discovery/015_stakeholders.md` y `_workflow/005_discovery.md`. `DT-002` y
+  `DT-005` siguen `No implementada`, sin pagar.
 
 ---
 

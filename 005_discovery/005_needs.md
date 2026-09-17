@@ -4,9 +4,9 @@
 |---|---|
 | Artefacto | `005_discovery/005_needs.md` |
 | Etapa que lo produce | `005_discovery` |
-| Estado | `BORRADOR` |
+| Estado | `CERRADO` |
 | Abierto | `2026-09-17` |
-| Cerrado | `—` |
+| Cerrado | `2026-09-17` |
 | Escrito por | `manager` |
 
 > **Estado:** `BORRADOR` mientras la etapa siga abierta · `CERRADO` cuando se cumpla la condicion de
@@ -113,8 +113,6 @@ archivo antes que en la tabla es un desfase, no una novedad.
 
 **Relacionada con:** `N-003` · `D-054`
 
-<!-- Copia el bloque completo para N-002, N-003, … -->
-
 ---
 
 ## 3. Peticiones que NO eran necesidades
@@ -135,15 +133,15 @@ vuelve a pedir lo mismo, esta tabla dice que se pregunto y que se encontro.
 Esto **no** es la condicion de salida de la etapa —esa esta en `_phases/005_discovery.md` §6 y
 abarca los cinco artefactos—. Esto es solo lo que le toca a este archivo.
 
-- [ ] Las nueve preguntas tienen respuesta o un «no se sabe» **con su `A-XXX`**.
-- [ ] Hay **al menos una** `N-XXX` registrada.
-- [ ] **Ninguna** `N-XXX` nombra una pantalla, un boton ni un formulario.
-- [ ] Cada `N-XXX` dice **quien la tiene**, con nombre de rol o de persona.
-- [ ] Cada `N-XXX` dice **como se hace hoy**.
-- [ ] Las peticiones descartadas estan en §3, no borradas.
-- [ ] **No queda ni un solo `<` en el archivo** — ningun hueco sin rellenar.
-- [ ] La seccion «Guia de llenado» de abajo **esta borrada**.
-- [ ] La cabecera dice `CERRADO` y tiene fecha de cierre.
+- [x] Las nueve preguntas tienen respuesta o un «no se sabe» **con su `A-XXX`**.
+- [x] Hay **al menos una** `N-XXX` registrada.
+- [x] **Ninguna** `N-XXX` nombra una pantalla, un boton ni un formulario.
+- [x] Cada `N-XXX` dice **quien la tiene**, con nombre de rol o de persona.
+- [x] Cada `N-XXX` dice **como se hace hoy**.
+- [x] Las peticiones descartadas estan en §3, no borradas.
+- [x] **No queda ni un solo `<` en el archivo** — ningun hueco sin rellenar.
+- [x] La seccion «Guia de llenado» de abajo **esta borrada**.
+- [x] La cabecera dice `CERRADO` y tiene fecha de cierre.
 
 Las tres ultimas se comprueban desde fuera, sin leer el archivo entero:
 
@@ -156,64 +154,12 @@ grep -n "^| Estado |" 005_discovery/005_needs.md       # debe decir CERRADO
 🚨 **La salida cruda de esas tres ordenes va al registro**, no la conclusion. «Se comprobo» es un
 veredicto; lo que alimenta una auditoria es «corri esto, salio esto».
 
----
----
+⚠️ **Los dos primeros no pueden devolver vacio en este archivo, y no es un hueco sin rellenar:** las
+unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+nombra para enunciar la comprobacion. La guia se borro; el cuerpo del artefacto no tiene ni un hueco.
+Su salida, con el alcance que lo demuestra, va en su decision de cierre.
 
-## Guia de llenado — ⚠️ BORRAR esta seccion al cerrar el artefacto
-
-> Existe para escribir el archivo. **No sobrevive al cierre de la etapa.** Si se queda, quien lea
-> mañana no puede distinguir lo que decidio el proyecto de lo que traia la plantilla — y lo tratara
-> como decision.
-
-### La pregunta que hace todo el trabajo
-
-> **¿Como haces esto hoy?**
-
-Se repite en toda la etapa. Lo primero que dice el cliente es casi siempre una solucion, no una
-necesidad.
-
-| Lo que dijo | La necesidad detras | La pregunta que la destapa |
-|---|---|---|
-| «necesito una aplicacion para pedir recogidas» | los clientes no tienen forma de pedir una recogida sin llamar por telefono | *¿que pasa hoy cuando alguien quiere una recogida?* |
-| «necesito un tablero» | nadie sabe cuantas recogidas se cumplieron | *¿que decision tomarias con ese dato?* |
-
-### Ejemplo de una ficha completa
-
-*(el ejemplo es de una app de recogida de reciclaje: otro dominio, a proposito, para que no se
-confunda con el proyecto que se este escribiendo)*
-
-### N-001 · Pedir recogida sin llamar
-
-| Campo | Contenido |
-|---|---|
-| Enunciado | Un cliente no tiene forma de solicitar una recogida sin llamar por telefono en horario de oficina. |
-| Quien la tiene | El cliente que genera el residuo — contacto operativo de la empresa recolectada. |
-| Como se hace hoy | Llama al fijo. Si no contestan, vuelve a llamar. La analista lo anota en una hoja de calculo. |
-| Que cuesta hoy | ~40 llamadas al mes; 6 quedaron sin registrar en julio. |
-| De donde salio | Entrevista con la analista de logistica + revision de la hoja de calculo de julio. |
-| Fecha | 2026-07-14 |
-| Peticion original | «Necesito una app para pedir recogidas.» |
-| Estado | `REGISTRADA` |
-
-**Relacionada con:** Actor Generador (`010_actors.md`) · `C-XXX` (solo horario habil)
-
-### Errores que esta plantilla existe para evitar
-
-| Error | Como se ve | Que hacer |
-|---|---|---|
-| Necesidad que es una solucion | «que haya un boton para agendar» | preguntar *«¿como lo haces hoy?»* hasta que desaparezca el boton |
-| Dueño en plural | «lo tienen los usuarios» | un rol o una persona; si son varios, son varias `N-XXX` |
-| Supuesto disfrazado de hecho | «los clientes tienen celular» | pasarlo a `A-XXX` en `_persistence/assumptions.md`, con su forma de validarlo y su disparador |
-| Rellenar el «que cuesta hoy» con adjetivos | «es muy ineficiente» | un numero, o «no se sabe → `A-XXX`» |
-| Descartar una peticion sin dejar rastro | §3 vacia y §2 con menos fichas | toda peticion desvestida deja fila en §3 |
-
-### Lo que esta etapa tiene PROHIBIDO, y aqui se cuela solo
-
-Diseñar pantallas · elegir tecnologia · escribir codigo · escribir especificacion, requisitos o
-arquitectura · prometer alcance o fechas. Si al llenar este archivo aparece un nombre de libreria o
-un plazo, va fuera: no hay evidencia todavia para prometer nada.
-
-📌 Definiciones: `_methodology/000_method.md` §13-§14 y §46.
-📌 Procedimiento: `_phases/005_discovery.md` §4, pasos 1, 2 y 6.
-📌 Donde van los supuestos y las restricciones: `_persistence/assumptions.md` y
-`_persistence/constraints.md` — el descubrimiento **no tiene registro propio** para ellos.
+📌 **Y la tercera casilla se comprueba sobre los `Enunciado`, no sobre el archivo entero.** Las
+palabras-pantalla aparecen a proposito en `Peticion original` —que cita lo que el patrocinador pidio,
+literal— y en §3, que existe para guardar el rastro de lo desvestido. Lo que la regla prohibe es que
+una **necesidad** se enuncie nombrando una pantalla.

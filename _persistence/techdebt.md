@@ -25,6 +25,7 @@
 | [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
 | [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | Implementada | Confirmada | Alta | No bloqueante |
 | [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | Implementada | Confirmada | Baja | No bloqueante |
+| [DT-005](#dt-005---la-cifra-de-casillas-que-llevan-juicio-no-cuadra-en-dos-archivos-de-reparto) | La cifra de casillas «que llevan juicio» no cuadra en dos archivos de reparto | No implementada | Sin confirmar | Baja | No bloqueante |
 
 ---
 
@@ -238,3 +239,53 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
 - 🕐 **Nota 2026-09-16 (`D-035`): confirmada y pagada, estado al 2026-09-16.** El usuario la confirmo, y
   `.claude/skills/protocol-close/SKILL.md` se promovio desde `1add289` al commit `7f4381e` del
   esqueleto, subido. El barrido del Paso 1 salio vacio despues de promover. La evidencia esta en `D-035`.
+
+### DT-005 - La cifra de casillas «que llevan juicio» no cuadra en dos archivos de reparto
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Confirmacion | Sin confirmar |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Origen | manager |
+| Fecha | 2026-09-17 |
+
+- **Deuda:** dos archivos de `_workflow/` publican una cifra derivada que su propia tabla no respalda,
+  y **ninguna de las dos se toco**:
+
+  ```
+  $ grep -n "llevan juicio" _workflow/005_discovery.md _workflow/010_prototype.md
+  _workflow/005_discovery.md:119:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
+  _workflow/010_prototype.md:150:📌 **Seis de las siete llevan juicio en la columna derecha**, una mas que en el descubrimiento. Lo
+  ```
+
+  Las dos tablas tienen **todas** sus filas con texto en la columna `Juicio`, asi que bajo la lectura
+  llana ninguna de las dos cifras se sostiene:
+
+  ```
+  $ sed -n '/^## 5\./,/^## 6\./p' _workflow/005_discovery.md | grep '^| ' | awk -F'|' '{print NR": ["$4"]"}'
+  1: [ Juicio ]
+  2: [ que sea de verdad una necesidad, y no una peticion disfrazada ]
+  3: [ entero ]
+  4: [ la clasificacion por funcion ]
+  5: [ entero ]
+  6: [ que la falsacion sirva ]
+  7: [ entero ]
+  8: [ que leccion sube, cual ya esta cubierta y cual es solo de este proyecto ]
+  ```
+
+  La unica lectura que hace **correcta** la del prototipo es «filas cuyo `Juicio` no es `entero`» — seis
+  de siete alli. Bajo esa misma lectura, descubrimiento deberia decir **cuatro de las siete** (las tres
+  no-`entero` de antes mas la nueva fila de la cosecha), no «cuatro de las seis»; y la coletilla «*una
+  mas que en el descubrimiento*» no cuadra con ninguna de las dos lecturas.
+- **Por que se tomo:** la lectura de «llevan juicio» **se esta infiriendo, no leyendo**, y la cifra vive
+  en dos archivos de etapa distintos de los seis copiables. Fijar una lectura por conveniencia para
+  cerrar `F-020` habria convertido una cifra dudosa en una cifra afirmada. `PI-3`: no se amplia el
+  alcance de la tarea.
+- **Costo de no pagarla:** `_workflow/005_discovery.md` queda **internamente incoherente**: su linea 107
+  dice siete casillas y su linea 119 dice «de las seis», junto a una tabla que ya tiene siete filas. Un
+  proyecto que copie los copiables se lleva las dos cifras. Y al ser derivadas y escritas a mano, nadie
+  las recalcula al releerlas.
+- **Como se paga:** decidir que significa «llevan juicio» — preferiblemente escribiendolo en el propio
+  archivo, que es lo que falta —, y recontar las dos cifras y la coletilla contra sus tablas, con su
+  `D-XXX`. Al estar en los copiables, la correccion debe llegar tambien al esqueleto de arranque.

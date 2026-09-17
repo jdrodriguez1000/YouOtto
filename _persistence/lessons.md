@@ -35,7 +35,9 @@
 | [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Ya cubierta por LG-100 |
 | [L-014](#l-014---una-exclusividad-que-ya-fallo-se-pone-en-la-herramienta-no-en-el-texto) | Una exclusividad que ya fallo se pone en la herramienta, no en el texto | 2026-09-17 | 005_discovery | Promovida a LG-109 |
 | [L-015](#l-015---un-bloqueo-se-prueba-en-los-dos-casos-el-prohibido-y-el-permitido) | Un bloqueo se prueba en los dos casos: el prohibido y el permitido | 2026-09-17 | 005_discovery | Promovida a LG-22 |
-| [L-016](#l-016---una-cifra-escrita-donde-no-se-puede-corregir-se-cuenta-antes-no-despues) | Una cifra escrita donde no se puede corregir se cuenta antes, no despues | 2026-09-17 | 005_discovery | Sin evaluar |
+| [L-016](#l-016---una-cifra-escrita-donde-no-se-puede-corregir-se-cuenta-antes-no-despues) | Una cifra escrita donde no se puede corregir se cuenta antes, no despues | 2026-09-17 | 005_discovery | Promovida a LG-32 |
+| [L-017](#l-017---los-sitios-que-cita-un-hallazgo-son-una-muestra-no-el-inventario) | Los sitios que cita un hallazgo son una muestra, no el inventario | 2026-09-17 | 005_discovery | Ya cubierta por LG-85 |
+| [L-018](#l-018---un-barrido-de-estado-encuentra-tambien-el-archivo-que-prohibe-ese-estado) | Un barrido de estado encuentra tambien el archivo que prohibe ese estado | 2026-09-17 | 005_discovery | Ya cubierta por LG-101 |
 
 ---
 
@@ -389,3 +391,56 @@ Plantilla:
   poder corregir, toda cifra que resuma un conjunto se contrasta contra el conjunto que tiene al lado. Si
   el texto ya esta subido, se corrige por declaracion fechada donde si se pueda escribir, nunca
   reescribiendo historia.
+
+### L-017 - Los sitios que cita un hallazgo son una muestra, no el inventario
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** el tratamiento de un hallazgo de auditoria sobre una cifra equivocada («seis» donde el
+  archivo de etapa enumera «siete»). El hallazgo venia con su barrido y su salida cruda, citando **dos**
+  archivos afectados.
+- **Que ocurrio:** al rehacer el barrido con el mismo patron pero sobre un ambito mas ancho, aparecio un
+  **tercer** archivo que el hallazgo no nombraba — y en el, el defecto era peor que la cifra: a una
+  tabla de reparto le faltaba una fila entera. Aceptar el hallazgo por su lista habria cerrado la tarea
+  dejando el sitio peor sin tocar, y con la sensacion de estar resuelto. El auditor no se equivoco en lo
+  que dijo; se quedo corto en donde miro, que no es lo mismo y no se ve igual.
+- **Leccion:** un hallazgo bien escrito —con su orden y su salida cruda— invita a leer su lista como el
+  inventario completo, precisamente porque **parece** exhaustivo. La evidencia que trae prueba que esos
+  sitios estan mal; no prueba que sean los unicos. Y el ambito de un barrido ajeno no se hereda: se
+  vuelve a elegir.
+- **Como aplicarla:** antes de aceptar o rechazar un hallazgo, **rehacer su barrido con su patron y un
+  ambito propio** — tipicamente el repositorio entero en vez de las carpetas que cita—, y publicar esa
+  salida al lado de la del hallazgo. Si aparece algo mas, entra en la misma tarea y se dice que el
+  hallazgo se quedo corto; si no aparece nada, el barrido propio es la prueba de que la lista estaba
+  completa.
+
+### L-018 - Un barrido de estado encuentra tambien el archivo que prohibe ese estado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** al listar que artefactos de la etapa seguian abiertos, para decir que faltaba para
+  cerrarla. El barrido usado fue `grep -m1 -oE 'BORRADOR|CERRADO'` sobre cada archivo.
+- **Que ocurrio:** clasifico el artefacto de la hipotesis como `BORRADOR`. No lo es: nace **`SELLADA`**
+  y es el unico de los cuatro que nunca lleva `BORRADOR`. Lo que el barrido encontro fue la linea que
+  **prohibe** ese estado — una advertencia en mayusculas que dice que el archivo no lleva `BORRADOR`—,
+  y `-m1` la tomo por el valor porque aparece antes que la fila de cabecera. Con la misma orden se
+  publicaron otras dos afirmaciones falsas sobre el mismo archivo —huecos sin rellenar y guia sin
+  borrar—, que eran las citas de su propia seccion de comprobacion.
+- **El coste estuvo a un paso de ser real:** ese archivo se sella con **un unico commit**, y un Gate
+  posterior comprueba en el historial que devuelva una sola linea. Editarlo habria anadido un segundo
+  commit y dejado al Gate sin nada contra que medir, sin forma de recuperar cual era la apuesta
+  original. Lo que lo evito no fue el barrido: fue **leer el archivo entero antes de tocarlo**.
+- **Leccion:** un barrido que busca un **valor** lo encuentra igual en la linea que lo asigna y en la
+  que lo prohibe, lo advierte o lo cita — y `-m1` no elige la correcta, elige la primera. Un estado no
+  se lee buscando su valor en el archivo: se lee en **el campo que lo declara**. Y la forma del fallo
+  ya estaba escrita y conocida al cometerlo, en la misma jornada en que se trato dos veces.
+- **Como aplicarla:** un barrido de estado se ancla a la **forma de la linea** del campo
+  —`grep -m1 '^| Estado |'`—, nunca al valor suelto; y la salida se publica con la linea entera, que es
+  lo que delata haber leido otra cosa. Antes de editar un archivo que un barrido senalo, **leerlo**: la
+  lectura es el control que atrapa la mala clasificacion, y en un archivo irreversible es el unico.

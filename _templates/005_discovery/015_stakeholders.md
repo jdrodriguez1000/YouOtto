@@ -98,7 +98,7 @@ El rastro de las personas que se consideraron y donde aterrizaron. Existe porque
 
 ## 6. Comprobacion antes de cerrar este archivo
 
-- [ ] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+- [ ] **Los interesados estan identificados** — es una de las siete condiciones de salida de la etapa.
 - [ ] Cada uno dice **que aporta** y **que puede bloquear**; ninguna de las dos vacia.
 - [ ] Los que pueden bloquear tienen **ficha**, con el momento en que bloquean.
 - [ ] Ningun interesado esta aqui solo porque «hay que tenerlo contento».

@@ -104,7 +104,7 @@ para que nadie lo use en ninguna de las dos direcciones.
 
 ## 5. Artefactos y condicion de salida: que es mecanico y que es juicio
 
-Las seis casillas de `_phases/005_discovery.md` §6, separadas por quien las puede comprobar:
+Las siete casillas de `_phases/005_discovery.md` §6, separadas por quien las puede comprobar:
 
 | Casilla | Mecanico | Juicio |
 |---|---|---|
@@ -114,6 +114,7 @@ Las seis casillas de `_phases/005_discovery.md` §6, separadas por quien las pue
 | interesados con lo que aportan y lo que bloquean | campos completos, `I-XXX` unicos | entero |
 | hipotesis con su condicion de falsacion | que la seccion exista y no quede ningun hueco sin rellenar | que la falsacion sirva |
 | alcance y objetivo con su `D-XXX` | que el `D-XXX` exista y este en el indice | entero |
+| cosecha hecha, ninguna leccion sin evaluar | el recuento de la columna de portabilidad | que leccion sube, cual ya esta cubierta y cual es solo de este proyecto |
 
 📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
 esta **completo**; nunca dice que sea **cierto**. Las plantillas de la etapa ya traen sus barridos

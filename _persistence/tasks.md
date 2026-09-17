@@ -52,6 +52,8 @@
 | [T-033](#t-033---publicar-por-nota-las-ordenes-del-paso-1b-y-del-barrido-que-d-045-resume) | Publicar por nota las ordenes del Paso 1b y del barrido que D-045 resume | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-034](#t-034---corregir-por-nota-la-cifra-del-criterio-de-cierre-de-t-029) | Corregir por nota la cifra del criterio de cierre de T-029 | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-035](#t-035---anclar-por-nota-la-cifra-del-barrido-del-paso-1-de-protocol-harvest-en-d-062) | Anclar por nota la cifra del barrido del Paso 1 de protocol-harvest en D-062 | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-036](#t-036---corregir-la-cifra-de-condiciones-de-salida-de-005_discovery-en-la-plantilla-el-reparto-y-el-artefacto) | Corregir la cifra de condiciones de salida de 005_discovery en la plantilla, el reparto y el artefacto | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-037](#t-037---anclar-o-fechar-dos-ordenes-del-contexto-de-d-064-que-ya-no-reproducen) | Anclar o fechar dos ordenes del Contexto de D-064 que ya no reproducen | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -904,3 +906,52 @@ Plantilla:
   paso en esta misma sesion.
 - **Criterio de cierre:** `manager` ancla la orden al commit anterior a esta sesion, o la marca
   explicitamente como «al momento de escribir esta entrada», por nota fechada en `D-062`.
+
+### T-036 - Corregir la cifra de condiciones de salida de 005_discovery en la plantilla, el reparto y el artefacto
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-020` (`Baja`/`No bloqueante`). La frase «es una de las **seis** condiciones de salida de
+  la etapa» donde `_phases/005_discovery.md` §6 enumera **siete**. Aceptado y hecho: la plantilla y la
+  cifra del reparto corregidas a `siete`, la septima fila anadida a la tabla del reparto, y el artefacto
+  `CERRADO` con nota fechada en vez de reescritura. El reparto de la decision esta en `D-064`.
+- **Por que:** dos de los tres sitios viven en `_templates/` y `_workflow/`, que existen para copiarse
+  a otro proyecto: una instruccion falsa ahi no se queda quieta, arrastra. Y a la tabla del reparto le
+  faltaba **la fila de la casilla de la cosecha**, que es la que `CLAUDE.md` declara no delegable.
+- **Criterio de cierre:** el de `D-064`.
+
+### T-037 - Anclar o fechar dos ordenes del Contexto de D-064 que ya no reproducen
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d de `protocol-close` detecto dos ordenes en el bloque «Contexto» de `D-064` —no
+  en su «Criterio de cierre», que si esta anclado— que no llevan ancla y hoy ya no reproducen, porque
+  documentan el estado **anterior** a la correccion que la propia decision aplico en el mismo commit:
+
+  - Archivo: `_persistence/decisions.md`.
+  - Orden literal: `grep -rn "seis condiciones de salida\|seis casillas\|Cuatro de las seis"
+    005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md`.
+    Publica 3 lineas (incluye `_templates/005_discovery/015_stakeholders.md:101`); reejecutada hoy
+    sobre el arbol de trabajo devuelve 2 lineas, porque `D-064` ya corrigio esa plantilla en el mismo
+    commit.
+  - Orden literal: `sed -n '/^## 5\./,/^## 6\./p' _workflow/005_discovery.md | grep -c '^| '`.
+    Publica `7` («1 cabecera + 6 filas de datos»); reejecutada hoy devuelve `8`, porque `D-064` anadio
+    la septima fila en el mismo commit.
+- **Por que:** `_persistence/decisions.md` no es un archivo que `session-closer` pueda editar fuera del
+  anclaje mecanico del Paso 7c-bis, y ese paso solo toca bloques «Criterio de cierre»: este defecto
+  vive en «Contexto», asi que no lo puede corregir este cierre.
+- **Criterio de cierre:** `manager` ancla las dos ordenes al commit anterior a esta sesion (`205b1f2`,
+  el estado que realmente describen) o las marca explicitamente como «antes de la correccion de esta
+  misma decision», por nota fechada en `D-064`.

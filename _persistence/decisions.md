@@ -83,6 +83,11 @@
 | [D-060](#d-060---se-cierran-los-artefactos-de-actores-e-interesados) | Se cierran los artefactos de actores e interesados | 2026-09-17 | Vigente |
 | [D-061](#d-061---objetivo-y-alcance-del-proyecto) | Objetivo y alcance del proyecto | 2026-09-17 | Vigente |
 | [D-062](#d-062---cosecha-de-005_discovery-al-archivo-de-lecciones-globales) | Cosecha de 005_discovery al archivo de lecciones globales | 2026-09-17 | Vigente |
+| [D-063](#d-063---l-016-sube-como-enmienda-de-lg-32-segunda-pasada-de-la-cosecha-de-005_discovery) | L-016 sube como enmienda de LG-32: segunda pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
+| [D-064](#d-064---f-020-se-acepta-y-se-corrige-hacia-adelante-en-los-copiables-y-por-nota-en-el-artefacto) | F-020 se acepta y se corrige hacia adelante: en los copiables y por nota en el artefacto | 2026-09-17 | Vigente |
+| [D-065](#d-065---l-017-no-sube-ya-cubierta-por-lg-85-tercera-pasada-de-la-cosecha-de-005_discovery) | L-017 no sube: ya cubierta por LG-85, tercera pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
+| [D-066](#d-066---se-cierra-el-artefacto-de-necesidades) | Se cierra el artefacto de necesidades | 2026-09-17 | Vigente |
+| [D-067](#d-067---l-018-no-sube-ya-cubierta-por-lg-101-cuarta-pasada-de-la-cosecha-de-005_discovery) | L-018 no sube: ya cubierta por LG-101, cuarta pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
 
 ---
 
@@ -3538,3 +3543,370 @@ Plantilla:
   discrepancia queda declarada aqui, y `D-062` sigue `Vigente` pero su criterio de cierre pendiente
   hasta que `L-016` se evalue. Ver `T-035` en `tasks.md` y «Sin resolver» del informe de `S-016`.
 
+  📌 **NOTA 2026-09-17 — el criterio pendiente de esta decision queda cumplido; ver `D-063`.** `L-016`
+  se evaluo en la segunda pasada de `protocol-harvest`: sube como **enmienda de `LG-32`**, y su columna
+  `Portabilidad` pasa de `Sin evaluar` a `Promovida a LG-32`. Con eso ninguna leccion de
+  `005_discovery` sigue `Sin evaluar`, que es lo que este criterio exigia. **La salida `0` publicada
+  arriba no se reescribe**, y la discrepancia declarada en el diagnostico se mantiene tal cual: lo que
+  esta nota anade es cuando y donde se resolvio, no una correccion del texto. `T-035` **sigue abierta**: pide anclar la cifra `8` del barrido del Paso 1 **de esta
+  decision**, y eso no es lo que se hizo aqui — `D-063` ancla su propio barrido, que es otro.
+
+### D-063 - L-016 sube como enmienda de LG-32: segunda pasada de la cosecha de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-062` dejo su criterio de cierre pendiente por una razon declarada alli: `L-016`,
+  escrita por el cierre de la sesion anterior **despues** del barrido de aquella cosecha, quedo ella
+  misma `Sin evaluar`, y eso mantenia sin cumplir la septima casilla de la condicion de salida de
+  `005_discovery` (`_phases/005_discovery.md` §6). Segunda pasada de `protocol-harvest` sobre esa
+  unica leccion. Barrido del Paso 1:
+
+  ```
+  $ git show 205b1f2:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep 'Sin evaluar'
+  | [L-016](#l-016---una-cifra-escrita-donde-no-se-puede-corregir-se-cuenta-antes-no-despues) | Una cifra escrita donde no se puede corregir se cuenta antes, no despues | 2026-09-17 | 005_discovery | Sin evaluar |
+  $ git show 205b1f2:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  1
+  ```
+
+  🔑 **El barrido va anclado a `205b1f2`, el commit anterior a esta sesion, y no al arbol de trabajo.**
+  Es el estado sobre el que se corrio el Paso 1; en cuanto el Paso 7 escribio `Promovida a LG-32`, la
+  misma orden sin ancla devuelve `0` y deja de poder contrastarse. Esta es `T-035` aplicada en el
+  momento de escribir en vez de por nota despues, y es `L-016` sobre si misma.
+
+  Los dos disparadores del protocolo se comprobaron antes de empezar: la etapa se esta cerrando de
+  verdad —esta casilla es la unica que le falta— y no hay auditoria en curso ni pendiente (`R-018`
+  cerro sobre `205b1f2`, y ninguna sesion queda sin auditar).
+- **Decision:** `L-016` **no sube como entrada nueva: enmienda `LG-32`**. Clasificacion, con el filtro
+  que la decidio:
+
+  | Leccion | Destino | Razon |
+  |---|---|---|
+  | `L-016` | `Promovida a LG-32` | pasa los filtros 1, 2 y 3; el **filtro 4** con salida de enmienda: su nucleo ya estaba en `LG-32`, que cubre «una lista, un recuento […] copiados a mano». La cara nueva es el **soporte** |
+
+  Una fila, que es el recuento del barrido. No se asigna codigo nuevo —el ultimo en uso sigue siendo
+  `LG-109`— porque una enmienda no consume codigo.
+
+  La enmienda toca el **enunciado** de `LG-32`, no se anade debajo, como pide la seccion de promocion
+  del archivo global (`LG-28` aplicada a ese archivo): de «*y la cercania no protege*» a «*la cercania
+  no protege, y donde no se puede corregir no hay segunda pasada*». Sus otras dos columnas ganan la
+  forma nueva del fallo y su defensa —contar antes, y si ya esta subido corregir por declaracion
+  fechada, nunca reescribiendo historia—, y la cita de origen gana `· YouOtto · L-016`.
+- **Por que:** el usuario aprobo el texto en la puerta del Paso 5, con el antes y el despues a la vista.
+- **Alternativas descartadas:**
+  - **`Ya cubierta por LG-32`:** habria cerrado la casilla hoy sin escribir fuera, pero el filtro 4 es
+    explicito en que una **cara nueva** se enmienda, no se descarta. `LG-32` presupone un soporte donde
+    todavia se puede escribir —«se pega la orden y su salida»—, y un mensaje de commit ya subido no lo
+    es; esa cara no estaba en ninguna entrada global.
+  - **`Solo proyecto`:** la forma del fallo no depende de este repositorio. Que aqui lo prohiba un
+    protocolo propio es el caso concreto, no la leccion: un acta firmada o un mensaje de commit de
+    cualquier proyecto tienen el mismo limite.
+  - **Subir `L-016` como `LG-110` aparte:** duplicaria el nucleo de `LG-32` en dos entradas, que es lo
+    que `LG-26` vigila y lo que el filtro 4 existe para evitar.
+  - **Arreglar de paso una cifra rancia del archivo global:** su guia de lectura sigue diciendo «104
+    lecciones» donde la cabecera declara 109. **No se toco**: no salio de `L-016`, y el protocolo
+    prohibe mezclar dos trabajos en una cosecha. Queda reportado para decidirse aparte.
+- **Version nueva del archivo global declarada:** **6 · 2026-09-17 · 109 lecciones · 10 bloques**, con
+  su fila en el registro de revisiones. El recuento no cambia porque una enmienda no anade entrada.
+- **Commit en el repositorio de lecciones:** `b1915d3`, subido a `origin/main`.
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" log --oneline -1
+  b1915d3 Cosecha de 005_discovery desde YouOtto, segunda pasada: enmienda de LG-32 (version 6)
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" status -sb | head -1
+  ## main...origin/main
+  ```
+
+  La linea de `status` sin `[ahead N]` es la que prueba que el push llego.
+- **La enmienda existe de verdad en el archivo global**, que es la unica afirmacion de este registro
+  sobre un archivo que el auditor no puede ver — por eso va anclada al hash:
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show b1915d3:global_lessons.md | grep -cF "donde no se puede corregir no hay segunda pasada"
+  1
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show b1915d3:global_lessons.md | grep -cF "YouOtto` · L-016"
+  1
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show b1915d3:global_lessons.md | grep -cE "^> \*\*Versión: 6"
+  1
+  ```
+- **El mensaje de este commit se escribio contando la lista**, que es justamente lo que pide `L-016`:
+  una leccion evaluada, una enmienda, cero entradas nuevas. La suma cuadra con el barrido.
+- **Criterio de cierre:** a este commit, ninguna leccion de `005_discovery` sigue `Sin evaluar` —con lo
+  que queda cumplido tambien el criterio que `D-062` dejo pendiente.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  0
+  $ git show <hash>:_persistence/lessons.md | grep -cF 'Promovida a LG-32'
+  1
+  ```
+
+### D-064 - F-020 se acepta y se corrige hacia adelante: en los copiables y por nota en el artefacto
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-020` observa que una casilla de `015_stakeholders.md`, ya `CERRADO`, afirma «seis
+  condiciones de salida» donde su archivo de etapa enumera siete, y que la misma frase vive en la
+  plantilla. Verificado contra `HEAD` antes de tratarlo:
+
+  ```
+  $ sed -n '/^## 6. Condicion de salida/,/^## 7/p' _phases/005_discovery.md | grep -c '^- \[ \]'
+  7
+  ```
+
+  **El hallazgo se sostiene, y se queda corto.** Citaba dos sitios; el barrido propio devuelve tres
+  —se le escapo `_workflow/`, que tambien es de los seis copiables—:
+
+  ```
+  $ grep -rn "seis condiciones de salida\|seis casillas\|Cuatro de las seis" 005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md
+  005_discovery/015_stakeholders.md:115:- [x] **Los interesados estan identificados** - es una de las seis condiciones de salida de la etapa.
+  _templates/005_discovery/015_stakeholders.md:101:- [ ] **Los interesados estan identificados** - es una de las seis condiciones de salida de la etapa.
+  _workflow/005_discovery.md:107:Las seis casillas de `_phases/005_discovery.md` §6, separadas por quien las puede comprobar:
+  _workflow/005_discovery.md:118:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
+  ```
+
+  Y el reparto no solo publicaba mal la cifra: **le faltaba la septima fila entera**, la de la cosecha
+  —la casilla que `CLAUDE.md` declara no delegable—. Su tabla repartia seis casillas:
+
+  ```
+  $ sed -n '/^## 5\./,/^## 6\./p' _workflow/005_discovery.md | grep -c '^| '
+  7          # 1 cabecera + 6 filas de datos
+  ```
+
+  Todo entro ya incoherente desde el esqueleto, sin `D-XXX` que lo declarase:
+
+  ```
+  $ git log --oneline -S"las siete son ciertas" -- _phases/005_discovery.md
+  fa7da56 Estado de partida del esqueleto, tal como estaba antes de sincronizar
+  $ git log --oneline -S"Las seis casillas" -- _workflow/005_discovery.md
+  fa7da56 Estado de partida del esqueleto, tal como estaba antes de sincronizar
+  ```
+
+- **Decision:** se acepta (`T-XXX`, `Origen: report_auditor`), y se corrige **distinto segun el tipo de
+  archivo**:
+
+  | Sitio | Que se hizo | Por que |
+  |---|---|---|
+  | la plantilla | `seis` → `siete` | existe para copiarse: una instruccion falsa arrastra a cada proyecto que la use |
+  | el reparto, la cifra | `seis` → `siete` | igual, y ademas es de los seis copiables |
+  | el reparto, la tabla | **se anade la septima fila** | faltaba el reparto de la casilla de la cosecha |
+  | el artefacto `CERRADO` | **nota fechada, sin reescribir** | es evidencia ya cerrada y auditada |
+
+- **Por que:** el usuario eligio la nota fechada frente a corregir el texto del artefacto. Un archivo
+  que **instruye** se arregla; un archivo que **es evidencia** se corrige por declaracion. La frase mala
+  no cambia nada de lo comprobado: las siete casillas se evaluaron una por una de todos modos.
+- **Alternativas descartadas:**
+  - **Corregir tambien el artefacto `CERRADO`:** defendible porque la frase es descripcion copiada y no
+    una medicion publicada, pero reescribe un artefacto que una auditoria ya juzgo, y abre el precedente
+    de tocar evidencia cerrada cuando el error parece menor.
+  - **Corregir solo los dos sitios que el hallazgo citaba:** habria dejado `_workflow/` afirmando la
+    cifra mala y sin la fila que le falta, con el hallazgo cerrado. Tomar la lista de un hallazgo como
+    el inventario es lo que el barrido propio desmintio aqui.
+  - **Recontar de paso «Cuatro de las seis llevan juicio»:** queda **sin tocar** y con su deuda tecnica
+    (`DT-XXX`). Ver el punto siguiente.
+- 🚨 **Lo que queda deliberadamente mal, y se declara:** al pasar la cifra de la linea 107 a `siete` y
+  anadir la fila, la linea 119 del mismo archivo **sigue diciendo «de las seis» junto a una tabla de
+  siete**. No se escribio «Cuatro de las siete» porque esa cifra tampoco se sostiene bajo ninguna
+  lectura comprobable, y publicar a sabiendas otra cifra falsa es peor que dejar la conocida con su
+  deuda escrita. La incoherencia va a `DT-XXX`, no se disimula.
+- **Criterio de cierre:** a ese commit, la etapa enumera siete casillas, el reparto tiene sus siete
+  filas, y los unicos `seis` que quedan para esta etapa son los dos declarados — el de la linea con
+  nota y el de la cifra en disputa.
+
+  ```
+  $ git show <hash>:_phases/005_discovery.md | sed -n '/^## 6. Condicion de salida/,/^## 7/p' | grep -c '^- \[ \]'
+  7
+  $ git show <hash>:_workflow/005_discovery.md | sed -n '/^## 5\./,/^## 6\./p' | grep -c '^| '
+  8
+  $ git show <hash>:_templates/005_discovery/015_stakeholders.md | grep -c 'siete condiciones de salida'
+  1
+  $ git grep -n "seis condiciones de salida\|seis casillas\|Cuatro de las seis" <hash> -- 005_discovery/ _templates/005_discovery/ _workflow/005_discovery.md
+  <hash>:005_discovery/015_stakeholders.md:115:- [x] **Los interesados estan identificados** - es una de las seis condiciones de salida de la etapa.
+  <hash>:_workflow/005_discovery.md:119:📌 **Cuatro de las seis llevan juicio en la columna derecha.** Lo mecanico dice que el artefacto
+  ```
+
+### D-065 - L-017 no sube: ya cubierta por LG-85, tercera pasada de la cosecha de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** el tratamiento de `F-020` produjo `L-017`, que nacio `Sin evaluar` y volvio a romper la
+  septima casilla de la condicion de salida de `005_discovery` — el mismo patron que `D-063` acababa de
+  resolver. Se evalua **en la misma pasada**, que es literalmente lo que `L-016` enseña. Barrido,
+  anclado al arbol de trabajo **al momento de escribir esta entrada** — antes de tocar la columna:
+
+  ```
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'
+  1
+  ```
+
+- **Decision:** `L-017` **no sube**. Destino `Ya cubierta por LG-85`.
+
+  | Leccion | Destino | Razon |
+  |---|---|---|
+  | `L-017` | `Ya cubierta por LG-85` | **filtro 4**: dos entradas globales la cubren entre las dos |
+
+  Una fila, que es el recuento del barrido. `LG-85` aporta la mitad operativa —«lo que no esta en la
+  lista no se declara limpio, se declara NO MIRADO»—, que aplicada a un hallazgo recibido dice
+  exactamente que los sitios que cita son la lista y el resto esta sin mirar. `LG-79` aporta la otra
+  —«reporta → no se cree → se mide con comandos propios»—. Se anota `LG-85` por ser la operativa.
+- **Por que:** ademas del filtro 4, falla el **«cuando se promueve»** del archivo global: pide la misma
+  forma vista en dos revisiones distintas, o una sola cuyo coste sea concreto y demostrable. Aqui hay un
+  caso, y el coste no llego a materializarse porque el barrido propio lo detecto. Si reaparece, el
+  destino natural es **enmendar `LG-85`** con la cara nueva — que la evidencia cruda adjunta a un
+  hallazgo hace que su lista **parezca** exhaustiva—, no crear una entrada aparte.
+- **Alternativas descartadas:**
+  - **`Global candidata` con enmienda a `LG-85`:** habria requerido tercera pasada de la puerta y un
+    push mas al repositorio de lecciones el mismo dia, para una leccion de un solo caso y coste no
+    materializado. El propio archivo global pide esperar a la repeticion.
+  - **`Solo proyecto`:** falso. La forma —heredar el ambito del barrido de otro— no depende de lenguaje,
+    libreria ni dominio, y `LG-85` no seria pertinente si lo hiciera.
+- **No se escribio nada fuera de este repositorio**, asi que esta pasada no tiene puerta ni commit en el
+  repositorio de lecciones: un destino `Ya cubierta` no toca el archivo global.
+- **Criterio de cierre:** a ese commit, ninguna leccion de `005_discovery` sigue `Sin evaluar`, y
+  `L-017` consta con su destino.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  0
+  $ git show <hash>:_persistence/lessons.md | grep -cF 'Ya cubierta por LG-85'
+  1
+  ```
+
+### D-066 - Se cierra el artefacto de necesidades
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** de las siete casillas de la condicion de salida de `005_discovery`
+  (`_phases/005_discovery.md` §6), cinco ya se cumplian; las dos pendientes eran la primera —la
+  necesidad `N-XXX` enunciada— y la quinta —la hipotesis—, las dos por tener su artefacto en
+  `BORRADOR`. El contenido de `005_needs.md` estaba completo desde `S-015` (`D-051` a `D-058`) y las
+  cuatro necesidades entraron al alcance en `D-061`; lo que faltaba era el cierre.
+- **Decision:** `005_discovery/005_needs.md` pasa de `BORRADOR` a `CERRADO`, con fecha de cierre
+  `2026-09-17`. Se marcan sus nueve comprobaciones, se borra la seccion «Guia de llenado» y se elimina
+  el ultimo hueco de la plantilla — el comentario que invitaba a copiar el bloque de ficha.
+- **Por que:** el mismo criterio que `D-060` aplico a `010_actors.md` y `015_stakeholders.md`. Un
+  artefacto en `BORRADOR` con la guia dentro no distingue lo que decidio el proyecto de lo que traia la
+  plantilla, y quien lo lea manana tratara la guia como decision.
+- **Alternativas descartadas:**
+  - **Cerrarlo junto con `020_hypothesis.md` en una sola decision:** son dos artefactos distintos con
+    comprobaciones distintas; una decision que cierra dos cosas a la vez no deja ver cual de las dos
+    fallo si alguna falla.
+  - **Dejarlo en `BORRADOR` hasta el acta de cierre de la etapa:** el acta **verifica** las casillas, no
+    las cumple. Llegar al acta con el artefacto abierto es llegar con la casilla sin cumplir.
+- **Verificacion.** Las tres ordenes de §4 del artefacto, copiadas del archivo:
+
+  ```
+  $ grep -n "<" 005_discovery/005_needs.md
+  142:- [x] **No queda ni un solo `<` en el archivo** — ningun hueco sin rellenar.
+  149:grep -n "<" 005_discovery/005_needs.md                 # debe no devolver nada
+  158:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -n "Guia de llenado" 005_discovery/005_needs.md
+  143:- [x] La seccion «Guia de llenado» de abajo **esta borrada**.
+  150:grep -n "Guia de llenado" 005_discovery/005_needs.md   # debe no devolver nada
+  158:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -n "^| Estado |" 005_discovery/005_needs.md
+  7:| Estado | `CERRADO` |
+  67:| Estado | `REGISTRADA` |
+  82:| Estado | `REGISTRADA` |
+  97:| Estado | `REGISTRADA` |
+  112:| Estado | `REGISTRADA` |
+  ```
+
+  ⚠️ **Las dos primeras no devuelven vacio, y el alcance es lo que lo explica:** las cinco lineas que
+  quedan son **de §4 mismo** — la casilla que enuncia la comprobacion, la linea de la propia orden, y la
+  nota que declara esto. Es `LG-101`: una busqueda de texto encuentra tambien las citas de ese texto. El
+  cuerpo del artefacto, hasta §4, no tiene ni un hueco:
+
+  ```
+  $ sed -n '1,/^## 4. Comprobacion/p' 005_discovery/005_needs.md | grep -c "<"
+  0
+  ```
+
+  📌 **La tercera casilla se comprobo sobre los `Enunciado`, no sobre el archivo entero**, porque es
+  lo que la regla dice —«si en el **enunciado** aparece …»—. Las palabras-pantalla aparecen a proposito
+  en `Peticion original`, que cita literal lo que se pidio, y en §3, que guarda el rastro de lo
+  desvestido:
+
+  ```
+  $ grep -n '^| Enunciado |' 005_discovery/005_needs.md | grep -icE 'pantalla|boton|formulario|tablero|app|menu'
+  0
+  $ grep -c "^### N-00" 005_discovery/005_needs.md
+  4
+  ```
+
+- **Criterio de cierre:** a ese commit, el artefacto esta `CERRADO`, sus cuatro fichas siguen ahi, su
+  cuerpo no tiene huecos y la guia no esta.
+
+  ```
+  $ git show <hash>:005_discovery/005_needs.md | grep -c 'Guia de llenado'
+  3
+  $ git show <hash>:005_discovery/005_needs.md | sed -n '1,/^## 4. Comprobacion/p' | grep -c "<"
+  0
+  $ git show <hash>:005_discovery/005_needs.md | grep -c "^### N-00"
+  4
+  ```
+
+  📌 El primero devuelve `3`, no `0`, y son las tres lineas de §4 declaradas arriba.
+
+### D-067 - L-018 no sube: ya cubierta por LG-101, cuarta pasada de la cosecha de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** `L-018` nacio al detectar que el barrido de estado de los artefactos habia clasificado
+  mal el de la hipotesis, y volvio a dejar una leccion `Sin evaluar`. Se evalua en la misma pasada.
+  Barrido, **al momento de escribir esta entrada**, antes de tocar la columna:
+
+  ```
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'
+  1
+  ```
+
+- **Decision:** `L-018` **no sube**. Destino `Ya cubierta por LG-101`.
+
+  | Leccion | Destino | Razon |
+  |---|---|---|
+  | `L-018` | `Ya cubierta por LG-101` | **filtro 4**: `LG-101` ya lo dice, y prescribe la misma defensa |
+
+  Una fila, que es el recuento del barrido. `LG-101` —«una busqueda de texto encuentra tambien las citas
+  de ese texto»— cubre el fallo entero, incluida la prescripcion: «**se ancla a la forma de la linea**,
+  se limita al sitio donde vive el defecto». Que aqui la cita fuera una **prohibicion** del valor
+  buscado, y no una correccion que lo menciona, es el mismo mecanismo con otra ropa.
+- **Por que:** ademas del filtro 4, el «cuando se promueve» tampoco se cumple como entrada nueva: es una
+  reaparicion de una forma **ya promovida**, no una forma nueva. Lo que si vale la pena decir es que
+  reaparecio **tres veces en la misma jornada** —en el control de un artefacto, en un criterio de cierre
+  y en este barrido—, lo que refuerza `LG-32` en su mitad de que conocer la forma del fallo no protege
+  de cometerlo. Ninguna de las dos necesita enmienda para decirlo.
+- **Alternativas descartadas:**
+  - **`Global candidata`:** duplicaria `LG-101` con un caso mas, que es lo que el filtro 4 evita.
+  - **Enmendar `LG-101` con el caso de la prohibicion:** su prescripcion ya cubre la defensa sin
+    cambiarla; una enmienda que no cambia lo que hay que hacer solo alarga el archivo (`LG-26`).
+  - **No registrar la leccion:** el error fue propio y se publico en pantalla al usuario. Un fallo que
+    llego a una afirmacion falsa y estuvo a un paso de romper un archivo irreversible se registra.
+- **No se escribio nada fuera de este repositorio.**
+- **Criterio de cierre:** a ese commit, ninguna leccion de `005_discovery` sigue `Sin evaluar`.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  0
+  $ git show <hash>:_persistence/lessons.md | grep -cE '^\| \[L-018\].*Ya cubierta por LG-101'
+  1
+  ```
+
+  📌 **La segunda orden va anclada a `L-018`, y no es cosmetica.** Escrita como
+  `grep -cF 'Ya cubierta por LG-101'` devolvia `3`, no `1`: ese valor ya lo llevan dos lecciones
+  anteriores. La cifra se corrigio **antes de publicarla**, contando la lista en vez de
+  recordarla — que es exactamente lo que pide `L-016`, aplicado esta vez a tiempo.
