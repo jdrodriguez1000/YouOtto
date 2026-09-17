@@ -2905,11 +2905,13 @@ Plantilla:
   tarea en indice y ficha.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-018`, `D-049`\)|^\s*\$ for p in 005_project|^\s*\$ W=\$\(mktemp -d\)'
+  $ git show eda6314:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-018`, `D-049`\)|^\s*\$ for p in 005_project|^\s*\$ W=\$\(mktemp -d\)'
   3
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-018\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-033, D-049 \|$'
+  $ git show eda6314:_audit/findings.md | grep -cE '^\| \[F-018\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-033, D-049 \|$'
   2
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `eda6314`.** Las dos reproducen lo publicado arriba.
 
 ### D-050 - T-032 se verifica con una sonda de la cabecera exacta, en los dos casos
 | Campo | Valor |
@@ -3215,8 +3217,10 @@ Plantilla:
   ```
   $ git log --oneline -- 005_discovery/020_hypothesis.md | wc -l
   1
-  $ git show <hash>:005_discovery/020_hypothesis.md | grep -c '^| Estado | `SELLADA` |$'
+  $ git show eda6314:005_discovery/020_hypothesis.md | grep -c '^| Estado | `SELLADA` |$'
   1
   ```
+
+📌 **Anclada por el Paso 7c-bis al commit `eda6314`.** Reproduce lo publicado arriba.
 
 - **Tarea:** `T-029`. **Necesidades:** `N-001`, `N-002`.
