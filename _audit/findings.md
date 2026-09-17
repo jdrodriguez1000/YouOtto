@@ -37,7 +37,8 @@
 | [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
 | [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
-| [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Aceptado — pendiente |
+| [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado |
+| [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Abierto |
 
 ---
 
@@ -464,9 +465,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-033, D-049 |
-| Cerrado en | |
+| Cerrado en | eda6314 (R-017) |
 
 - **Que se observo:** en `91562b7`, `D-045` afirma «Paso 1b: nueve copias de la raiz dan `0` y
   `_audit/findings.md` da `21`», «Barrido del Paso 1 despues de promover: salida vacia» y «Paso 1b sobre
@@ -478,3 +479,28 @@ Plantilla:
 - **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`ca12450`), con orden y salida en `D-049`.
   El usuario eligio corregirlo en la misma sesion: nota fechada en `D-045` con las dos ordenes ancladas a
   `2063f09` y `1bec59a` y sus salidas (`T-033`). Lo cierra la auditoria siguiente.
+
+### F-019 - El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido
+| Campo | Valor |
+|---|---|
+| Auditoria | R-017 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** en `eda6314`, el bloque de verificacion de `T-029` publica `grep -c "^### N-0"
+  005_discovery/005_needs.md` con salida `4`, y la orden devuelve `5` tanto sobre el commit
+  (`git show eda6314:005_discovery/005_needs.md | grep -c "^### N-0"` → `5`) como sobre el arbol de
+  trabajo. La quinta linea es `185:### N-001 · Pedir recogida sin llamar`, el ejemplo de ficha de la
+  seccion «Guia de llenado» que sigue en el archivo porque el artefacto esta `BORRADOR`. La seccion 7
+  de `_audit/S-015.md` lista esa misma orden como la numero 12 con `Reproduce: Si` y nota `4`, asi que
+  el control del Paso 2d la dio por buena. Ordenes y salidas en `R-017`, secciones 1.8 y 2.
+- **Por que importa:** es la evidencia que cierra `T-029`, una tarea `Alta`/`Bloqueante`, y el registro
+  publica una salida que su propia orden no devuelve — la misma clase que `F-005`. `Media`: el enunciado
+  del criterio si se cumple (hay cuatro necesidades reales) y ningun control depende de la cifra.
+  `No bloqueante`: nada hereda el defecto, pero la cifra volvera a valer `4` sola al borrar la guia
+  cuando se cierre el artefacto, y entonces el defecto dejaria de poder detectarse.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
