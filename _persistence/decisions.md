@@ -2269,9 +2269,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-040\]|### D-040 )'
+  $ git show d54e314:_persistence/decisions.md | grep -cE '^(\| \[D-040\]|### D-040 )'
   2
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `d54e314`.** Reproduce lo publicado arriba.
 
 ### D-041 - F-014 se acepta con notas fechadas y control de fechas en el Paso 7d
 | Campo | Valor |
@@ -2348,21 +2350,24 @@ Plantilla:
   y ficha.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  $ git show d54e314:_persistence/decisions.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
   4
-  $ git show <hash>:_persistence/lessons.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  $ git show d54e314:_persistence/lessons.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
   1
-  $ git show <hash>:_audit/S-011.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  $ git show d54e314:_audit/S-011.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
   1
   $ for c in cf2992f 079b0a4; do echo "== 7d fechas @ $c: $(git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^d=\$\(git log -1 --format=%ad --date=short <hash[>]\)$/{f=1} f&&/^```$/{exit} f' | sed "s/<hash[>]/$c/g" | bash | wc -l)"; done
   == 7d fechas @ cf2992f: 11
   == 7d fechas @ 079b0a4: 0
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-014\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-025, T-026, D-041 \|$'
+  $ git show d54e314:_audit/findings.md | grep -cE '^\| \[F-014\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-025, T-026, D-041 \|$'
   2
   ```
 
   ⚠️ **El `awk` y el `sed` escriben `<hash[>]` a proposito,** igual que en `D-036`: con el ancla literal,
   el Paso 7c-bis los sustituiria.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d54e314`.** Las cuatro reproducen lo publicado arriba
+  (la orden del 7d conserva `<hash>` a proposito, sin tocar).
 
 ### D-042 - El commit de anclaje lleva tambien el trailer de coautoria
 | Campo | Valor |
@@ -2408,14 +2413,17 @@ Plantilla:
   sigue cerrandose y abriendose donde debe.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF -- '-m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>" && git push'
+  $ git show d54e314:.claude/skills/protocol-close/SKILL.md | grep -cF -- '-m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>" && git push'
   1
-  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/^  git commit -m .* && git push$/  echo COMMIT/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh) | tail -1; done
+  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show d54e314:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/^  git commit -m .* && git push$/  echo COMMIT/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh) | tail -1; done
   == puerta @ fdfca7b
   PUERTA CERRADA: no se commitea el anclaje
   == puerta @ 1358c3c
   COMMIT
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d54e314`.** Las dos reproducen lo publicado arriba (el
+  `<hash[>]` interno del `sed` conserva su forma a proposito, sin tocar).
 
 ### D-043 - Cada hallazgo de auditoria lleva urgencia ademas de gravedad
 | Campo | Valor |
@@ -2461,15 +2469,17 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, la plantilla, el registro y las dos skills llevan la urgencia.
 
   ```
-  $ git show <hash>:_templates/000_preproject/050_audit_findings.md | grep -cE '^\| Codigo \| Hallazgo \| Auditoria \| Gravedad \| Urgencia \| Estado \|$|^\| Urgencia \| `Bloqueante` / `No bloqueante` \|$|^\| Urgencia \| \|$'
+  $ git show d54e314:_templates/000_preproject/050_audit_findings.md | grep -cE '^\| Codigo \| Hallazgo \| Auditoria \| Gravedad \| Urgencia \| Estado \|$|^\| Urgencia \| `Bloqueante` / `No bloqueante` \|$|^\| Urgencia \| \|$'
   3
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-[0-9]+\].*\| (Alta|Media|Baja) \| — \| [^|]+ \|$'
+  $ git show d54e314:_audit/findings.md | grep -cE '^\| \[F-[0-9]+\].*\| (Alta|Media|Baja) \| — \| [^|]+ \|$'
   13
-  $ git show <hash>:.claude/skills/protocol-audit/SKILL.md | grep -cF '| Urgencia | Bloqueante / No bloqueante |'
+  $ git show d54e314:.claude/skills/protocol-audit/SKILL.md | grep -cF '| Urgencia | Bloqueante / No bloqueante |'
   1
-  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF '(gravedad, urgencia)'
+  $ git show d54e314:.claude/skills/protocol-start/SKILL.md | grep -cF '(gravedad, urgencia)'
   2
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d54e314`.** Las cuatro reproducen lo publicado arriba.
 
 ### D-044 - Reparto del trabajo de 005_discovery
 | Campo | Valor |
@@ -2519,8 +2529,10 @@ Plantilla:
   tambien.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-044\]|### D-044 )'
+  $ git show d54e314:_persistence/decisions.md | grep -cE '^(\| \[D-044\]|### D-044 )'
   2
-  $ git show <hash>:_persistence/assumptions.md | grep -cE '^(\| \[A-00[45]\]|### A-00[45] )'
+  $ git show d54e314:_persistence/assumptions.md | grep -cE '^(\| \[A-00[45]\]|### A-00[45] )'
   4
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d54e314`.** Las dos reproducen lo publicado arriba.
