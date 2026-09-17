@@ -34,7 +34,9 @@
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | — | Implementado |
 | [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | — | Implementado |
 | [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | — | Implementado |
-| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Aceptado — pendiente |
+| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
+| [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Abierto |
+| [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Abierto |
 
 ---
 
@@ -394,9 +396,9 @@ Plantilla:
 | Auditoria | R-013 |
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-025, T-026, D-041 |
-| Cerrado en | |
+| Cerrado en | d54e314 (R-015) |
 
 - **Que se observo:** `cf2992f` (fecha de commit `2026-09-17`, sesion `S-012` fechada `2026-09-17`)
   anade en `_audit/S-011.md` una «Nota 2026-09-16 (`F-013`, `T-021`), escrita por `manager` en la
@@ -412,3 +414,42 @@ Plantilla:
   `D-041`. El usuario eligio las dos partes: notas fechadas en las seis entradas, que dan `2026-09-17`
   sin reescribir la fecha publicada (`T-025`), y un control en el Paso 7d de `protocol-close` que lista
   las fechas que anade el commit distintas de la suya (`T-026`).
+
+### F-016 - D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden
+| Campo | Valor |
+|---|---|
+| Auditoria | R-015 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** en `d54e314`, `D-041` descarta «mirar todas las filas de indice del diff» diciendo
+  «Probado sobre los commits de sesion, salta en `079b0a4`, `a61e453`, `8509c18`, `27c03bb`, `5884e98`
+  y `101db28`», sin orden ni salida; el bloque siguiente solo publica la version con filtro. El informe
+  `S-013` lo repite en su seccion 3. Reconstruida la orden sin filtro, el resultado se sostiene (orden y
+  salida en `R-015`, seccion 2).
+- **Por que importa:** `CLAUDE.md` exige patron y ambito para todo resultado que el registro afirme. La
+  justificacion del filtro del Paso 7d no es reproducible desde el registro. `Baja`: el resultado es
+  cierto y ningun control depende de el. `No bloqueante`: nada posterior hereda el defecto.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
+
+### F-017 - La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete
+| Campo | Valor |
+|---|---|
+| Auditoria | R-015 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** en `17d769f`, el bloque «CONTROL DE CIFRA ADYACENTE — salida» de `_audit/S-013.md`
+  publica 17 lineas (`grep -c '^_audit/S-013.md:'` = `17`) y la linea 497, justo debajo, dice «Ninguna de
+  las dieciseis lineas…».
+- **Por que importa:** es el defecto que ese control existe para atrapar, dentro de la lectura del propio
+  control. `Baja`: la salida esta entera y nada depende de la cifra. `No bloqueante`.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
