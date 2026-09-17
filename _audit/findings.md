@@ -38,7 +38,8 @@
 | [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado |
-| [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Aceptado — pendiente |
+| [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Implementado |
+| [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Abierto |
 
 ---
 
@@ -487,9 +488,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-034, D-059 |
-| Cerrado en | |
+| Cerrado en | 205b1f2 (R-018) |
 
 - **Que se observo:** en `eda6314`, el bloque de verificacion de `T-029` publica `grep -c "^### N-0"
   005_discovery/005_needs.md` con salida `4`, y la orden devuelve `5` tanto sobre el commit
@@ -506,3 +507,42 @@ Plantilla:
 - **Que se hizo:** verificado contra `HEAD` (`e18bf5b`): sigue vivo, la orden devuelve `5`. Aceptado con
   `D-059` y corregido en la misma sesion con `T-034` — nota fechada en `T-029` con la orden anclada a
   `e18bf5b` y su salida real; la cifra publicada no se reescribe.
+
+### F-020 - `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete
+| Campo | Valor |
+|---|---|
+| Auditoria | R-018 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el commit `205b1f2` cierra `005_discovery/015_stakeholders.md` y marca `[x]` una
+  casilla cuyo texto afirma un numero que el archivo de etapa contradice.
+
+  ```
+  $ git show 205b1f2:005_discovery/015_stakeholders.md | grep -n 'condiciones de salida'
+  115:- [x] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+
+  $ grep -rn "seis condiciones\|siete condiciones\|las siete\|las seis" _phases/005_discovery.md _templates/005_discovery/
+  _phases/005_discovery.md:282:La etapa termina cuando **las siete son ciertas**:
+  _phases/005_discovery.md:304:⚠️ **Ninguna de las siete exige que exista la etapa siguiente.** Cual sea se declara dentro de esta
+  _templates/005_discovery/015_stakeholders.md:101:- [ ] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+  ```
+
+  El defecto es heredado del esqueleto, no nace en esta sesion:
+
+  ```
+  $ git log --oneline -S"siete son ciertas" -- _phases/005_discovery.md
+  fa7da56 Estado de partida del esqueleto, tal como estaba antes de sincronizar
+  ```
+
+  No hay `D-XXX` que declare la diferencia.
+- **Por que importa:** un artefacto `CERRADO` es evidencia, y esta afirmando un recuento que el archivo
+  de etapa desmiente. Ademas el error vive en `_templates/`, que existe para copiarse: cada proyecto que
+  arranque con esa plantilla heredara la misma frase falsa. `Baja` porque ningun control lee ese numero y
+  las siete casillas se evaluaron una por una de todos modos; `No bloqueante` porque nada de lo que se
+  haga despues depende de la cifra — pero tampoco desaparece sola.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
