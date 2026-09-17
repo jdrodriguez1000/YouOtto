@@ -24,7 +24,7 @@
 | [DT-001](#dt-001---claude-se-aleja-del-esqueleto-de-arranque) | `.claude/` se aleja del esqueleto de arranque | Implementada | Confirmada | Media | No bloqueante |
 | [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
 | [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | Implementada | Confirmada | Alta | No bloqueante |
-| [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | No implementada | Propuesta (pendiente del usuario) | Baja | No bloqueante |
+| [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | Implementada | Confirmada | Baja | No bloqueante |
 
 ---
 
@@ -212,8 +212,8 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
 ### DT-004 - La frase de `D-028` quedo fuera de la promocion de `D-032`
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
-| Confirmacion | Propuesta (pendiente del usuario) |
+| Estado | Implementada |
+| Confirmacion | Confirmada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Origen | session-closer |
@@ -235,3 +235,6 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
   `protocol-close` el caso del criterio que no reproduce.
 - **Como se paga:** correr `protocol-promote` de nuevo, ya con la frase de `D-028` commiteada, para
   llevarla al esqueleto de arranque.
+- 🕐 **Nota 2026-09-16 (`D-035`): confirmada y pagada, estado al 2026-09-16.** El usuario la confirmo, y
+  `.claude/skills/protocol-close/SKILL.md` se promovio desde `1add289` al commit `7f4381e` del
+  esqueleto, subido. El barrido del Paso 1 salio vacio despues de promover. La evidencia esta en `D-035`.

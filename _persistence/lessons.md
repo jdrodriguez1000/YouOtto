@@ -302,3 +302,7 @@ Plantilla:
   sesion**, justo despues del arranque y antes de atender correcciones que toquen las seis areas.
   Las correcciones van despues y suben en el lote siguiente. Si ya se edito algo, se retira del arbol
   guardandolo aparte, se promueve desde `HEAD` y se repone.
+- 🕐 **Nota 2026-09-16 (`D-035`): aplicada y funciono.** En `S-011` la promocion de `DT-004` se hizo
+  antes de tocar las seis areas: el Paso 0 de `protocol-promote` salio limpio a la primera, sin retirar
+  nada del arbol, y el barrido de despues quedo vacio. Las correcciones de la sesion (`D-033`, `D-034`)
+  solo tocaron `_persistence/` y `_audit/`, que no bloquean la promocion.

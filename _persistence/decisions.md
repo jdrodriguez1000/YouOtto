@@ -53,6 +53,9 @@
 | [D-030](#d-030---la-promocion-de-dt-003-pasa-a-alta-y-va-antes-que-los-actores) | La promocion de DT-003 pasa a Alta y va antes que los actores | 2026-09-16 | Vigente |
 | [D-031](#d-031---no-se-corrige-el-orden-de-los-hashes-de-la-seccion-3-de-s-009) | No se corrige el orden de los hashes de la seccion 3 de S-009 | 2026-09-16 | Vigente |
 | [D-032](#d-032---promocion-al-esqueleto-de-los-tres-archivos-de-dt-003) | Promocion al esqueleto de los tres archivos de DT-003 | 2026-09-16 | Vigente |
+| [D-033](#d-033---el-desfase-4-que-reporta-el-arranque-tras-s-010-no-se-corrige) | El desfase 4 que reporta el arranque tras S-010 no se corrige | 2026-09-16 | Vigente |
+| [D-034](#d-034---f-011-se-acepta-con-una-nota-fechada-en-t-019) | F-011 se acepta con una nota fechada en T-019 | 2026-09-16 | Vigente |
+| [D-035](#d-035---promocion-al-esqueleto-de-la-frase-de-d-028) | Promocion al esqueleto de la frase de D-028 | 2026-09-16 | Vigente |
 
 ---
 
@@ -1730,4 +1733,194 @@ Plantilla:
   ```
 
 📌 **Ancladas por el Paso 7c-bis al commit `a61e453`.** Las tres reproducen lo publicado arriba.
+
+### D-033 - El desfase 4 que reporta el arranque tras S-010 no se corrige
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** el arranque de `S-011` reporta el desfase 4 de `protocol-start`: `progress.md` se sello
+  en `a61e453` y el commit posterior `25b8e41` toca `_persistence/`. Verificado contra `HEAD` (`1add289`):
+
+  ```
+  $ git log --oneline -3; git log --oneline -2 -- _persistence/progress.md
+  1add289 auditoria R-010 sobre S-010 (a61e453)
+  25b8e41 S-010: ancla el informe y los criterios de cierre al hash a61e453
+  a61e453 S-010: las tres recomendaciones sin hallazgo de R-009 evaluadas, DT-003 pagada (D-032)
+  a61e453 S-010: las tres recomendaciones sin hallazgo de R-009 evaluadas, DT-003 pagada (D-032)
+  8509c18 S-009: F-010 de R-008 atendido (D-027, T-014/T-015 pasan a Implementada)
+  $ git diff a61e453 25b8e41 -- _persistence | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' | grep -vE '^\+(📌 \*\*Anclada|$)' | wc -l
+  0
+  $ git diff --stat a61e453 1add289 -- _persistence | tail -1
+   1 file changed, 10 insertions(+)
+  $ for c in 9e169f3 f42388a 25b8e41; do echo "== $c $(git show --format= --name-only $c | tr '\n' ' ')"; done
+  == 9e169f3 _audit/S-008.md _persistence/decisions.md 
+  == f42388a _audit/S-009.md _persistence/decisions.md 
+  == 25b8e41 _audit/S-010.md _persistence/decisions.md 
+  ```
+
+  Lo unico que entra en `_persistence/` despues de `a61e453` son las lineas `📌` del Paso 7c-bis, que
+  tiene prohibido tocar `progress.md`. El mismo patron se repite en los commits de anclaje de `S-008` y
+  `S-009`.
+- **Decision:** no es un desfase real y **no se corrige nada**: `progress.md` describe bien el estado.
+  El usuario acepta esa lectura al pedir que se trabaje sobre ella.
+- **Por que:** el desfase 4 busca un estado sellado antes que la ultima entrada; aqui la ultima
+  entrada es un ancla mecanica que no cambia ningun estado. Tocar `progress.md` para callar el aviso
+  no lo corregiria: afirmaria un cambio que no hubo.
+- **Alternativas descartadas:**
+  - **Actualizar `progress.md` para que el arranque no lo vea:** no hay nada que reflejar.
+  - **Afinar ya el desfase 4 de `protocol-start` para que ignore los commits de anclaje:** toca el
+    andamiaje y vuelve a separar este repositorio del esqueleto con `DT-004` aun abierta (`L-012`). Se
+    deja fuera de esta decision; si el usuario lo quiere, es una tarea aparte.
+- **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-033\]|### D-033 )'
+  2
+  ```
+
+### D-034 - F-011 se acepta con una nota fechada en T-019
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-011` de `R-010`: `T-019` esta `Implementada` y su «Que» incluye la frase de
+  `D-028`, que `D-032` dejo fuera de la promocion. Verificado vigente contra `HEAD` (`1add289`) y contra
+  el esqueleto:
+
+  ```
+  $ git show 1add289:_persistence/tasks.md | sed -n '/^### T-019 /,$p' | grep -nE 'Estado|incluida la frase|Nota'
+  4:| Estado | Implementada |
+  12:  esqueleto de arranque los archivos del andamiaje que difieren, incluida la frase de `D-028`. Paga
+  $ git -C "$ESQ" show 447c2a0:.claude/skills/protocol-close/SKILL.md | grep -cF 'no reproduce, la tarea'
+  0
+  $ git -C "$ESQ" log --oneline -1; git -C "$ESQ" ls-remote origin refs/heads/main | cut -c1-7
+  447c2a0 Promocion del andamiaje desde YouOtto (origen 95c5cfd)
+  447c2a0
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.) Sin nota en `T-019`, y el
+  esqueleto sigue sin la frase.
+- **Decision:** se acepta con la opcion (a) del auditor: **una nota fechada en `T-019`** que saca la
+  frase de `D-028` de su alcance y remite a `D-032` y `DT-004`, sin reescribir el «Que». `T-019` sigue
+  `Implementada`. La nota lleva la orden que compara los blobs del esqueleto con el origen, para que la
+  tarea tenga una prueba de lo que si hizo. `T-020`.
+- **Por que:** el alcance cambio por una decision aprobada por el usuario (`D-032`), no quedo a medias
+  por accidente. Lo que falta ya tiene donde seguirse, `DT-004`, y la nota hace que la tarea leida sola
+  lo diga.
+- **Alternativas descartadas:**
+  - **(b) Devolver `T-019` a `No implementada`:** duplica `DT-004`. Dos registros seguirian lo mismo, y
+    la tarea no podria cerrarse sin otra promocion que ya esta en la deuda.
+  - **Reescribir el «Que» de `T-019`:** borraria lo que se planeo, y `R-010` describiria un texto que ya
+    no existe.
+- **Criterio de cierre:** a ese commit, `T-019` lleva la nota que cita `F-011` y sigue `Implementada`,
+  y `F-011` esta `Aceptado — pendiente` en indice y ficha.
+
+  ```
+  $ git show <hash>:_persistence/tasks.md | sed -n '/^### T-019 /,/^### T-020 /p' | grep -cE '🕐 \*\*Nota 2026-09-16 \(`F-011`, `D-034`\)|^\| Estado \| Implementada \|$'
+  2
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-011\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-020, D-034 \|$'
+  2
+  ```
+
+### D-035 - Promocion al esqueleto de la frase de D-028
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `DT-004` estaba `Propuesta (pendiente del usuario)`. La frase de `D-028` ya esta
+  commiteada (`a61e453`) y auditada (`R-010`), y las seis areas estaban limpias y subidas en `1add289`.
+  Por `L-012`, la promocion va antes de tocar el andamiaje en la sesion.
+
+  ```
+  $ git status --short -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  $ git status -sb | head -1
+  ## main...origin/main
+  $ git rev-parse --short HEAD; git rev-parse --short origin/main
+  1add289
+  1add289
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "fin P1"
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  fin P1
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.)
+- **Decision:** el usuario **confirma `DT-004` y aprueba promover ya** el unico candidato,
+  `.claude/skills/protocol-close/SKILL.md` (2 lineas entran, 1 se borra). Hash de origen `1add289`;
+  commit del esqueleto `7f4381e`, subido. `DT-004` pasa a `Confirmada` e `Implementada`.
+- **Por que:** paga `DT-004` con el arbol limpio y antes de cualquier cambio al andamiaje, que es lo
+  que `L-012` pide para no volver a bloquear la promocion.
+- **Alternativas descartadas:**
+  - **Confirmar y promover en un lote posterior:** el desfase es de una linea y la promocion no estaba
+    bloqueada; esperar solo deja que se acumule mas.
+  - **Rechazar la deuda:** un proyecto nuevo no tendria declarado el caso del criterio que no
+    reproduce, que `R-009` y `D-028` ya dieron por necesario.
+- **Hallazgos:** ninguno. Nada existia solo en el esqueleto.
+- **Comprobacion del supuesto del Paso 2:** se leyo la unica linea que borra el candidato,
+  `  nadie.`; es la misma linea, que en la version nueva sigue con la frase de `D-028`. Nada que un
+  proyecto generico necesitara.
+- **Final de linea:** LF en los dos (`1add289` `CR=0 LF=2203`; esqueleto `CR=0 LF=2202`). Se copio
+  desde el blob (`git show 1add289:<archivo>`).
+- **Verificacion.** Diferencia leida y controles de agnosticismo sobre el origen, antes de la puerta:
+
+  ```
+  $ F=.claude/skills/protocol-close/SKILL.md; diff <(git -C "$ESQ" show 447c2a0:$F) <(git show 1add289:$F)
+  831c831,832
+  <   nadie.
+  ---
+  >   nadie. Y al reves: si el trabajo esta en el diff pero su criterio de cierre no reproduce, la tarea
+  >   **sigue en `No implementada`**, por hecho que parezca el trabajo.
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 1add289 -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' 1add289 -- _phases _workflow | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  $ git grep -nE "USUARIO|jdrodriguez|gmail|SDAI_TripleS|TripleS|Triple S|[A-Z]:[/\\]|/Users/|AppData" 1add289 -- $F | wc -l
+  0
+  ```
+
+  El commit del esqueleto, su remoto y la identidad del blob con el origen:
+
+  ```
+  $ git -C "$ESQ" show --stat --format='%h %s' 7f4381e | tail -2
+   .claude/skills/protocol-close/SKILL.md | 3 ++-
+   1 file changed, 2 insertions(+), 1 deletion(-)
+  $ [ "$(git rev-parse 1add289:.claude/skills/protocol-close/SKILL.md)" = "$(git -C "$ESQ" rev-parse 7f4381e:.claude/skills/protocol-close/SKILL.md)" ] && echo igual || echo DISTINTO
+  igual
+  $ git -C "$ESQ" ls-remote origin refs/heads/main | cut -c1-7
+  7f4381e
+  ```
+
+  Barrido del Paso 1 despues de promover (sin salida: el desfase cerro) y Paso 1b sobre el commit del
+  esqueleto:
+
+  ```
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "fin P1"
+  fin P1
+  $ for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff <(git -C "$ESQ" show 7f4381e:_templates/000_preproject/$t) <(git -C "$ESQ" show 7f4381e:$c) | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+- **Criterio de cierre:** a ese commit, `DT-004` esta `Implementada` y `Confirmada` en indice y ficha.
+
+  ```
+  $ git show <hash>:_persistence/techdebt.md | grep -E '^\| \[DT-004\]' | grep -c '| Implementada | Confirmada |'
+  1
+  $ git show <hash>:_persistence/techdebt.md | sed -n '/^### DT-004 /,$p' | grep -cE '^\| (Estado \| Implementada|Confirmacion \| Confirmada) \|$'
+  2
+  ```
 

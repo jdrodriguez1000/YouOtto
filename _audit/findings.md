@@ -32,7 +32,7 @@
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
-| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Abierto |
+| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Aceptado — pendiente |
 
 ---
 
@@ -329,8 +329,8 @@ Plantilla:
 | Auditoria | R-010 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-020, D-034 |
 | Cerrado en | |
 
 - **Que se observo:** en `a61e453`, el «Que» de `T-019` incluye la frase de `D-028` en la promocion al
@@ -342,4 +342,7 @@ Plantilla:
 - **Por que importa:** lo que queda a medias sigue en `No implementada` (Paso 4 de `protocol-close`);
   leida sola, la tarea afirma un alcance cumplido que no lo esta, y si `DT-004` no se confirma el resto
   desaparece del registro. `Media`: la omision esta declarada en `D-032`, `DT-003` y `DT-004`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`1add289`), con orden y salida en
+  `D-034`. Se elige la opcion (a): nota fechada en `T-019` que saca la frase de `D-028` de su alcance y
+  remite a `D-032`/`DT-004`, con la comparacion de blobs contra el esqueleto. `T-019` sigue
+  `Implementada`. Registrado en `T-020`.

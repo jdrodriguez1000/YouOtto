@@ -44,6 +44,7 @@
 | [S-008](#s-008---f-009-de-r-007-atendido-dt-003-abierta-y-el-7c-quater-declara-el-punto-ciego-de-la-orden-partida) | `F-009` de `R-007` atendido (abre `DT-003`), y el 7c-quater declara el punto ciego de la orden partida en dos lineas | 2026-09-16 | 005_discovery |
 | [S-009](#s-009---f-010-de-r-008-atendido-d-027-el-estado-de-una-tarea-lo-decide-el-diff-no-el-anclaje) | `F-010` de `R-008` atendido (`D-027`: el estado de una tarea lo decide el diff, no el anclaje), `T-014`/`T-015` pasan a `Implementada` | 2026-09-16 | 005_discovery |
 | [S-010](#s-010---las-tres-recomendaciones-sin-hallazgo-de-r-009-evaluadas-y-dt-003-pagada-con-la-promocion-al-esqueleto) | Las tres recomendaciones sin hallazgo de `R-009` evaluadas, y `DT-003` pagada con la promocion al esqueleto (`D-032`) | 2026-09-16 | 005_discovery |
+| [S-011](#s-011---f-011-de-r-010-aceptado-con-nota-en-t-019-y-dt-004-confirmada-y-pagada-d-035) | `F-011` de `R-010` aceptado con nota en `T-019`, y `DT-004` confirmada y pagada (`D-035`) | 2026-09-16 | 005_discovery |
 
 ---
 
@@ -75,39 +76,35 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-16 (S-010)` |
+| Ultima actualizacion | `2026-09-16 (S-011)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito `S-009` en `R-009` y no entrego hallazgos, solo tres recomendaciones y el estado de `D-027`/`D-031` sobre erratas. `D-028` (aceptada) anade al Paso 4 de `protocol-close` el caso contrario al de `D-027`: si el trabajo esta en el diff pero el criterio de cierre no reproduce, la tarea sigue en `No implementada`. `D-029` (aceptada) completa `D-027` con una nota fechada que ancla, a los commits de sesion y de anclaje de `S-004`/`S-006`/`S-007`, la prueba de que sus criterios seguian con `<hash>` sin resolver en el commit de sesion. `D-030` (aceptada) sube `DT-003` a Importancia `Alta` porque lleva tres sesiones creciendo y ordena promoverla ya, antes de la clasificacion de actores. `D-031` rechaza corregir un orden de hashes invertido en la seccion 3 de `S-009.md`, ya auditado. `D-032` ejecuta la promocion: el usuario aprobo retirar del arbol la frase de `D-028` (sin commitear, bloqueaba `protocol-promote`), promover los tres archivos y la copia de la raiz desde el ultimo commit auditado (`95c5cfd`) al esqueleto de arranque (commit `447c2a0`, subido), y reponer la frase despues. `DT-003` queda `Implementada`. Se escribio `L-012`: la promocion va al principio de la sesion, antes de tocar el andamiaje, para no repetir el circulo de bloquearla con una correccion sin commitear |
+| Avance de la etapa | `report_auditor` audito `S-010` en `R-010` y entrego `F-011`: `T-019` quedaba `Implementada` con un alcance —la frase de `D-028`— que su propio commit declaraba fuera de la promocion. `D-033` (rechaza, no es un hallazgo del usuario): el desfase 4 que reporta el arranque tras `S-010` no es real, `progress.md` describe bien el estado; los unicos cambios posteriores a `a61e453` son las lineas `📌` del Paso 7c-bis, que tiene prohibido tocar `progress.md`. `D-034` (aceptada, `report_auditor`): `F-011` se acepta con la opcion (a) — una nota fechada en `T-019` que saca la frase de `D-028` de su alcance y remite a `D-032`/`DT-004`, sin reescribir el «Que»; `T-019` sigue `Implementada`; nace `T-020`, que esta misma sesion cierra `Implementada` porque su trabajo (la nota) ya esta en el diff, por el criterio de `D-027`/`D-028`. `D-035` (usuario): con las seis areas limpias y subidas, se confirma y paga `DT-004` — se promueve `.claude/skills/protocol-close/SKILL.md` (la frase de `D-028`) desde `1add289` al commit `7f4381e` del esqueleto de arranque, subido; `DT-004` queda `Implementada` y `Confirmada`. Se anadio una nota de reincidencia a `L-012`: la promocion al principio de la sesion volvio a funcionar |
 | Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa |
 
 ---
 
 ## 2. Ultimo realizado
 
-Decima sesion de trabajo. Segun el diff: se evaluaron las tres recomendaciones sin hallazgo de
-`R-009` sobre `S-009` (`D-028`, `D-029`, `D-030`) y una cuarta sobre una errata de `S-009.md`
-(`D-031`, rechazada). `D-028` anade al Paso 4 de `protocol-close` el caso del criterio que no
-reproduce; `T-017` la registra `Implementada`. `D-029` completa `D-027` con la nota fechada que
-prueba, con orden y salida cruda contra los commits de sesion y de anclaje de `S-004`/`S-006`/`S-007`,
-que sus criterios de cierre seguian con `<hash>` en el commit de sesion; `T-018` la registra
-`Implementada`. `D-030` sube `DT-003` a `Alta` y ordena promoverla antes que la clasificacion de
-actores; `D-032` ejecuta la promocion —tres archivos y la copia de la raiz, desde `95c5cfd` al
-commit `447c2a0` del esqueleto, subido, con la frase de `D-028` retirada y repuesta para no bloquear
-`protocol-promote`—; `T-019` la registra `Implementada` y `DT-003` pasa a `Implementada`. Se
-escribio `L-012` sobre el orden correcto de la promocion dentro de una sesion.
+Onceava sesion de trabajo. Segun el diff: se acepto `F-011` de `R-010` con `D-034` (nota fechada en
+`T-019` que saca la frase de `D-028` de su alcance y remite a `D-032`/`DT-004`, con la comparacion de
+blobs contra el esqueleto; `T-019` sigue `Implementada`); nace `T-020` y esta sesion la cierra
+`Implementada`. `D-033` deja sin corregir el desfase 4 que reporto el arranque de `S-011`: no es real,
+solo son las lineas `📌` del Paso 7c-bis sobre `progress.md`. `D-035` confirma y paga `DT-004`: se
+promovio la frase de `D-028` al esqueleto de arranque (commit `7f4381e`, subido), con el barrido del
+Paso 1 vacio despues de promover; `DT-004` pasa a `Implementada`/`Confirmada`. Se anadio una nota de
+reincidencia a `L-012` confirmando que el orden (promover antes de tocar el andamiaje) funciono en
+esta sesion.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-010`). Con la etapa `005_discovery` en marcha, el primer trabajo de producto sigue siendo la
+(`S-011`). Con la etapa `005_discovery` en marcha, el primer trabajo de producto sigue siendo la
 clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
-`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque vuelve
-a diferir en un solo archivo (`protocol-close/SKILL.md`), por la frase de `D-028` que `D-032` dejo
-fuera a proposito de la promocion: viaja en el lote siguiente, y no es una `DT-003` nueva —esta pagada
-por `D-032`—. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes),
-confirmada y sin pagar.
+`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque queda al
+dia con las seis areas tras la promocion de `D-035` (verificado en el Paso 2f de este cierre). Sigue
+abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -335,6 +332,29 @@ Plantilla:
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. El esqueleto de
   arranque vuelve a diferir en `protocol-close/SKILL.md` por la frase de `D-028`, dejada fuera a
   proposito de `D-032`: no es `DT-003` nueva, viaja en el lote siguiente. `DT-002` sigue
+  `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
+
+### S-011 - `F-011` de `R-010` aceptado con nota en `T-019`, y `DT-004` confirmada y pagada (`D-035`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Tareas | T-020 |
+
+- **Que se hizo:** se acepto `F-011` de `R-010` (`T-019` quedaba `Implementada` con un alcance que su
+  propio commit declaraba no cumplido: la frase de `D-028` fuera de la promocion de `D-032`). `D-034`
+  (aceptada, opcion (a) del auditor): nota fechada en `T-019` que saca esa frase de su alcance y remite
+  a `D-032`/`DT-004`, con la comparacion de blobs contra el esqueleto; `T-019` sigue `Implementada`.
+  Nace `T-020`, y esta misma sesion la cierra `Implementada`: su trabajo (la nota en `T-019`) ya esta
+  en el diff, y por el criterio de `D-027`/`D-028` no hace falta esperar al anclaje del Paso 7c-bis.
+  `D-033` (rechaza corregir): el desfase 4 que reporto el arranque de esta sesion no es real —
+  `progress.md` describe bien el estado, y lo unico posterior a `a61e453` son las lineas `📌` del Paso
+  7c-bis, que tiene prohibido tocar `progress.md`. `D-035` (usuario): con las seis areas del esqueleto
+  limpias y subidas, se confirma `DT-004` y se promueve `.claude/skills/protocol-close/SKILL.md` (la
+  frase de `D-028`) desde `1add289` al commit `7f4381e` del esqueleto de arranque, subido; `DT-004`
+  queda `Implementada` y `Confirmada`. Se anadio una nota de reincidencia a `L-012`: el orden de
+  promover antes de tocar el andamiaje volvio a funcionar.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `DT-002` sigue
   `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
 
 ---

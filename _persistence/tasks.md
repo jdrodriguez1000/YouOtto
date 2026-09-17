@@ -36,6 +36,7 @@
 | [T-017](#t-017---declarar-en-el-paso-4-el-caso-del-criterio-que-no-reproduce) | Declarar en el Paso 4 el caso del criterio que no reproduce | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-018](#t-018---completar-d-027-con-los-criterios-sin-anclar-de-sus-precedentes) | Completar D-027 con los criterios sin anclar de sus precedentes | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-019](#t-019---promover-al-esqueleto-de-arranque-lo-que-difiere-en-dt-003) | Promover al esqueleto de arranque lo que difiere en DT-003 | Implementada | Alta | No bloqueante | 005_discovery |
+| [T-020](#t-020---ajustar-por-nota-el-alcance-de-t-019) | Ajustar por nota el alcance de T-019 | Implementada | Media | No bloqueante | 005_discovery |
 
 ---
 
@@ -554,3 +555,36 @@ Plantilla:
   clasificacion de actores.
 - **Criterio de cierre:** el de `D-032`, con sus ordenes ancladas y sus salidas. El commit del
   esqueleto es `447c2a0`.
+- 🕐 **Nota 2026-09-16 (`F-011`, `D-034`):** la frase de `D-028` **sale del alcance** de esta tarea.
+  `D-032`, aprobada por el usuario, promovio desde `95c5cfd`, donde la frase no estaba; se sigue en
+  `DT-004`. Lo que la tarea si hizo, contra el esqueleto:
+
+  ```
+  $ for f in .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md _templates/000_preproject/020_decisions.md; do [ "$(git rev-parse 95c5cfd:$f)" = "$(git -C "$ESQ" rev-parse 447c2a0:$f)" ] && echo "igual $f" || echo "DISTINTO $f"; done
+  igual .claude/skills/protocol-close/SKILL.md
+  igual .claude/skills/protocol-start/SKILL.md
+  igual _templates/000_preproject/020_decisions.md
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.)
+
+### T-020 - Ajustar por nota el alcance de T-019
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-011 |
+
+- **Que:** atender `F-011`: anadir a `T-019` una nota fechada que saque la frase de `D-028` de su
+  alcance y remita a `D-032`/`DT-004`, con la comparacion de blobs contra el esqueleto, segun `D-034`.
+- **Por que:** `T-019` leida sola afirma un alcance cumplido que no lo esta. Verificacion contra `HEAD`
+  (`1add289`) en `D-034`.
+- 🕐 **Nota 2026-09-16 (session-closer):** el trabajo ya esta en el diff de esta sesion — la nota en
+  `T-019` citando `F-011`/`D-034` esta escrita, verificada mas arriba en el Paso 2d de este cierre.
+  Por el criterio de `D-027`/`D-028` (Paso 4 de `protocol-close`), pasa a `Implementada` en el commit
+  de esta sesion sin esperar al anclaje del Paso 7c-bis, que solo publicara la evidencia de
+  `D-034` con `<hash>` resuelto.
+- **Criterio de cierre:** el de `D-034`, con sus ordenes ancladas y sus salidas.
