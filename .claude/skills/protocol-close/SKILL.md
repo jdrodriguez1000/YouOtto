@@ -253,7 +253,7 @@ estado, y quien evalua un hallazgo puede cambiar uno y olvidar el otro. Esta com
 estado de cada fila con el `Estado` de su ficha:
 
 ```bash
-diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 1); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) \
+diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 2); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) \
      <(awk '/^[[:space:]]*```/{c=!c; next} c{next} /^### F-[0-9]+ /{match($0,/F-[0-9]+/); cur=substr($0,RSTART,RLENGTH); got=0} /^\| Estado \|/ && cur!="" && !got{s=$0; sub(/^\| Estado \| */,"",s); sub(/ *\|$/,"",s); print cur" "s; got=1}' _audit/findings.md | sort)
 ```
 
@@ -264,6 +264,47 @@ hallazgo con dos estados; un codigo solo en un lado es una fila sin ficha, o una
 principio): una diferencia **no se corrige en este cierre**. Va al reporte con sus lineas y a **Sin
 resolver**, y la corrige quien trata los hallazgos, en la sesion siguiente. Si el archivo no existe
 todavia, la linea dice `SIN COMPROBAR` con ese motivo.
+
+---
+
+## Paso 2b-bis — Ningun ancla interna rota (antes del `git add`)
+
+El Paso 2b comprueba que cada codigo del indice tenga su ficha. Este comprueba **que el enlace del
+indice lleve de verdad a esa ficha**: los dos son coherencia indice ↔ detalle, pero uno mira los
+codigos y el otro la navegacion.
+
+```bash
+node .claude/checks/anchors.js _persistence/*.md _audit/*.md
+```
+
+Sale `0` cuando todas resuelven; sale `1` y **nombra archivo, linea y el ancla que no resuelve** en
+cuanto hay una. La salida entera va al reporte, tal cual.
+
+| Lo que ves | Que significa | Que haces |
+|---|---|---|
+| `total anclas rotas: 0` | todas las filas llevan a su entrada | nada |
+| una o mas lineas `ROTA` | el ancla no corresponde a ningun titulo del archivo | 🚨 corrigela **en la misma pasada**: el ancla se deriva del titulo, no se elige |
+
+⚠️ **El ancla se deriva del titulo, y a mano se deriva mal.** No es un descuido evitable con
+cuidado: las reglas son poco intuitivas —un punto desaparece sin dejar guion, un simbolo rodeado de
+espacios desaparece pero sus dos espacios dejan dos guiones, un titulo repetido recibe sufijo—, y
+sobre todo **un titulo que se retoca despues deja su ancla apuntando a la version vieja**, que es la
+causa mas frecuente. Por eso el control no propone una convencion de titulos: calcula el ancla.
+
+⛔ **La correccion es el ancla, nunca el titulo.** Un titulo ya publicado describe lo que paso en esa
+sesion; reescribirlo para que encaje con un enlace cambia el registro para acomodar la navegacion,
+que es exactamente al reves. El ancla es un medio para llegar, y no afirma nada.
+
+📌 **Por que existe este paso:** esta clase de defecto ya se detecto una vez, se corrigio **el caso
+citado** y no se puso control — y reaparecio seis veces a lo largo de las sesiones siguientes, en
+todas las filas nuevas que nadie volvio a mirar. Un indice roto no rompe nada: solo deja de llevar
+a donde dice, y quien lo usa supone que la entrada no existe. Es el fallo silencioso tipico, y el
+unico disparador fiable es mecanico.
+
+⚠️ **El control replica el algoritmo de los anclas de GitHub y esa replica tiene un limite escrito
+en su cabecera:** se valido contra la implementacion de referencia sobre los titulos reales de este
+repositorio, no contra su tabla de rangos completa. Su test —`node --test .claude/checks/anchors.test.js`—
+cubre las reglas que la produjeron.
 
 ---
 
@@ -1955,6 +1996,13 @@ reproduce, porque la orden que la publico no la devolvio asi.
 ⛔ **No se «arregla» la orden para que coincida.** Anadirle el filtro que le falta cambia lo que se
 publico como evidencia; eso lo decide `manager` en la sesion siguiente, no este paso.
 
+⛔ **La linea `📌` no remite a «Sin resolver» ni a nada del reporte de pantalla.** Esa seccion muere
+con la sesion: no entra en el commit, asi que una entrada del registro que la cite **queda apuntando
+a algo que no persiste**, y quien la lea dentro de meses no tiene donde ir. La discrepancia va **en
+la propia entrada**, con las dos salidas una debajo de la otra — que es lo que este paso ya hace, y
+es todo el detalle que hay. Si hace falta un puntero, se cita **lo que queda en el commit**: una
+`T-XXX`, o el informe `_audit/S-XXX.md` por una seccion que ese archivo tenga de verdad.
+
 🚨 **Su orden y su salida se publican en la NOTA DE CIERRE, junto al CONTROL DE PROSA BORRADA,
 tambien cuando sale limpia**, y por la misma razon: las dos lineas `== … ==` son lo que distingue
 «se corrio y salio limpio» de «no se corrio».
@@ -2215,6 +2263,7 @@ Fuga de datos propios (1b) — <cero lineas | 🚨 <las lineas> | 🚨 SIN COMPR
 Codigos instanciados en `_phases/` y `_workflow/` (1c) — <cero lineas | 🚨 <las lineas, con archivo y numero de linea>>
 Indices de `_persistence/` (2b) — <al dia | corregidos | 🚨 SIN COMPROBAR — <que fallo>>
 Fila ↔ ficha en `_audit/findings.md` (2b) — <coinciden | 🚨 <las lineas>, a Sin resolver | 🚨 SIN COMPROBAR — <que fallo>>
+Anclas internas (2b-bis) — <total anclas rotas: 0 | 🚨 <las lineas `ROTA`, y si quedaron corregidas>>
 Carpetas declaradas (2c) — <coinciden | <las diferencias y su razon> | 🚨 SIN COMPROBAR — <por que>>
 Ordenes sin reproducir en archivos ajenos (2d) — <ninguna | <N> tareas abiertas: <sus T-XXX, con el archivo de cada una>>
 Desfase con el esqueleto (2f) — <al dia, sin salida | <N> archivos por promover: <la lista entera> | 🚨 SIN COMPROBAR — <el motivo>>

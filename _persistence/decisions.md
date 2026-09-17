@@ -88,6 +88,11 @@
 | [D-065](#d-065---l-017-no-sube-ya-cubierta-por-lg-85-tercera-pasada-de-la-cosecha-de-005_discovery) | L-017 no sube: ya cubierta por LG-85, tercera pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
 | [D-066](#d-066---se-cierra-el-artefacto-de-necesidades) | Se cierra el artefacto de necesidades | 2026-09-17 | Vigente |
 | [D-067](#d-067---l-018-no-sube-ya-cubierta-por-lg-101-cuarta-pasada-de-la-cosecha-de-005_discovery) | L-018 no sube: ya cubierta por LG-101, cuarta pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
+| [D-068](#d-068---f-021-se-acepta-y-el-alcance-real-son-seis-anclas-y-un-control-no-una-linea) | F-021 se acepta, y el alcance real son seis anclas y un control, no una linea | 2026-09-17 | Vigente |
+| [D-069](#d-069---f-022-el-sintoma-ya-no-reproduce-y-el-choque-de-reglas-que-lo-causo-se-zanja-con-una-columna) | F-022: el sintoma ya no reproduce, y el choque de reglas que lo causo se zanja con una columna | 2026-09-17 | Vigente |
+| [D-070](#d-070---f-023-se-acepta-la-confirmacion-de-dt-005-es-del-usuario-y-se-escribe-con-su-dueno) | F-023 se acepta: la confirmacion de DT-005 es del usuario, y se escribe con su dueno | 2026-09-17 | Vigente |
+| [D-071](#d-071---f-024-se-acepta-en-su-parte-comprobable-y-se-rechaza-lo-que-atribuye-a-la-skill) | F-024 se acepta en su parte comprobable, y se rechaza lo que atribuye a la skill | 2026-09-17 | Vigente |
+| [D-072](#d-072---l-019-sube-como-enmienda-de-lg-100-y-l-020-no-sube-quinta-pasada-de-la-cosecha-de-005_discovery) | L-019 sube como enmienda de LG-100 y L-020 no sube: quinta pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
 
 ---
 
@@ -3551,6 +3556,16 @@ Plantilla:
   esta nota anade es cuando y donde se resolvio, no una correccion del texto. `T-035` **sigue abierta**: pide anclar la cifra `8` del barrido del Paso 1 **de esta
   decision**, y eso no es lo que se hizo aqui — `D-063` ancla su propio barrido, que es otro.
 
+  📌 **NOTA 2026-09-17 — la remision a «Sin resolver» del diagnostico no resuelve, y la linea no se
+  reescribe.** «Sin resolver» es una seccion del **reporte en pantalla** del cierre, no del informe
+  `_audit/S-XXX.md` que queda en el commit: el registro permanente apunta a algo que no persiste. Lo
+  que sustituye a ese puntero es lo que ya esta **en esta misma entrada**: el diagnostico de arriba
+  publica la discrepancia entera —la salida `0`, la condicion que la rompe y por que—, asi que no hay
+  nada que buscar fuera. Hacia adelante se corrige en `protocol-close` con una prohibicion explicita
+  en el 7c-bis: **la skill nunca mando citar esa seccion desde una entrada** —sus menciones son todas
+  instrucciones para el reporte en pantalla— pero tampoco lo prohibia, y el paso que escribe estas
+  notas lo hizo dos veces. Ver `D-071`.
+
 ### D-063 - L-016 sube como enmienda de LG-32: segunda pasada de la cosecha de 005_discovery
 | Campo | Valor |
 |---|---|
@@ -3746,6 +3761,22 @@ Plantilla:
   No se sustituye la salida publicada ni se corrige: queda declarado aqui. Ver «Sin resolver» del
   informe de esta sesion.
 
+  📌 **NOTA 2026-09-17 — esa remision no resuelve, y la linea de arriba no se reescribe.** «Sin
+  resolver» es una seccion del **reporte en pantalla** del cierre, no del informe `_audit/S-XXX.md`
+  que queda en el commit; comprobado que el informe de la sesion no la tiene:
+
+  ```
+  $ git show 0854fd3:_audit/S-017.md | grep -c "Sin resolver"
+  0
+  ```
+
+  No se perdio nada: las dos salidas —la publicada y la que reproduce— estan **arriba, en esta misma
+  entrada**, una debajo de la otra, que es exactamente el detalle al que el puntero pretendia llevar.
+  Hacia adelante se corrige en `protocol-close` con una prohibicion explicita en el 7c-bis: **la skill
+  nunca mando citar esa seccion desde una entrada** —sus menciones son todas instrucciones para el
+  reporte en pantalla— pero tampoco lo prohibia, y el paso que escribe estas notas lo hizo dos veces.
+  Ver `D-071`.
+
 ### D-065 - L-017 no sube: ya cubierta por LG-85, tercera pasada de la cosecha de 005_discovery
 | Campo | Valor |
 |---|---|
@@ -3932,3 +3963,364 @@ Plantilla:
   `grep -cF 'Ya cubierta por LG-101'` devolvia `3`, no `1`: ese valor ya lo llevan dos lecciones
   anteriores. La cifra se corrigio **antes de publicarla**, contando la lista en vez de
   recordarla — que es exactamente lo que pide `L-016`, aplicado esta vez a tiempo.
+
+### D-068 - F-021 se acepta, y el alcance real son seis anclas y un control, no una linea
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-021` senala un ancla rota en el indice de `progress.md`: el titulo de la sesion
+  anterior lleva un `→` entre espacios y el ancla escrita omite uno de los dos guiones que esos
+  espacios producen. El hallazgo se verifico vigente contra `HEAD` (`31ece08`) antes de tratarlo:
+
+  ```
+  $ grep -n '(#s-017' _persistence/progress.md | grep -oE 'l-018-+d-063'
+  l-018-d-063
+  ```
+
+  El hallazgo deja abiertas **dos** lecturas posibles del slug y no elige. Se resolvio ejecutando la
+  implementacion de referencia —`github-slugger`, la que usa GitHub— en vez de razonarlo:
+
+  ```
+  $ node slug.mjs 'S-017 - `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`)'
+  s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018--d-063d-065d-067-y-se-cierra-005_needsmd-d-066
+  ```
+
+  Gana la lectura «el simbolo desaparece y sus dos espacios dejan dos guiones». Y aplicando `L-017`
+  —los sitios que cita un hallazgo son una muestra, no el inventario— se barrio **todo** el registro
+  en vez de esa linea, con un script que deriva el slug de cada titulo y lo compara con cada ancla:
+
+  ```
+  $ node .claude/checks/anchors.js _persistence/*.md _audit/*.md
+  ROTA _persistence/progress.md:43 -> #s-007---f-008-de-r-006-atendido-y-nuevo-estado-revocada-en-parte-para-decisions
+  ROTA _persistence/progress.md:44 -> #s-008---f-009-de-r-007-atendido-dt-003-abierta-y-el-7c-quater-declara-el-punto-ciego-de-la-orden-partida
+  ROTA _persistence/progress.md:46 -> #s-010---las-tres-recomendaciones-sin-hallazgo-de-r-009-evaluadas-y-dt-003-pagada-con-la-promocion-al-esqueleto
+  ROTA _persistence/progress.md:51 -> #s-015---f-018-de-r-016-aceptado-y-corregido-d-049-t-032-verificada-con-la-sonda-hook-probe-d-050-y-pasos-1-a-7-de-005_discovery-con-el-patrocinador
+  ROTA _persistence/progress.md:52 -> #s-016---f-019-de-r-017-aceptado-y-corregido-d-059-cierre-de-010_actors-y-015_stakeholders-d-060-alcance-y-objetivo-del-proyecto-d-061-y-cosecha-de-005_discovery-d-062
+  ROTA _persistence/progress.md:53 -> #s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018-d-063d-065d-067-y-se-cierra-005_needsmd-d-066
+  total anclas rotas: 6
+  ```
+
+  **Seis, no una**, y solo la ultima es la que el hallazgo cita. Las otras cinco tienen otra causa,
+  mas comun: el titulo se retoco despues de escribir el ancla, que quedo apuntando a la version vieja.
+
+  🚨 **Y esta clase de defecto ya se habia detectado, corregido y cerrado.** `F-003` —el tercer
+  hallazgo de la historia del proyecto— era el mismo defecto sobre la primera sesion; se acepto, se
+  corrigio en `T-005` y una auditoria posterior lo cerro como `Implementado`. Se corrigio **el caso
+  citado** y no se puso control, y reaparecio seis veces:
+
+  ```
+  $ grep -A7 '^### F-003' _audit/findings.md | grep -E '^\| (Estado|Cerrado en) \|'
+  | Estado | Implementado |
+  | Cerrado en | e222812 (R-002) |
+  ```
+- **Decision:** se acepta el hallazgo y se corrigen **las seis** anclas, derivando cada una del titulo
+  en vez de escribirla a mano; y se anade al cierre el **Paso 2b-bis**, que corre el control sobre
+  `_persistence/` y `_audit/` y sale `1` si queda alguna rota. El titulo **no** se toca en ningun
+  caso: lo que se corrige es el ancla.
+- **Por que:** un indice roto no rompe nada visible —solo deja de llevar a donde dice, y quien lo usa
+  supone que la entrada no existe—, y `progress.md` es justo por donde entra el arranque de cada
+  jornada. Es el fallo silencioso tipico: su unico disparador fiable es mecanico, porque el disparador
+  «alguien lo nota» ya se demostro que no se activa. La correccion de la instancia sin el control es
+  exactamente lo que se hizo la primera vez, y el resultado esta medido: seis reincidencias.
+- **Alternativas descartadas:**
+  - **Corregir solo el ancla que el hallazgo cita:** es lo que se hizo con `F-003`, con el resultado
+    conocido. Habria dejado cinco rotas en el mismo archivo, ninguna citada por nadie.
+  - **Prohibir los simbolos no ASCII en los titulos que necesitan ancla**, que es lo que el hallazgo
+    sugiere como mas robusto: no cubre la causa mayoritaria —cinco de las seis son titulos retocados
+    despues, todos ASCII— y ademas empobrece el titulo para favorecer al enlace, cuando el enlace es
+    el medio y el titulo lo que describe la sesion.
+  - **Reescribir el titulo para que encaje con el ancla escrita:** cambia el registro para acomodar la
+    navegacion. Un titulo publicado describe lo que paso; un ancla no afirma nada.
+  - **Usar `github-slugger` como dependencia del repositorio:** obligaria a meter `package.json` y
+    `node_modules` en un repositorio que todavia no tiene una linea de codigo de producto. Se replico
+    el algoritmo en el control (14 lineas, sin dependencias) y se **valido contra la implementacion de
+    referencia** sobre los titulos reales del repositorio, con su limite escrito en la cabecera:
+
+    ```
+    $ node validate2.mjs _persistence/*.md _audit/*.md _phases/*.md _workflow/*.md _methodology/*.md _templates/*/*.md project.md CLAUDE.md
+    titulos comparados: 1532 · diferencias: 0
+    ```
+  - **Dejar el control para mas adelante y abrir deuda:** habria sido repetir a sabiendas el error de
+    `F-003`. El control con su test costo una sola pasada.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** no queda ningun ancla rota en `_persistence/` ni en `_audit/`, y el control que lo
+     comprueba existe con su test.
+  2. **Ordenes:**
+     ```
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c '^## Paso 2b-bis'
+     git show <hash>:_persistence/progress.md | grep -cE '\(#s-0(07|08|10|15|16|17)---'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     6
+     ```
+
+  📌 **El test del control se corre en el arbol de trabajo, no anclado, porque ejecuta:**
+
+  ```
+  $ node --test .claude/checks/anchors.test.js 2>&1 | grep -E 'tests|pass|fail'
+  ℹ tests 10
+  ℹ pass 10
+  ℹ fail 0
+  ```
+
+### D-069 - F-022: el sintoma ya no reproduce, y el choque de reglas que lo causo se zanja con una columna
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-022` observa que la fila de `F-020` publicaba un valor de `Estado` con la cita
+  pegada dentro, donde la convencion de `findings.md` cierra la lista de valores posibles. Verificado
+  contra `HEAD` (`31ece08`), **el sintoma ya no existe**: la propia auditoria que abrio el hallazgo
+  cerro esa fila al pasarla a `Implementado`.
+
+  ```
+  $ grep -E '^\| \[F-020\]' _audit/findings.md | awk -F'|' '{print $(NF-1)}'
+   Implementado
+  ```
+
+  La causa, en cambio, sigue entera, y el hallazgo la nombra bien: `CLAUDE.md` manda actualizar la
+  fila «citando la `T-XXX` o la `D-XXX` donde quedo» y la fila no tenia columna para eso, mientras
+  `findings.md` cierra los valores de `Estado`. Cumplir una regla rompia la otra, y el control del
+  Paso 2b avisaba **en cada hallazgo aceptado**.
+- **Decision:** el indice de `findings.md` gana una columna `Registrado en`, y `Estado` vuelve a
+  llevar solo un valor de la lista. La columna se relleno **derivandola del campo homonimo de cada
+  ficha**, no a mano, de modo que fila y ficha coinciden por construccion: 22 filas.
+- **Por que:** es la unica de las dos salidas que cumple las dos reglas a la vez, sin enmendar
+  `CLAUDE.md` ni perder la cita en el sitio por donde se entra. Y resuelve el problema de fondo, que
+  no es de formato: un control que avisa siempre deja de leerse, y entonces ya no avisa de nada —
+  peor que no tenerlo, porque sigue pareciendo un detector.
+- **Alternativas descartadas:**
+  - **Valor limpio en la fila y la cita solo en la ficha:** mas simple y sin tocar la estructura, pero
+    obliga a enmendar la frase de `CLAUDE.md` que pide citar en la fila, y deja el indice sin decir
+    donde quedo cada hallazgo — que es lo que se quiere ver de un vistazo. Se presento al usuario
+    junto con la adoptada, con las dos formas a la vista, y eligio esta.
+  - **Dejarlo como estaba y silenciar el aviso del Paso 2b:** es apagar el detector en vez de arreglar
+    la contradiccion.
+- 🚨 **La columna rompia el control del Paso 2b, que leia `Estado` por posicion (`$(NF - 1)`), y se
+  corrigio a `$(NF - 2)` en la misma pasada.** Reejecutado despues del cambio, sin salida y `exit=0`.
+
+  ⚠️ **Se comprobo que habria pasado si no se hubiera corregido, y el resultado contradice lo que
+  parecia obvio.** La sospecha era que el control seguiria en verde midiendo la columna equivocada. No:
+  corrido el control **viejo** (`$(NF - 1)`) sobre el archivo ya con la columna nueva, devuelve las 22
+  filas como diferencias, porque compara `Registrado en` contra `Estado` y no se parecen.
+
+  ```
+  $ diff <(… awk -F'|' '{… e=$(NF - 1) …}' …) <(… la ficha …) | head -1
+  1,22c1,22
+  ```
+
+  🔑 **Asi que este control, al cambiar la estructura, falla ruidosamente — que es lo deseable.** El
+  riesgo de verde falso existe solo cuando las dos columnas llevan valores parecidos, y aqui no es el
+  caso. Queda dicho porque la version anterior de esta linea afirmaba el verde silencioso sin haberlo
+  comprobado, y la orden de arriba lo desmiente.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** el indice de `findings.md` tiene la columna, la convencion la declara, y el
+     control del Paso 2b lee la columna correcta.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_audit/findings.md | grep -c '^| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado | Registrado en |'
+     git show <hash>:_audit/findings.md | grep -c '^| Registrado en | la `T-XXX` o la `D-XXX`'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'e=$(NF - 2)'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     1
+     ```
+
+### D-070 - F-023 se acepta: la confirmacion de DT-005 es del usuario, y se escribe con su dueno
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-023` observa que `DT-005` llevaba `Confirmacion: Sin confirmar`, valor que la
+  convencion de `techdebt.md` no declara, y que ademas incumple su regla explicita: `Propuesta` lleva
+  siempre escrito quien confirma, porque una propuesta sin dueno no espera — se queda propuesta para
+  siempre. Verificado vigente contra `HEAD` (`31ece08`) antes de tratarlo:
+
+  ```
+  $ grep -cE '^\|.*\| Sin confirmar \|' _persistence/techdebt.md
+  1
+  ```
+- **Decision:** `DT-005` pasa a `Propuesta (pendiente del usuario)`, en la fila del indice y en la
+  ficha, en la misma pasada. El usuario lo confirmo como dueno de esa decision al presentarle las dos
+  salidas que la convencion permite.
+- **Por que:** el valor no solo estaba fuera de la lista; dejaba la deuda sin nadie que la hiciera
+  avanzar, que es precisamente lo que esa convencion existe para impedir. `DT-005` afecta a una cifra
+  de dos etapas, asi que quedarse propuesta para siempre tiene coste.
+- **Alternativas descartadas:**
+  - **Abrir una `T-XXX` para determinar de quien es la confirmacion**, que es la salida que la propia
+    convencion prescribe cuando no se sabe: aqui si se sabe. El usuario es el patrocinador y todas las
+    confirmaciones de deuda del registro han sido suyas; abrir una tarea para preguntar lo que se
+    puede preguntar en una linea es ceremonia.
+  - **Confirmarla yo como `Confirmada`:** no me corresponde. `Confirmacion` dice si el atajo fue un
+    atajo, y esa lectura es justo lo que `DT-005` declara que no esta claro.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** no queda ninguna `Confirmacion` fuera de la lista de la convencion, y `DT-005`
+     nombra a su dueno en el indice y en la ficha.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/techdebt.md | grep -cE '\| Sin confirmar \|'
+     git show <hash>:_persistence/techdebt.md | grep -cF 'Propuesta (pendiente del usuario)'
+     ```
+  3. **Salidas:**
+     ```
+     0
+     3
+     ```
+
+  📌 **El `3` son las tres apariciones legitimas:** la fila del indice, la ficha, y la linea de la
+  convencion que usa ese mismo valor como ejemplo de la forma correcta.
+
+### D-071 - F-024 se acepta en su parte comprobable, y se rechaza lo que atribuye a la skill
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-024` observa que la nota de anclaje de `D-064` remite a una seccion «Sin resolver»
+  que no existe en el informe de la sesion, porque esa seccion pertenece al **reporte de pantalla**
+  del cierre y no persiste en el commit. El hallazgo senala tambien que `D-062` tiene el mismo
+  puntero. Las dos partes verificadas vigentes contra `HEAD` (`31ece08`):
+
+  ```
+  $ grep -c "Sin resolver" _audit/S-017.md
+  0
+  ```
+- **Decision:** se acepta lo comprobable y se corrige por **nota fechada** en las dos entradas, sin
+  reescribir ninguna linea: la nota dice que el puntero no resuelve y senala lo que si persiste, que
+  esta en la propia entrada —las dos salidas, una debajo de la otra—. Y hacia adelante se anade al
+  7c-bis de `protocol-close` la prohibicion explicita de remitir desde el registro a una seccion del
+  reporte.
+
+  🚨 **Se rechaza, en cambio, la parte del hallazgo que atribuye el defecto a la skill** («que
+  `protocol-close` no mande citar desde el registro una seccion que solo existe en pantalla»). La
+  skill **no lo mandaba**: sus dieciseis menciones de «Sin resolver» son todas instrucciones sobre que
+  escribir en el reporte, ninguna sobre que escribir en una entrada del registro.
+
+  ```
+  $ grep -c "Sin resolver" .claude/skills/protocol-close/SKILL.md
+  16
+  ```
+
+  Lo que faltaba no era quitar una orden: era que **nada lo prohibiera**, y el paso que escribe esas
+  notas lo hizo dos veces. Por eso la correccion es una prohibicion nueva, no la retirada de una
+  instruccion que no existe.
+- **Por que:** `decisions.md` se lee dentro de meses, y `D-064` es justo la entrada cuya cuarta orden
+  no reproduce: el puntero que deberia llevar al detalle del fallo no llevaba a ninguna parte. El
+  contenido nunca se perdio, asi que el defecto era solo el puntero — y arreglarlo por nota, sin
+  tocar la linea, es lo que corresponde a un registro ya publicado.
+- **Alternativas descartadas:**
+  - **Reescribir las dos lineas para que citen lo correcto:** convierte «falta un puntero» en «hay un
+    puntero que nadie escribio», y borra que el defecto ocurrio.
+  - **Tratar solo `D-064`, que es la que el hallazgo titula:** `D-062` tiene el mismo puntero y el
+    propio hallazgo lo dice. Es la muestra contra el inventario otra vez.
+  - **Aceptar tambien la atribucion a la skill y «corregirla»:** habria dejado el registro afirmando
+    que se retiro una instruccion que nunca estuvo. Un rechazo con la evidencia delante vale mas que
+    una conformidad comoda.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** las dos entradas llevan su nota fechada, y el 7c-bis prohibe ese puntero.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/decisions.md | grep -cE 'NOTA 2026-09-17 — (la remision a|esa remision no resuelve)'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'no remite a «Sin resolver»'
+     ```
+  3. **Salidas:**
+     ```
+     2
+     1
+     ```
+
+### D-072 - L-019 sube como enmienda de LG-100 y L-020 no sube: quinta pasada de la cosecha de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** las dos lecciones escritas hoy al tratar los hallazgos de `R-019` nacieron `Sin evaluar`,
+  y con eso la septima casilla de la condicion de salida de `005_discovery` —«ninguna leccion de esta
+  etapa queda `Sin evaluar`»— dejo de cumplirse en la misma sesion en que se iba a levantar el acta. Es
+  el mismo fenomeno que `D-062` declaro en su dia: la cosecha se hace, y el trabajo posterior de la
+  etapa genera lecciones nuevas que la invalidan. Barrido del Paso 1:
+
+  ```
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'
+  2
+  ```
+- **Decision:** `L-019` sube como **enmienda de `LG-100`**, y `L-020` **no sube**: su nucleo ya lo
+  cubre `LG-06`. Ninguna entrada nueva, asi que el recuento del archivo global sigue en 109 y su
+  cabecera pasa a **version 7**.
+
+  | Leccion | Destino | Filtro |
+  |---|---|---|
+  | `L-019` | enmienda de `LG-100` | pasa 1, 2 y 3; el **4** la manda a enmienda: es una cara nueva de `LG-100`, no una entrada aparte |
+  | `L-020` | `Ya cubierta por LG-06` | **4**: «no dar un control por bueno sin verlo rojo contra el formato real» ya lo dice `LG-06`, y este proyecto ya establecio ese mapeo con `L-003` |
+
+  Dos filas clasificadas contra `2` del barrido: cuadra.
+- **Por que:** `L-019` cumple con holgura el «cuando se promueve» del archivo global —«la misma forma
+  vista en dos revisiones distintas»—: el defecto que la origino se cerro como `Implementado` en una
+  auditoria y reaparecio **seis veces** en las dieciseis sesiones siguientes. Y lo que anade a `LG-100`
+  no es enfasis: `LG-100` explica que una correccion como texto solo vale para su commit, pero no dice
+  que **el cierre formal del hallazgo es lo que apaga la vigilancia**, ni que por eso un control
+  aplazado exige deuda declarada en vez de una tarea suelta.
+- **Alternativas descartadas:**
+  - **`L-019` como entrada nueva `LG-110`:** el filtro 4 lo prohibe cuando el nucleo ya existe, y aqui
+    existe. Habria dejado dos entradas diciendo lo mismo con distinto alcance, que es justo lo que ese
+    filtro evita — y el archivo global tiene declarado su propio tamano como enemigo.
+  - **`L-020` como enmienda de `LG-06`:** tiene un matiz que `LG-06` no lleva —el disparador «cuando
+    cambies la estructura, revisa los controles que la leen»—, pero el «cuando se promueve» pide que se
+    repita o que el coste sea demostrable, y aqui es **una sola aparicion atrapada antes de costar
+    nada**. Si vuelve a aparecer, es enmienda.
+  - **Dejar las dos `Sin evaluar` y cerrar la etapa igual:** la casilla existe para impedir exactamente
+    eso.
+
+  🚨 **`L-020` se reescribio a mitad de esta cosecha, y conviene que quede dicho.** Su primera version
+  afirmaba que el control mal direccionado «habria seguido diciendo coinciden». Se comprobo antes de
+  clasificarla y es falso: el control viejo devuelve las 22 filas como diferencias, es decir falla
+  ruidosamente. Se corrigio la leccion y la linea de `D-069` que lo repetia, **antes de commitear
+  ninguna de las dos** — no habia nada publicado que reescribir.
+
+  ⚠️ **Y el archivo global no se recorrio entero, a proposito.** Se leyeron su indice, su seccion de
+  promocion y las entradas contra las que habia que contrastar (`LG-06`, `LG-16`, `LG-22`, `LG-26`,
+  `LG-32`, `LG-66`, `LG-67`, `LG-69`, `LG-100`, `LG-104`, `LG-109`). **Los demas bloques quedan NO
+  MIRADOS, no limpios.**
+
+- **Criterio de cierre:**
+  1. **Enunciado:** la enmienda esta en el archivo global con su cita de origen, la version declarada
+     es la 7, el commit esta subido, y ninguna leccion de la etapa queda `Sin evaluar`.
+  2. **Ordenes:**
+     ```
+     git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show e915383:global_lessons.md | grep -c 'apaga al único que vigilaba'
+     git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show e915383:global_lessons.md | grep -cF '`YouOtto` · L-019'
+     git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show e915383:global_lessons.md | grep -nE '^> \*\*Versión: 7'
+     git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" status -sb | head -1
+     git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     26:> **Versión: 7 · 2026-09-17** · 109 lecciones · 10 bloques
+     ## main...origin/main
+     0
+     ```
+
+  📌 **`## main...origin/main` sin `[ahead N]` es la confirmacion del push**, y es la unica de las cinco
+  ordenes que no se puede reproducir desde este repositorio: las tres primeras hablan de un archivo que
+  el auditor **no puede ver**, y por eso van con el hash `e915383` delante.

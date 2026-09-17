@@ -38,6 +38,8 @@
 | [L-016](#l-016---una-cifra-escrita-donde-no-se-puede-corregir-se-cuenta-antes-no-despues) | Una cifra escrita donde no se puede corregir se cuenta antes, no despues | 2026-09-17 | 005_discovery | Promovida a LG-32 |
 | [L-017](#l-017---los-sitios-que-cita-un-hallazgo-son-una-muestra-no-el-inventario) | Los sitios que cita un hallazgo son una muestra, no el inventario | 2026-09-17 | 005_discovery | Ya cubierta por LG-85 |
 | [L-018](#l-018---un-barrido-de-estado-encuentra-tambien-el-archivo-que-prohibe-ese-estado) | Un barrido de estado encuentra tambien el archivo que prohibe ese estado | 2026-09-17 | 005_discovery | Ya cubierta por LG-101 |
+| [L-019](#l-019---corregir-el-caso-que-cita-un-hallazgo-sin-poner-el-control-deja-el-defecto-reapareciendo) | Corregir el caso que cita un hallazgo, sin poner el control, deja el defecto reapareciendo | 2026-09-17 | 005_discovery | Promovida a LG-100 |
+| [L-020](#l-020---al-cambiar-la-estructura-de-un-archivo-los-controles-que-lo-miden-se-reejecutan-en-la-misma-pasada) | Al cambiar la estructura de un archivo, los controles que lo miden se reejecutan en la misma pasada | 2026-09-17 | 005_discovery | Ya cubierta por LG-06 |
 
 ---
 
@@ -444,3 +446,59 @@ Plantilla:
   —`grep -m1 '^| Estado |'`—, nunca al valor suelto; y la salida se publica con la linea entera, que es
   lo que delata haber leido otra cosa. Antes de editar un archivo que un barrido senalo, **leerlo**: la
   lectura es el control que atrapa la mala clasificacion, y en un archivo irreversible es el unico.
+
+### L-019 - Corregir el caso que cita un hallazgo, sin poner el control, deja el defecto reapareciendo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** al tratar un hallazgo que senalaba un ancla rota en el indice de la bitacora. Un
+  hallazgo cita **un** sitio, y la reaccion natural es arreglar ese sitio y cerrar el asunto.
+- **Que ocurrio:** el mismo defecto ya se habia detectado dieciseis sesiones antes, sobre otra fila del
+  mismo archivo. Aquella vez se acepto, se corrigio **la fila citada**, una auditoria posterior lo
+  verifico y el hallazgo se cerro como `Implementado` — todo correcto segun el procedimiento. Lo que no
+  se puso fue un control, y al barrer el archivo entero aparecieron **seis** anclas rotas: la citada
+  por el hallazgo nuevo y cinco mas, acumuladas en las sesiones intermedias sin que nadie las viera.
+  Cinco de las seis ni siquiera tenian la causa del caso citado: eran titulos retocados despues de
+  escribir su ancla.
+- **Leccion:** un hallazgo cerrado como `Implementado` no significa que su defecto este resuelto:
+  significa que **su instancia** lo esta. Si el defecto puede volver a producirse —y puede, siempre que
+  dependa de que alguien se acuerde—, la correccion completa son dos cosas: la instancia y el control
+  que detecta la siguiente. Sin la segunda, el cierre del hallazgo es lo que hace que nadie vuelva a
+  mirar, y el defecto reaparece con la ventaja de estar declarado resuelto.
+- **Como aplicarla:** al aceptar un hallazgo, antes de corregir, preguntar **dos** cosas: «¿cuantos
+  sitios mas tienen esto?» —el barrido, que ya pide otra leccion— y «¿que impide que vuelva a pasar
+  manana?». Si la respuesta a la segunda es «acordarse», el hallazgo no esta tratado hasta que exista
+  un control mecanizado; y si ese control no se puede poner en la misma sesion, lo que queda no es una
+  tarea sin mas, es **deuda tecnica declarada** con su `DT-XXX`, porque el hallazgo se va a cerrar
+  igual y con el se va el unico recordatorio.
+
+### L-020 - Al cambiar la estructura de un archivo, los controles que lo miden se reejecutan en la misma pasada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** al anadir una columna al indice de un archivo del registro que un control de cierre
+  compara contra las fichas del mismo archivo.
+- **Que ocurrio:** el control extraia el valor a comparar como «el penultimo campo de la fila»
+  (`$(NF - 1)` en `awk`), asi que con la columna nueva pasaba a leer **otra columna**. Se corrigio en
+  la misma pasada. Y despues se comprobo que habria pasado sin corregirlo, en vez de suponerlo: el
+  control viejo, corrido sobre el archivo ya cambiado, devuelve las 22 filas como diferencias
+  (`1,22c1,22`) — **falla ruidosamente**, porque `Registrado en` y `Estado` no se parecen. La sospecha
+  de partida era la contraria, un verde falso, y la orden la desmintio.
+- **Leccion:** un control que direcciona por posicion tiene una dependencia oculta con la estructura
+  del archivo que mide, y al cambiar esa estructura **cambia de objeto sin que nadie lo toque**. Lo que
+  no se puede suponer es **como** se va a manifestar: da un rojo escandaloso si los valores de las dos
+  columnas se parecen poco, y un verde falso si se parecen mucho. Las dos son roturas; solo una avisa,
+  y cual de las dos toca no lo decide el control, lo deciden los datos.
+- **Como aplicarla:** cuando se cambie la estructura de un archivo que un control lee —una columna, un
+  campo, el orden—, **buscar y reejecutar los controles que lo leen en la misma pasada**, y dejar su
+  salida publicada; no se aplaza a la siguiente sesion. Y al escribir un control nuevo, preferir
+  direccionar **por nombre** —el encabezado de la columna, el rotulo del campo— antes que por posicion,
+  aunque cueste dos lineas mas de `awk`. ⚠️ **Y cuando se diga como habria fallado, se corre:** aqui la
+  version inicial de esta leccion afirmaba el verde silencioso, que es la forma mas alarmante y la que
+  primero viene a la cabeza, y la comprobacion mostro un rojo.

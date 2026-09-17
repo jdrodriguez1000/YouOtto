@@ -54,6 +54,11 @@
 | [T-035](#t-035---anclar-por-nota-la-cifra-del-barrido-del-paso-1-de-protocol-harvest-en-d-062) | Anclar por nota la cifra del barrido del Paso 1 de protocol-harvest en D-062 | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-036](#t-036---corregir-la-cifra-de-condiciones-de-salida-de-005_discovery-en-la-plantilla-el-reparto-y-el-artefacto) | Corregir la cifra de condiciones de salida de 005_discovery en la plantilla, el reparto y el artefacto | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-037](#t-037---anclar-o-fechar-dos-ordenes-del-contexto-de-d-064-que-ya-no-reproducen) | Anclar o fechar dos ordenes del Contexto de D-064 que ya no reproducen | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-038](#t-038---reparar-las-seis-anclas-rotas-del-indice-de-progressmd-y-poner-el-control-que-las-detecta) | Reparar las seis anclas rotas del indice de progress.md y poner el control que las detecta | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-039](#t-039---dar-al-indice-de-findingsmd-una-columna-propia-para-la-cita-de-la-t-xxx-o-la-d-xxx) | Dar al indice de findings.md una columna propia para la cita de la T-XXX o la D-XXX | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-040](#t-040---poner-dueno-a-la-confirmacion-de-dt-005) | Poner dueno a la confirmacion de DT-005 | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-041](#t-041---corregir-por-nota-las-dos-remisiones-a-sin-resolver-y-prohibirlas-hacia-adelante) | Corregir por nota las dos remisiones a «Sin resolver» y prohibirlas hacia adelante | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-042](#t-042---anclar-o-fechar-seis-ordenes-de-contexto-en-d-068d-069d-070d-071d-072-que-ya-no-reproducen) | Anclar o fechar seis ordenes de Contexto en D-068/D-069/D-070/D-071/D-072 que ya no reproducen | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -955,3 +960,127 @@ Plantilla:
 - **Criterio de cierre:** `manager` ancla las dos ordenes al commit anterior a esta sesion (`205b1f2`,
   el estado que realmente describen) o las marca explicitamente como «antes de la correccion de esta
   misma decision», por nota fechada en `D-064`.
+
+### T-042 - Anclar o fechar seis ordenes de Contexto en D-068/D-069/D-070/D-071/D-072 que ya no reproducen
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d de `protocol-close` detecto seis ordenes en bloques «Contexto» de las decisiones
+  nacidas hoy —ninguna en un «Criterio de cierre»— que no llevan ancla y hoy ya no reproducen, porque
+  documentan el estado **anterior** a la correccion que la propia decision aplico en el mismo commit.
+  Archivo en todos los casos: `_persistence/decisions.md`.
+
+  - **D-068:** `grep -n '(#s-017' _persistence/progress.md | grep -oE 'l-018-+d-063'`. Publica
+    `l-018-d-063`; reejecutada hoy da `l-018--d-063`, porque `D-068` ya corrigio el ancla en el mismo
+    commit (dos guiones, no uno).
+  - **D-068:** `node .claude/checks/anchors.js _persistence/*.md _audit/*.md`. Publica la lista de seis
+    anclas rotas y `total anclas rotas: 6`; reejecutada hoy da `total anclas rotas: 0`, porque `D-068`
+    ya corrigio las seis en el mismo commit.
+  - **D-068:** `node slug.mjs '...'` y `node validate2.mjs ...`. Los dos scripts eran deliberadamente
+    temporales (asi lo dice la propia decision, para no anadir una dependencia al repositorio) y no
+    quedaron en el arbol: no reproducibles por construccion, no por un desfase.
+  - **D-069:** `grep -E '^\| \[F-020\]' _audit/findings.md | awk -F'|' '{print $(NF-1)}'`. Publica
+    ` Implementado`; reejecutada hoy da ` \`T-036\` y \`D-064\` `, porque `D-069` anadio la columna
+    `Registrado en` en el mismo commit y desplazo la penultima columna.
+  - **D-069:** `grep -A7 '^### F-003' _audit/findings.md | grep -E '^\| (Estado|Cerrado en) \|'`.
+    Publica dos lineas (`Estado` y `Cerrado en`); reejecutada hoy da solo `Estado`, porque la columna
+    `Registrado en` que `D-069` anadio a la ficha de `F-003` empujo la linea `Cerrado en` fuera de la
+    ventana de 7 lineas.
+  - **D-070:** `grep -cE '^\|.*\| Sin confirmar \|' _persistence/techdebt.md`. Publica `1`; reejecutada
+    hoy da `0`, porque `D-070` ya corrigio `DT-005` en el mismo commit.
+  - **D-071:** `grep -c "Sin resolver" .claude/skills/protocol-close/SKILL.md`. Publica `16`;
+    reejecutada hoy da `17`, porque la propia `D-071` anadio la prohibicion nueva al 7c-bis (que
+    menciona «Sin resolver» una vez) en el mismo commit.
+  - **D-072:** `grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'`.
+    Publica `2`; reejecutada hoy da `0`, porque `D-072` ya clasifico `L-019` y `L-020` en el mismo
+    commit.
+- **Por que:** `_persistence/decisions.md` no es un archivo que `session-closer` pueda editar fuera del
+  anclaje mecanico del Paso 7c-bis, y ese paso solo toca bloques «Criterio de cierre»: los ocho casos
+  de arriba viven en «Contexto», asi que no los puede corregir este cierre.
+- **Criterio de cierre:** `manager` ancla cada orden reproducible al commit anterior a esta sesion
+  (`31ece08`, el estado que realmente describen) o las marca explicitamente como «antes de la
+  correccion de esta misma decision», por nota fechada en la entrada correspondiente. Las dos ordenes
+  de scripts temporales de `D-068` se dejan como estan, declaradas no reproducibles por naturaleza.
+
+### T-038 - Reparar las seis anclas rotas del indice de progress.md y poner el control que las detecta
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-021` (`Baja`/`No bloqueante`). El hallazgo cita **un** ancla rota; el barrido del archivo
+  entero devolvio **seis**. Aceptado y hecho: las seis corregidas derivando cada ancla de su titulo, y
+  anadido el **Paso 2b-bis** a `protocol-close`, que corre `.claude/checks/anchors.js` sobre
+  `_persistence/` y `_audit/`. El control lleva su test (`node --test`, 10 casos). El reparto de la
+  decision, las dos lecturas posibles del slug y como se resolvieron estan en `D-068`.
+- **Por que:** el mismo defecto ya se cerro una vez como `Implementado` corrigiendo solo el caso citado,
+  y reaparecio seis veces sin que nadie lo viera. El indice de `progress.md` es por donde entra el
+  arranque de cada jornada, y un ancla rota no avisa: lleva a la cabecera del archivo y quien lo usa
+  supone que la entrada no existe.
+
+### T-039 - Dar al indice de findings.md una columna propia para la cita de la T-XXX o la D-XXX
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-022` (`Baja`/`No bloqueante`). El sintoma que el hallazgo cita **ya no reproduce** contra
+  `HEAD` —la auditoria que lo abrio cerro esa fila al pasarla a `Implementado`—, pero la causa seguia
+  entera. Aceptado y hecho: el indice gana la columna `Registrado en`, rellenada derivandola del campo
+  homonimo de cada ficha (22 filas); la convencion la declara y zanja que `Estado` lleva solo un valor
+  de la lista; y el control del Paso 2b se corrigio para leer la columna correcta. El reparto esta en
+  `D-069`, y la eleccion entre las dos formas posibles la hizo el usuario.
+- **Por que:** dos reglas del proyecto se contradecian —una pedia citar en la fila, la otra cerraba los
+  valores de `Estado`—, asi que el control de cierre avisaba en **cada** hallazgo aceptado. Un control
+  que siempre avisa deja de leerse, y entonces es peor que no tenerlo: sigue pareciendo un detector.
+
+### T-040 - Poner dueno a la confirmacion de DT-005
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-023` (`Baja`/`No bloqueante`). `DT-005` llevaba `Confirmacion: Sin confirmar`, valor que
+  la convencion de `techdebt.md` no declara. Aceptado y hecho: pasa a
+  `Propuesta (pendiente del usuario)` en la fila del indice y en la ficha, en la misma pasada. El
+  reparto esta en `D-070`; el usuario confirmo ser el dueno de esa decision.
+- **Por que:** la convencion no solo cierra la lista, prohibe la salida sin dueno — una propuesta sin
+  dueno no espera, se queda propuesta para siempre. Y `DT-005` afecta a una cifra que vive en dos archivos
+  de reparto, asi que quedarse ahi tiene coste.
+
+### T-041 - Corregir por nota las dos remisiones a «Sin resolver» y prohibirlas hacia adelante
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-024` (`Baja`/`No bloqueante`). Dos entradas de `decisions.md` remiten a una seccion «Sin
+  resolver» que solo existe en el reporte de pantalla del cierre y no persiste en el commit. Aceptado en
+  su parte comprobable y hecho: nota fechada en las dos, sin reescribir ninguna linea, y prohibicion
+  explicita en el 7c-bis de `protocol-close`. **Rechazada** la parte del hallazgo que atribuia el
+  defecto a una orden de la skill: la skill no lo mandaba, y la evidencia esta en `D-071`.
+- **Por que:** `decisions.md` se lee dentro de meses, y una de las dos entradas es justo la que declara
+  una orden que no reproduce: el puntero al detalle no llevaba a ninguna parte. El contenido nunca se
+  perdio —las dos salidas estan en la propia entrada—, asi que lo que fallaba era solo el puntero.

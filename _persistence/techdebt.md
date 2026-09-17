@@ -25,7 +25,7 @@
 | [DT-002](#dt-002---el-control-de-salida-reproducida-no-reejecuta-las-ordenes) | El CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes | No implementada | Confirmada | Baja | No bloqueante |
 | [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | Implementada | Confirmada | Alta | No bloqueante |
 | [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | Implementada | Confirmada | Baja | No bloqueante |
-| [DT-005](#dt-005---la-cifra-de-casillas-que-llevan-juicio-no-cuadra-en-dos-archivos-de-reparto) | La cifra de casillas «que llevan juicio» no cuadra en dos archivos de reparto | No implementada | Sin confirmar | Baja | No bloqueante |
+| [DT-005](#dt-005---la-cifra-de-casillas-que-llevan-juicio-no-cuadra-en-dos-archivos-de-reparto) | La cifra de casillas «que llevan juicio» no cuadra en dos archivos de reparto | No implementada | Propuesta (pendiente del usuario) | Baja | No bloqueante |
 
 ---
 
@@ -244,7 +244,7 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
 | Campo | Valor |
 |---|---|
 | Estado | No implementada |
-| Confirmacion | Sin confirmar |
+| Confirmacion | Propuesta (pendiente del usuario) |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Origen | manager |

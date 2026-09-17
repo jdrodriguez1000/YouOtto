@@ -35,6 +35,7 @@
 | `S-015.md` | S-015 | 2026-09-17 | eda6314 | `R-017.md` | Con hallazgos (1) | F-019 |
 | `S-016.md` | S-016 | 2026-09-17 | 205b1f2 | `R-018.md` | Con hallazgos (1) | F-020 |
 | `S-017.md` | S-017 | 2026-09-17 | a0949c5 | `R-019.md` | Con hallazgos (4) | F-021, F-022, F-023, F-024 |
+| `S-018.md` | S-018 | 2026-09-17 | Pendiente | Pendiente | Pendiente | - |
 
 ---
 
