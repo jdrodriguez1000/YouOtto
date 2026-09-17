@@ -33,7 +33,8 @@
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
 | [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Implementado |
-| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Aceptado — pendiente |
+| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Implementado |
+| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | Abierto |
 
 ---
 
@@ -354,9 +355,9 @@ Plantilla:
 | Auditoria | R-012 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-021, T-022, D-036 |
-| Cerrado en | |
+| Cerrado en | cf2992f (R-013) |
 
 - **Que se observo:** el commit de anclaje `fdfca7b` dejo la seccion 7 de `S-011.md` con el marcador
   `NOTA DE CIERRE: <se completa en el Paso 7c-bis, despues del commit>`, y el control del Paso 7c-ter
@@ -371,3 +372,25 @@ Plantilla:
   `D-036`. El usuario eligio las dos partes: nota fechada en la seccion 7 de `S-011.md`, que nombra
   `1358c3c` sin reescribir la linea publicada (`T-021`), y puerta mecanica en el bloque del commit de
   anclaje de `protocol-close`, que solo commitea si el 7c-ter y el 7c-quater salen vacios (`T-022`).
+
+### F-014 - La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17
+| Campo | Valor |
+|---|---|
+| Auditoria | R-013 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** `cf2992f` (fecha de commit `2026-09-17`, sesion `S-012` fechada `2026-09-17`)
+  anade en `_audit/S-011.md` una «Nota 2026-09-16 (`F-013`, `T-021`), escrita por `manager` en la
+  sesion siguiente», y cinco entradas con `| Fecha | 2026-09-16 |` (`D-036`..`D-039`, `L-013`, con sus
+  filas de indice). El Paso 7d de `protocol-close` manda corregir toda nota fechada de la jornada en
+  el commit de anclaje; `de83026` no la toca y el informe no reporta la discrepancia. Comandos y
+  salidas en `_audit/R-013.md`, seccion 2.
+- **Por que importa:** la nota fechada existe para decir cuando se supo algo, y esta afirma un dia que
+  su commit y su propia sesion contradicen; el criterio de `D-036` fija esa fecha en su `grep`, asi que
+  la correccion solo cabe por nota. `Media`: `git log` conserva la cronologia real y no afecta a ningun
+  control.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
