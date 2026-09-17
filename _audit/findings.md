@@ -37,6 +37,7 @@
 | [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
 | [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
+| [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Abierto |
 
 ---
 
@@ -455,3 +456,23 @@ Plantilla:
   control. `Baja`: la salida esta entera y nada depende de la cifra. `No bloqueante`.
 - **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`2063f09`), con orden y salida en `D-046`.
   Por ser `No bloqueante`, su correccion se aplaza con `T-031` abierta.
+
+### F-018 - D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion
+| Campo | Valor |
+|---|---|
+| Auditoria | R-016 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** en `91562b7`, `D-045` afirma «Paso 1b: nueve copias de la raiz dan `0` y
+  `_audit/findings.md` da `21`», «Barrido del Paso 1 despues de promover: salida vacia» y «Paso 1b sobre
+  `1bec59a` (…`git -C "$ESQ" show 1bec59a:`): las diez parejas dan `0`» sin la orden literal usada ni su
+  salida de diez lineas (orden y salida en `R-016`, seccion 2).
+- **Por que importa:** `CLAUDE.md` exige orden y ambito para todo resultado que el registro afirme; misma
+  clase que `F-016`. La medicion posterior a `1bec59a` no es reproducible desde el registro. `Baja`: el
+  resto de la promocion lleva orden y salida, y ningun control depende de estas cifras. `No bloqueante`.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
