@@ -20,21 +20,21 @@
 
 ## Indice
 
-| Codigo | Hallazgo | Auditoria | Gravedad | Estado |
-|---|---|---|---|---|
-| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | Implementado |
-| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | Implementado |
-| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | Implementado |
-| [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | Implementado |
-| [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | Implementado |
-| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | Implementado |
-| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | Implementado |
-| [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
-| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
-| [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
-| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Implementado |
-| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Implementado |
-| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | Abierto |
+| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado |
+|---|---|---|---|---|---|
+| [F-001](#f-001---los-barridos-de-anclaje-de-los-pasos-2d-y-7c-no-ven-ordenes-indentadas) | Los barridos de anclaje de los Pasos 2d y 7c no ven ordenes indentadas | R-001 | Media | — | Implementado |
+| [F-002](#f-002---el-control-de-cifra-adyacente-de-s-001-no-se-publico-entero) | El CONTROL DE CIFRA ADYACENTE de S-001 no se publico entero | R-001 | Media | — | Implementado |
+| [F-003](#f-003---ancla-rota-en-el-indice-de-progressmd-para-s-001) | Ancla rota en el indice de `progress.md` para S-001 | R-001 | Baja | — | Implementado |
+| [F-004](#f-004---el-control-de-prosa-borrada-de-protocol-close-no-reconoce-cercas-indentadas) | El CONTROL DE PROSA BORRADA de protocol-close no reconoce cercas indentadas | R-002 | Media | — | Implementado |
+| [F-005](#f-005---el-anclaje-de-t-006-sustituyo-una-salida-que-no-reproducia-y-la-nota-afirma-que-reproduce) | El anclaje de T-006 sustituyo una salida que no reproducia y la nota afirma que reproduce | R-003 | Media | — | Implementado |
+| [F-006](#f-006---el-acta-de-cierre-de-000_preproject-sigue-con-la-firma-del-patrocinador-en-blanco-mientras-el-registro-da-la-etapa-por-cerrada) | El acta de cierre de 000_preproject sigue con la firma del patrocinador en blanco mientras el registro da la etapa por cerrada | R-005 | Media | — | Implementado |
+| [F-007](#f-007---la-seccion-7-de-s-005-promete-la-forma-anclada-de-la-orden-del-paso-2d-en-la-nota-de-cierre-y-no-esta) | La seccion 7 de S-005 promete la forma anclada de la orden del Paso 2d en la NOTA DE CIERRE, y no esta | R-005 | Baja | — | Implementado |
+| [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | — | Implementado |
+| [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | — | Implementado |
+| [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | — | Implementado |
+| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | — | Implementado |
+| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | — | Implementado |
+| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Aceptado — pendiente |
 
 ---
 
@@ -45,6 +45,7 @@
 | Codigo | `F-NNN`, correlativo, no se reutiliza |
 | Auditoria | el `R-XXX` que lo abrio |
 | Gravedad | `Alta` / `Media` / `Baja` |
+| Urgencia | `Bloqueante` / `No bloqueante` |
 | Estado | `Abierto` / `Aceptado — pendiente` / `Implementado` / `No se implementa` |
 | Cerrado en | el commit sobre el que la auditoria verifico la correccion |
 
@@ -56,6 +57,19 @@
 | `Aceptado — pendiente` | de acuerdo, pero todavia no hecho | **su `T-XXX`**, abierta |
 | `Implementado` | corregido, y **una auditoria posterior lo verifico** | el commit donde se verifico |
 | `No se implementa` | rechazado | **su `D-XXX`**. Si el rechazo es por coste o prioridad y no por ser incorrecto, ademas **su `DT-XXX`** |
+
+### Que significa cada urgencia
+
+La gravedad dice **cuanto dano hace** el defecto; la urgencia dice **si se puede esperar**. Son dos
+preguntas distintas y cada hallazgo lleva las dos.
+
+| Urgencia | Cuando | Que se hace |
+|---|---|---|
+| `Bloqueante` | mientras siga sin corregir, lo que se haga despues hereda el defecto: el registro afirma un estado falso que otros van a leer, un control obligatorio no corre o miente, o se puede perder trabajo | se corrige en la sesion siguiente, **antes** del trabajo de la etapa |
+| `No bloqueante` | el defecto no contamina lo que venga despues | se evalua igual en la sesion siguiente, pero su correccion **se puede aplazar** con su `T-XXX` abierta |
+
+⚠️ **Aplazar no es olvidar.** Un `No bloqueante` aceptado sigue en `Aceptado — pendiente` con su
+tarea, y aparece en cada arranque hasta que una auditoria lo cierre.
 
 🚨 **`Implementado` no lo escribe `manager`, lo escribe la auditoria siguiente.** Un hallazgo se
 cierra **verificando la correccion sobre un commit posterior**, no declarandola. Si el auditado
@@ -88,6 +102,7 @@ Plantilla:
 | Auditoria | R-XXX |
 | Fecha | AAAA-MM-DD |
 | Gravedad | |
+| Urgencia | |
 | Estado | Abierto |
 | Registrado en | T-XXX / D-XXX / DT-XXX |
 | Cerrado en | |
@@ -379,8 +394,8 @@ Plantilla:
 | Auditoria | R-013 |
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-025, T-026, D-041 |
 | Cerrado en | |
 
 - **Que se observo:** `cf2992f` (fecha de commit `2026-09-17`, sesion `S-012` fechada `2026-09-17`)
@@ -393,4 +408,7 @@ Plantilla:
   su commit y su propia sesion contradicen; el criterio de `D-036` fija esa fecha en su `grep`, asi que
   la correccion solo cabe por nota. `Media`: `git log` conserva la cronologia real y no afecta a ningun
   control.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`4409bb9`), con orden y salida en
+  `D-041`. El usuario eligio las dos partes: notas fechadas en las seis entradas, que dan `2026-09-17`
+  sin reescribir la fecha publicada (`T-025`), y un control en el Paso 7d de `protocol-close` que lista
+  las fechas que anade el commit distintas de la suya (`T-026`).

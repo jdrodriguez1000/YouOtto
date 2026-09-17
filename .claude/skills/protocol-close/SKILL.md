@@ -2082,6 +2082,37 @@ grep -m1 '^| Fecha |' _audit/S-XXX.md
 anteriores **no se toca**: ya se auditó, y reescribir su fecha convierte «falta exactitud» en «hay
 exactitud falsa». Eso sale por nota fechada, y lo escribe `manager`.
 
+**Y las fechas que el commit anade, no solo la del informe.** La cabecera del informe es una fecha
+entre muchas: cada entrada nueva del registro trae la suya, y cada nota fechada tambien. Con
+`<hash>` = el commit de la sesion:
+
+```bash
+d=$(git log -1 --format=%ad --date=short <hash>)
+D=$(git diff -U0 <hash>^ <hash> -- _persistence _audit)
+nuevos=$(printf '%s\n' "$D" | grep -oE '^\+#{3} [A-Z]+-[0-9]+ ' | grep -oE '[A-Z]+-[0-9]+' | paste -sd'|')
+printf '%s\n' "$D" |
+  grep -E "^\+(\| Fecha \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|$|\| \[(${nuevos:-NINGUNO})\].*\| [0-9]{4}-[0-9]{2}-[0-9]{2} \||[[:space:]]*(> )?(- )?🕐 \*\*Nota [0-9]{4}-[0-9]{2}-[0-9]{2})" |
+  grep -vF "$d"
+```
+
+Mira tres formas: el campo `| Fecha |` de una ficha, la fila de indice **de una entrada nueva** y la
+nota fechada. Imprime las que **no** llevan la fecha del commit.
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| nada | toda fecha nueva es la del commit | sigue |
+| lineas en archivos que escribe este cierre (`progress.md`, `tasks.md`, el informe, `_audit/index.md`) | 🚨 **el registro afirma algo falso** | corrigelas igual que la cabecera, y **entran en el commit de anclaje** |
+| lineas en `decisions.md`, `assumptions.md`, `constraints.md`, `lessons.md`, o en una nota de otro informe | 🚨 **lo mismo, pero no es tuyo** | **no lo toques**: pega la salida en **Sin resolver**, para que `manager` lo corrija por nota fechada en la sesion siguiente |
+| el comando falla | **no lo comprobaste** | sigue, y a **Sin resolver** con 🚨 `SIN COMPROBAR` |
+
+🔑 **Por que solo las filas de indice de entradas nuevas.** Un cierre cambia a menudo el estado de
+una entrada antigua, y su fila vuelve a entrar en el diff con la fecha de entonces, que es correcta.
+Sin ese filtro el control salta en casi cada cierre. **Esta regla nacio de un defecto real:** una
+sesion que cruzo la medianoche escribio sus entradas con la fecha de la vispera, el control de la
+cabecera salio limpio y solo lo vio la auditoria.
+
+⚠️ **Limite:** una fecha escrita en prosa, fuera de esas tres formas, no se ve.
+
 ### Cual de los dos commits es «el commit de la sesion»
 
 Un cierre que necesita anclaje deja **dos** commits, y hay que decir cual es cual porque el auditor
@@ -2118,7 +2149,7 @@ PUERTA=$(
 if [ -n "$PUERTA" ]; then
   printf '%s\n' "$PUERTA"; echo "PUERTA CERRADA: no se commitea el anclaje"
 else
-  git commit -m "S-XXX: ancla el informe y los criterios de cierre al hash <hash>" && git push
+  git commit -m "S-XXX: ancla el informe y los criterios de cierre al hash <hash>" -m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>" && git push
 fi
 git status -sb
 ```

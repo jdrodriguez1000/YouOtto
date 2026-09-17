@@ -129,7 +129,9 @@ sed -n '/^## Indice/,/^---/p' _audit/findings.md
 quedo sin revisar. **Este es el unico sitio del sistema donde esa omision se descubre.** Si la ves,
 propon correr la auditoria pendiente como primera accion.
 
-Si hay hallazgos nuevos, **di su codigo, su gravedad y de que auditoria vienen**. No los resumas ni
+Si hay hallazgos nuevos, **di su codigo, su gravedad, su urgencia y de que auditoria vienen**.
+La urgencia es la que dice al usuario si se puede aplazar: un `Bloqueante` va antes que el trabajo de
+la etapa. Si un hallazgo no la trae, di «sin urgencia» —no la deduzcas de la gravedad—. No los resumas ni
 los interpretes: quien los va a evaluar es `manager`, y necesita el enunciado tal cual.
 
 ⚠️ **No abras los `R-XXX.md` salvo que haya algo nuevo que mirar.** El tablero y el indice de
@@ -270,7 +272,7 @@ teniendo clara **que pregunta concreta** quieres responder con cada uno:
 | `_persistence/lessons.md` | se vaya a repetir un tipo de trabajo que ya fallo antes |
 | `_persistence/techdebt.md` | haya deuda que bloquee lo siguiente, o propuestas del cierre sin confirmar |
 | `_audit/S-XXX.md` | quieras ver que se dijo de una sesion concreta, o que puntos debiles declaro |
-| el `R-XXX.md` de una auditoria | el Paso 1c muestre hallazgos nuevos **y** el usuario pida el detalle. Por defecto basta con anunciarlos por codigo y gravedad |
+| el `R-XXX.md` de una auditoria | el Paso 1c muestre hallazgos nuevos **y** el usuario pida el detalle. Por defecto basta con anunciarlos por codigo, gravedad y urgencia |
 | `_brief/` | el usuario lo pida explicitamente. **No es fuente de estado** — ver la regla del Paso 1 |
 
 ⚠️ **`assumptions.md` ya no esta en esta tabla, y estuvo.** Paso a lectura **obligatoria** del
@@ -403,8 +405,8 @@ En espanol, sin relleno:
 - **Deuda:** ...
 
 ## Auditoria        <-- OBLIGATORIO, nunca se omite
-- Hallazgos sin evaluar: <`F-NNN` (gravedad), de `R-XXX` | «ninguno»>
-- Hallazgos aceptados y pendientes: <`F-NNN` → `T-XXX` | «ninguno»>
+- Hallazgos sin evaluar: <`F-NNN` (gravedad, urgencia), de `R-XXX` | «ninguno»>
+- Hallazgos aceptados y pendientes: <`F-NNN` (gravedad, urgencia) → `T-XXX` | «ninguno»>
 - Sesiones cerradas sin auditar: <`S-XXX` en `<hash>` | «ninguna»>
 ```
 

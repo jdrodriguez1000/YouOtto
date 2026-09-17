@@ -326,3 +326,4 @@ Plantilla:
   corre `git log --oneline -4`. Tiene que haber solo commits de sesion y de anclaje; si aparece un
   commit de auditoria, no se lanza nada: se revierte y los ids consumidos se registran como retirados
   en la misma sesion.
+- 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta leccion entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.

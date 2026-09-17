@@ -20,9 +20,9 @@
 
 ## Indice
 
-| Codigo | Hallazgo | Auditoria | Gravedad | Estado |
-|---|---|---|---|---|
-| — | — | — | — | — |
+| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado |
+|---|---|---|---|---|---|
+| — | — | — | — | — | — |
 
 ---
 
@@ -33,6 +33,7 @@
 | Codigo | `F-NNN`, correlativo, no se reutiliza |
 | Auditoria | el `R-XXX` que lo abrio |
 | Gravedad | `Alta` / `Media` / `Baja` |
+| Urgencia | `Bloqueante` / `No bloqueante` |
 | Estado | `Abierto` / `Aceptado — pendiente` / `Implementado` / `No se implementa` |
 | Cerrado en | el commit sobre el que la auditoria verifico la correccion |
 
@@ -44,6 +45,19 @@
 | `Aceptado — pendiente` | de acuerdo, pero todavia no hecho | **su `T-XXX`**, abierta |
 | `Implementado` | corregido, y **una auditoria posterior lo verifico** | el commit donde se verifico |
 | `No se implementa` | rechazado | **su `D-XXX`**. Si el rechazo es por coste o prioridad y no por ser incorrecto, ademas **su `DT-XXX`** |
+
+### Que significa cada urgencia
+
+La gravedad dice **cuanto dano hace** el defecto; la urgencia dice **si se puede esperar**. Son dos
+preguntas distintas y cada hallazgo lleva las dos.
+
+| Urgencia | Cuando | Que se hace |
+|---|---|---|
+| `Bloqueante` | mientras siga sin corregir, lo que se haga despues hereda el defecto: el registro afirma un estado falso que otros van a leer, un control obligatorio no corre o miente, o se puede perder trabajo | se corrige en la sesion siguiente, **antes** del trabajo de la etapa |
+| `No bloqueante` | el defecto no contamina lo que venga despues | se evalua igual en la sesion siguiente, pero su correccion **se puede aplazar** con su `T-XXX` abierta |
+
+⚠️ **Aplazar no es olvidar.** Un `No bloqueante` aceptado sigue en `Aceptado — pendiente` con su
+tarea, y aparece en cada arranque hasta que una auditoria lo cierre.
 
 🚨 **`Implementado` no lo escribe `manager`, lo escribe la auditoria siguiente.** Un hallazgo se
 cierra **verificando la correccion sobre un commit posterior**, no declarandola. Si el auditado
@@ -76,6 +90,7 @@ Plantilla:
 | Auditoria | R-XXX |
 | Fecha | AAAA-MM-DD |
 | Gravedad | |
+| Urgencia | |
 | Estado | Abierto |
 | Registrado en | T-XXX / D-XXX / DT-XXX |
 | Cerrado en | |

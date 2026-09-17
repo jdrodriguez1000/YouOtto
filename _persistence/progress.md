@@ -46,6 +46,7 @@
 | [S-010](#s-010---las-tres-recomendaciones-sin-hallazgo-de-r-009-evaluadas-y-dt-003-pagada-con-la-promocion-al-esqueleto) | Las tres recomendaciones sin hallazgo de `R-009` evaluadas, y `DT-003` pagada con la promocion al esqueleto (`D-032`) | 2026-09-16 | 005_discovery |
 | [S-011](#s-011---f-011-de-r-010-aceptado-con-nota-en-t-019-y-dt-004-confirmada-y-pagada-d-035) | `F-011` de `R-010` aceptado con nota en `T-019`, y `DT-004` confirmada y pagada (`D-035`) | 2026-09-16 | 005_discovery |
 | [S-012](#s-012---f-013-de-r-012-aceptado-nota-en-s-011-y-puerta-mecanica-en-el-anclaje-y-tres-recomendaciones-sin-hallazgo-evaluadas) | `F-013` de `R-012` aceptado (nota en `S-011` y puerta mecanica en el anclaje), y tres recomendaciones sin hallazgo evaluadas | 2026-09-17 | 005_discovery |
+| [S-013](#s-013---f-014-de-r-013-aceptado-d-041-promocion-de-protocol-close-y-protocol-start-d-040-urgencia-de-hallazgos-d-043-y-reparto-de-005_discovery-d-044) | `F-014` de `R-013` aceptado (`D-041`), promocion de `protocol-close` y `protocol-start` (`D-040`), urgencia de hallazgos (`D-043`) y reparto de `005_discovery` (`D-044`) | 2026-09-17 | 005_discovery |
 
 ---
 
@@ -77,40 +78,41 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-17 (S-012)` |
+| Ultima actualizacion | `2026-09-17 (S-013)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito los tres commits de `S-011` (`079b0a4`, `fdfca7b`, `1358c3c`) en `R-012` y entrego `F-013`: el commit de anclaje `fdfca7b` se subio con la NOTA DE CIERRE en su marcador de pendiente y el Paso 7c-ter fallando, y la nota se completo despues en un tercer commit (`1358c3c`) que el informe no declaraba. `D-036` (aceptada, `report_auditor`; usuario elige la puerta mecanica): nota fechada en la seccion 7 de `_audit/S-011.md` que nombra `1358c3c` sin reescribir la linea publicada (`T-021`), y el bloque del commit de anclaje de `protocol-close` pasa a correr los controles del 7c-ter y del 7c-quater y solo commitear si los dos salen vacios, imprimiendo `PUERTA CERRADA` si no (`T-022`). Ademas, tres recomendaciones sin hallazgo de `R-012`: `D-037` (aceptada) anade al desfase 4 de `protocol-start` una tercera orden que ignora los commits cuyo cambio en `_persistence/` solo ancla `<hash>` y anade lineas `📌` (`T-023`); `D-038` (aceptada) deja `R-011`/`F-012` retirados y no reutilizables, porque esa auditoria la ejecuto el propio `session-closer` sobre su cierre, no `report_auditor` (revertida en `9eb9d49`), y registra `L-013`; `D-039` (aceptada) cambia el trailer literal `Claude Opus 5` del Paso 7 de `protocol-close` por `<modelo>`, el que ejecuta el cierre (`T-024`). `T-021`, `T-022`, `T-023` y `T-024` quedan `Implementada`: su trabajo esta en el diff de esta sesion y sus criterios de cierre (los de `D-036`/`D-037`/`D-039`) reproducen |
-| Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa. `DT-002` sigue `No implementada`, confirmada y sin pagar |
+| Avance de la etapa | `report_auditor` audito el commit de `S-012` (`cf2992f`) en `R-013` y entrego `F-014`: la nota nueva de `_audit/S-011.md` y las entradas `D-036`-`D-039`/`L-013` llevan `2026-09-16` en un commit (`cf2992f`) fechado `2026-09-17`. `D-041` (aceptada, `report_auditor`; usuario elige las dos partes): nota fechada `2026-09-17` en cada una de las seis entradas afectadas, sin reescribir la fecha publicada (`T-025`); y el Paso 7d de `protocol-close` anade una orden que lista las fechas que el commit anade (`| Fecha |`, fila de indice de una entrada nueva, nota fechada) distintas de la del commit (`T-026`). Ademas: `D-040` (usuario) promueve `protocol-close` y `protocol-start` de `S-012` al esqueleto de arranque (commit `a75cfb6`, subido), por `L-012`, antes de tocar mas el andamiaje; `D-042` (`report_auditor`, recomendacion sin hallazgo de `R-013`) anade el trailer de coautoria al commit de anclaje (`T-027`); `D-043` (usuario) anade `Urgencia` (`Bloqueante`/`No bloqueante`) a cada hallazgo de auditoria, ademas de su `Gravedad`, en `findings.md`, su plantilla, `protocol-audit` y `protocol-start` (`T-028`); y `D-044` (usuario) adopta el reparto de `_workflow/005_discovery.md` §2 para el trabajo de la etapa, con `A-004` y `A-005` como supuestos vigentes. `T-025`, `T-026`, `T-027` y `T-028` quedan `Implementada`: su trabajo esta en el diff de esta sesion y sus criterios de cierre reproducen contra el arbol de trabajo, aunque las ordenes que citan `<hash>` en `D-040`-`D-044` se anclen todavia en el Paso 7c-bis de este mismo cierre |
+| Bloqueos activos | `T-029` (Alta, Bloqueante): trabajar los Pasos 1 y 2 de `005_discovery` con el patrocinador va antes que cualquier otro trabajo de la etapa. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores— sigue activo. `A-004` y `A-005` (abiertos, `005_discovery`): revision del patrocinador antes de que una entrada entre al registro, y acceso a personas que conocen el proceso real. `DT-002` sigue `No implementada`, confirmada y sin pagar |
 
 ---
 
 ## 2. Ultimo realizado
 
-Doceava sesion de trabajo. Segun el diff: se acepto `F-013` de `R-012` con `D-036` — nota fechada en
-la seccion 7 de `_audit/S-011.md` que declara que la NOTA DE CIERRE se commiteo en `1358c3c`, no en
-`fdfca7b`, sin reescribir la linea publicada (`T-021`); y el bloque del commit de anclaje de
-`protocol-close` pasa a estar detras de una puerta mecanica que repite los controles del 7c-ter y del
-7c-quater y solo commitea si los dos salen vacios (`T-022`). Se evaluaron las tres recomendaciones sin
-hallazgo de `R-012`: `D-037` anade al desfase 4 de `protocol-start` una tercera orden que descarta los
-commits de solo anclaje (`T-023`); `D-038` deja retirados `R-011`/`F-012` porque esa auditoria la
-ejecuto el propio `session-closer` sobre su propio cierre y se revirtio (`9eb9d49`), y escribe `L-013`;
-`D-039` cambia el trailer literal `Claude Opus 5` del Paso 7 de `protocol-close` por `<modelo>` (el que
-ejecuta el cierre) (`T-024`). `T-021`, `T-022`, `T-023` y `T-024` quedan `Implementada` en este mismo
-commit: su trabajo esta en el diff y sus criterios de cierre reproducen contra el arbol de trabajo,
-por el criterio de `D-027`/`D-028`.
+Trece sesiones de trabajo. Segun el diff: se acepto `F-014` de `R-013` con `D-041` — una nota fechada
+`2026-09-17` en cada una de las seis entradas que llevaban `2026-09-16` en el commit `cf2992f`
+(`D-036`-`D-039`, `L-013` y la nota de `F-013` en `_audit/S-011.md`), sin reescribir la fecha
+publicada (`T-025`); y el Paso 7d de `protocol-close` anade una orden que lista las fechas que un
+commit anade distintas de la suya, para `progress.md`/`tasks.md`/el informe (que se corrigen en el
+anclaje) y para los otros archivos del porque (que van a Sin resolver) (`T-026`). Ademas: `D-040`
+promueve `protocol-close` y `protocol-start` de `S-012` al esqueleto de arranque (commit `a75cfb6`);
+`D-042` anade el trailer de coautoria al commit de anclaje (`T-027`); `D-043` anade `Urgencia` a cada
+hallazgo de auditoria, ademas de `Gravedad` (`T-028`); y `D-044` adopta el reparto de
+`_workflow/005_discovery.md` §2 para el trabajo de la etapa (`A-004`, `A-005`). `T-025`, `T-026`,
+`T-027` y `T-028` quedan `Implementada` en este mismo commit: su trabajo esta en el diff y sus
+criterios de cierre reproducen contra el arbol de trabajo, por el criterio de `D-027`/`D-028`.
 
 ---
 
 ## 3. Siguiente paso
 
-Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-012`). Con la etapa `005_discovery` en marcha, el primer trabajo de producto sigue siendo la
-clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
-`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque vuelve a
-diferir en dos archivos (`.claude/skills/protocol-close/SKILL.md` y `.claude/skills/protocol-start/SKILL.md`,
-verificado en el Paso 2f de este cierre): las promociones de `D-036`, `D-037` y `D-039` quedan
-pendientes de aprobacion del usuario. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no
-reejecuta las ordenes), confirmada y sin pagar.
+`T-029` (Alta, Bloqueante): trabajar con el patrocinador, en conversacion y sin guion previo, los
+Pasos 1 y 2 de `005_discovery` (`_phases/005_discovery.md` §4) con el reparto de `D-044`, y escribir
+`005_discovery/005_needs.md` con al menos una `N-XXX`. Evaluar tambien el informe de auditoria que
+`report_auditor` entregue sobre el commit de esta sesion (`S-013`). El esqueleto de arranque vuelve a
+diferir en cuatro archivos (`protocol-audit`, `protocol-close`, `protocol-start` y
+`_templates/000_preproject/050_audit_findings.md`, verificado en el Paso 2f de este cierre), por los
+cambios de esta misma sesion posteriores a `D-040`: pendiente de promocion con aprobacion del usuario.
+Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin
+pagar.
 
 ---
 
@@ -391,6 +393,36 @@ Plantilla:
   arranque vuelve a diferir en `protocol-close/SKILL.md` y `protocol-start/SKILL.md`, pendiente de
   promocion con aprobacion del usuario. `DT-002` sigue `No implementada`, confirmada y sin pagar.
   `A-001` sigue `Abierto`.
+
+### S-013 - `F-014` de `R-013` aceptado (`D-041`), promocion de `protocol-close` y `protocol-start` (`D-040`), urgencia de hallazgos (`D-043`) y reparto de `005_discovery` (`D-044`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Tareas | T-025, T-026, T-027, T-028, T-029 |
+
+- **Que se hizo:** se acepto `F-014` de `R-013` (la nota nueva de `_audit/S-011.md` y las entradas
+  `D-036`-`D-039`/`L-013` llevan `2026-09-16` en el commit `cf2992f`, fechado `2026-09-17`) con
+  `D-041`: una nota fechada `2026-09-17` en cada una de las seis entradas afectadas, sin reescribir la
+  fecha publicada (`T-025`); y el Paso 7d de `protocol-close` anade una orden que lista las fechas que
+  un commit anade (campo `| Fecha |`, fila de indice de una entrada nueva, nota fechada) distintas de
+  la suya (`T-026`). Al principio de la sesion, `D-040` (usuario) promovio `protocol-close` y
+  `protocol-start` de `S-012` al esqueleto de arranque (commit `a75cfb6`, subido), por `L-012`. Se
+  evaluaron ademas dos decisiones del usuario y una recomendacion sin hallazgo de `R-013`: `D-042`
+  anade el trailer de coautoria al commit de anclaje (`T-027`); `D-043` anade `Urgencia`
+  (`Bloqueante`/`No bloqueante`) a cada hallazgo de auditoria, ademas de su `Gravedad`, en
+  `findings.md`, su plantilla, `protocol-audit` y `protocol-start` (`T-028`); y `D-044` adopta el
+  reparto de `_workflow/005_discovery.md` §2 para el trabajo de `005_discovery` (`A-004`, `A-005`
+  como supuestos vigentes; `T-029` nace como primer trabajo bloqueante de la etapa). `T-025`, `T-026`,
+  `T-027` y `T-028` quedan `Implementada` en este mismo commit, por el criterio de `D-027`/`D-028`: su
+  trabajo esta en el diff y sus criterios de cierre reproducen contra el arbol de trabajo, aunque las
+  ordenes que citan `<hash>` en `D-040`-`D-044` se anclen todavia en el Paso 7c-bis de este cierre.
+  `F-014` queda `Aceptado — pendiente` en fila y en ficha de `_audit/findings.md`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `T-029`
+  (Alta, Bloqueante) es el primer trabajo de producto de `005_discovery`. El esqueleto de arranque
+  vuelve a diferir en `protocol-audit`, `protocol-close`, `protocol-start` y la plantilla de
+  hallazgos, por los cambios de esta sesion posteriores a `D-040`. `DT-002` sigue `No implementada`,
+  confirmada y sin pagar. `A-001`, `A-004` y `A-005` siguen `Abierto`.
 
 ---
 

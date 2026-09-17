@@ -258,6 +258,7 @@ proyecto — asi que no expliques las convenciones, pero **cita siempre codigo, 
 | Campo | Valor |
 |---|---|
 | Gravedad | Alta / Media / Baja |
+| Urgencia | Bloqueante / No bloqueante |
 | Donde | ruta y codigo |
 
 - **Que se observo:** el hecho, con comando y salida cruda.
@@ -284,12 +285,19 @@ defecto, no una preferencia.
 ⚠️ **La gravedad se justifica en el propio hallazgo.** `Alta` es lo que rompe algo o hace que el
 registro mienta; `Baja` es lo que molesta. Si todo es `Alta`, nada lo es.
 
+🚨 **Y la urgencia tambien, y es otra pregunta.** La gravedad dice cuanto dano hace; la urgencia dice
+si se puede esperar. `Bloqueante` es lo que contamina lo que se haga despues —el registro afirma un
+estado falso que otros van a leer, un control obligatorio no corre o miente, se puede perder
+trabajo—; `No bloqueante` es lo que se puede corregir mas tarde sin que nada herede el defecto. Las
+definiciones completas estan en las convenciones de `findings.md`. ⚠️ **No se deduce una de la
+otra:** un `Baja` puede bloquear y un `Alta` puede esperar.
+
 ---
 
 ## Paso 7 — Registrar en `findings.md` y cerrar la fila del tablero
 
-**a)** Cada hallazgo nuevo entra en `_audit/findings.md` con estado `Abierto`, su fila en el indice
-y su entrada en el detalle, **en la misma pasada**. Los ids `F-NNN` son correlativos y globales: no
+**a)** Cada hallazgo nuevo entra en `_audit/findings.md` con estado `Abierto`, **su gravedad y su
+urgencia**, su fila en el indice y su entrada en el detalle, **en la misma pasada**. Los ids `F-NNN` son correlativos y globales: no
 se reinician por auditoria y no se reutilizan.
 
 **b)** Los estados que cambiaste en el Paso 5 se actualizan ahi mismo, en la fila **y** en la entrada.

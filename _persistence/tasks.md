@@ -41,6 +41,11 @@
 | [T-022](#t-022---poner-el-commit-de-anclaje-detras-de-una-puerta-mecanica) | Poner el commit de anclaje detras de una puerta mecanica | Implementada | Media | No bloqueante | 005_discovery |
 | [T-023](#t-023---hacer-que-el-desfase-4-del-arranque-ignore-los-commits-de-solo-anclaje) | Hacer que el desfase 4 del arranque ignore los commits de solo anclaje | Implementada | Media | No bloqueante | 005_discovery |
 | [T-024](#t-024---hacer-que-el-trailer-del-cierre-nombre-el-modelo-que-lo-ejecuta) | Hacer que el trailer del cierre nombre el modelo que lo ejecuta | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-025](#t-025---declarar-por-nota-la-fecha-del-commit-en-las-entradas-de-s-012) | Declarar por nota la fecha del commit en las entradas de S-012 | Implementada | Media | No bloqueante | 005_discovery |
+| [T-026](#t-026---hacer-que-el-paso-7d-compare-las-fechas-que-anade-el-commit) | Hacer que el Paso 7d compare las fechas que anade el commit | Implementada | Media | No bloqueante | 005_discovery |
+| [T-027](#t-027---anadir-el-trailer-de-coautoria-al-commit-de-anclaje) | Anadir el trailer de coautoria al commit de anclaje | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-028](#t-028---anadir-la-urgencia-a-los-hallazgos-de-auditoria) | Anadir la urgencia a los hallazgos de auditoria | Implementada | Media | No bloqueante | 005_discovery |
+| [T-029](#t-029---pasos-1-y-2-de-005_discovery-con-el-patrocinador) | Pasos 1 y 2 de 005_discovery con el patrocinador | No implementada | Alta | Bloqueante | 005_discovery |
 
 ---
 
@@ -657,3 +662,90 @@ Plantilla:
 - **Por que:** el agente del cierre corre en otro modelo, y la skill le pedia firmar con uno que no
   escribio el commit.
 - **Criterio de cierre:** el de `D-039`, con sus ordenes ancladas y sus salidas.
+
+### T-025 - Declarar por nota la fecha del commit en las entradas de S-012
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-013 |
+
+- **Que:** atender la primera parte de `F-014`. Una nota fechada en `D-036`, `D-037`, `D-038`, `D-039`,
+  `L-013` y en la nota de `F-013` de `_audit/S-011.md` dice que su fecha es `2026-09-17`, la del commit
+  `cf2992f`, sin reescribir la publicada. Segun `D-041`.
+- **Por que:** esas entradas afirman un dia que su commit contradice. Verificacion contra `HEAD`
+  (`4409bb9`) en `D-041`.
+- **Criterio de cierre:** el de `D-041`, con sus ordenes ancladas y sus salidas.
+
+### T-026 - Hacer que el Paso 7d compare las fechas que anade el commit
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-013 |
+
+- **Que:** atender la segunda parte de `F-014`. El Paso 7d de `protocol-close` lista las fechas que el
+  commit anade (campo `| Fecha |`, fila de indice de una entrada nueva, nota fechada) distintas de la
+  suya. Lo que es del cierre lo corrige en el anclaje; lo que es de `manager` va a Sin resolver. Segun
+  `D-041`.
+- **Por que:** el 7d solo comparaba la cabecera del informe, y el error de `F-014` solo lo vio la
+  auditoria.
+- **Criterio de cierre:** el de `D-041`, con sus ordenes ancladas y sus salidas.
+
+### T-027 - Anadir el trailer de coautoria al commit de anclaje
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-013 |
+
+- **Que:** recomendacion sin hallazgo de `R-013`. La linea del commit de anclaje de `protocol-close`
+  anade `-m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>"`. Segun `D-042`.
+- **Por que:** el anclaje de `S-012` salio sin trailer.
+- **Criterio de cierre:** el de `D-042`, con sus ordenes ancladas y sus salidas.
+
+### T-028 - Anadir la urgencia a los hallazgos de auditoria
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | usuario |
+| Sesion | S-013 |
+
+- **Que:** `_audit/findings.md`, su plantilla, `protocol-audit` y `protocol-start` pasan a llevar y
+  reportar la urgencia (`Bloqueante` / `No bloqueante`) de cada hallazgo, ademas de su gravedad. Segun
+  `D-043`.
+- **Por que:** el usuario necesita saber si un hallazgo se puede aplazar o hay que trabajarlo ya.
+- **Criterio de cierre:** el de `D-043`, con sus ordenes ancladas y sus salidas.
+
+### T-029 - Pasos 1 y 2 de 005_discovery con el patrocinador
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Alta |
+| Urgencia | Bloqueante |
+| Etapa | 005_discovery |
+| Origen | usuario |
+| Sesion | S-013 |
+
+- **Que:** trabajar con el patrocinador, en conversacion y sin guion previo, el Paso 1 (separar la
+  necesidad de la solucion que describe `_brief/`) y el Paso 2 (las nueve preguntas) de
+  `_phases/005_discovery.md` §4, con el reparto de `D-044`. Se escribe `005_discovery/` copiando
+  `_templates/005_discovery/005_needs.md`, y `N-XXX` se declara en la tabla «Codigos» de `project.md`
+  con su `D-XXX` en la misma pasada. Los «no se sabe» van a `assumptions.md`.
+- **Por que:** el usuario pide que la sesion siguiente trabaje ya en la etapa. Es el primer paso de su
+  procedimiento, y el disparador de `A-001` y de `A-005`.
+- **Criterio de cierre:** existe `005_discovery/` con el artefacto de necesidades, con al menos una
+  `N-XXX` enunciada sin nombrar una pantalla, y `N-XXX` esta en la tabla «Codigos» de `project.md`. Las
+  ordenes se escriben cuando exista el artefacto, con las de comprobacion que trae su plantilla.

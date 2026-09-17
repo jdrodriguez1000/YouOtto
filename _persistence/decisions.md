@@ -60,6 +60,11 @@
 | [D-037](#d-037---el-desfase-4-del-arranque-ignora-los-commits-de-solo-anclaje) | El desfase 4 del arranque ignora los commits de solo anclaje | 2026-09-16 | Vigente |
 | [D-038](#d-038---r-011-y-f-012-quedan-retirados-por-la-auditoria-revertida) | R-011 y F-012 quedan retirados por la auditoria revertida | 2026-09-16 | Vigente |
 | [D-039](#d-039---el-trailer-del-cierre-nombra-el-modelo-que-lo-ejecuta) | El trailer del cierre nombra el modelo que lo ejecuta | 2026-09-16 | Vigente |
+| [D-040](#d-040---promocion-al-esqueleto-de-protocol-close-y-protocol-start-de-s-012) | Promocion al esqueleto de protocol-close y protocol-start de S-012 | 2026-09-17 | Vigente |
+| [D-041](#d-041---f-014-se-acepta-con-notas-fechadas-y-control-de-fechas-en-el-paso-7d) | F-014 se acepta con notas fechadas y control de fechas en el Paso 7d | 2026-09-17 | Vigente |
+| [D-042](#d-042---el-commit-de-anclaje-lleva-tambien-el-trailer-de-coautoria) | El commit de anclaje lleva tambien el trailer de coautoria | 2026-09-17 | Vigente |
+| [D-043](#d-043---cada-hallazgo-de-auditoria-lleva-urgencia-ademas-de-gravedad) | Cada hallazgo de auditoria lleva urgencia ademas de gravedad | 2026-09-17 | Vigente |
+| [D-044](#d-044---reparto-del-trabajo-de-005_discovery) | Reparto del trabajo de 005_discovery | 2026-09-17 | Vigente |
 
 ---
 
@@ -2010,6 +2015,8 @@ Plantilla:
 
   📌 **Ancladas por el Paso 7c-bis al commit `cf2992f`.** Las tres reproducen lo publicado arriba.
 
+- 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta decision entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.
+
 ### D-037 - El desfase 4 del arranque ignora los commits de solo anclaje
 | Campo | Valor |
 |---|---|
@@ -2065,6 +2072,8 @@ Plantilla:
 
   📌 **Anclada por el Paso 7c-bis al commit `cf2992f`.** Reproduce lo publicado arriba.
 
+- 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta decision entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.
+
 ### D-038 - R-011 y F-012 quedan retirados por la auditoria revertida
 | Campo | Valor |
 |---|---|
@@ -2114,6 +2123,8 @@ Plantilla:
 
   📌 **Anclada por el Paso 7c-bis al commit `cf2992f`.** Reproduce lo publicado arriba.
 
+- 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta decision entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.
+
 ### D-039 - El trailer del cierre nombra el modelo que lo ejecuta
 | Campo | Valor |
 |---|---|
@@ -2159,3 +2170,357 @@ Plantilla:
   ```
 
   📌 **Ancladas por el Paso 7c-bis al commit `cf2992f`.** Las dos reproducen lo publicado arriba.
+
+- 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta decision entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.
+
+### D-040 - Promocion al esqueleto de protocol-close y protocol-start de S-012
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-036`, `D-037` y `D-039` cambiaron `protocol-close` y `protocol-start`, y dejaron el
+  esqueleto por detras. El cambio ya tiene su cierre (`S-012`) y su auditoria (`R-013`). Por `L-012`,
+  la promocion va al principio de `S-013`, antes de atender `F-014`, que puede tocar el andamiaje.
+  Paso 0 y Paso 1 sobre el origen:
+
+  ```
+  $ git status --short -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  $ git status -sb | head -1
+  ## main...origin/main
+  $ git rev-parse --short HEAD; git rev-parse --short origin/main
+  4409bb9
+  4409bb9
+  $ git -C "$ESQ" status -sb | head -1; git -C "$ESQ" log --oneline -1
+  ## main...origin/main
+  7f4381e Promocion del andamiaje desde YouOtto (origen 1add289)
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "fin P1"
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-start/SKILL.md and .claude/skills/protocol-start/SKILL.md differ
+  fin P1
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.)
+- **Decision:** el usuario **aprueba los dos archivos**: `.claude/skills/protocol-close/SKILL.md` (35
+  lineas entran, 4 se borran) y `.claude/skills/protocol-start/SKILL.md` (23 entran, 1 se borra). El
+  hash de origen es `4409bb9` y el commit del esqueleto es `a75cfb6`, ya subido. No se dejo nada fuera.
+- **Por que:** con el arbol limpio y lo promovido ya auditado, promover ahora evita que el siguiente
+  cambio del andamiaje (`F-014`, o la recomendacion de `R-013` sobre el trailer del anclaje) bloquee la
+  promocion, que es el circulo que describe `L-012`.
+- **Alternativas descartadas:**
+  - **Promover despues de atender `F-014`:** el arbol dejaria de estar limpio y la promocion esperaria
+    otro cierre.
+  - **Incluir ya el trailer del bloque de anclaje que recomienda `R-013`:** no esta escrito ni auditado
+    aqui, y el protocolo prohibe que nazca nada en el esqueleto.
+- **Hallazgos:** ninguno. No habia nada que existiera solo en el esqueleto.
+- **Comprobacion del supuesto del Paso 2:** se leyeron las 5 lineas que se borran. En `protocol-close`
+  son 4: el trailer `Co-Authored-By: Claude Opus 5 …` (lo sustituye `<modelo>`, `D-039`), y la cerca de
+  apertura, `git commit -m "S-XXX: ancla…"` y `git push` del bloque de anclaje (los sustituye el bloque
+  con la puerta, `D-036`). En `protocol-start` es 1: `que la ultima entrada**.`, que sigue en la
+  version nueva con la tercera orden detras (`D-037`). Todas son versiones anteriores de lo reescrito:
+  no se perdio nada que un proyecto generico necesite.
+- **Final de linea:** LF en los dos repositorios y en los dos archivos (CR=0). Se copio desde el blob
+  con `git show 4409bb9:<archivo>`.
+- **Verificacion.** Controles de agnosticismo sobre el origen, antes de la puerta:
+
+  ```
+  $ git grep -nE "YouOtto|Company_TripleS|github.com" 4409bb9 -- .claude CLAUDE.md _phases _methodology _templates _workflow | wc -l
+  0
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' 4409bb9 -- _phases _workflow | grep -vE ':PI-[0-9]+$' | wc -l
+  0
+  $ git grep -nE "USUARIO|jdrodriguez|gmail|SDAI_TripleS|TripleS|Triple S|[A-Z]:[/\]|/Users/|AppData" 4409bb9 -- .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md | wc -l
+  0
+  ```
+
+  El commit del esqueleto, la identidad de los blobs con el origen y el remoto:
+
+  ```
+  $ git -C "$ESQ" show --stat --format="%h %s" a75cfb6 | tail -3
+   .claude/skills/protocol-close/SKILL.md | 39 ++++++++++++++++++++++++++++++----
+   .claude/skills/protocol-start/SKILL.md | 24 ++++++++++++++++++++-
+   2 files changed, 58 insertions(+), 5 deletions(-)
+  $ for f in protocol-close protocol-start; do F=.claude/skills/$f/SKILL.md; [ "$(git rev-parse 4409bb9:$F)" = "$(git -C "$ESQ" rev-parse a75cfb6:$F)" ] && echo "igual $F" || echo "DISTINTO $F"; done
+  igual .claude/skills/protocol-close/SKILL.md
+  igual .claude/skills/protocol-start/SKILL.md
+  $ git -C "$ESQ" ls-remote origin refs/heads/main | cut -c1-7
+  a75cfb6
+  ```
+
+  Barrido del Paso 1 despues de promover (sin salida: el desfase se cerro) y Paso 1b sobre el commit
+  del esqueleto:
+
+  ```
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md; echo "fin P1"
+  fin P1
+  $ for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff <(git -C "$ESQ" show a75cfb6:_templates/000_preproject/$t) <(git -C "$ESQ" show a75cfb6:$c) | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+- **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-040\]|### D-040 )'
+  2
+  ```
+
+### D-041 - F-014 se acepta con notas fechadas y control de fechas en el Paso 7d
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-014` de `R-013`: el commit `cf2992f` es de `2026-09-17`, pero la nota nueva de
+  `S-011.md` y las entradas `D-036` a `D-039` y `L-013` llevan `2026-09-16`, en la ficha y en la fila del
+  indice. Verificado vigente contra `HEAD` (`4409bb9`):
+
+  ```
+  $ git log --format='%h %ad' --date=iso -1 1fc3264; git log --format='%h %ad' --date=iso -1 cf2992f
+  1fc3264 2026-09-16 21:23:51 -0500
+  cf2992f 2026-09-17 07:14:58 -0500
+  $ git show 4409bb9:_persistence/decisions.md | grep -E '^\| \[D-03[6-9]\].*\| 2026-09-16 \|' | wc -l
+  4
+  $ git show 4409bb9:_persistence/decisions.md | sed -n '/^### D-036 /,$p' | grep -c '^| Fecha | 2026-09-16 |$'
+  4
+  $ git show 4409bb9:_persistence/lessons.md | grep -cE '^\| \[L-013\].*\| 2026-09-16 \|'
+  1
+  $ git show 4409bb9:_persistence/lessons.md | sed -n '/^### L-013 /,$p' | grep -c '^| Fecha | 2026-09-16 |$'
+  1
+  $ git show 4409bb9:_audit/S-011.md | grep -c "Nota 2026-09-16 (\`F-013\`"
+  1
+  ```
+
+  Las entradas se redactaron la noche del `2026-09-16`, despues de `1fc3264`, y el cierre que las
+  commiteo fue la manana del `2026-09-17`. La regla dice que manda la fecha del commit. El Paso 7d solo
+  comparaba la cabecera del informe, y el cierre no puede editar la prosa de `decisions.md` ni de
+  `lessons.md`, asi que aunque lo hubiera visto no podia corregirlo.
+- **Decision:** se acepta, y el usuario eligio las dos partes. (1) Una nota fechada en cada entrada
+  afectada, cinco en el registro y una en `S-011.md`, que da `2026-09-17` como fecha y no reescribe la
+  publicada (`T-025`). (2) El Paso 7d de `protocol-close` anade una orden que lista las fechas que el
+  commit anade (campo `| Fecha |`, fila de indice de una entrada nueva, nota fechada) distintas de la
+  suya. Lo que es del cierre lo corrige en el anclaje; lo que es de `manager` va a **Sin resolver**
+  (`T-026`).
+- **Por que:** la nota fechada vale por decir cuando se supo algo, y aqui su commit la contradice. El
+  control nuevo lo detecta en el propio cierre, sin esperar a la auditoria. Y deja escrito que hacer
+  con lo que el cierre no puede tocar.
+- **Alternativas descartadas:**
+  - **Reescribir las fechas:** `R-013` describiria un texto que ya no existe, y el criterio de `D-036`
+    busca `Nota 2026-09-16` literal.
+  - **Solo las notas:** una sesion que cruce la medianoche lo repite, y solo lo caza la auditoria.
+  - **Mirar todas las filas de indice del diff:** cambiar el estado de una entrada antigua vuelve a
+    meter su fila, con su fecha de entonces. Probado sobre los commits de sesion, salta en `079b0a4`,
+    `a61e453`, `8509c18`, `27c03bb`, `5884e98` y `101db28`.
+- **Prueba del control** sobre los 13 commits de sesion, con la version que solo mira filas de entradas
+  nuevas:
+
+  ```
+  $ fechas() { d=$(git log -1 --format=%ad --date=short $1); D=$(git diff -U0 $1^ $1 -- _persistence _audit); nuevos=$(printf '%s\n' "$D" | grep -oE '^\+#{3} [A-Z]+-[0-9]+ ' | grep -oE '[A-Z]+-[0-9]+' | paste -sd'|'); printf '%s\n' "$D" | grep -E "^\+(\| Fecha \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|$|\| \[(${nuevos:-NINGUNO})\].*\| [0-9]{4}-[0-9]{2}-[0-9]{2} \||[[:space:]]*(> )?(- )?🕐 \*\*Nota [0-9]{4}-[0-9]{2}-[0-9]{2})" | grep -vF "$d" | sed "s/^/$1 ($d): /" | cut -c1-150; }
+  $ for c in $(git log --format='%h %s' | grep -E ' S-0[0-9]+: ' | grep -v 'ancla el informe' | cut -d' ' -f1); do fechas $c; done; echo fin
+  cf2992f (2026-09-17): +> 🕐 **Nota 2026-09-16 (`F-013`, `T-021`), escrita por `manager` en la sesion siguiente.** La linea
+  cf2992f (2026-09-17): +| [D-036](#d-036---f-013-se-acepta-con-nota-fechada-y-puerta-mecanica-en-el-anclaje) | F-013 se acepta con nota fechada y puert
+  cf2992f (2026-09-17): +| [D-037](#d-037---el-desfase-4-del-arranque-ignora-los-commits-de-solo-anclaje) | El desfase 4 del arranque ignora los commits
+  cf2992f (2026-09-17): +| [D-038](#d-038---r-011-y-f-012-quedan-retirados-por-la-auditoria-revertida) | R-011 y F-012 quedan retirados por la auditoria
+  cf2992f (2026-09-17): +| [D-039](#d-039---el-trailer-del-cierre-nombra-el-modelo-que-lo-ejecuta) | El trailer del cierre nombra el modelo que lo ejecu
+  cf2992f (2026-09-17): +| Fecha | 2026-09-16 |
+  cf2992f (2026-09-17): +| Fecha | 2026-09-16 |
+  cf2992f (2026-09-17): +| Fecha | 2026-09-16 |
+  cf2992f (2026-09-17): +| Fecha | 2026-09-16 |
+  cf2992f (2026-09-17): +| [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la
+  cf2992f (2026-09-17): +| Fecha | 2026-09-16 |
+  fin
+  ```
+
+  Da exactamente las 11 lineas de `F-014` y nada en los otros 12 commits.
+- **Consecuencia:** `protocol-close` vuelve a diferir del esqueleto de arranque. Se promueve al principio
+  de la sesion siguiente (`L-012`).
+- **Criterio de cierre:** a ese commit, estan las seis notas. El bloque del 7d, extraido de la skill,
+  da 11 lineas sobre `cf2992f` y ninguna sobre `079b0a4`. `F-014` esta `Aceptado — pendiente` en indice
+  y ficha.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  4
+  $ git show <hash>:_persistence/lessons.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  1
+  $ git show <hash>:_audit/S-011.md | grep -c '🕐 \*\*Nota 2026-09-17 (`F-014`, `D-041`)'
+  1
+  $ for c in cf2992f 079b0a4; do echo "== 7d fechas @ $c: $(git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^d=\$\(git log -1 --format=%ad --date=short <hash[>]\)$/{f=1} f&&/^```$/{exit} f' | sed "s/<hash[>]/$c/g" | bash | wc -l)"; done
+  == 7d fechas @ cf2992f: 11
+  == 7d fechas @ 079b0a4: 0
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-014\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-025, T-026, D-041 \|$'
+  2
+  ```
+
+  ⚠️ **El `awk` y el `sed` escriben `<hash[>]` a proposito,** igual que en `D-036`: con el ancla literal,
+  el Paso 7c-bis los sustituiria.
+
+### D-042 - El commit de anclaje lleva tambien el trailer de coautoria
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** recomendacion sin hallazgo de `R-013`. El bloque del commit de anclaje de
+  `protocol-close` solo pasaba un `-m`, asi que el anclaje de `S-012` salio sin trailer y el de `S-011`
+  si lo llevaba. Verificado contra `HEAD` (`4409bb9`):
+
+  ```
+  $ git show 4409bb9:.claude/skills/protocol-close/SKILL.md | grep -cF -- '-m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>" && git push'
+  0
+  $ for c in de83026 fdfca7b; do echo "$c $(git log -1 --format='%(trailers:key=Co-Authored-By,valueonly)' $c)"; done
+  de83026 
+  fdfca7b Claude Sonnet 5 <noreply@anthropic.com>
+  ```
+
+- **Decision:** la linea del commit de anclaje anade un segundo `-m` con
+  `Co-Authored-By: Claude <modelo> <noreply@anthropic.com>`, la misma forma que fijo `D-039` para el
+  commit de la sesion (`T-027`).
+- **Por que:** `D-039` quiere que el trailer diga que modelo escribio el commit. Un commit del cierre
+  sin trailer no dice nada.
+- **Alternativas descartadas:**
+  - **Dejarlo como esta:** el anclaje es un commit del cierre, y quedaria como el unico sin autoria.
+  - **Escribir el mensaje con un heredoc:** cambia mas lineas del bloque de la puerta para lograr lo
+    mismo.
+- **Prueba:** la puerta, extraida de la skill, se cierra sobre `fdfca7b` y se abre sobre `1358c3c`. Un
+  commit con esos dos `-m`, en un repositorio temporal, deja el trailer que `git` reconoce:
+
+  ```
+  $ R=$(mktemp -d); git -C "$R" init -q; echo x > "$R/f"; git -C "$R" add f; git -C "$R" -c user.name=t -c user.email=t@t commit -q -m "S-XXX: ancla el informe y los criterios de cierre al hash abc1234" -m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>"; git -C "$R" log -1 --format='%(trailers:key=Co-Authored-By,valueonly)'
+  Claude <modelo> <noreply@anthropic.com>
+  ```
+
+  ⚠️ **La orden de prueba del criterio de `D-036` ya no extrae bien la puerta en la version nueva:** su
+  `sed` sobre la linea del commit choca con el `<` del trailer. No cambia nada publicado, porque ese
+  criterio esta anclado a `cf2992f`. La extraccion que funciona ahora cambia la linea entera, y es la
+  del criterio de abajo.
+- **Criterio de cierre:** a ese commit, la linea del commit de anclaje lleva el trailer y la puerta
+  sigue cerrandose y abriendose donde debe.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF -- '-m "Co-Authored-By: Claude <modelo> <noreply@anthropic.com>" && git push'
+  1
+  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/^  git commit -m .* && git push$/  echo COMMIT/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh) | tail -1; done
+  == puerta @ fdfca7b
+  PUERTA CERRADA: no se commitea el anclaje
+  == puerta @ 1358c3c
+  COMMIT
+  ```
+
+### D-043 - Cada hallazgo de auditoria lleva urgencia ademas de gravedad
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario ve que las sesiones se van en corregir el andamiaje y la etapa no avanza.
+  Se le propuso corregir en la sesion solo los hallazgos `Alta` y dejar como deuda los demas, o poner
+  un tope por sesion.
+- **Decision:** el usuario eligio **seguir corrigiendo como hasta ahora**, pero que cada hallazgo diga
+  su **gravedad** (`Alta` / `Media` / `Baja`) y ademas su **urgencia** (`Bloqueante` / `No
+  bloqueante`), para saber si se puede aplazar o hay que trabajarlo ya. Se aplica asi (`T-028`):
+  - `_audit/findings.md` y su plantilla (`_templates/000_preproject/050_audit_findings.md`) anaden el
+    campo `Urgencia`: una columna en el indice, entre `Gravedad` y `Estado`, un campo en la ficha y la
+    definicion de cada valor en las convenciones.
+  - `protocol-audit` obliga a asignarla y a justificarla, sin deducirla de la gravedad.
+  - `protocol-start` la reporta junto a la gravedad, y un hallazgo sin urgencia sale como «sin
+    urgencia».
+- **Por que:** la gravedad dice cuanto dano hace un defecto, no si puede esperar. Con la urgencia, el
+  arranque dice si un hallazgo va antes que el trabajo de la etapa o puede aplazarse con su tarea
+  abierta.
+- **Alternativas descartadas:**
+  - **Corregir solo los `Alta` y aplazar el resto como deuda:** la propuso `manager` y el usuario la
+    descarto.
+  - **Un hallazgo por sesion:** limita la cantidad pero no distingue lo que no puede esperar.
+  - **Deducir la urgencia de la gravedad:** un `Baja` puede bloquear y un `Alta` puede esperar.
+- **Alcance hacia atras:** rige hacia adelante. Los hallazgos ya abiertos (`F-001` a `F-014`) llevan
+  `—` en la columna y no llevan el campo en la ficha. Asignarles ahora una urgencia seria inventarla,
+  y seria `manager` graduando hallazgos que no abrio. `F-014` ya esta corregido en esta sesion.
+- **Consecuencia:** el control del Paso 2b de `protocol-close` lee el estado en la ultima columna, y
+  sigue siendolo:
+
+  ```
+  $ diff <(awk '/^[[:space:]]*```/{c=!c; next} !c' _audit/findings.md | grep -E '^\| \[F-[0-9]+\]' | awk -F'|' '{match($2,/F-[0-9]+/); e=$(NF - 1); gsub(/^ +| +$/,"",e); print substr($2,RSTART,RLENGTH)" "e}' | sort) <(awk '/^[[:space:]]*```/{c=!c; next} c{next} /^### F-[0-9]+ /{match($0,/F-[0-9]+/); cur=substr($0,RSTART,RLENGTH); got=0} /^\| Estado \|/ && cur!="" && !got{s=$0; sub(/^\| Estado \| */,"",s); sub(/ *\|$/,"",s); print cur" "s; got=1}' _audit/findings.md | sort); echo "fin 2b"
+  fin 2b
+  ```
+
+  Tres archivos mas del andamiaje difieren del esqueleto (`protocol-audit`, `protocol-start` y la
+  plantilla), y van en la promocion de la sesion siguiente. Al promover la plantilla hay que regenerar
+  la copia de `_audit/findings.md` del esqueleto (Paso 1b).
+- **Criterio de cierre:** a ese commit, la plantilla, el registro y las dos skills llevan la urgencia.
+
+  ```
+  $ git show <hash>:_templates/000_preproject/050_audit_findings.md | grep -cE '^\| Codigo \| Hallazgo \| Auditoria \| Gravedad \| Urgencia \| Estado \|$|^\| Urgencia \| `Bloqueante` / `No bloqueante` \|$|^\| Urgencia \| \|$'
+  3
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-[0-9]+\].*\| (Alta|Media|Baja) \| — \| [^|]+ \|$'
+  13
+  $ git show <hash>:.claude/skills/protocol-audit/SKILL.md | grep -cF '| Urgencia | Bloqueante / No bloqueante |'
+  1
+  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF '(gravedad, urgencia)'
+  2
+  ```
+
+### D-044 - Reparto del trabajo de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `_phases/005_discovery.md` §4 exige adoptar el reparto antes del Paso 1, con su
+  `D-XXX`, a partir de `_workflow/005_discovery.md`. Desde `D-015` la etapa figura como actual en
+  `progress.md`, pero ningun paso de su procedimiento ha empezado. El usuario pide dejarlo todo listo
+  para trabajar la etapa desde la sesion siguiente.
+
+  ```
+  $ git show 4409bb9:_workflow/005_discovery.md | grep -c "^| \*\*[1-7] · "
+  7
+  ```
+
+- **Decision:** se adopta **la tabla de §2 de `_workflow/005_discovery.md` tal cual**, con sus tres
+  asignaciones no obvias (§2.1) y lo que nunca se delega (§3).
+  - **El humano es el usuario, JD Rodriguez, patrocinador.** Responde las entrevistas, decide que es
+    necesidad, clasifica los actores, decide en solitario el actor originador (Paso 4), decide que es
+    firme y que es supuesto, y formula, sella y firma la hipotesis y el perfil del usuario
+    representativo.
+  - **`manager` es la IA.** Propone las preguntas, resume, senala las soluciones disfrazadas de
+    necesidad y los errores de clasificacion, propone los supuestos que nadie escribio e intenta tumbar
+    la hipotesis. **No responde por el patrocinador ni da nada por bueno.**
+  - **El software** son los barridos de una linea que ya traen las plantillas y los controles del cierre
+    y de la auditoria. **No se escribe ningun programa.**
+  - **Nivel del sistema de IA para el trabajo de la etapa: 0–1**, con la discrepancia de §6 aceptada. El
+    eje «variabilidad de la entrada» esta en 3, pero cada salida la revisa el usuario caso a caso, y el
+    impacto (2) y la autonomia (1) no estan en 3. Si la revision caso a caso deja de hacerse o el
+    volumen crece, la lectura cambia.
+  - **Lo que da por cierto sin confirmar:** `A-004` y `A-005`.
+  - **Como se trabaja:** los Pasos 1 y 2 se hacen juntos en conversacion, sin guion preparado de
+    antemano (`T-029`).
+- **Por que:** es el reparto que el metodo ya argumenta, y el usuario no ve motivo para cambiarlo. Da a
+  la IA lo que hace bien, que es encontrar lo no escrito y buscar contraejemplos, y deja al humano lo
+  que es juicio o es irreversible.
+- **Alternativas descartadas:**
+  - **Tabla con mas IA,** con `manager` redactando borradores de `N-XXX` y actores a partir del brief:
+    roza «validar por plausibilidad» (§9) y convierte el encargo en requisito, que §2 de la etapa
+    prohibe.
+  - **Guion de entrevista preparado antes de la sesion:** el usuario prefiere construirlo en la
+    conversacion.
+- **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle, y los dos supuestos
+  tambien.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-044\]|### D-044 )'
+  2
+  $ git show <hash>:_persistence/assumptions.md | grep -cE '^(\| \[A-00[45]\]|### A-00[45] )'
+  4
+  ```
