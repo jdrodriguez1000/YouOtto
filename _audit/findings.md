@@ -39,7 +39,11 @@
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado |
 | [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Implementado |
-| [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Aceptado — pendiente (`T-036`, `D-064`) |
+| [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Implementado |
+| [F-021](#f-021---ancla-rota-en-el-indice-de-progressmd-para-s-017-la-flecha-del-titulo) | Ancla rota en el indice de `progress.md` para `S-017`: la flecha del titulo | R-019 | Baja | No bloqueante | Abierto |
+| [F-022](#f-022---la-fila-de-f-020-publica-un-valor-de-estado-que-la-convencion-de-findingsmd-no-declara) | La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara | R-019 | Baja | No bloqueante | Abierto |
+| [F-023](#f-023---dt-005-lleva-confirmacion-sin-confirmar-un-valor-que-la-convencion-de-techdebtmd-no-declara) | `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara | R-019 | Baja | No bloqueante | Abierto |
+| [F-024](#f-024---la-nota-de-anclaje-de-d-064-remite-a-una-seccion-sin-resolver-que-no-existe) | La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe | R-019 | Baja | No bloqueante | Abierto |
 
 ---
 
@@ -515,9 +519,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-036` y `D-064` |
-| Cerrado en | |
+| Cerrado en | `a0949c5` (verificado en `R-019`) |
 
 - **Que se observo:** el commit `205b1f2` cierra `005_discovery/015_stakeholders.md` y marca `[x]` una
   casilla cuyo texto afirma un numero que el archivo de etapa contradice.
@@ -554,3 +558,206 @@ Plantilla:
   su deuda (`DT-005`) la cifra «Cuatro de las seis llevan juicio» de la linea 119 del mismo archivo de
   reparto, cuya lectura no esta clara y afecta tambien a otra etapa. Leccion registrada: `L-017`.
   **`Estado` lo cierra una auditoria posterior, no esta entrada.**
+- **Cierre (`R-019`, sobre `a0949c5`):** la correccion esta en el diff y es la que `R-018` recomendaba,
+  ampliada al tercer archivo.
+
+  ```
+  $ git diff a0949c5^ a0949c5 -- _templates/005_discovery/015_stakeholders.md | grep -E '^[-+].*condiciones de salida'
+  -- [ ] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+  +- [ ] **Los interesados estan identificados** — es una de las siete condiciones de salida de la etapa.
+  $ git diff a0949c5^ a0949c5 -- _workflow/005_discovery.md | grep -E '^[-+][^-+]'
+  -Las seis casillas de `_phases/005_discovery.md` §6, separadas por quien las puede comprobar:
+  +Las siete casillas de `_phases/005_discovery.md` §6, separadas por quien las puede comprobar:
+  +| cosecha hecha, ninguna leccion sin evaluar | el recuento de la columna de portabilidad | que leccion sube, cual ya esta cubierta y cual es solo de este proyecto |
+  $ git show a0949c5:_templates/005_discovery/015_stakeholders.md | grep -c 'siete condiciones de salida'
+  1
+  $ git show a0949c5:_workflow/005_discovery.md | sed -n '/^## 5\./,/^## 6\./p' | grep -c '^| '
+  8
+  ```
+
+  El artefacto `CERRADO` conserva su linea y gana la nota fechada, como se pedia. **`Implementado`.**
+
+### F-021 - Ancla rota en el indice de `progress.md` para `S-017`: la flecha del titulo
+| Campo | Valor |
+|---|---|
+| Auditoria | R-019 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el titulo de `S-017` lleva un `→` entre espacios y el ancla del indice lo omite
+  junto con uno de sus dos espacios.
+
+  ```
+  $ git grep -n '^### .*→' a0949c5 -- _persistence _audit
+  a0949c5:_persistence/progress.md:526:### S-017 - `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`)
+  $ git show a0949c5:_persistence/progress.md | sed -n '53p' | grep -oE '\(#[a-z0-9_-]+\)'
+  (#s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018-d-063d-065d-067-y-se-cierra-005_needsmd-d-066)
+  ```
+
+  El ancla escrita pone **un** guion entre `l-018` y `d-063`. Las dos lecturas posibles del slug de
+  GitHub dan dos caracteres ahi, porque el `→` esta rodeado de espacios y los espacios siempre se
+  vuelven guiones: `...l-016l-017l-018-→-d-063...` si el simbolo se conserva,
+  `...l-016l-017l-018--d-063...` si se elimina. Que el slug no colapsa guiones consecutivos lo prueba
+  el propio registro: `_persistence/assumptions.md:24` usa `#a-001---los-juegos...`, tres guiones para
+  «A-001 - Los». Es el primer titulo del registro con un `→`. La comprobacion completa, con el calculo
+  de los dos slugs candidatos, esta en `_audit/R-019.md` §2.
+- **Por que importa:** el indice de `progress.md` es la puerta de entrada a la bitacora y
+  `session-starter` lo lee en cada arranque; un ancla rota lleva a la cabecera del archivo en vez de a
+  la sesion. `Baja` porque la entrada existe y se encuentra buscando el codigo. `No bloqueante` porque
+  nada de lo que venga despues hereda el defecto.
+- **Que lo corregiria:** reponer el tramo que falta en el ancla, o —mas robusto— no usar `→` en
+  titulos que necesitan ancla. ⚠️ Es una recomendacion, no una orden.
+
+### F-022 - La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara
+| Campo | Valor |
+|---|---|
+| Auditoria | R-019 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** la fila del indice pega la cita dentro de la celda de `Estado`; la ficha usa el
+  valor limpio y su campo `Registrado en`.
+
+  ```
+  $ git show a0949c5:_audit/findings.md | sed -n '42p' | awk -F'|' '{print $(NF-1)}'
+   Aceptado — pendiente (`T-036`, `D-064`)
+  $ git show a0949c5:_audit/findings.md | sed -n '/^### F-020/,/^- \*\*Que se observo/p' | grep -E '^\| (Estado|Registrado en) \|'
+  | Estado | Aceptado — pendiente |
+  | Registrado en | `T-036` y `D-064` |
+  $ git show a0949c5:_audit/findings.md | grep -E '^\| Estado \| `Abierto`'
+  | Estado | `Abierto` / `Aceptado — pendiente` / `Implementado` / `No se implementa` |
+  ```
+
+  Las otras dos filas vivas del mismo indice escriben el valor limpio, asi que el mismo estado aparece
+  en dos formas dentro del mismo archivo:
+
+  ```
+  $ git show a0949c5:_audit/findings.md | grep -E '^\| \[F-01[67]\]' | awk -F'|' '{print $2, "->", $(NF-1)}' | sed 's/(#[^)]*)//'
+   [F-016]  ->  Aceptado — pendiente
+   [F-017]  ->  Aceptado — pendiente
+  ```
+- **Por que importa:** el Paso 2b de `protocol-close` compara fila y ficha en cada cierre, y por esto
+  reporto una discrepancia que el informe de `S-017` tuvo que escalar a mano (su seccion 6). El origen
+  es un choque real de reglas: `CLAUDE.md` pide actualizar la fila «citando la `T-XXX` o la `D-XXX`
+  donde quedo» —y la fila no tiene columna para eso—, mientras la convencion de este archivo cierra la
+  lista de valores de `Estado`. Mientras no se zanje cual manda, **cada hallazgo aceptado volvera a
+  disparar el mismo aviso**, y un control que siempre avisa deja de leerse. `Baja` porque nada de lo
+  escrito es falso: la cita es correcta y la ficha lleva sus dos campos al dia. `No bloqueante` porque
+  el registro no afirma un estado equivocado.
+- **Que lo corregiria:** decidir una de las dos formas y escribirla en la convencion de este archivo
+  —columna `Registrado en` propia en el indice, o valor limpio en la fila y cita solo en la ficha—,
+  con su `D-XXX`. ⚠️ Es una recomendacion, no una orden.
+
+### F-023 - `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara
+| Campo | Valor |
+|---|---|
+| Auditoria | R-019 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el valor no esta en la lista declarada, y es el unico caso del archivo.
+
+  ```
+  $ git show a0949c5:_persistence/techdebt.md | grep -nE '^\| Confirmacion \|'
+  41:| Confirmacion | `Confirmada` / `Propuesta (pendiente de <quien>)` |
+  80:| Confirmacion | |
+  96:| Confirmacion | Confirmada |
+  158:| Confirmacion | Confirmada |
+  177:| Confirmacion | Confirmada |
+  217:| Confirmacion | Confirmada |
+  247:| Confirmacion | Sin confirmar |
+  $ git show a0949c5:_persistence/techdebt.md | grep -cE '^\|.*\| Sin confirmar \|'
+  1
+  ```
+
+  La convencion no solo lista los valores: prohibe explicitamente la salida sin dueno.
+
+  ```
+  $ git show a0949c5:_persistence/techdebt.md | sed -n '50,53p'
+  🚨 **`Propuesta` lleva dueno dentro del valor, siempre.** No existe `Propuesta` a secas: quien
+  confirma va escrito (`Propuesta (pendiente del usuario)`), porque una propuesta sin dueno no espera
+  —se queda propuesta para siempre—. Si no sabes quien confirma, entonces lo que falta no es la
+  confirmacion: es saber de quien es la decision, y eso es una `T-XXX`.
+  ```
+
+  La linea `80` es el hueco de la plantilla de entrada del propio archivo, no una entrada. El informe
+  de `S-017` declara este defecto en su seccion 6.
+- **Por que importa:** `DT-005` es deuda declarada y sin pagar sobre una cifra que afecta a dos etapas;
+  sin dueno de la confirmacion no hay nada que la haga avanzar, y se queda propuesta para siempre — que
+  es justo lo que esa convencion existe para impedir. `Baja` porque la deuda esta escrita con su
+  evidencia y `progress.md` la cita. `No bloqueante` porque nada de lo que se haga despues la hereda.
+- **Que lo corregiria:** poner `Propuesta (pendiente del usuario)` —o el dueno que corresponda— en la
+  fila y en la ficha, en la misma pasada; o, si no se sabe de quien es la decision, abrir la `T-XXX`
+  que la convencion pide. ⚠️ Es una recomendacion, no una orden.
+
+### F-024 - La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe
+| Campo | Valor |
+|---|---|
+| Auditoria | R-019 |
+| Fecha | 2026-09-17 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** la nota que el Paso 7c-bis anadio en el commit de anclaje `0854fd3` cierra con un
+  puntero que no resuelve.
+
+  ```
+  $ git show 0854fd3:_persistence/decisions.md | sed -n '3746,3747p'
+    No se sustituye la salida publicada ni se corrige: queda declarado aqui. Ver «Sin resolver» del
+    informe de esta sesion.
+  $ git show 0854fd3:_audit/S-017.md | grep -c "Sin resolver"
+  0
+  $ git show 0854fd3:_audit/S-017.md | grep -n '^## '
+  11:## 0. Respuesta a la auditoria anterior
+  30:## 1. Que se hizo
+  82:## 2. Que NO se hizo, y por que
+  101:## 3. Decisiones tomadas
+  129:## 4. Supuestos vigentes y riesgos
+  146:## 5. Siguiente tarea propuesta
+  155:## 6. Que pedimos auditar
+  174:## 7. Evidencia del Paso 2d
+  413:## 8. Evidencia del Paso 2e
+  434:## 9. Evidencia del Paso 2f
+  ```
+
+  «Sin resolver» es una seccion del **reporte en pantalla** del Paso 8 de `protocol-close`
+  (`.claude/skills/protocol-close/SKILL.md:1943`), no del informe que queda en el commit: el registro
+  permanente apunta a algo que no persiste.
+
+  ⚠️ **No es nuevo de esta sesion**, y hay que decirlo: `D-062` (de `S-016`) hace la misma remision y
+  `R-018` no lo abrio.
+
+  ```
+  $ git show 0854fd3:_persistence/decisions.md | grep -n "Sin resolver"
+  1217:  - **Que la tabla mande publicar la salida en «Sin resolver» y seguir:** trata el sintoma; con el
+  2336:  suya. Lo que es del cierre lo corrige en el anclaje; lo que es de `manager` va a **Sin resolver**
+  3544:  hasta que `L-016` se evalue. Ver `T-035` en `tasks.md` y «Sin resolver» del informe de `S-016`.
+  3746:  No se sustituye la salida publicada ni se corrige: queda declarado aqui. Ver «Sin resolver» del
+  ```
+
+  Las lineas `1217` y `2336` son decisiones que **describen** el protocolo, y ahi la mencion es
+  legitima; las `3544` y `3746` son remisiones a un documento que no existe.
+- **Por que importa:** `decisions.md` es el registro que se lee dentro de meses, y `D-064` es
+  precisamente la entrada cuya cuarta orden **no reproduce**: el puntero que deberia llevar al detalle
+  del fallo no lleva a ninguna parte. El contenido no se perdio —`D-064` publica las dos salidas, una
+  debajo de la otra—, asi que el defecto es solo el puntero. `Baja` por eso. `No bloqueante` porque
+  nada lo hereda.
+- **Que lo corregiria:** una nota fechada en `D-064` —y en `D-062`, que tiene el mismo puntero— que
+  sustituya la remision por lo que si persiste: «ver las dos salidas publicadas arriba en esta misma
+  entrada», sin reescribir la linea original. Y, de fondo, que `protocol-close` no mande citar desde el
+  registro una seccion que solo existe en pantalla. ⚠️ Es una recomendacion, no una orden.
