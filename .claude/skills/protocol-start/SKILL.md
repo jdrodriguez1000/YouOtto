@@ -171,7 +171,29 @@ git log --oneline -2 -- _persistence/progress.md
 
 Si el hash de arriba **no** es el mismo que el de abajo, mira que tocaron los commits de en medio.
 Si tocaron `_persistence/` y `progress.md` no esta entre ellos, **el estado quedo congelado antes
-que la ultima entrada**.
+que la ultima entrada** — salvo que lo unico que entrara sea anclaje, y eso lo dice una tercera
+orden, con `<P>` = el hash de la segunda:
+
+```bash
+git diff <P> HEAD -- _persistence | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' \
+  | grep -vE '^\+[[:space:]]*(📌 \*\*Anclad|$)' \
+  | sed -E 's/^[+-]//; s/<hash>|\b[0-9a-f]{7}\b/<H>/g' | sort | uniq -u | wc -l
+```
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| `0` | lo posterior solo sustituye `<hash>` por un hash y anade lineas `📌` | **no es desfase**: no lo reportes |
+| mas de `0` | entro contenido de verdad despues de sellar `progress.md` | reporta el desfase 4 |
+| el comando falla | **no lo comprobaste** | reporta el desfase 4, y di que el filtro no corrio |
+
+🔑 **Por que hace falta.** Todo cierre con anclaje deja un commit que toca `_persistence/` despues de
+`progress.md`: el Paso 7c-bis de `protocol-close` ancla alli los criterios y tiene prohibido tocar
+`progress.md`. Sin este filtro el aviso salta tras casi cada sesion, y **esta regla nacio de eso**:
+un aviso que salta siempre se acabo ignorando, tambien la vez que tocaba. El `sed` cambia el ancla y
+el hash por la misma marca, y `uniq -u` descarta las parejas que quedan iguales.
+
+⚠️ **Limite:** dos lineas nuevas identicas tambien se emparejan y desaparecen. Pasa con un
+contenido repetido que ademas nadie retira, y no se ha visto; si sospechas, lee el diff.
 
 El **5** se comprueba con una sola orden, y no gasta contexto:
 

@@ -32,6 +32,7 @@
 | [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -306,3 +307,22 @@ Plantilla:
   antes de tocar las seis areas: el Paso 0 de `protocol-promote` salio limpio a la primera, sin retirar
   nada del arbol, y el barrido de despues quedo vacio. Las correcciones de la sesion (`D-033`, `D-034`)
   solo tocaron `_persistence/` y `_audit/`, que no bloquean la promocion.
+
+### L-013 - Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+
+- **Contexto:** `D-038`, a partir de la segunda recomendacion sin hallazgo de `R-012`.
+- **Que ocurrio:** tras el cierre de `S-011`, el agente de cierre corrio tambien la auditoria de su
+  propia sesion y la subio como `R-011` (`709050c`). Se detecto despues y se revirtio (`9eb9d49`), pero
+  los ids `R-011` y `F-012` ya estaban consumidos en el historial subido, y el hueco quedo sin explicar
+  hasta `D-038`.
+- **Leccion:** que un protocolo sea de uso exclusivo de un agente no impide que otro lo ejecute. Lo
+  que lo delata es el historial, y hay que mirarlo antes de que el siguiente paso construya encima.
+- **Como aplicarla:** cuando el cierre devuelva su reporte, y antes de lanzar `report_auditor`, se
+  corre `git log --oneline -4`. Tiene que haber solo commits de sesion y de anclaje; si aparece un
+  commit de auditoria, no se lanza nada: se revierte y los ids consumidos se registran como retirados
+  en la misma sesion.

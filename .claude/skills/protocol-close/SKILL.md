@@ -1525,8 +1525,13 @@ El mensaje dice **que avanzo y por que**, no que archivos cambiaron: eso ya lo s
 linea corta, y debajo lo que valga la pena. Termina siempre con:
 
 ```
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Co-Authored-By: Claude <modelo> <noreply@anthropic.com>
 ```
+
+🚨 **`<modelo>` es el modelo que ejecuta este cierre, no uno fijado aqui.** El trailer dice quien
+escribio el commit, y el agente del cierre puede correr en un modelo distinto al de otros agentes.
+Un literal que no coincide obliga a elegir entre copiarlo y firmar con un modelo que no escribio el
+commit, o firmar con la verdad y contradecir la skill. **Esta regla nacio de ese choque.**
 
 ### 7b — Que el informe entro en el commit (obligatorio)
 
@@ -2097,12 +2102,38 @@ un commit, nunca reescribe el que ya se subio. El mensaje lo dice con esas palab
 informe de S-XXX al hash <hash>» — para que el historial distinga solo, sin leer el diff, un commit
 de trabajo de uno de anclaje.
 
-```
+```bash
 git add _audit/S-XXX.md _persistence/decisions.md
-git commit -m "S-XXX: ancla el informe y los criterios de cierre al hash <hash>"
-git push
+S=_audit/S-XXX.md
+PUERTA=$(
+  for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**" "**ORDEN DEL PASO 2d ANCLADA — salida:**"; do
+    grep -qF "$m" "$S" || echo "FALTA en la NOTA DE CIERRE: $m"
+  done
+  grep -qE '^(> )?\$ git show --stat --name-only --format= <hash>$' "$S" ||
+    echo "FALTA en la seccion 1: la orden prescrita por el Paso 7c (sin --format= la salida no reproduce)"
+  sed -n '/^## 1\./,/^## 2\./p' "$S" |
+    grep -E '^[[:space:]]*(> )?\$ git diff --cached|`git diff --cached[^`]*\|' | grep -vF -- '--stat --name-only' &&
+    echo "SIN ANCLAR en la seccion 1: ordenes git diff --cached que el Paso 7c tenia que traducir"
+)
+if [ -n "$PUERTA" ]; then
+  printf '%s\n' "$PUERTA"; echo "PUERTA CERRADA: no se commitea el anclaje"
+else
+  git commit -m "S-XXX: ancla el informe y los criterios de cierre al hash <hash>" && git push
+fi
 git status -sb
 ```
+
+🚨 **El commit de anclaje va detras de una puerta, no detras de una instruccion.** El bloque repite
+literales los controles del 7c-ter y del 7c-quater, y **solo commitea si los dos salen vacios**. Si
+sale `PUERTA CERRADA`, vuelves al paso que imprime la linea, lo corriges y corres el bloque entero
+otra vez. **Esta regla nacio de un defecto real:** los dos pasos ya decian «no commitees el anclaje
+hasta que salga vacio», y un cierre commiteo el anclaje con la NOTA DE CIERRE vacia y la completo en
+un tercer commit que el informe no declaraba. Una instruccion se puede saltar; un `if`, no.
+
+⚠️ **Los literales del bloque y los del 7c-ter y el 7c-quater son los mismos, y se cambian juntos.**
+Un rotulo nuevo en el 7c-ter que no llegue aqui deja la puerta abierta para el. ⚠️ **Y si un control
+falla al ejecutarse**, su error va a la pantalla y no a `PUERTA`, asi que el commit sigue: es la fila
+«el comando falla» de sus tablas, y va a **Sin resolver** con 🚨 `SIN COMPROBAR`.
 
 ⚠️ **`_persistence/decisions.md` entra aqui solo si el Paso 7c-bis lo toco** — es decir,
 si esta sesion abrio alguna decision con criterio de cierre. Si no la abrio, se anade solo el

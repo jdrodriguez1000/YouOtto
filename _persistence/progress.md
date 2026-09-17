@@ -45,6 +45,7 @@
 | [S-009](#s-009---f-010-de-r-008-atendido-d-027-el-estado-de-una-tarea-lo-decide-el-diff-no-el-anclaje) | `F-010` de `R-008` atendido (`D-027`: el estado de una tarea lo decide el diff, no el anclaje), `T-014`/`T-015` pasan a `Implementada` | 2026-09-16 | 005_discovery |
 | [S-010](#s-010---las-tres-recomendaciones-sin-hallazgo-de-r-009-evaluadas-y-dt-003-pagada-con-la-promocion-al-esqueleto) | Las tres recomendaciones sin hallazgo de `R-009` evaluadas, y `DT-003` pagada con la promocion al esqueleto (`D-032`) | 2026-09-16 | 005_discovery |
 | [S-011](#s-011---f-011-de-r-010-aceptado-con-nota-en-t-019-y-dt-004-confirmada-y-pagada-d-035) | `F-011` de `R-010` aceptado con nota en `T-019`, y `DT-004` confirmada y pagada (`D-035`) | 2026-09-16 | 005_discovery |
+| [S-012](#s-012---f-013-de-r-012-aceptado-nota-en-s-011-y-puerta-mecanica-en-el-anclaje-y-tres-recomendaciones-sin-hallazgo-evaluadas) | `F-013` de `R-012` aceptado (nota en `S-011` y puerta mecanica en el anclaje), y tres recomendaciones sin hallazgo evaluadas | 2026-09-17 | 005_discovery |
 
 ---
 
@@ -76,35 +77,40 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-16 (S-011)` |
+| Ultima actualizacion | `2026-09-17 (S-012)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito `S-010` en `R-010` y entrego `F-011`: `T-019` quedaba `Implementada` con un alcance —la frase de `D-028`— que su propio commit declaraba fuera de la promocion. `D-033` (rechaza, no es un hallazgo del usuario): el desfase 4 que reporta el arranque tras `S-010` no es real, `progress.md` describe bien el estado; los unicos cambios posteriores a `a61e453` son las lineas `📌` del Paso 7c-bis, que tiene prohibido tocar `progress.md`. `D-034` (aceptada, `report_auditor`): `F-011` se acepta con la opcion (a) — una nota fechada en `T-019` que saca la frase de `D-028` de su alcance y remite a `D-032`/`DT-004`, sin reescribir el «Que»; `T-019` sigue `Implementada`; nace `T-020`, que esta misma sesion cierra `Implementada` porque su trabajo (la nota) ya esta en el diff, por el criterio de `D-027`/`D-028`. `D-035` (usuario): con las seis areas limpias y subidas, se confirma y paga `DT-004` — se promueve `.claude/skills/protocol-close/SKILL.md` (la frase de `D-028`) desde `1add289` al commit `7f4381e` del esqueleto de arranque, subido; `DT-004` queda `Implementada` y `Confirmada`. Se anadio una nota de reincidencia a `L-012`: la promocion al principio de la sesion volvio a funcionar |
-| Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa |
+| Avance de la etapa | `report_auditor` audito los tres commits de `S-011` (`079b0a4`, `fdfca7b`, `1358c3c`) en `R-012` y entrego `F-013`: el commit de anclaje `fdfca7b` se subio con la NOTA DE CIERRE en su marcador de pendiente y el Paso 7c-ter fallando, y la nota se completo despues en un tercer commit (`1358c3c`) que el informe no declaraba. `D-036` (aceptada, `report_auditor`; usuario elige la puerta mecanica): nota fechada en la seccion 7 de `_audit/S-011.md` que nombra `1358c3c` sin reescribir la linea publicada (`T-021`), y el bloque del commit de anclaje de `protocol-close` pasa a correr los controles del 7c-ter y del 7c-quater y solo commitear si los dos salen vacios, imprimiendo `PUERTA CERRADA` si no (`T-022`). Ademas, tres recomendaciones sin hallazgo de `R-012`: `D-037` (aceptada) anade al desfase 4 de `protocol-start` una tercera orden que ignora los commits cuyo cambio en `_persistence/` solo ancla `<hash>` y anade lineas `📌` (`T-023`); `D-038` (aceptada) deja `R-011`/`F-012` retirados y no reutilizables, porque esa auditoria la ejecuto el propio `session-closer` sobre su cierre, no `report_auditor` (revertida en `9eb9d49`), y registra `L-013`; `D-039` (aceptada) cambia el trailer literal `Claude Opus 5` del Paso 7 de `protocol-close` por `<modelo>`, el que ejecuta el cierre (`T-024`). `T-021`, `T-022`, `T-023` y `T-024` quedan `Implementada`: su trabajo esta en el diff de esta sesion y sus criterios de cierre (los de `D-036`/`D-037`/`D-039`) reproducen |
+| Bloqueos activos | Ninguno bloqueante. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores de `005_discovery`— ya esta activo al entrar en esta etapa. `DT-002` sigue `No implementada`, confirmada y sin pagar |
 
 ---
 
 ## 2. Ultimo realizado
 
-Onceava sesion de trabajo. Segun el diff: se acepto `F-011` de `R-010` con `D-034` (nota fechada en
-`T-019` que saca la frase de `D-028` de su alcance y remite a `D-032`/`DT-004`, con la comparacion de
-blobs contra el esqueleto; `T-019` sigue `Implementada`); nace `T-020` y esta sesion la cierra
-`Implementada`. `D-033` deja sin corregir el desfase 4 que reporto el arranque de `S-011`: no es real,
-solo son las lineas `📌` del Paso 7c-bis sobre `progress.md`. `D-035` confirma y paga `DT-004`: se
-promovio la frase de `D-028` al esqueleto de arranque (commit `7f4381e`, subido), con el barrido del
-Paso 1 vacio despues de promover; `DT-004` pasa a `Implementada`/`Confirmada`. Se anadio una nota de
-reincidencia a `L-012` confirmando que el orden (promover antes de tocar el andamiaje) funciono en
-esta sesion.
+Doceava sesion de trabajo. Segun el diff: se acepto `F-013` de `R-012` con `D-036` — nota fechada en
+la seccion 7 de `_audit/S-011.md` que declara que la NOTA DE CIERRE se commiteo en `1358c3c`, no en
+`fdfca7b`, sin reescribir la linea publicada (`T-021`); y el bloque del commit de anclaje de
+`protocol-close` pasa a estar detras de una puerta mecanica que repite los controles del 7c-ter y del
+7c-quater y solo commitea si los dos salen vacios (`T-022`). Se evaluaron las tres recomendaciones sin
+hallazgo de `R-012`: `D-037` anade al desfase 4 de `protocol-start` una tercera orden que descarta los
+commits de solo anclaje (`T-023`); `D-038` deja retirados `R-011`/`F-012` porque esa auditoria la
+ejecuto el propio `session-closer` sobre su propio cierre y se revirtio (`9eb9d49`), y escribe `L-013`;
+`D-039` cambia el trailer literal `Claude Opus 5` del Paso 7 de `protocol-close` por `<modelo>` (el que
+ejecuta el cierre) (`T-024`). `T-021`, `T-022`, `T-023` y `T-024` quedan `Implementada` en este mismo
+commit: su trabajo esta en el diff y sus criterios de cierre reproducen contra el arbol de trabajo,
+por el criterio de `D-027`/`D-028`.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-011`). Con la etapa `005_discovery` en marcha, el primer trabajo de producto sigue siendo la
+(`S-012`). Con la etapa `005_discovery` en marcha, el primer trabajo de producto sigue siendo la
 clasificacion de actores (`_templates/005_discovery/010_actors.md`), que es ademas el disparador de
-`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque queda al
-dia con las seis areas tras la promocion de `D-035` (verificado en el Paso 2f de este cierre). Sigue
-abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
+`A-001` (si el historial de juegos registrados es dato de persona). El esqueleto de arranque vuelve a
+diferir en dos archivos (`.claude/skills/protocol-close/SKILL.md` y `.claude/skills/protocol-start/SKILL.md`,
+verificado en el Paso 2f de este cierre): las promociones de `D-036`, `D-037` y `D-039` quedan
+pendientes de aprobacion del usuario. Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no
+reejecuta las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -356,6 +362,35 @@ Plantilla:
   promover antes de tocar el andamiaje volvio a funcionar.
 - **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `DT-002` sigue
   `No implementada`, confirmada y sin pagar. `A-001` sigue `Abierto`.
+
+### S-012 - `F-013` de `R-012` aceptado (nota en `S-011` y puerta mecanica en el anclaje), y tres recomendaciones sin hallazgo evaluadas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Tareas | T-021, T-022, T-023, T-024 |
+
+- **Que se hizo:** se acepto `F-013` de `R-012` (el commit de anclaje `fdfca7b` de `S-011` se subio con
+  la NOTA DE CIERRE en su marcador de pendiente y el Paso 7c-ter fallando; la nota se completo despues
+  en `1358c3c`, sin que el informe lo declarara) con `D-036`: nota fechada en la seccion 7 de
+  `_audit/S-011.md` que nombra `1358c3c` sin reescribir la linea publicada (`T-021`); y el bloque del
+  commit de anclaje del Paso 7c-bis de `protocol-close` pasa a correr los controles del 7c-ter y del
+  7c-quater y solo commitear si los dos salen vacios, imprimiendo `PUERTA CERRADA` en caso contrario
+  (`T-022`). Se evaluaron las tres recomendaciones sin hallazgo de `R-012`: `D-037` anade al desfase 4
+  del arranque una tercera orden que ignora los commits cuyo cambio en `_persistence/` solo ancla
+  `<hash>` y anade lineas `📌`, probada sobre cuatro anclajes reales y dos rangos con trabajo real
+  (`T-023`); `D-038` deja `R-011` y `F-012` retirados y no reutilizables porque esa auditoria la
+  ejecuto el propio `session-closer` sobre su propio cierre y no `report_auditor` (revertida en
+  `9eb9d49`), y escribe `L-013`; `D-039` cambia el trailer literal `Claude Opus 5` del Paso 7 de
+  `protocol-close` por `<modelo>`, el que ejecuta el cierre, porque el agente del cierre corre en
+  `Sonnet` y no en `Opus` (`T-024`). `T-021`, `T-022`, `T-023` y `T-024` quedan `Implementada` en este
+  mismo commit, por el criterio de `D-027`/`D-028`: su trabajo esta en el diff y sus criterios de
+  cierre reproducen contra el arbol de trabajo, aunque las ordenes que citan `<hash>` en `D-036`,
+  `D-037` y `D-039` se anclen todavia en el Paso 7c-bis de este mismo cierre.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. El esqueleto de
+  arranque vuelve a diferir en `protocol-close/SKILL.md` y `protocol-start/SKILL.md`, pendiente de
+  promocion con aprobacion del usuario. `DT-002` sigue `No implementada`, confirmada y sin pagar.
+  `A-001` sigue `Abierto`.
 
 ---
 

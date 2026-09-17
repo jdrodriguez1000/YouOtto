@@ -33,7 +33,7 @@
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
 | [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Implementado |
-| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Abierto |
+| [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | Aceptado — pendiente |
 
 ---
 
@@ -354,8 +354,8 @@ Plantilla:
 | Auditoria | R-012 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-021, T-022, D-036 |
 | Cerrado en | |
 
 - **Que se observo:** el commit de anclaje `fdfca7b` dejo la seccion 7 de `S-011.md` con el marcador
@@ -367,4 +367,7 @@ Plantilla:
 - **Por que importa:** se salto la puerta que existe para impedir un anclaje con la nota coja, y el
   informe apunta a un commit donde la nota no esta. Las salidas de la nota reproducen: no hay datos
   falsos, solo una puerta saltada y un puntero equivocado. `Media`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`1fc3264`), con orden y salida en
+  `D-036`. El usuario eligio las dos partes: nota fechada en la seccion 7 de `S-011.md`, que nombra
+  `1358c3c` sin reescribir la linea publicada (`T-021`), y puerta mecanica en el bloque del commit de
+  anclaje de `protocol-close`, que solo commitea si el 7c-ter y el 7c-quater salen vacios (`T-022`).

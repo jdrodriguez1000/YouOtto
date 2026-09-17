@@ -56,6 +56,10 @@
 | [D-033](#d-033---el-desfase-4-que-reporta-el-arranque-tras-s-010-no-se-corrige) | El desfase 4 que reporta el arranque tras S-010 no se corrige | 2026-09-16 | Vigente |
 | [D-034](#d-034---f-011-se-acepta-con-una-nota-fechada-en-t-019) | F-011 se acepta con una nota fechada en T-019 | 2026-09-16 | Vigente |
 | [D-035](#d-035---promocion-al-esqueleto-de-la-frase-de-d-028) | Promocion al esqueleto de la frase de D-028 | 2026-09-16 | Vigente |
+| [D-036](#d-036---f-013-se-acepta-con-nota-fechada-y-puerta-mecanica-en-el-anclaje) | F-013 se acepta con nota fechada y puerta mecanica en el anclaje | 2026-09-16 | Vigente |
+| [D-037](#d-037---el-desfase-4-del-arranque-ignora-los-commits-de-solo-anclaje) | El desfase 4 del arranque ignora los commits de solo anclaje | 2026-09-16 | Vigente |
+| [D-038](#d-038---r-011-y-f-012-quedan-retirados-por-la-auditoria-revertida) | R-011 y F-012 quedan retirados por la auditoria revertida | 2026-09-16 | Vigente |
+| [D-039](#d-039---el-trailer-del-cierre-nombra-el-modelo-que-lo-ejecuta) | El trailer del cierre nombra el modelo que lo ejecuta | 2026-09-16 | Vigente |
 
 ---
 
@@ -1930,3 +1934,220 @@ Plantilla:
 
   📌 **Ancladas por el Paso 7c-bis al commit `079b0a4`.** Las dos reproducen lo publicado arriba.
 
+### D-036 - F-013 se acepta con nota fechada y puerta mecanica en el anclaje
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-013` de `R-012`: el commit de anclaje de `S-011` (`fdfca7b`) entro con la NOTA DE
+  CIERRE en su marcador de pendiente y el 7c-ter fallando. La nota se completo en `1358c3c`, que el
+  informe no nombra. Verificado vigente contra `HEAD` (`1fc3264`):
+
+  ```
+  $ git show fdfca7b:_audit/S-011.md | grep -n "NOTA DE CIERRE"
+  241:NOTA DE CIERRE: <se completa en el Paso 7c-bis, despues del commit>
+  $ git show 1fc3264:_audit/S-011.md | grep -c 1358c3c
+  0
+  $ for c in fdfca7b 1fc3264; do echo "== 7c-ter @ $c"; for m in "**BARRIDO DE ANCLAJE — salida:**" "**CONTROL DE PROSA BORRADA — salida:**" "**CONTROL DE SALIDA REPRODUCIDA — salida:**" "**SEGUNDA PASADA anclada del Paso 2e — salida:**" "**CONTROL DE CIFRA ADYACENTE — salida:**" "**ORDEN DEL PASO 2d ANCLADA — salida:**"; do git show $c:_audit/S-011.md | grep -qF "$m" || echo "FALTA en la NOTA DE CIERRE: $m"; done; done
+  == 7c-ter @ fdfca7b
+  FALTA en la NOTA DE CIERRE: **BARRIDO DE ANCLAJE — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE PROSA BORRADA — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE SALIDA REPRODUCIDA — salida:**
+  FALTA en la NOTA DE CIERRE: **SEGUNDA PASADA anclada del Paso 2e — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE CIFRA ADYACENTE — salida:**
+  FALTA en la NOTA DE CIERRE: **ORDEN DEL PASO 2d ANCLADA — salida:**
+  == 7c-ter @ 1fc3264
+  $ git log --format="%h %s" 1fc3264 -- _audit/S-011.md
+  1358c3c S-011: completa la NOTA DE CIERRE del informe con los seis controles del anclaje
+  fdfca7b S-011: ancla el informe y los criterios de cierre al hash 079b0a4
+  079b0a4 S-011: F-011 de R-010 aceptado con nota en T-019, y DT-004 confirmada y pagada (D-035)
+  ```
+
+- **Decision:** se aceptan las dos partes de la recomendacion, y el usuario eligio la puerta
+  mecanica. (1) Nota fechada en la seccion 7 de `S-011.md` que nombra `1358c3c` y el fallo del 7c-ter,
+  sin reescribir la linea publicada (`T-021`). (2) El bloque del commit de anclaje de `protocol-close`
+  repite los controles del 7c-ter y del 7c-quater, y solo commitea si los dos salen vacios. Si no,
+  imprime `PUERTA CERRADA` (`T-022`).
+- **Por que:** los dos pasos ya decian «no commitees el anclaje hasta que salga vacio», y se commiteo
+  igual. La propia skill da la razon: una regla de redaccion sola ya fallo. Un `if` delante del commit
+  no depende de que el agente se acuerde. La nota corrige el puntero sin borrar lo que se audito.
+- **Alternativas descartadas:**
+  - **Solo la nota fechada:** arregla este informe y deja la puerta igual de facil de saltar.
+  - **Aplazarlo como deuda:** el cambio son unas lineas y ya esta probado; no hay coste que justifique
+    esperar.
+  - **Reescribir la linea «commit de anclaje `fdfca7b`»:** `R-012` describiria un texto que ya no
+    existe.
+- **Consecuencia:** `protocol-close` vuelve a diferir del esqueleto de arranque. Por `L-012`, la
+  promocion va al principio de la sesion siguiente.
+- **Criterio de cierre:** a ese commit, `S-011.md` lleva la nota que nombra `1358c3c`. La puerta de
+  `protocol-close`, extraida y con el commit cambiado por un `echo`, se cierra sobre `fdfca7b` y se
+  abre sobre `1358c3c`. `F-013` esta `Aceptado — pendiente` en indice y ficha.
+
+  ```
+  $ git show <hash>:_audit/S-011.md | grep -cE 'Nota 2026-09-16 \(`F-013`, `T-021`\)|^> `1358c3c`\*\*, y el informe no lo decia'
+  2
+  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/git commit -m \(.*\) \&\& git push/echo "COMMIT \1"/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh); done
+  == puerta @ fdfca7b
+  FALTA en la NOTA DE CIERRE: **BARRIDO DE ANCLAJE — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE PROSA BORRADA — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE SALIDA REPRODUCIDA — salida:**
+  FALTA en la NOTA DE CIERRE: **SEGUNDA PASADA anclada del Paso 2e — salida:**
+  FALTA en la NOTA DE CIERRE: **CONTROL DE CIFRA ADYACENTE — salida:**
+  FALTA en la NOTA DE CIERRE: **ORDEN DEL PASO 2d ANCLADA — salida:**
+  PUERTA CERRADA: no se commitea el anclaje
+  == puerta @ 1358c3c
+  COMMIT S-011: ancla el informe y los criterios de cierre al hash 079b0a4
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-013\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-021, T-022, D-036 \|$'
+  2
+  ```
+
+  ⚠️ **El `sed` escribe `<hash[>]` a proposito:** con el ancla literal, el Paso 7c-bis la sustituiria
+  tambien ahi y la orden dejaria de extraer la puerta. Las dos ramas del 7c-quater se probaron aparte,
+  sobre la version `1358c3c`: una inyectando una orden de staging con tuberia en la seccion 1, y otra
+  quitando `--format=`. Las dos imprimen su linea y `PUERTA CERRADA`.
+
+### D-037 - El desfase 4 del arranque ignora los commits de solo anclaje
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** primera recomendacion sin hallazgo de `R-012`. `D-033` constato por tercera vez que el
+  desfase 4 salta tras cada commit de anclaje, y dejo afinarlo como tarea aparte. Tras `S-011` la
+  condicion se cumple de nuevo, y el arranque de `S-012` no la reporto:
+
+  ```
+  $ git log --format=%h -1 1fc3264 -- _persistence/progress.md
+  079b0a4
+  $ git log --format="%h %s" 079b0a4..1fc3264 -- _persistence
+  fdfca7b S-011: ancla el informe y los criterios de cierre al hash 079b0a4
+  ```
+
+- **Decision:** el usuario eligio afinarlo ya. `protocol-start` anade al desfase 4 una tercera orden
+  que mira el diff de `_persistence/` desde el ultimo commit de `progress.md`. Descarta las lineas `📌`,
+  cambia `<hash>` y los hashes de 7 caracteres por la misma marca, y quita las parejas con `uniq -u`.
+  Si sale `0`, no hay desfase.
+- **Por que:** un aviso que salta siempre se ignora, y hoy ya fallo en la direccion contraria. Asi el
+  desfase 4 vuelve a significar «entro contenido despues de sellar el estado».
+- **Alternativas descartadas:**
+  - **Dejarlo como deuda:** el aviso seguiria ensenando a ignorarlo mientras tanto.
+  - **Excluir por mensaje de commit («ancla el informe»):** un mensaje no prueba lo que entro; el diff si.
+  - **Reutilizar el filtro de `D-033` tal cual:** no descarta la linea `-` con el ancla sin resolver ni
+    las `📌` sangradas. En `079b0a4..1fc3264` da `13`.
+- **Prueba del filtro:** sobre cuatro anclajes reales tiene que dar `0`, y sobre dos rangos con trabajo
+  real, mas de `0`.
+
+  ```
+  $ f4() { git diff "$1" "$2" -- _persistence | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' | grep -vE '^\+[[:space:]]*(📌 \*\*Anclad|$)' | sed -E 's/^[+-]//; s/<hash>|\b[0-9a-f]{7}\b/<H>/g' | sort | uniq -u; }
+  $ for r in "079b0a4 1fc3264" "a61e453 1add289" "8509c18 f42388a" "27c03bb 9e169f3" "079b0a4^ fdfca7b" "a61e453^ 25b8e41"; do set -- $r; echo "== $1..$2: $(f4 $1 $2 | wc -l)"; done
+  == 079b0a4..1fc3264: 0
+  == a61e453..1add289: 0
+  == 8509c18..f42388a: 0
+  == 27c03bb..9e169f3: 0
+  == 079b0a4^..fdfca7b: 204
+  == a61e453^..25b8e41: 293
+  ```
+
+  Una primera version sin `[[:space:]]*` daba `1` en `079b0a4..1fc3264`: la linea `📌` va sangrada
+  dentro de la vineta.
+- **Consecuencia:** `protocol-start` vuelve a diferir del esqueleto; va en la misma promocion que `D-036`.
+- **Criterio de cierre:** a ese commit, `protocol-start` lleva la tercera orden del desfase 4.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF "s/<hash>|\b[0-9a-f]{7}\b/<H>/g"
+  1
+  ```
+
+### D-038 - R-011 y F-012 quedan retirados por la auditoria revertida
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** segunda recomendacion sin hallazgo de `R-012`. `709050c` creo `R-011` y `F-012`, y
+  `9eb9d49` los revirtio porque esa auditoria no la hizo `report_auditor`. Ningun registro lo decia, y
+  el hueco en las series `R-` y `F-` parece un error:
+
+  ```
+  $ git log --all --format=%h -- _audit/R-011.md
+  9eb9d49
+  709050c
+  $ git show 709050c:_audit/findings.md | grep -oE "^### F-012 - .*"
+  ### F-012 - El anclaje de S-011 se hizo en dos commits, contra la regla de "un unico commit de anclaje"
+  $ git log -1 --format=%B 9eb9d49 | sed -n 3,5p
+  This reverts commit 709050c. R-011 la ejecuto el propio session-closer
+  sobre su cierre, no report_auditor: no es revision independiente. S-011
+  vuelve a Pendiente para que la audite report_auditor en frio.
+  $ git show 1fc3264:_audit/findings.md | grep -cE "^(\| \[F-012\]|### F-012 )"
+  0
+  $ git ls-tree --name-only 1fc3264 _audit/ | grep -c R-011
+  0
+  $ git show 1fc3264:project.md | grep -nE "retirado queda retirado"
+  260:🚨 **Ningun codigo se reutiliza, en ningun archivo.** Un id retirado queda retirado; la entrada que
+  ```
+
+- **Decision:** `R-011` y `F-012` quedan **retirados** y no se reutilizan. Su contenido no vale como
+  auditoria, porque no fue revision independiente. Lo que senalaba `F-012` lo recogio `F-013`, que si
+  abrio `report_auditor`. No se escribe fila para ellos en `_audit/index.md` ni en `findings.md`: esta
+  decision explica el hueco.
+- **Por que:** `project.md` prohibe reutilizar codigos, y sin registro el salto de `R-010` a `R-012` se
+  leeria como un indice roto. Recuperar el contenido revertido daria validez a una autoevaluacion.
+- **Alternativas descartadas:**
+  - **Filas `Retirado` en el tablero y en `findings.md`:** exige un estado que sus convenciones no
+    tienen, y dejaria en el registro de hallazgos una entrada que ninguna auditoria valida abrio.
+  - **Reutilizar los ids:** lo prohibe `project.md`, y `R-012` ya los salto.
+- **Leccion:** `L-013`.
+- **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-038\]|### D-038 )'
+  2
+  ```
+
+### D-039 - El trailer del cierre nombra el modelo que lo ejecuta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-16 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** tercera recomendacion sin hallazgo de `R-012`. El Paso 7 de `protocol-close` fijaba el
+  trailer `Claude Opus 5` literal, y el agente del cierre corre en otro modelo. Los tres commits de
+  `S-011` firmaron con el modelo real:
+
+  ```
+  $ git show 1fc3264:.claude/agents/session-closer.md | head -8 | grep ^model
+  model: sonnet
+  $ git show 1fc3264:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude Opus 5'
+  1
+  $ for c in 079b0a4 fdfca7b 1358c3c; do git log -1 --format="%h %(trailers:key=Co-Authored-By,valueonly)" $c; done
+  079b0a4 Claude Sonnet 5 <noreply@anthropic.com>
+
+  fdfca7b Claude Sonnet 5 <noreply@anthropic.com>
+
+  1358c3c Claude Sonnet 5 <noreply@anthropic.com>
+  ```
+
+- **Decision:** el usuario eligio que la skill pida
+  `Co-Authored-By: Claude <modelo> <noreply@anthropic.com>`, donde `<modelo>` es el modelo que ejecuta
+  el cierre.
+- **Por que:** el trailer dice quien escribio el commit. Con un literal falso, o el agente firma con un
+  modelo que no es el suyo, o contradice la skill.
+- **Alternativas descartadas:**
+  - **Sin cambios:** la contradiccion volveria a salir en cada auditoria.
+  - **Pasar el cierre a Opus:** mas coste en cada cierre solo para cuadrar un literal.
+- **Alcance:** solo `protocol-close`. Las otras skills que fijan `Claude Opus 5` (`protocol-audit`,
+  `protocol-gate1`, `protocol-gate2`) las ejecutan agentes con `model: opus`, y ahi el literal es cierto.
+- **Consecuencia:** va en la misma promocion que `D-036` y `D-037`.
+- **Criterio de cierre:** a ese commit, la skill ya no fija el literal y pide `<modelo>`.
+
+  ```
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude Opus 5'
+  0
+  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude <modelo> <noreply@anthropic.com>'
+  1
+  ```

@@ -37,6 +37,10 @@
 | [T-018](#t-018---completar-d-027-con-los-criterios-sin-anclar-de-sus-precedentes) | Completar D-027 con los criterios sin anclar de sus precedentes | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-019](#t-019---promover-al-esqueleto-de-arranque-lo-que-difiere-en-dt-003) | Promover al esqueleto de arranque lo que difiere en DT-003 | Implementada | Alta | No bloqueante | 005_discovery |
 | [T-020](#t-020---ajustar-por-nota-el-alcance-de-t-019) | Ajustar por nota el alcance de T-019 | Implementada | Media | No bloqueante | 005_discovery |
+| [T-021](#t-021---declarar-por-nota-el-tercer-commit-del-anclaje-de-s-011) | Declarar por nota el tercer commit del anclaje de S-011 | Implementada | Media | No bloqueante | 005_discovery |
+| [T-022](#t-022---poner-el-commit-de-anclaje-detras-de-una-puerta-mecanica) | Poner el commit de anclaje detras de una puerta mecanica | Implementada | Media | No bloqueante | 005_discovery |
+| [T-023](#t-023---hacer-que-el-desfase-4-del-arranque-ignore-los-commits-de-solo-anclaje) | Hacer que el desfase 4 del arranque ignore los commits de solo anclaje | Implementada | Media | No bloqueante | 005_discovery |
+| [T-024](#t-024---hacer-que-el-trailer-del-cierre-nombre-el-modelo-que-lo-ejecuta) | Hacer que el trailer del cierre nombre el modelo que lo ejecuta | Implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -588,3 +592,68 @@ Plantilla:
   de esta sesion sin esperar al anclaje del Paso 7c-bis, que solo publicara la evidencia de
   `D-034` con `<hash>` resuelto.
 - **Criterio de cierre:** el de `D-034`, con sus ordenes ancladas y sus salidas.
+
+### T-021 - Declarar por nota el tercer commit del anclaje de S-011
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-012 |
+
+- **Que:** atender la primera parte de `F-013`. Una nota fechada en la seccion 7 de `_audit/S-011.md`
+  dice que la NOTA DE CIERRE se commiteo en `1358c3c`, no en `fdfca7b`, y que el 7c-ter fallaba en
+  `fdfca7b`. La linea publicada no se reescribe. Segun `D-036`.
+- **Por que:** el informe apunta a un commit donde la nota no esta. Verificacion contra `HEAD`
+  (`1fc3264`) en `D-036`.
+- **Criterio de cierre:** el de `D-036`, con sus ordenes ancladas y sus salidas.
+
+### T-022 - Poner el commit de anclaje detras de una puerta mecanica
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-012 |
+
+- **Que:** atender la segunda parte de `F-013`. El bloque del commit de anclaje de `protocol-close`
+  corre los controles del 7c-ter y del 7c-quater y solo commitea si los dos salen vacios. Segun `D-036`.
+- **Por que:** los dos pasos ya prohibian commitear el anclaje con la nota coja, y un cierre lo hizo
+  igual.
+- **Criterio de cierre:** el de `D-036`, con sus ordenes ancladas y sus salidas.
+
+### T-023 - Hacer que el desfase 4 del arranque ignore los commits de solo anclaje
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-012 |
+
+- **Que:** primera recomendacion sin hallazgo de `R-012`. `protocol-start` anade al desfase 4 una
+  orden que descarta los commits cuyo cambio en `_persistence/` solo ancla `<hash>` y anade lineas `📌`.
+  Segun `D-037`.
+- **Por que:** el aviso salta tras casi cada cierre, y en el arranque de `S-012` ni siquiera se reporto.
+- **Criterio de cierre:** el de `D-037`, con sus ordenes ancladas y sus salidas.
+
+### T-024 - Hacer que el trailer del cierre nombre el modelo que lo ejecuta
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-012 |
+
+- **Que:** tercera recomendacion sin hallazgo de `R-012`. El Paso 7 de `protocol-close` cambia el
+  literal `Claude Opus 5` del trailer por `<modelo>`, el modelo que ejecuta el cierre. Segun `D-039`.
+- **Por que:** el agente del cierre corre en otro modelo, y la skill le pedia firmar con uno que no
+  escribio el commit.
+- **Criterio de cierre:** el de `D-039`, con sus ordenes ancladas y sus salidas.

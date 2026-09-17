@@ -29,6 +29,7 @@
 | `S-009.md` | S-009 | 2026-09-16 | 8509c18 | `R-009.md` | Sin hallazgos | - |
 | `S-010.md` | S-010 | 2026-09-16 | a61e453 | `R-010.md` | Con hallazgos (1) | F-011 |
 | `S-011.md` | S-011 | 2026-09-16 | 079b0a4 | `R-012.md` | Con hallazgos (1) | F-013 |
+| `S-012.md` | S-012 | 2026-09-17 | Pendiente | Pendiente | Pendiente | - |
 
 ---
 
