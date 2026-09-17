@@ -32,7 +32,8 @@
 | [F-008](#f-008---el-control-sin-anclar-del-7c-quater-salta-con-prosa-y-el-anclaje-de-s-006-se-commiteo-igual) | El control SIN ANCLAR del 7c-quater salta con prosa y el anclaje de S-006 se commiteo igual | R-006 | Media | Implementado |
 | [F-009](#f-009---la-seccion-9-de-s-007-atribuye-el-desfase-con-el-esqueleto-a-dt-001-que-esta-implementada) | La seccion 9 de S-007 atribuye el desfase con el esqueleto a DT-001, que esta Implementada | R-007 | Baja | Implementado |
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | Implementado |
-| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Aceptado — pendiente |
+| [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | Implementado |
+| [F-012](#f-012---el-anclaje-de-s-011-se-hizo-en-dos-commits-contra-la-regla-de-un-unico-commit-de-anclaje) | El anclaje de S-011 se hizo en dos commits, contra la regla de "un unico commit de anclaje" | R-011 | Baja | Abierto |
 
 ---
 
@@ -329,9 +330,9 @@ Plantilla:
 | Auditoria | R-010 |
 | Fecha | 2026-09-16 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-020, D-034 |
-| Cerrado en | |
+| Cerrado en | 079b0a4 (R-011) |
 
 - **Que se observo:** en `a61e453`, el «Que» de `T-019` incluye la frase de `D-028` en la promocion al
   esqueleto y la tarea esta `Implementada`; `D-032`, en el mismo commit, dice que esa frase se dejo fuera,
@@ -346,3 +347,23 @@ Plantilla:
   `D-034`. Se elige la opcion (a): nota fechada en `T-019` que saca la frase de `D-028` de su alcance y
   remite a `D-032`/`DT-004`, con la comparacion de blobs contra el esqueleto. `T-019` sigue
   `Implementada`. Registrado en `T-020`.
+
+### F-012 - El anclaje de S-011 se hizo en dos commits, contra la regla de "un unico commit de anclaje"
+| Campo | Valor |
+|---|---|
+| Auditoria | R-011 |
+| Fecha | 2026-09-16 |
+| Gravedad | Baja |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el Paso 7c de `protocol-close` exige rellenar los cuatro sitios del anclaje
+  juntos, en un unico commit. El cierre de `S-011` lo hizo en dos: `fdfca7b` dejo la NOTA DE CIERRE de
+  la seccion 7 con un marcador de pendiente, y un segundo commit, `1358c3c`, la completo. Es el primer
+  commit de "completar" que aparece en el historial de anclajes (`S-001` a `S-010` usaron uno solo
+  cada una). Comando y salida en `_audit/R-011.md`, seccion 2.
+- **Por que importa:** no corrompe evidencia (el commit sustantivo, la cabecera y los criterios
+  quedaron correctos y verificables), pero deja el anclaje partido donde el protocolo pide un solo
+  commit, lo que dificulta identificar cual commit es "el" de anclaje sin abrir los dos. `Baja`.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
