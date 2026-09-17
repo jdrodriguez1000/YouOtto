@@ -34,7 +34,8 @@
 | [F-010](#f-010---t-014-y-t-015-quedan-no-implementada-con-el-trabajo-en-el-diff-y-el-informe-dice-que-es-la-practica-de-sesiones-anteriores) | T-014 y T-015 quedan No implementada con el trabajo en el diff, y el informe dice que es la practica de sesiones anteriores | R-008 | Media | — | Implementado |
 | [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | — | Implementado |
 | [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | — | Implementado |
-| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Aceptado — pendiente |
+| [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
+| [F-015](#f-015---el-control-de-cifra-adyacente-publicado-en-la-nota-de-cierre-de-s-013-no-reproduce-contra-el-commit-de-anclaje-por-su-propia-insercion) | El CONTROL DE CIFRA ADYACENTE publicado en la NOTA DE CIERRE de S-013 no reproduce contra el commit de anclaje, por su propia insercion | R-014 | Media | No bloqueante | Abierto |
 
 ---
 
@@ -394,9 +395,9 @@ Plantilla:
 | Auditoria | R-013 |
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | T-025, T-026, D-041 |
-| Cerrado en | |
+| Cerrado en | d54e314 |
 
 - **Que se observo:** `cf2992f` (fecha de commit `2026-09-17`, sesion `S-012` fechada `2026-09-17`)
   anade en `_audit/S-011.md` una «Nota 2026-09-16 (`F-013`, `T-021`), escrita por `manager` en la
@@ -412,3 +413,44 @@ Plantilla:
   `D-041`. El usuario eligio las dos partes: notas fechadas en las seis entradas, que dan `2026-09-17`
   sin reescribir la fecha publicada (`T-025`), y un control en el Paso 7d de `protocol-close` que lista
   las fechas que anade el commit distintas de la suya (`T-026`).
+
+### F-015 - El CONTROL DE CIFRA ADYACENTE publicado en la NOTA DE CIERRE de S-013 no reproduce contra el commit de anclaje, por su propia insercion
+| Campo | Valor |
+|---|---|
+| Auditoria | R-014 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | |
+| Cerrado en | |
+
+- **Que se observo:** el bloque **CONTROL DE CIFRA ADYACENTE — salida:** de la NOTA DE CIERRE de
+  `_audit/S-013.md` publica una lista de 16 lineas y afirma «Ninguna de las dieciseis lineas afirma
+  una cifra que no salga...». Reejecutando la misma orden sobre el commit ya anclado (`17d769f`):
+
+  ```
+  $ git show 17d769f:_audit/S-013.md > /tmp/s013_head.md
+  $ awk '
+    /^[[:space:]]*```/ { infence = !infence; if (!infence) { since=0; armed=1 } ; next }
+    infence { next }
+    armed { since++; if (since<=3 && $0 ~ /[0-9]/ && $0 !~ /^[[:space:]]*$/) print FILENAME":"NR": "$0; if (since>3) armed=0 }
+  ' /tmp/s013_head.md | wc -l
+  ```
+  ```
+  18
+  ```
+
+  Las dos lineas de mas son la propia frase de cierre del bloque (que cita "13 ordenes ancladas", y
+  quedo dentro de las tres lineas siguientes al cierre de su propio bloque de codigo, autocapturandose)
+  y el desplazamiento de las dos frases ya revisadas de las secciones 8 y 9, que al insertarse el
+  propio bloque de la CIFRA ADYACENTE se corrieron a una linea distinta de la anotada como «publicada».
+- **Por que importa:** el bloque existe para que una cifra publicada como completa se pueda
+  contrastar sin rehacer nada. Aqui la cifra de completitud no reproduce contra el commit que la
+  contiene — el mismo defecto que el control persigue, colandose en el bloque que se escribio para
+  impedirlo. No hay ninguna cifra sustantiva falsa: las dos lineas nuevas remiten a numeros ya
+  justificados en el propio informe, y ninguna conclusion del cierre cambia.
+- **Que lo corregiria:** correr el CONTROL DE CIFRA ADYACENTE despues de pegar su propio bloque y su
+  parrafo de cierre en el informe, no antes; o declarar en la propia nota que el recuento es previo a
+  esa insercion y que una segunda pasada sobre el commit final puede devolver un numero mayor por esa
+  causa.
