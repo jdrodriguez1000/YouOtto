@@ -38,7 +38,7 @@
 | [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado |
-| [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Abierto |
+| [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Aceptado — pendiente |
 
 ---
 
@@ -487,8 +487,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-034, D-059 |
 | Cerrado en | |
 
 - **Que se observo:** en `eda6314`, el bloque de verificacion de `T-029` publica `grep -c "^### N-0"
@@ -503,4 +503,6 @@ Plantilla:
   del criterio si se cumple (hay cuatro necesidades reales) y ningun control depende de la cifra.
   `No bloqueante`: nada hereda el defecto, pero la cifra volvera a valer `4` sola al borrar la guia
   cuando se cierre el artefacto, y entonces el defecto dejaria de poder detectarse.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** verificado contra `HEAD` (`e18bf5b`): sigue vivo, la orden devuelve `5`. Aceptado con
+  `D-059` y corregido en la misma sesion con `T-034` — nota fechada en `T-029` con la orden anclada a
+  `e18bf5b` y su salida real; la cifra publicada no se reescribe.

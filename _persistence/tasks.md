@@ -50,6 +50,8 @@
 | [T-031](#t-031---corregir-por-nota-la-cifra-de-la-nota-de-cierre-de-s-013) | Corregir por nota la cifra de la NOTA DE CIERRE de S-013 | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-032](#t-032---limitar-las-skills-que-puede-invocar-el-agente-de-cierre) | Limitar las skills que puede invocar el agente de cierre | No implementada | Alta | No bloqueante | 005_discovery |
 | [T-033](#t-033---publicar-por-nota-las-ordenes-del-paso-1b-y-del-barrido-que-d-045-resume) | Publicar por nota las ordenes del Paso 1b y del barrido que D-045 resume | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-034](#t-034---corregir-por-nota-la-cifra-del-criterio-de-cierre-de-t-029) | Corregir por nota la cifra del criterio de cierre de T-029 | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-035](#t-035---anclar-por-nota-la-cifra-del-barrido-del-paso-1-de-protocol-harvest-en-d-062) | Anclar por nota la cifra del barrido del Paso 1 de protocol-harvest en D-062 | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -771,6 +773,27 @@ Plantilla:
   cumplido y reproduce; `010_actors.md` y `015_stakeholders.md` siguen `BORRADOR`, y la condicion de
   salida de la etapa (`_phases/005_discovery.md` §6) no se comprobo en esta sesion. Ver «Sin resolver»
   del informe de `S-015`.
+- 🕐 **Nota 2026-09-17 (`F-019`, `D-059`):** la cifra `4` que publica el bloque de arriba **no es la que
+  devuelve su orden**: son `5`. La quinta coincidencia es el ejemplo de ficha que trae la seccion «Guia
+  de llenado» de la plantilla, que sigue en el archivo porque el artefacto esta `BORRADOR` y esa seccion
+  se borra al cerrarlo. El enunciado del criterio se cumple igual: las necesidades reales son cuatro
+  (`N-001` a `N-004`, lineas 56 a 101). Lo publicado arriba no se reescribe; la salida correcta es esta,
+  anclada a `e18bf5b`:
+
+  ```
+  $ git show e18bf5b:005_discovery/005_needs.md | grep -c "^### N-0"
+  5
+  $ git show e18bf5b:005_discovery/005_needs.md | grep -n "^### N-0"
+  56:### N-001 · Combinacion en maximo un minuto
+  71:### N-002 · Saber por que entra cada numero
+  86:### N-003 · Saber cuantos numeros acerte
+  101:### N-004 · Saber con que acumulado se juega
+  185:### N-001 · Pedir recogida sin llamar
+  $ git show e18bf5b:005_discovery/005_needs.md | grep -n "Guia de llenado"
+  145:- [ ] La seccion «Guia de llenado» de abajo **esta borrada**.
+  152:grep -n "Guia de llenado" 005_discovery/005_needs.md   # debe no devolver nada
+  162:## Guia de llenado — ⚠️ BORRAR esta seccion al cerrar el artefacto
+  ```
 
 ### T-030 - Publicar por nota la orden sin filtro que D-041 cita
 | Campo | Valor |
@@ -840,3 +863,44 @@ Plantilla:
   salidas. Lo publicado no se reescribe. Segun `D-049`.
 - **Por que:** un resultado sin su orden no es reproducible.
 - **Criterio de cierre:** el de `D-049`.
+
+### T-034 - Corregir por nota la cifra del criterio de cierre de T-029
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-016 |
+
+- **Que:** `F-019`. Nota fechada en `T-029` que publica, anclada a `e18bf5b`, la salida real de
+  `grep -c "^### N-0" 005_discovery/005_needs.md` (`5`) y de donde sale la quinta coincidencia. La cifra
+  publicada no se reescribe. Segun `D-059`.
+- **Por que:** el registro publica una salida que su propia orden no devuelve, y es la evidencia que
+  cierra una tarea `Alta`/`Bloqueante`.
+- **Criterio de cierre:** el de `D-059`.
+
+### T-035 - Anclar por nota la cifra del barrido del Paso 1 de protocol-harvest en D-062
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | session-closer |
+| Sesion | S-016 |
+
+- **Que:** el Paso 2d de `protocol-close`, al correr sobre esta sesion, encontro que el bloque de
+  `D-062` con la orden `grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c
+  'Sin evaluar'` publica `8`, y esa orden reejecutada sobre el commit de esta sesion (que ya trae
+  `lessons.md` con las ocho lecciones evaluadas) devuelve `1` — el `L-016` que nace en esta misma
+  sesion y queda `Sin evaluar`. El bloque documenta el barrido inicial del Paso 1 de
+  `protocol-harvest`, antes de que este cierre anadiera `L-016`; no esta anclado a un commit ni
+  fechado como «al momento de escribir esta entrada». `decisions.md` no es un archivo que este
+  protocolo pueda editar.
+- **Por que:** un resultado sin ancla ni fecha explicita dentro de una entrada que si mide algo
+  reproducible deja de poder contrastarse en cuanto el arbol cambia, que es exactamente lo que
+  paso en esta misma sesion.
+- **Criterio de cierre:** `manager` ancla la orden al commit anterior a esta sesion, o la marca
+  explicitamente como «al momento de escribir esta entrada», por nota fechada en `D-062`.

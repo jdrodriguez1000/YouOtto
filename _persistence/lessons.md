@@ -27,14 +27,15 @@
 | [L-005](#l-005---una-orden-escrita-al-registro-por-un-script-se-reejecuta-copiandola-del-archivo) | Una orden escrita al registro por un script se reejecuta copiandola del archivo | 2026-09-16 | 000_preproject | Ya cubierta por LG-103 |
 | [L-006](#l-006---un-criterio-que-busca-un-texto-se-excluye-a-si-mismo-del-recuento) | Un criterio que busca un texto se excluye a si mismo del recuento | 2026-09-16 | 000_preproject | Ya cubierta por LG-101 |
 | [L-007](#l-007---un-criterio-que-comparten-dos-entradas-se-copia-del-archivo-no-se-reescribe) | Un criterio que comparten dos entradas se copia del archivo, no se reescribe | 2026-09-16 | 000_preproject | Ya cubierta por LG-98 |
-| [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Sin evaluar |
-| [L-014](#l-014---una-exclusividad-que-ya-fallo-se-pone-en-la-herramienta-no-en-el-texto) | Una exclusividad que ya fallo se pone en la herramienta, no en el texto | 2026-09-17 | 005_discovery | Sin evaluar |
-| [L-015](#l-015---un-bloqueo-se-prueba-en-los-dos-casos-el-prohibido-y-el-permitido) | Un bloqueo se prueba en los dos casos: el prohibido y el permitido | 2026-09-17 | 005_discovery | Sin evaluar |
+| [L-008](#l-008---una-firma-que-el-artefacto-espera-se-escribe-en-el-artefacto-no-solo-en-el-registro) | Una firma que el artefacto espera se escribe en el artefacto, no solo en el registro | 2026-09-16 | 005_discovery | Promovida a LG-106 |
+| [L-009](#l-009---un-control-nuevo-se-prueba-tambien-sobre-el-texto-que-lo-describe) | Un control nuevo se prueba tambien sobre el texto que lo describe | 2026-09-16 | 005_discovery | Ya cubierta por LG-101 |
+| [L-010](#l-010---la-prueba-de-que-un-control-no-detecta-algo-lleva-su-caso-positivo-al-lado) | La prueba de que un control no detecta algo lleva su caso positivo al lado | 2026-09-16 | 005_discovery | Ya cubierta por LG-22 |
+| [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Promovida a LG-107 |
+| [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Promovida a LG-108 |
+| [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Ya cubierta por LG-100 |
+| [L-014](#l-014---una-exclusividad-que-ya-fallo-se-pone-en-la-herramienta-no-en-el-texto) | Una exclusividad que ya fallo se pone en la herramienta, no en el texto | 2026-09-17 | 005_discovery | Promovida a LG-109 |
+| [L-015](#l-015---un-bloqueo-se-prueba-en-los-dos-casos-el-prohibido-y-el-permitido) | Un bloqueo se prueba en los dos casos: el prohibido y el permitido | 2026-09-17 | 005_discovery | Promovida a LG-22 |
+| [L-016](#l-016---una-cifra-escrita-donde-no-se-puede-corregir-se-cuenta-antes-no-despues) | Una cifra escrita donde no se puede corregir se cuenta antes, no despues | 2026-09-17 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -365,3 +366,26 @@ Plantilla:
   prohibido solo decide si la barrera sirve.
 - **Como aplicarla:** al montar cualquier bloqueo —hook, permiso, validacion—, la prueba lleva siempre la
   pareja: una entrada que debe pasar y una que no.
+
+### L-016 - Una cifra escrita donde no se puede corregir se cuenta antes, no despues
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** `D-062`, la cosecha de `005_discovery`. El mismo dia en que se evaluo `F-019`, que abre
+  precisamente por una cifra publicada que su propia orden no devuelve.
+- **Que ocurrio:** el cuerpo del mensaje del commit `a9ed27b`, en el repositorio de lecciones, dice «No
+  suben cuatro» y a continuacion lista tres. El reparto real —cuatro promovidas, una enmienda, tres ya
+  cubiertas— estaba bien en el archivo y bien en la tabla que se aprobo; lo unico mal es la cifra del
+  mensaje. Y el mensaje de un commit ya subido no se enmienda: `protocol-harvest` prohibe reescribir
+  historia en los dos repositorios, asi que el defecto se queda ahi y solo se puede declarar aparte.
+- **Leccion:** una cifra que resume una lista se escribe **contando la lista**, no recordandola — y en un
+  soporte que no admite correccion, ese descuido no tiene arreglo, solo declaracion. Que la misma jornada
+  estuviera tratando un hallazgo de esa forma exacta no ayudo: conocer la forma del fallo no protege del
+  fallo cuando la cifra se escribe de memoria.
+- **Como aplicarla:** antes de escribir un mensaje de commit, un acta o cualquier texto que no se vaya a
+  poder corregir, toda cifra que resuma un conjunto se contrasta contra el conjunto que tiene al lado. Si
+  el texto ya esta subido, se corrige por declaracion fechada donde si se pueda escribir, nunca
+  reescribiendo historia.

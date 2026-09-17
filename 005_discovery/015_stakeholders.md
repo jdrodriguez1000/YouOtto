@@ -4,9 +4,9 @@
 |---|---|
 | Artefacto | `005_discovery/015_stakeholders.md` |
 | Etapa que lo produce | `005_discovery` |
-| Estado | `BORRADOR` |
+| Estado | `CERRADO` |
 | Abierto | `2026-09-17` |
-| Cerrado | `—` |
+| Cerrado | `2026-09-17` |
 | Escrito por | `manager` |
 
 > ⚠️ **Las dos fechas las lee `report_auditor` y las cruza contra el historial de `git`.** Una fecha
@@ -70,8 +70,6 @@ Solo llevan ficha los que pueden **bloquear** algo. Los demas se quedan en la ta
 | Como se llega a el | No hay canal. Es una organizacion con la que este proyecto no tiene relacion |
 | Consultado el | TODAVIA NO → `A-008` |
 
-<!-- Copia el bloque para I-002, I-003, … -->
-
 🚨 **Un interesado que puede bloquear y con el que nadie ha hablado todavia no es un riesgo
 abstracto: es una fecha que aun no ha llegado.** Si «Consultado el» dice `TODAVIA NO`, eso es un
 `A-XXX` en `_persistence/assumptions.md` —con su forma de validarlo y su disparador—, no una casilla
@@ -114,16 +112,16 @@ El rastro de las personas que se consideraron y donde aterrizaron. Existe porque
 
 ## 6. Comprobacion antes de cerrar este archivo
 
-- [ ] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
-- [ ] Cada uno dice **que aporta** y **que puede bloquear**; ninguna de las dos vacia.
-- [ ] Los que pueden bloquear tienen **ficha**, con el momento en que bloquean.
-- [ ] Ningun interesado esta aqui solo porque «hay que tenerlo contento».
-- [ ] Nadie aparece como interesado **solo** por usar la aplicacion → ese es un actor.
-- [ ] Los que son las dos cosas estan en §5 y en `010_actors.md`.
-- [ ] Los `TODAVIA NO` consultados tienen su `A-XXX` en `_persistence/assumptions.md`.
-- [ ] **No queda ni un solo `<` en el archivo.**
-- [ ] La seccion «Guia de llenado» **esta borrada**.
-- [ ] La cabecera dice `CERRADO` y tiene fecha de cierre.
+- [x] **Los interesados estan identificados** — es una de las seis condiciones de salida de la etapa.
+- [x] Cada uno dice **que aporta** y **que puede bloquear**; ninguna de las dos vacia.
+- [x] Los que pueden bloquear tienen **ficha**, con el momento en que bloquean.
+- [x] Ningun interesado esta aqui solo porque «hay que tenerlo contento».
+- [x] Nadie aparece como interesado **solo** por usar la aplicacion → ese es un actor.
+- [x] Los que son las dos cosas estan en §5 y en `010_actors.md`.
+- [x] Los `TODAVIA NO` consultados tienen su `A-XXX` en `_persistence/assumptions.md`.
+- [x] **No queda ni un solo `<` en el archivo.**
+- [x] La seccion «Guia de llenado» **esta borrada**.
+- [x] La cabecera dice `CERRADO` y tiene fecha de cierre.
 
 ```bash
 grep -n "<" 005_discovery/015_stakeholders.md                 # debe no devolver nada
@@ -133,56 +131,8 @@ grep -n "TODAVIA NO" 005_discovery/015_stakeholders.md        # cada linea neces
 
 🚨 **La salida cruda de las tres ordenes va al registro**, no la conclusion.
 
----
----
-
-## Guia de llenado — ⚠️ BORRAR esta seccion al cerrar el artefacto
-
-> Existe para escribir el archivo. **No sobrevive al cierre de la etapa.**
-
-### Las ocho formas de ser interesado
-
-Decidir · financiar · definir politicas · aportar conocimiento · aprobar resultados · verse
-afectado · representar usuarios · imponer restricciones legales o tecnicas.
-
-Si alguien no encaja en ninguna, probablemente no es un interesado.
-
-### Actor o interesado — la pregunta que lo resuelve
-
-> **¿Abriria la aplicacion para hacer su trabajo?**
-> **Si → actor** (va en `010_actors.md`). **No, pero puede parar el proyecto → interesado.**
-
-Y si, puede ser los dos. El gerente que revisa los informes **y** firma el presupuesto es Supervisor
-en `010_actors.md` e `I-00X` aqui. No se elige uno: se escriben los dos.
-
-### Ejemplo — app de recogida de reciclaje
-
-*(otro dominio a proposito, para que no se confunda con el proyecto que se este escribiendo)*
-
-| # | Persona o rol | Rol frente al proyecto | Que aporta | Que puede bloquear |
-|---|---|---|---|---|
-| `I-001` | Director de operaciones | financia y aprueba | el presupuesto del producto minimo | la inversion, en el Gate posterior |
-| `I-002` | Juridica | impone restricciones | la politica de datos personales | el acceso a datos de clientes |
-| `I-003` | Jefe de flota | se ve afectado | conoce las rutas reales | nada formalmente, pero su gente ejecuta |
-
-### Errores que esta plantilla existe para evitar
-
-| Error | Como se ve | Que hacer |
-|---|---|---|
-| Lista de organigrama | doce nombres, ninguno con «que bloquea» | quitar a los que ni aportan ni bloquean |
-| Interesado que es actor | el analista que usa la aplicacion esta aqui y no en actores | va en `010_actors.md`; aqui solo si ademas influye |
-| «Que puede bloquear: nada» | la columna rellena por cortesia | si no bloquea nada, no lleva ficha; si tampoco aporta, sale de la tabla |
-| Bloqueo sin momento | «podria oponerse» | *que decision* se detiene y *cuando* llega esa decision |
-| Juridica descubierta tarde | aparece cuando ya se esta construyendo | quien impone restricciones legales se busca **en esta etapa** |
-| Confundir patrocinador con Generador | «el que paga es el usuario» | el patrocinador financia; el Generador **usa**. Casi nunca son el mismo |
-
-### Lo que esta etapa tiene PROHIBIDO, y aqui se cuela solo
-
-**Prometer alcance o fechas.** Una reunion con quien financia empuja sola hacia «entonces en octubre
-estaria». No hay evidencia todavia para prometer nada: lo que sale de aqui es quien decide, no
-cuando se entrega.
-
-📌 Definiciones: `_methodology/000_method.md` §12.
-📌 Procedimiento: `_phases/005_discovery.md` §4, paso 5.
-📌 Donde van las restricciones que imponga un interesado: `_persistence/constraints.md`, como
-`C-XXX`. Lo que aun no este confirmado, `_persistence/assumptions.md`, como `A-XXX`.
+⚠️ **Los dos primeros no pueden devolver vacio en este archivo, y no es un hueco sin rellenar:** las
+unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+nombra para enunciar la comprobacion. La guia se borro; el cuerpo del artefacto no tiene ni un hueco.
+El tercero si devuelve lineas, y debe: `I-002` sigue sin consultar, y esa es exactamente la fecha que
+`A-008` esta esperando. Su salida, con el alcance que lo demuestra, va en `D-060`.

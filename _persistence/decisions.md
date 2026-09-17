@@ -79,6 +79,10 @@
 | [D-056](#d-056---la-aplicacion-no-guarda-identidad-y-a-001-queda-refutado) | La aplicacion no guarda identidad, y A-001 queda refutado | 2026-09-17 | Vigente |
 | [D-057](#d-057---interesados-del-proyecto-y-declaracion-de-i-xxx) | Interesados del proyecto y declaracion de I-XXX | 2026-09-17 | Vigente |
 | [D-058](#d-058---hipotesis-sellada-de-005_discovery) | Hipotesis sellada de 005_discovery | 2026-09-17 | Vigente |
+| [D-059](#d-059---f-019-se-acepta-y-se-corrige-por-nota-en-esta-sesion) | F-019 se acepta y se corrige por nota en esta sesion | 2026-09-17 | Vigente |
+| [D-060](#d-060---se-cierran-los-artefactos-de-actores-e-interesados) | Se cierran los artefactos de actores e interesados | 2026-09-17 | Vigente |
+| [D-061](#d-061---objetivo-y-alcance-del-proyecto) | Objetivo y alcance del proyecto | 2026-09-17 | Vigente |
+| [D-062](#d-062---cosecha-de-005_discovery-al-archivo-de-lecciones-globales) | Cosecha de 005_discovery al archivo de lecciones globales | 2026-09-17 | Vigente |
 
 ---
 
@@ -3224,3 +3228,287 @@ Plantilla:
 📌 **Anclada por el Paso 7c-bis al commit `eda6314`.** Reproduce lo publicado arriba.
 
 - **Tarea:** `T-029`. **Necesidades:** `N-001`, `N-002`.
+
+### D-059 - F-019 se acepta y se corrige por nota en esta sesion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-017` abrio `F-019` sobre `S-015` (`eda6314`), `Media` y `No bloqueante`: el bloque de
+  verificacion de `T-029` publica `4` donde su orden devuelve `5`, y la seccion 7 del informe la listo
+  con `Reproduce: Si`. Verificado contra `HEAD` (`e18bf5b`):
+
+  ```
+  $ git rev-parse --short HEAD
+  e18bf5b
+  $ grep -c "^### N-0" 005_discovery/005_needs.md
+  5
+  $ grep -n "^### N-0" 005_discovery/005_needs.md
+  56:### N-001 · Combinacion en maximo un minuto
+  71:### N-002 · Saber por que entra cada numero
+  86:### N-003 · Saber cuantos numeros acerte
+  101:### N-004 · Saber con que acumulado se juega
+  185:### N-001 · Pedir recogida sin llamar
+  $ git show e18bf5b:005_discovery/005_needs.md | grep -n "Guia de llenado"
+  145:- [ ] La seccion «Guia de llenado» de abajo **esta borrada**.
+  152:grep -n "Guia de llenado" 005_discovery/005_needs.md   # debe no devolver nada
+  162:## Guia de llenado — ⚠️ BORRAR esta seccion al cerrar el artefacto
+  ```
+
+  El hallazgo sigue vivo en `HEAD`, y su calificacion es correcta: la quinta coincidencia es el ejemplo
+  de ficha de la «Guia de llenado», no una necesidad, asi que el **enunciado** del criterio se cumple y
+  lo que falla es solo la cifra publicada.
+- **Decision:** se acepta y, por decision del usuario, **se corrige en esta sesion** (`T-034`): nota
+  fechada en `T-029` con la orden anclada a `e18bf5b` y su salida real, y de donde sale la quinta
+  coincidencia. La cifra publicada no se reescribe. `F-019` queda `Aceptado — pendiente`: lo cierra la
+  auditoria siguiente.
+- **Por que:** el hallazgo se sostiene contra el repositorio, y la reproduccion ya estaba hecha al
+  verificarlo, asi que corregirlo costaba solo escribirla. Ademas, la cifra volvera a valer `4` sola el
+  dia que se borre la guia al cerrar el artefacto, y entonces el defecto dejaria de poder detectarse.
+- **Alternativas descartadas:**
+  - **Aceptar y aplazar, como `F-016` y `F-017` con `D-046`:** dejaba el registro publicando una cifra
+    falsa durante toda la etapa, y con fecha de caducidad — al borrar la guia ya no se podria contrastar.
+  - **Reescribir el `4` por un `5` en el bloque de `T-029`:** convierte «falta evidencia» en «hay
+    evidencia falsa»; lo publicado no se reescribe.
+  - **Anadir al criterio una orden acotada que excluya la «Guia de llenado» y devuelva `4`:** publicaria
+    como evidencia de `S-015` una orden que nadie corrio en `S-015`.
+  - **Tratar el hallazgo como defecto del control del Paso 2d y abrir tarea sobre el:** ya esta
+    inventariado como `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes); abrir otra
+    entrada duplicaria la misma deuda.
+- **Criterio de cierre:** a ese commit, `T-029` lleva la nota con la orden anclada y su salida, y `F-019`
+  cita su tarea en indice y ficha.
+
+  ```
+  $ git show <hash>:_persistence/tasks.md | sed -n '/^### T-029 /,/^### T-030 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-019`, `D-059`\)|^\s*\$ git show e18bf5b:005_discovery/005_needs.md \| grep -c'
+  2
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-019\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-034, D-059 \|$'
+  2
+  ```
+
+- **Tarea:** `T-034`.
+
+### D-060 - Se cierran los artefactos de actores e interesados
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `010_actors.md` y `015_stakeholders.md` quedaron `BORRADOR` al final de `S-015`, con su
+  contenido ya decidido (`D-055`, `D-056`, `D-057`) pero sin el cierre formal del artefacto. Dos de las
+  siete casillas de la condicion de salida de la etapa (`_phases/005_discovery.md` §6) dependen de ellos.
+  El usuario pide cerrarlos antes de tratar el alcance.
+- **Decision:** los dos pasan a `CERRADO` con fecha `2026-09-17`. Se borra la seccion «Guia de llenado»
+  de cada uno, se marcan las casillas de su seccion de comprobacion, y en `015_stakeholders.md` se borra
+  ademas el comentario `<!-- Copia el bloque para I-002, I-003, … -->`, que era un hueco de la plantilla
+  y no contenido. **El contenido de las secciones 1 a 5 no se toca:** lo que se cierra es el artefacto,
+  no se reabre lo decidido.
+- **Por que:** un artefacto en `BORRADOR` no cuenta para la condicion de salida, y la guia de llenado no
+  sobrevive al cierre de la etapa por diseno de la plantilla. Ademas, borrar la guia de `005_needs.md`
+  hara que la cifra de `F-019` vuelva a `4` por si sola — por eso la nota de `T-029` se ancla a `e18bf5b`,
+  que es donde el defecto todavia se puede observar.
+- **Alternativas descartadas:**
+  - **Cerrarlos junto con el alcance, en una sola pasada:** el alcance es una conversacion con el
+    patrocinador y no tiene fecha; los artefactos ya estaban listos y no dependen de el.
+  - **Dejar `015_stakeholders.md` abierto hasta consultar a Baloto:** `A-008` tiene su disparador antes
+    del primer codigo del prototipo, no en esta etapa; el artefacto declara el `TODAVIA NO` con su
+    supuesto, que es justo lo que la plantilla pide.
+  - **Cerrar tambien `005_needs.md` en la misma pasada:** no se pidio, y borrar ahora su guia haria
+    desaparecer la evidencia de `F-019` antes de que la auditoria pueda cerrarlo.
+- **Verificacion.** Las seis ordenes de las secciones de comprobacion de los dos artefactos, sobre el
+  arbol de trabajo:
+
+  ```
+  $ grep -n "<" 005_discovery/010_actors.md
+  123:- [x] **No queda ni un solo `<` en el archivo.**
+  128:grep -n "<" 005_discovery/010_actors.md                 # debe no devolver nada
+  140:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -n "Guia de llenado" 005_discovery/010_actors.md
+  124:- [x] La seccion «Guia de llenado» **esta borrada**.
+  129:grep -n "Guia de llenado" 005_discovery/010_actors.md   # debe no devolver nada
+  140:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -ni "invitado" 005_discovery/010_actors.md
+  102:⚠️ **No existe «Actor Invitado».** «Invitado» describe una **condicion de acceso**, no un
+  120:- [x] No aparece ningun «Actor Invitado» — lo temporal y lo externo estan en §4.
+  130:grep -ni "invitado" 005_discovery/010_actors.md         # SOLO la advertencia de §4, ni una linea mas
+  $ grep -n "<" 005_discovery/015_stakeholders.md
+  122:- [x] **No queda ni un solo `<` en el archivo.**
+  127:grep -n "<" 005_discovery/015_stakeholders.md                 # debe no devolver nada
+  135:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -n "Guia de llenado" 005_discovery/015_stakeholders.md
+  123:- [x] La seccion «Guia de llenado» **esta borrada**.
+  128:grep -n "Guia de llenado" 005_discovery/015_stakeholders.md   # debe no devolver nada
+  135:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  $ grep -n "TODAVIA NO" 005_discovery/015_stakeholders.md
+  71:| Consultado el | TODAVIA NO → `A-008` |
+  74:abstracto: es una fecha que aun no ha llegado.** Si «Consultado el» dice `TODAVIA NO`, eso es un
+  121:- [x] Los `TODAVIA NO` consultados tienen su `A-XXX` en `_persistence/assumptions.md`.
+  129:grep -n "TODAVIA NO" 005_discovery/015_stakeholders.md        # cada linea necesita su A-XXX
+  ```
+
+  Ninguna de las cuatro primeras deja una linea fuera de su propia seccion de comprobacion: la guia se
+  borro en los dos. «Invitado» sale solo en la advertencia de §4 y en las lineas que la enuncian, no en
+  ninguna fila de §1. `TODAVIA NO` sale en `I-002`, con su `A-008` al lado.
+- **Criterio de cierre:** a ese commit, los dos artefactos dicen `CERRADO` con su fecha, y ninguno
+  conserva la seccion «Guia de llenado» fuera de su comprobacion.
+
+  ```
+  $ git show <hash>:005_discovery/010_actors.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
+  2
+  $ git show <hash>:005_discovery/015_stakeholders.md | grep -cE '^\| Estado \| `CERRADO` \|$|^\| Cerrado \| `2026-09-17` \|$'
+  2
+  $ git show <hash>:005_discovery/010_actors.md | grep -c '^## Guia de llenado'
+  0
+  $ git show <hash>:005_discovery/015_stakeholders.md | grep -c '^## Guia de llenado'
+  0
+  ```
+
+- **Necesidades:** `N-001`, `N-002`, `N-003`, `N-004`. **Interesados:** `I-001`, `I-002`.
+
+### D-061 - Objetivo y alcance del proyecto
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** la sexta casilla de la condicion de salida de `005_discovery` (`_phases/005_discovery.md`
+  §6) pide el alcance y el objetivo definidos y registrados con su `D-XXX`, y era la unica de las siete
+  sin nada escrito. Las cuatro necesidades estan en `005_needs.md`, pero la hipotesis sellada
+  (`020_hypothesis.md` §3) solo apuesta por `N-001` y `N-002`, asi que decidir el alcance era decidir
+  que hacer con `N-003` y `N-004`. Lo zanja el patrocinador (`I-001`), que es quien aprueba el alcance
+  segun `015_stakeholders.md` §4.
+- **Decision:** tres partes.
+
+  1. **Objetivo del proyecto.** Que JD Rodriguez obtenga en menos de un minuto, y pudiendo explicar de
+     donde salio cada numero, la combinacion de 6 que hoy arma a mano en 40 a 60 minutos — sin que la
+     aplicacion pretenda acertar mas.
+  2. **Alcance del proyecto: las cuatro necesidades.** `N-001` (combinacion en un minuto), `N-002`
+     (explicacion numero por numero), `N-003` (cuantos numeros acerto) y `N-004` (acumulado del proximo
+     sorteo). En consecuencia: **la aplicacion guarda las apuestas jugadas** —sin dueno, como ya preve
+     `C-005`—, porque sin registro de lo jugado `N-003` no se puede cumplir; y **la aplicacion lee el
+     sitio oficial de Baloto**, sin paso manual del jugador.
+  3. **Alcance del prototipo: solo lo que la hipotesis mide.** La etapa siguiente construye `N-001` y
+     `N-002`; `N-003` y `N-004` llegan en el producto minimo. El prototipo es descartable y existe para
+     saber pronto si la apuesta central se sostiene.
+
+  **Fuera de alcance, dicho:** acertar mas (los sorteos son independientes, `020_hypothesis.md` §5),
+  cuentas de usuario o identidad (`C-005`), juegos distintos de Baloto y Revancha, y cualquier llamada a
+  una API de modelos de lenguaje (`C-002`).
+- **Por que:** el patrocinador quiere el producto que describe su encargo, no una version recortada, y
+  `N-003` y `N-004` son parte de su rutina real de cada dia de sorteo. Leer el sitio directamente es lo
+  unico que evita trabajo manual por sorteo, que es el problema entero del proyecto: una herramienta que
+  exige pegar el resultado a mano reintroduce el paso que se quiere quitar.
+- **Consecuencias, dichas:**
+  1. **El Gate 1 sigue midiendo solo `N-001` y `N-002`.** La hipotesis esta sellada y no se toca; que el
+     alcance del proyecto sea mayor no amplia lo que el Gate evalua, y el dictamen no puede exigir
+     `N-003` ni `N-004`.
+  2. **`A-008` pasa a ser condicion del producto, no solo del prototipo.** Si las condiciones de uso de
+     Baloto prohiben la extraccion automatica, esta decision queda afectada en su parte 2 y hay que
+     replantear la fuente. Su disparador no cambia.
+  3. **Guardar apuestas no levanta `C-005`**: se guarda lo jugado, sin identidad ni cuentas, que es
+     exactamente lo que esa restriccion ya preve («el historial de juegos se guarda sin dueno»).
+  4. **`C-004` («lo mas sencilla posible») se tensa**: persistencia y lectura del sitio son las dos
+     piezas que mas superficie anaden. Se acepta a sabiendas.
+- **Alternativas descartadas:**
+  - **Solo `N-001` y `N-002`:** coincide exactamente con lo que el Gate mide y es el alcance mas barato,
+    pero deja fuera dos necesidades registradas que el patrocinador usa en cada sorteo.
+  - **`N-001`, `N-002` y `N-004`, sin guardar nada:** evita la persistencia y con ella la pieza que mas
+    complica el producto, pero `N-003` se queda sin poder cumplirse nunca.
+  - **Que el jugador pegue el resultado de cada sorteo:** cero dependencia de una web ajena y saca
+    `A-008` del camino critico, pero devuelve al jugador un paso manual en cada sorteo.
+  - **Construir las cuatro ya en el prototipo:** retrasa el momento en que se sabe si la apuesta central
+    se sostiene, que es lo unico que el prototipo existe para averiguar.
+- **Criterio de cierre:** a ese commit, existe esta decision con las tres partes, y la sexta casilla de
+  `_phases/005_discovery.md` §6 tiene donde apoyarse.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-061 /,$p' | grep -cE '^  1\. \*\*Objetivo del proyecto\.\*\*|^  2\. \*\*Alcance del proyecto: las cuatro necesidades\.\*\*|^  3\. \*\*Alcance del prototipo: solo lo que la hipotesis mide\.\*\*'
+  3
+  $ git show <hash>:_persistence/decisions.md | grep -c '^| \[D-061\](#d-061---objetivo-y-alcance-del-proyecto)'
+  1
+  ```
+
+- **Necesidades:** `N-001`, `N-002`, `N-003`, `N-004`. **Interesados:** `I-001`, `I-002`.
+
+### D-062 - Cosecha de 005_discovery al archivo de lecciones globales
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** la septima casilla de la condicion de salida de `005_discovery`
+  (`_phases/005_discovery.md` §6) exige que ninguna leccion de la etapa quede `Sin evaluar` y que lo
+  que pase los filtros este ya en el archivo global. Barrido del Paso 1 de `protocol-harvest`:
+
+  ```
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'
+  8
+  ```
+
+  Los dos disparadores del protocolo se comprobaron antes de empezar: la etapa se esta cerrando de
+  verdad —era la ultima casilla— y no hay auditoria en curso ni pendiente. Ninguna sesion queda sin
+  auditar (`_audit/index.md`, `S-015` → `R-017`), y el archivo global todavia no se usa como vara aqui:
+
+  ```
+  $ grep -rn -i "global_lessons\|lecciones globales\|LG-" .claude/skills/protocol-audit/ .claude/agents/report_auditor.md
+  (sin salida)
+  ```
+
+- **Decision:** de las ocho lecciones, **suben cuatro y se enmienda una**; tres no suben por estar ya
+  cubiertas. Ninguna quedo `Solo proyecto`. Clasificacion, con el filtro que decidio cada una:
+
+  | Leccion | Destino | Razon |
+  |---|---|---|
+  | `L-008` | `Promovida a LG-106` | pasa los cuatro |
+  | `L-009` | `Ya cubierta por LG-101` | filtro 4 — «una busqueda de texto encuentra tambien las citas de ese texto» |
+  | `L-010` | `Ya cubierta por LG-22` | filtro 4 — el caso hermano que si encuentra X |
+  | `L-011` | `Promovida a LG-107` | pasa los cuatro |
+  | `L-012` | `Promovida a LG-108` | pasa los cuatro |
+  | `L-013` | `Ya cubierta por LG-100` | filtro 4 — «ante una reincidencia, la pregunta es que orden la detecta» |
+  | `L-014` | `Promovida a LG-109` | pasa los cuatro |
+  | `L-015` | `Promovida a LG-22` | filtro 4 con salida de enmienda: es cara nueva de `LG-22`, no leccion aparte |
+
+  Ocho filas, que es el recuento del barrido. `LG-106` y `LG-108` entran al bloque J; `LG-107` y
+  `LG-109` al bloque H. La enmienda de `LG-22` toca su enunciado, no se anade debajo.
+- **Por que:** el usuario aprobo las cuatro entradas y la enmienda en la puerta del Paso 5, con los
+  textos a la vista.
+- **Alternativas descartadas:**
+  - **Subir tambien `L-009`, `L-010` y `L-013`:** las tres fallan el filtro 4 contra entradas que ya
+    dicen lo mismo; duplicarlas haria crecer el archivo sin anadir nada, que es lo que `LG-26` vigila.
+  - **Subir `L-015` como leccion nueva:** el archivo global pide enmendar la existente cuando la
+    leccion es una cara nueva de una que ya esta.
+  - **Podar el archivo global de paso:** 399 lineas siguen leyendose de una sentada, y el protocolo
+    prohibe mezclar poda con promocion.
+- **Version nueva del archivo global declarada:** **5 · 2026-09-17 · 109 lecciones · 10 bloques**, con
+  su fila en el registro de revisiones.
+- **Commit en el repositorio de lecciones:** `a9ed27b`, subido a `origin/main`.
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" log --oneline -1
+  a9ed27b Cosecha de 005_discovery desde YouOtto: LG-106 a LG-109 y enmienda de LG-22 (version 5)
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" status -sb | head -1
+  ## main...origin/main
+  ```
+
+  La linea de `status` sin `[ahead N]` es la que prueba que el push llego.
+- **Defecto del propio commit, declarado:** el cuerpo del mensaje de `a9ed27b` dice «No suben cuatro» y
+  a continuacion lista **tres** (`L-009`, `L-010`, `L-013`). La cifra es un error de redaccion del
+  mensaje; el reparto real es el de la tabla de arriba, y el archivo global quedo correcto. **No se
+  enmienda el commit** —`protocol-harvest` prohibe reescribir historia en los dos repositorios—, asi que
+  se corrige por esta declaracion.
+- **Criterio de cierre:** a ese commit, ninguna leccion de la etapa sigue `Sin evaluar`, y las cinco
+  entradas afirmadas existen de verdad en el archivo global.
+
+  ```
+  $ git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+  0
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show a9ed27b:global_lessons.md | grep -cE '^\| \*\*LG-10[6789]\*\*'
+  4
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show a9ed27b:global_lessons.md | grep -cF 'y un bloqueo, con la puerta tapiada'
+  1
+  ```
+

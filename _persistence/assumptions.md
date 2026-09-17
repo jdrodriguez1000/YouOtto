@@ -304,3 +304,9 @@ Plantilla:
   no se ha contrastado es el permiso.
 - **Disparador:** antes de escribir la primera linea de codigo que lea el sitio, es decir al arrancar la
   etapa del prototipo.
+- 🕐 **Nota 2026-09-17 (`D-061`):** este supuesto sube de importancia sin cambiar de estado ni de
+  disparador. `D-061` decide que **la aplicacion lee el sitio oficial de Baloto**, descartando la carga
+  manual, asi que si queda refutado ya no afecta solo a como se obtienen los datos: afecta a la parte 2
+  de esa decision, y obliga a replantear la fuente para `N-001`, `N-003` y `N-004`. La alternativa que lo
+  sacaria del camino critico —que el jugador pegue el resultado de cada sorteo— esta escrita como
+  alternativa descartada en `D-061`, con su motivo.

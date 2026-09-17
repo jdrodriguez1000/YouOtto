@@ -4,9 +4,9 @@
 |---|---|
 | Artefacto | `005_discovery/010_actors.md` |
 | Etapa que lo produce | `005_discovery` |
-| Estado | `BORRADOR` |
+| Estado | `CERRADO` |
 | Abierto | `2026-09-17` |
-| Cerrado | `—` |
+| Cerrado | `2026-09-17` |
 | Escrito por | `manager` |
 
 > ⚠️ **Las dos fechas las lee `report_auditor` y las cruza contra el historial de `git`.** Una fecha
@@ -112,17 +112,17 @@ de arriba.
 
 ## 5. Comprobacion antes de cerrar este archivo
 
-- [ ] Hay un **Actor Generador identificado y alcanzable**, con actor concreto.
-- [ ] Su identificacion **no es un plural generico**: tiene nombre, o perfil con numero.
-- [ ] Cada actor de §1 tiene **tipo** y **actor concreto**, separados.
-- [ ] Ningun tipo se clasifico por el cargo en la empresa.
-- [ ] **Solo estan los actores que existen**; los ausentes se declaran en §3 con su motivo.
-- [ ] No aparece ningun «Actor Invitado» — lo temporal y lo externo estan en §4.
-- [ ] Cada actor concreto se puede amarrar a una `N-XXX` de `005_needs.md`.
-- [ ] Lo que se afirmo sin verificar esta como `A-XXX` en `_persistence/assumptions.md`.
-- [ ] **No queda ni un solo `<` en el archivo.**
-- [ ] La seccion «Guia de llenado» **esta borrada**.
-- [ ] La cabecera dice `CERRADO` y tiene fecha de cierre.
+- [x] Hay un **Actor Generador identificado y alcanzable**, con actor concreto.
+- [x] Su identificacion **no es un plural generico**: tiene nombre, o perfil con numero.
+- [x] Cada actor de §1 tiene **tipo** y **actor concreto**, separados.
+- [x] Ningun tipo se clasifico por el cargo en la empresa.
+- [x] **Solo estan los actores que existen**; los ausentes se declaran en §3 con su motivo.
+- [x] No aparece ningun «Actor Invitado» — lo temporal y lo externo estan en §4.
+- [x] Cada actor concreto se puede amarrar a una `N-XXX` de `005_needs.md`.
+- [x] Lo que se afirmo sin verificar esta como `A-XXX` en `_persistence/assumptions.md`.
+- [x] **No queda ni un solo `<` en el archivo.**
+- [x] La seccion «Guia de llenado» **esta borrada**.
+- [x] La cabecera dice `CERRADO` y tiene fecha de cierre.
 
 ```bash
 grep -n "<" 005_discovery/010_actors.md                 # debe no devolver nada
@@ -136,68 +136,7 @@ como tipo de actor.
 
 🚨 **La salida cruda de las tres ordenes va al registro**, no la conclusion.
 
----
----
-
-## Guia de llenado — ⚠️ BORRAR esta seccion al cerrar el artefacto
-
-> Existe para escribir el archivo. **No sobrevive al cierre de la etapa.**
-
-### Los seis tipos, en una linea cada uno
-
-| # | Tipo | Que hace | Grupo |
-|---|---|---|---|
-| 1 | **Generador** | realiza la accion que **da origen** al proceso | de negocio |
-| 2 | **Coordinador** | **organiza** el trabajo: asigna, prioriza, distribuye, reasigna | de negocio |
-| 3 | **Ejecutor** | **realiza** el trabajo fisica o directamente | de negocio |
-| 4 | **Supervisor** | usa la informacion para **supervisar** resultados y decidir | de negocio |
-| 5 | **Administrador de Plataforma** | usuarios, roles, permisos, parametros, catalogos, integraciones | de plataforma |
-| 6 | **Integrador** | **sistema externo** que intercambia informacion: ERP, pagos, mapas, correo, APIs | externo |
-
-**La confusion mas frecuente:** Coordinador contra Ejecutor.
-> **El Coordinador organiza el trabajo; el Ejecutor lo realiza.**
-
-**El Integrador no es una persona.** Un servicio de mapas es un actor.
-
-### Cuantos actores deberia haber
-
-| Tipo de aplicacion | Actores esperables |
-|---|---|
-| Sencilla | Generador + Administrador de Plataforma |
-| Operativa | Generador + Coordinador + Ejecutor |
-| Empresarial | los seis |
-
-Una aplicacion puede empezar **solo con Generador**. Que existan los seis en la taxonomia no obliga
-a inventarlos aqui.
-
-### Ejemplo — app de recogida de reciclaje
-
-*(otro dominio a proposito, para que no se confunda con el proyecto que se este escribiendo)*
-
-| Tipo | Actor concreto |
-|---|---|
-| Generador | Cliente que solicita la recogida |
-| Coordinador | Analista de logistica |
-| Ejecutor | Conductor / recolector |
-| Supervisor | Gerente de operaciones |
-| Administrador de Plataforma | Administrador de TI |
-| Integrador | Servicio de mapas |
-
-### Errores que esta plantilla existe para evitar
-
-| Error | Como se ve | Que hacer |
-|---|---|---|
-| Clasificar por cargo | aparece «Gerente» como tipo | el cargo va en *actor concreto*; el tipo es la funcion |
-| Inventar los seis | hay Supervisor y nadie mide nada | sacarlo de §1 y declararlo ausente en §3 |
-| Generador en plural generico | «los clientes» | nombre y apellido, o perfil **con numero** |
-| «Actor Invitado» | aparece un septimo tipo | es Supervisor mas un permiso → §4 |
-| Confundir actor con interesado | el gerente que financia pero no usa la aplicacion | ese va en `015_stakeholders.md` |
-| Declarar Generador sin verificar | nadie ha hablado con ninguno | es un `A-XXX` en `_persistence/assumptions.md`, no un hecho |
-
-### Lo que esta etapa tiene PROHIBIDO, y aqui se cuela solo
-
-Nada de pantallas por actor, ni de permisos tecnicos, ni de roles del sistema. Aqui se dice
-**quien** y **que funcion**, no **que ve** ni **con que se autentica**.
-
-📌 Definiciones: `_methodology/000_method.md` §7-§12.
-📌 Procedimiento: `_phases/005_discovery.md` §4, pasos 3 y 4.
+⚠️ **Los dos primeros no pueden devolver vacio en este archivo, y no es un hueco sin rellenar:** las
+unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+nombra para enunciar la comprobacion. La guia se borro; el cuerpo del artefacto no tiene ni un hueco.
+Su salida, con el alcance que lo demuestra, va en `D-060`.
