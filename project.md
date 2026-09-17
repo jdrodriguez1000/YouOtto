@@ -256,6 +256,8 @@ nadie la revise y acaba tapando justo lo que el control existe para ver.
 | `DT-XXX` | `_persistence/techdebt.md` | deuda tecnica |
 | `F-NNN` | `_audit/findings.md` | hallazgo de auditoria |
 | `R-XXX` | `_audit/R-XXX.md` | auditoria de una sesion |
+| `N-XXX` | `005_discovery/005_needs.md` | necesidad del producto |
+| `I-XXX` | `005_discovery/015_stakeholders.md` | interesado del proyecto |
 
 🚨 **Ningun codigo se reutiliza, en ningun archivo.** Un id retirado queda retirado; la entrada que
 lo llevaba conserva su texto para que se entienda que se creia y por que dejo de valer.

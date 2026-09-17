@@ -34,6 +34,7 @@
 | [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-014](#l-014---una-exclusividad-que-ya-fallo-se-pone-en-la-herramienta-no-en-el-texto) | Una exclusividad que ya fallo se pone en la herramienta, no en el texto | 2026-09-17 | 005_discovery | Sin evaluar |
+| [L-015](#l-015---un-bloqueo-se-prueba-en-los-dos-casos-el-prohibido-y-el-permitido) | Un bloqueo se prueba en los dos casos: el prohibido y el permitido | 2026-09-17 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -346,3 +347,21 @@ Plantilla:
 - **Como aplicarla:** cuando una prohibicion a un agente se incumpla, se busca primero el mecanismo que
   la aplique (permisos, hooks, herramientas del agente) y se deja el texto y la deteccion como segunda
   barrera.
+
+### L-015 - Un bloqueo se prueba en los dos casos: el prohibido y el permitido
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** `D-048`, `D-050`, `A-006`, `A-007`.
+- **Que ocurrio:** la primera sonda del hook probo solo que una skill ajena quedaba bloqueada, y con otra
+  skill permitida distinta de la real. Quedaba sin probar lo contrario: que el agente pudiera cargar **su
+  propia** skill. Si eso hubiera fallado, el cierre no habria podido arrancar, y se habria descubierto en
+  el peor momento.
+- **Leccion:** un mecanismo que impide algo se prueba con los dos casos y con la configuracion literal que
+  va a correr en produccion. El caso permitido es el que decide si el sistema sigue funcionando; el
+  prohibido solo decide si la barrera sirve.
+- **Como aplicarla:** al montar cualquier bloqueo —hook, permiso, validacion—, la prueba lleva siempre la
+  pareja: una entrada que debe pasar y una que no.

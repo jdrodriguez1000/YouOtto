@@ -37,7 +37,7 @@
 | [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
 | [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 | [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
-| [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Abierto |
+| [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Aceptado — pendiente |
 
 ---
 
@@ -464,8 +464,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-033, D-049 |
 | Cerrado en | |
 
 - **Que se observo:** en `91562b7`, `D-045` afirma «Paso 1b: nueve copias de la raiz dan `0` y
@@ -475,4 +475,6 @@ Plantilla:
 - **Por que importa:** `CLAUDE.md` exige orden y ambito para todo resultado que el registro afirme; misma
   clase que `F-016`. La medicion posterior a `1bec59a` no es reproducible desde el registro. `Baja`: el
   resto de la promocion lleva orden y salida, y ningun control depende de estas cifras. `No bloqueante`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`ca12450`), con orden y salida en `D-049`.
+  El usuario eligio corregirlo en la misma sesion: nota fechada en `D-045` con las dos ordenes ancladas a
+  `2063f09` y `1bec59a` y sus salidas (`T-033`). Lo cierra la auditoria siguiente.

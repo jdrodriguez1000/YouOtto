@@ -45,10 +45,11 @@
 | [T-026](#t-026---hacer-que-el-paso-7d-compare-las-fechas-que-anade-el-commit) | Hacer que el Paso 7d compare las fechas que anade el commit | Implementada | Media | No bloqueante | 005_discovery |
 | [T-027](#t-027---anadir-el-trailer-de-coautoria-al-commit-de-anclaje) | Anadir el trailer de coautoria al commit de anclaje | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-028](#t-028---anadir-la-urgencia-a-los-hallazgos-de-auditoria) | Anadir la urgencia a los hallazgos de auditoria | Implementada | Media | No bloqueante | 005_discovery |
-| [T-029](#t-029---pasos-1-y-2-de-005_discovery-con-el-patrocinador) | Pasos 1 y 2 de 005_discovery con el patrocinador | No implementada | Alta | Bloqueante | 005_discovery |
+| [T-029](#t-029---pasos-1-y-2-de-005_discovery-con-el-patrocinador) | Pasos 1 y 2 de 005_discovery con el patrocinador | Implementada | Alta | Bloqueante | 005_discovery |
 | [T-030](#t-030---publicar-por-nota-la-orden-sin-filtro-que-d-041-cita) | Publicar por nota la orden sin filtro que D-041 cita | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-031](#t-031---corregir-por-nota-la-cifra-de-la-nota-de-cierre-de-s-013) | Corregir por nota la cifra de la NOTA DE CIERRE de S-013 | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-032](#t-032---limitar-las-skills-que-puede-invocar-el-agente-de-cierre) | Limitar las skills que puede invocar el agente de cierre | No implementada | Alta | No bloqueante | 005_discovery |
+| [T-033](#t-033---publicar-por-nota-las-ordenes-del-paso-1b-y-del-barrido-que-d-045-resume) | Publicar por nota las ordenes del Paso 1b y del barrido que D-045 resume | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -735,7 +736,7 @@ Plantilla:
 ### T-029 - Pasos 1 y 2 de 005_discovery con el patrocinador
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Alta |
 | Urgencia | Bloqueante |
 | Etapa | 005_discovery |
@@ -752,6 +753,24 @@ Plantilla:
 - **Criterio de cierre:** existe `005_discovery/` con el artefacto de necesidades, con al menos una
   `N-XXX` enunciada sin nombrar una pantalla, y `N-XXX` esta en la tabla «Codigos» de `project.md`. Las
   ordenes se escriben cuando exista el artefacto, con las de comprobacion que trae su plantilla.
+
+  ```
+  $ test -d 005_discovery && echo "existe 005_discovery"
+  existe 005_discovery
+  $ grep -c "^### N-0" 005_discovery/005_needs.md
+  4
+  $ grep -n '^| `N-XXX`' project.md
+  259:| `N-XXX` | `005_discovery/005_needs.md` | necesidad del producto |
+  ```
+
+- 🕐 **Nota 2026-09-17 (session-closer):** el trabajo de la sesion fue mas alla del alcance literal
+  del titulo — ademas de los Pasos 1 y 2 (necesidades, `D-051`), se trabajaron los Pasos 3 a 7 de
+  `005_discovery` en la misma conversacion (actores en `010_actors.md`, `D-055`; interesados en
+  `015_stakeholders.md`, `D-057`; hipotesis sellada en `020_hypothesis.md`, `D-058`), todo citando
+  `Tarea: T-029`. El criterio literal de esta tarea (el artefacto de necesidades con su `N-XXX`) esta
+  cumplido y reproduce; `010_actors.md` y `015_stakeholders.md` siguen `BORRADOR`, y la condicion de
+  salida de la etapa (`_phases/005_discovery.md` §6) no se comprobo en esta sesion. Ver «Sin resolver»
+  del informe de `S-015`.
 
 ### T-030 - Publicar por nota la orden sin filtro que D-041 cita
 | Campo | Valor |
@@ -798,3 +817,26 @@ Plantilla:
   con su script y su test en `.claude/hooks/`. Segun `D-048`.
 - **Por que:** el cierre ejecuto dos veces `protocol-audit` sobre su propia sesion (`D-038`, `D-047`).
 - **Criterio de cierre:** el de `D-048`; y `A-006` confirmado tras reiniciar Claude Code.
+- 🕐 **Nota 2026-09-17 (session-closer):** `D-050` cambia el como se verifica esta tarea: en vez de
+  esperar un reinicio real, `A-007` prueba con la sonda `hook-probe` los dos casos (skill ajena
+  bloqueada, `protocol-close` cargando) dentro de un agente con la cabecera literal de
+  `session-closer`, y queda `Confirmado`. El criterio **literal** de arriba («tras reiniciar Claude
+  Code») sigue sin cumplirse — no hubo reinicio — asi que esta tarea sigue `No implementada`. Si
+  `D-050` se toma como reemplazo valido del criterio, hace falta que `manager` lo escriba asi en el
+  criterio de cierre; no lo hace este cierre por si solo. Ver «Sin resolver» del informe de `S-015`.
+
+### T-033 - Publicar por nota las ordenes del Paso 1b y del barrido que D-045 resume
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-015 |
+
+- **Que:** `F-018`. Nota fechada en `D-045` que publica, ancladas a `2063f09` y `1bec59a`, la orden del
+  Paso 1b sobre el commit del esqueleto y la del barrido del Paso 1 despues de promover, con sus
+  salidas. Lo publicado no se reescribe. Segun `D-049`.
+- **Por que:** un resultado sin su orden no es reproducible.
+- **Criterio de cierre:** el de `D-049`.

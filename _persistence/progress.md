@@ -48,6 +48,7 @@
 | [S-012](#s-012---f-013-de-r-012-aceptado-nota-en-s-011-y-puerta-mecanica-en-el-anclaje-y-tres-recomendaciones-sin-hallazgo-evaluadas) | `F-013` de `R-012` aceptado (nota en `S-011` y puerta mecanica en el anclaje), y tres recomendaciones sin hallazgo evaluadas | 2026-09-17 | 005_discovery |
 | [S-013](#s-013---f-014-de-r-013-aceptado-d-041-promocion-de-protocol-close-y-protocol-start-d-040-urgencia-de-hallazgos-d-043-y-reparto-de-005_discovery-d-044) | `F-014` de `R-013` aceptado (`D-041`), promocion de `protocol-close` y `protocol-start` (`D-040`), urgencia de hallazgos (`D-043`) y reparto de `005_discovery` (`D-044`) | 2026-09-17 | 005_discovery |
 | [S-014](#s-014---f-016-y-f-017-de-r-015-aceptados-y-aplazados-d-046-r-014f-015-retirados-d-047-y-el-agente-de-cierre-solo-puede-invocar-protocol-close-d-048) | `F-016` y `F-017` de `R-015` aceptados y aplazados (`D-046`), `R-014`/`F-015` retirados (`D-047`), y el agente de cierre solo puede invocar `protocol-close` (`D-048`) | 2026-09-17 | 005_discovery |
+| [S-015](#s-015---f-018-de-r-016-aceptado-y-corregido-d-049-t-032-verificada-con-la-sonda-hook-probe-d-050-y-pasos-1-a-7-de-005_discovery-con-el-patrocinador) | `F-018` de `R-016` aceptado y corregido (`D-049`), `T-032` verificada con la sonda `hook-probe` (`D-050`), y Pasos 1 a 7 de `005_discovery` con el patrocinador (`D-051`..`D-058`) | 2026-09-17 | 005_discovery |
 
 ---
 
@@ -79,44 +80,46 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-17 (S-014)` |
+| Ultima actualizacion | `2026-09-17 (S-015)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito el commit de `S-013` (`d54e314`) en `R-015` y entrego `F-016` y `F-017`, los dos `Baja`/`No bloqueante`. `D-046` (usuario, sobre recomendacion de `report_auditor`): los dos hallazgos se aceptan y, por ser `No bloqueante`, su correccion se aplaza — `F-016` a `T-030` (nota en `D-041` con la orden sin filtro que respalda su frase) y `F-017` a `T-031` (nota en `_audit/S-013.md` con la cifra correcta de 17 lineas). Antes de eso, `D-047` deja `R-014` y `F-015` retirados y no reutilizables: el propio `session-closer` volvio a auditar su propia sesion (`798500e`, revertido en `c180fd5`), repitiendo el patron de `D-038` pese a `L-013`. El usuario decide entonces la prevencion mecanica (`D-048`, `L-014`): la cabecera de `.claude/agents/session-closer.md` declara un hook `PreToolUse` sobre `Skill` que corre `.claude/hooks/allow-only-skill.js protocol-close` y bloquea cualquier otra skill, con su test (`node --test`, 5/5 en verde). `A-006` (el hook se dispara dentro del agente) se registro y se confirmo en la misma sesion con el agente temporal `hook-probe`, ya borrado; queda sin comprobar si el cierre de esta misma sesion corre ya protegido por el hook. Ademas, al principio de la sesion, `D-045` (usuario) promovio al esqueleto de arranque los cuatro archivos que `D-041`/`D-042`/`D-043` habian dejado por delante (commit `1bec59a`, subido), por `L-012` |
-| Bloqueos activos | `T-029` (Alta, Bloqueante): trabajar los Pasos 1 y 2 de `005_discovery` con el patrocinador va antes que cualquier otro trabajo de la etapa. `T-032` (Alta, No bloqueante): el hook de `D-048` esta escrito y probado por script, pero su criterio de cierre completo —incluida la comprobacion de `A-006` tras un reinicio real de Claude Code— sigue sin cerrarse; queda `No implementada`. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores— sigue activo. `A-004` y `A-005` (abiertos, `005_discovery`): revision del patrocinador antes de que una entrada entre al registro, y acceso a personas que conocen el proceso real. `DT-002` sigue `No implementada`, confirmada y sin pagar |
+| Avance de la etapa | `report_auditor` audito el commit de `S-014` (`91562b7`) en `R-016` y entrego `F-018`, `Baja`/`No bloqueante`. `D-049` (aceptado, y corregido en esta sesion por decision del usuario): nota fechada en `D-045` con las dos ordenes del Paso 1b sobre el esqueleto y del barrido del Paso 1, ancladas a `2063f09`/`1bec59a`, con sus salidas (`T-033`). `D-050` (manager): `T-032` se verifica con una nueva sonda `hook-probe` (cabecera literal de `session-closer`) que prueba los dos casos —skill ajena bloqueada, `protocol-close` cargando— dentro del agente; `A-007` queda `Confirmado`, y el agente temporal se borro sin commitear. Con eso resuelto, el trabajo central de la sesion fueron los Pasos 1 a 7 de `005_discovery` con el patrocinador (`T-029`): se crea `005_discovery/` con sus cuatro artefactos. Necesidades (`005_needs.md`, `D-051`): cuatro necesidades registradas (`N-001`..`N-004`) y tres restricciones firmes del encargo (`C-002`, `C-003`, `C-004`). El metodo del jugador se fija en detalle en vez de una generacion aleatoria (`D-052`, revisada en parte por `D-053`; ventanas, prioridad y desempates), y se decide que la revision del sorteo anterior tambien entra en el alcance (`D-054`). Actores (`010_actors.md`, `D-055`): Generador (el patrocinador) e Integrador (baloto.com), veredicto favorable del Paso 4. `A-001` queda `Refutado` y nace `C-005`: la aplicacion no guarda ningun dato personal (`D-056`). Interesados (`015_stakeholders.md`, `D-057`): dos, el patrocinador y Baloto; nace `A-008` (si las condiciones de uso de Baloto permiten leer su historico). Hipotesis (`020_hypothesis.md`, `D-058`): sellada en un solo commit, con falsacion, ventana (5 sesiones, umbral 4/5) y perfil de usuario fijados antes del primer dato. `N-XXX` e `I-XXX` se declaran en la tabla «Codigos» de `project.md` |
+| Bloqueos activos | `T-032` (Alta, No bloqueante): `A-007` confirma los dos casos del hook dentro del agente, pero el criterio de cierre literal («tras reiniciar Claude Code») no se probo asi; sigue `No implementada` hasta que `manager` decida si `D-050` lo sustituye. `010_actors.md` y `015_stakeholders.md` siguen `BORRADOR`; la condicion de salida de `005_discovery` (`_phases/005_discovery.md` §6) no se comprobo esta sesion. `A-004`, `A-005` y `A-008` (abiertos): revision del patrocinador antes de registrar, acceso a personas que conocen el proceso real, y permiso de Baloto para leer su historico. `DT-002` sigue `No implementada`, confirmada y sin pagar |
 
 ---
 
 ## 2. Ultimo realizado
 
-Catorce sesiones de trabajo. Segun el diff: se acepto `D-045` (usuario) al principio de la sesion,
-antes de tocar el andamiaje (`L-012`): promocion al esqueleto de arranque de los cuatro archivos que
-`D-041`/`D-042`/`D-043` de `S-013` habian dejado por delante (`protocol-audit`, `protocol-close`,
-`protocol-start`, `_templates/000_preproject/050_audit_findings.md`) mas la copia de
-`_audit/findings.md`, commit `1bec59a` del esqueleto, subido. Se aceptaron `F-016` y `F-017` de
-`R-015` con `D-046`: por ser `No bloqueante`, su correccion se aplaza — `T-030` (nota pendiente en
-`D-041` con la orden sin filtro) y `T-031` (nota pendiente en `_audit/S-013.md` con la cifra 17). Se
-registro `D-047`: `R-014` y `F-015` quedan retirados y no reutilizables, porque `798500e` fue una
-segunda auditoria del propio `session-closer` sobre su propia sesion (revertida en `c180fd5`), pese a
-`L-013`. Por eso el usuario decidio `D-048`: la cabecera de `.claude/agents/session-closer.md` declara
-un hook `PreToolUse` sobre `Skill` (`.claude/hooks/allow-only-skill.js protocol-close`) que bloquea
-cualquier skill distinta de `protocol-close`, con su test `.claude/hooks/allow-only-skill.test.js`
-(5/5 en verde). Se registraron `A-006` (Confirmado en la misma sesion, con el agente temporal
-`hook-probe`, ya borrado) y `L-014`. Nacen `T-030`, `T-031` y `T-032`, las tres `No implementada`.
+Quince sesiones de trabajo. Segun el diff: se acepto y corrigio `F-018`/`D-049` (nota en `D-045` con
+las dos ordenes ancladas a `2063f09`/`1bec59a` y sus salidas — `T-033`, nacida `No implementada`, nota
+del `session-closer` en `_audit/findings.md` y `D-049` misma). Se verifico `T-032` con `D-050`: agente
+temporal `hook-probe` con la cabecera literal de `session-closer`, probo los dos casos (skill ajena
+bloqueada, `protocol-close` cargando) dentro del agente; `A-007` queda `Confirmado`, y el agente se
+borro sin commitear. Se trabajaron con el patrocinador los Pasos 1 a 7 de `005_discovery` (`T-029`):
+nace `005_discovery/` con `005_needs.md` (`D-051`: cuatro necesidades `N-001`..`N-004`, tres
+restricciones firmes `C-002`-`C-004`), el metodo del jugador fijado en detalle (`D-052`, revisado por
+`D-053`, y `D-054` incorpora la revision del sorteo anterior), `010_actors.md` (`D-055`: Generador e
+Integrador, `A-001` refutado y `C-005` nueva por `D-056`), `015_stakeholders.md` (`D-057`: dos
+interesados, nace `A-008`) y `020_hypothesis.md` sellada en un solo commit (`D-058`). `N-XXX` e
+`I-XXX` se declaran en `project.md`. Se escribio `L-015` (un bloqueo se prueba en los dos casos).
+Por evidencia del diff, `T-029` pasa a `Implementada` (su criterio literal reproduce); `T-032` sigue
+`No implementada` porque su criterio literal exige un reinicio real que no ocurrio.
 
 ---
 
 ## 3. Siguiente paso
 
 Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-014`). Pendientes de la etapa: `T-029` (Alta, Bloqueante) sigue siendo el primer trabajo de
-producto — Pasos 1 y 2 de `005_discovery` con el patrocinador, reparto de `D-044`. `T-032` (Alta, No
-bloqueante) queda abierta: falta comprobar si el hook de `D-048` protege ya al cierre de esta misma
-sesion, y cerrar su criterio con un reinicio real de Claude Code. `T-030` y `T-031` (Baja, No
-bloqueante) son las notas pendientes de `F-016`/`F-017`. El esqueleto de arranque vuelve a diferir en
-`.claude/agents/session-closer.md` (por el hook de `D-048`) y en `.claude/hooks/` entero (solo existe
-en este proyecto), verificado en el Paso 2f de este cierre: pendiente de promocion con aprobacion del
-usuario, y solo despues de que `D-048` tenga su propio cierre y auditoria. Sigue abierta `DT-002` (el
-CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
+(`S-015`). Pendientes de la etapa: `010_actors.md` y `015_stakeholders.md` siguen `BORRADOR`, y la
+condicion de salida de `005_discovery` (`_phases/005_discovery.md` §6) no se ha comprobado todavia.
+`T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal
+de «tras reiniciar Claude Code», y en tal caso reescribirlo. `T-030` y `T-031` (Baja, No bloqueante)
+siguen siendo las notas pendientes de `F-016`/`F-017`. `A-004`, `A-005` y `A-008` (abiertos): revision
+del patrocinador antes de registrar, acceso a personas que conocen el proceso real, y permiso de
+Baloto para leer su historico automaticamente (disparador: antes de la primera linea de codigo que lo
+lea, al arrancar el prototipo). El esqueleto de arranque vuelve a diferir en
+`.claude/agents/session-closer.md` y en `.claude/hooks/` entero, verificado en el Paso 2f de este
+cierre: pendiente de promocion con aprobacion del usuario. Sigue abierta `DT-002` (el CONTROL DE
+SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -453,6 +456,41 @@ Plantilla:
   siguen `No implementada` (notas pendientes de `F-016`/`F-017`). El esqueleto de arranque vuelve a
   diferir en `.claude/agents/session-closer.md` y en `.claude/hooks/`, pendiente de promocion. `DT-002`
   sigue `No implementada`, confirmada y sin pagar. `A-001`, `A-004` y `A-005` siguen `Abierto`.
+
+### S-015 - `F-018` de `R-016` aceptado y corregido (`D-049`), `T-032` verificada con la sonda `hook-probe` (`D-050`), y Pasos 1 a 7 de `005_discovery` con el patrocinador (`D-051`..`D-058`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Tareas | T-029, T-032, T-033 |
+
+- **Que se hizo:** se acepto `F-018` de `R-016` (`D-045` publicaba en resumen, sin orden ni salida, el
+  Paso 1b del esqueleto y el barrido del Paso 1) con `D-049`: verificado vigente contra `HEAD`
+  (`ca12450`) y corregido en la misma sesion con nota fechada en `D-045`, con las dos ordenes ancladas
+  a `2063f09`/`1bec59a` y sus salidas (`T-033`). `D-050` (manager) verifica `T-032` con una sonda nueva
+  (`hook-probe`, cabecera literal de `session-closer`) que prueba dentro del agente los dos casos —
+  skill ajena bloqueada, `protocol-close` cargando —; `A-007` queda `Confirmado`, agente borrado sin
+  commitear. Se escribio `L-015`. El grueso de la sesion fue el trabajo de producto de `T-029`: nace
+  `005_discovery/` con sus cuatro artefactos. `005_needs.md` (`D-051`): `N-001`..`N-004` y `C-002`,
+  `C-003`, `C-004` (restricciones firmes del encargo). El metodo del jugador se fija en detalle en vez
+  de generacion aleatoria (`D-052`, revisado en parte por `D-053`: ventanas de 72/48 sorteos, prioridad
+  Baloto/Revancha, desempates); `D-054` suma a lo construido la revision del sorteo anterior
+  (`N-003`, `N-004`). `010_actors.md` (`D-055`): Generador (el patrocinador) e Integrador (baloto.com);
+  `A-001` queda `Refutado` y nace `C-005` — la aplicacion no guarda ningun dato personal (`D-056`).
+  `015_stakeholders.md` (`D-057`): dos interesados (patrocinador, Baloto); nace `A-008` (permiso de
+  Baloto para leer su historico). `020_hypothesis.md` se sella en un solo commit (`D-058`): hipotesis,
+  falsacion, ventana de 5 sesiones con umbral 4/5, y perfil de usuario. `N-XXX` e `I-XXX` se declaran
+  en la tabla «Codigos» de `project.md`. Por evidencia del diff, `T-029` pasa a `Implementada` (su
+  criterio literal — el artefacto de necesidades con `N-XXX` — reproduce, aunque la sesion avanzo mas
+  alla de los Pasos 1 y 2 que nombraba su titulo); `T-032` sigue `No implementada`, porque su criterio
+  literal exige un reinicio real de Claude Code que no ocurrio.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion.
+  `010_actors.md` y `015_stakeholders.md` siguen `BORRADOR`, y la condicion de salida de
+  `005_discovery` (`_phases/005_discovery.md` §6) no se comprobo. `T-032` (Alta, No bloqueante): decidir
+  si `D-050` sustituye el criterio literal. `T-030` y `T-031` (Baja, No bloqueante) siguen pendientes.
+  `A-004`, `A-005` y `A-008` siguen `Abierto`. El esqueleto de arranque difiere en
+  `.claude/agents/session-closer.md` y `.claude/hooks/`, pendiente de promocion. `DT-002` sigue
+  `No implementada`, confirmada y sin pagar.
 
 ---
 

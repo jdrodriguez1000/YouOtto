@@ -69,6 +69,16 @@
 | [D-046](#d-046---f-016-y-f-017-se-aceptan-y-su-correccion-se-aplaza) | F-016 y F-017 se aceptan y su correccion se aplaza | 2026-09-17 | Vigente |
 | [D-047](#d-047---r-014-y-f-015-quedan-retirados-por-la-auditoria-revertida) | R-014 y F-015 quedan retirados por la auditoria revertida | 2026-09-17 | Vigente |
 | [D-048](#d-048---el-agente-de-cierre-solo-puede-invocar-protocol-close) | El agente de cierre solo puede invocar protocol-close | 2026-09-17 | Vigente |
+| [D-049](#d-049---f-018-se-acepta-y-se-corrige-con-nota-fechada-en-d-045) | F-018 se acepta y se corrige con nota fechada en D-045 | 2026-09-17 | Vigente |
+| [D-050](#d-050---t-032-se-verifica-con-una-sonda-de-la-cabecera-exacta-en-los-dos-casos) | T-032 se verifica con una sonda de la cabecera exacta, en los dos casos | 2026-09-17 | Vigente |
+| [D-051](#d-051---se-abre-el-artefacto-de-necesidades-y-se-declara-n-xxx) | Se abre el artefacto de necesidades y se declara N-XXX | 2026-09-17 | Vigente |
+| [D-052](#d-052---el-producto-reproduce-el-metodo-del-jugador-no-una-generacion-aleatoria) | El producto reproduce el metodo del jugador, no una generacion aleatoria | 2026-09-17 | Revocada en parte por D-053 |
+| [D-053](#d-053---ventanas-prioridad-y-desempates-del-metodo) | Ventanas, prioridad y desempates del metodo | 2026-09-17 | Vigente |
+| [D-054](#d-054---la-revision-del-sorteo-anterior-entra-en-lo-que-se-construye) | La revision del sorteo anterior entra en lo que se construye | 2026-09-17 | Vigente |
+| [D-055](#d-055---actores-del-producto-y-veredicto-del-actor-generador) | Actores del producto y veredicto del Actor Generador | 2026-09-17 | Vigente |
+| [D-056](#d-056---la-aplicacion-no-guarda-identidad-y-a-001-queda-refutado) | La aplicacion no guarda identidad, y A-001 queda refutado | 2026-09-17 | Vigente |
+| [D-057](#d-057---interesados-del-proyecto-y-declaracion-de-i-xxx) | Interesados del proyecto y declaracion de I-XXX | 2026-09-17 | Vigente |
+| [D-058](#d-058---hipotesis-sellada-de-005_discovery) | Hipotesis sellada de 005_discovery | 2026-09-17 | Vigente |
 
 ---
 
@@ -2625,6 +2635,39 @@ Plantilla:
 - **Criterio de cierre:** el commit del esqueleto `1bec59a` contiene los cinco archivos con el contenido
   del origen `2063f09`: son las dos ordenes del bloque anterior, ya ancladas a los dos hashes. El
   esqueleto queda fuera de lo que la auditoria ve, y por eso van los dos hashes delante.
+- 🕐 **Nota 2026-09-17 (`F-018`, `D-049`):** el parrafo de arriba publica tres resultados sin su orden
+  ni su salida. No se reescribe: aqui van las dos ordenes, ancladas a los dos hashes, con lo que
+  devuelven hoy. Las dos confirman lo que el parrafo afirma. Con `ESQ` como arriba, el Paso 1b sobre el
+  commit del esqueleto, plantilla y copia leidas con `git -C "$ESQ" show 1bec59a:` (Paso 7.3 de
+  `protocol-promote`):
+
+  ```
+  $ for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff --strip-trailing-cr <(git -C "$ESQ" show 1bec59a:_templates/000_preproject/$t) <(git -C "$ESQ" show 1bec59a:$c) | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+  Y el barrido del Paso 1 despues de promover, sin el arbol de trabajo de ninguno de los dos: el origen
+  `2063f09` y el esqueleto `1bec59a` se extraen a un directorio temporal y se comparan con la misma
+  orden del Paso 1. La ultima linea cuenta los archivos extraidos, para que la salida vacia no pueda
+  venir de dos directorios vacios:
+
+  ```
+  $ W=$(mktemp -d); mkdir "$W/o" "$W/e"; git archive 2063f09 .claude _phases _methodology _templates _workflow CLAUDE.md | tar -x -C "$W/o"; git -C "$ESQ" archive 1bec59a .claude _phases _methodology _templates _workflow CLAUDE.md | tar -x -C "$W/e"; for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$W/e/$d" "$W/o/$d"; done; diff -q --strip-trailing-cr "$W/e/CLAUDE.md" "$W/o/CLAUDE.md"; echo "archivos: $(find "$W/o" -type f | wc -l) $(find "$W/e" -type f | wc -l)"; rm -rf "$W"
+  archivos: 71 71
+  ```
+
+  ⚠️ Esta segunda orden no es la que se corrio el dia de la promocion, que leia los dos arboles de
+  trabajo antes de tocar `.claude/`: esa ya no se puede repetir, porque `D-048` cambio `.claude/`
+  despues. Lo que se publica es su equivalente sobre los dos commits.
 
 ### D-046 - F-016 y F-017 se aceptan y su correccion se aplaza
 | Campo | Valor |
@@ -2813,3 +2856,367 @@ Plantilla:
   sesion, con la salida de `hook-probe`, y ese agente temporal se borro. El limite 2 se escribio antes de
   ver que las definiciones de agente se recargaron sin reiniciar: si el cierre de esta sesion ya corre con
   el hook **no se comprobo**, y `L-013` sigue siendo la barrera que se aplica despues del cierre.
+
+### D-049 - F-018 se acepta y se corrige con nota fechada en D-045
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-016` abrio `F-018` sobre `S-014` (`91562b7`), `Baja` y `No bloqueante`: `D-045`
+  publica en resumen, sin orden ni salida, el Paso 1b antes de la puerta, el barrido del Paso 1 despues
+  de promover y el Paso 1b sobre `1bec59a`. Verificado contra `HEAD` (`ca12450`): `D-045` no cambio
+  desde el commit auditado, y ninguna de sus diez lineas de orden es la del Paso 1b:
+
+  ```
+  $ diff <(git show 91562b7:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p') <(git show ca12450:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p'); echo "salida=$?"
+  salida=0
+  $ git show ca12450:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -cE '^\s*\$ '
+  10
+  $ git show ca12450:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -cE '^\s*\$ .*(for p in|git -C "\$ESQ" show 1bec59a:_templates)'
+  0
+  $ git show ca12450:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -nE 'nueve copias|salida vacia\. Paso 1b|las diez parejas dan'
+  26:  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.) Paso 1b: nueve copias de la raiz
+  80:  Barrido del Paso 1 despues de promover, antes de tocar `.claude/` por `D-048`: salida vacia. Paso 1b
+  81:  sobre `1bec59a` (plantilla y copia leidas con `git -C "$ESQ" show 1bec59a:`): las diez parejas dan `0`.
+  ```
+
+  Las dos mediciones posteriores a la promocion se reprodujeron ancladas a `2063f09` y `1bec59a`, y
+  confirman lo afirmado; orden y salida van en la nota de `D-045`. Una precision al hallazgo, que no lo
+  invalida: `R-016` dice que la forma `git -C "$ESQ" show 1bec59a:` es distinta de la literal del
+  protocolo, pero es la que pide el Paso 7.3 de `protocol-promote`. Lo que falta es la orden escrita, y
+  eso si es cierto.
+- **Decision:** se acepta y, por decision del usuario, **se corrige en esta sesion** (`T-033`): nota
+  fechada en `D-045` con el Paso 1b sobre `1bec59a` y el barrido del Paso 1 entre `2063f09` y `1bec59a`,
+  con sus salidas. Lo publicado no se reescribe. `F-018` queda `Aceptado — pendiente`: lo cierra la
+  auditoria siguiente.
+- **Por que:** el hallazgo se sostiene contra el repositorio, y la reproduccion ya estaba hecha al
+  verificarlo, asi que corregirlo costaba solo escribirla.
+- **Alternativas descartadas:**
+  - **Aceptar y aplazar, como `F-016` con `D-046`:** dejaba abierta una tarea cuyo trabajo ya estaba
+    hecho.
+  - **No publicar el Paso 1b previo a la puerta** («nueve dan `0` y `_audit/findings.md` da `21`»): no
+    se incluye porque mide el arbol del esqueleto antes de `1bec59a`, que ya no existe; su cifra `21` si
+    la respalda el `--stat` de `1bec59a` publicado en `D-045` (`_audit/findings.md | 21`).
+  - **Reproducir el barrido del Paso 1 sobre los arboles de trabajo:** `D-048` cambio `.claude/` despues
+    de la promocion, y el barrido saldria con diferencias que no son de la promocion.
+- **Criterio de cierre:** a ese commit, `D-045` lleva la nota con las dos ordenes, y `F-018` cita su
+  tarea en indice y ficha.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | sed -n '/^### D-045 /,/^### D-046 /p' | grep -cE '🕐 \*\*Nota 2026-09-17 \(`F-018`, `D-049`\)|^\s*\$ for p in 005_project|^\s*\$ W=\$\(mktemp -d\)'
+  3
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-018\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-033, D-049 \|$'
+  2
+  ```
+
+### D-050 - T-032 se verifica con una sonda de la cabecera exacta, en los dos casos
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** el criterio de `T-032` pide «`A-006` confirmado tras reiniciar Claude Code». Ese «tras
+  reiniciar» nacio del limite 2 de `D-048`, que su propia nota fechada deja en duda: las definiciones de
+  agente se recargaron sin reiniciar. Ademas `A-006` probo solo el caso bloqueado, con otra skill
+  permitida (`protocol-start`), y no la cabecera literal de `session-closer`. Desde esta sesion no hay
+  forma de comprobar si Claude Code se reinicio.
+- **Decision:** `T-032` se verifica con `A-007`: un agente temporal `hook-probe` con el bloque `hooks`
+  copiado literal de `session-closer`, que llama a `protocol-audit` (debe quedar bloqueada) y a
+  `protocol-close` (debe pasar). Se borra en la misma sesion. Identidad del bloque, comprobada al crearlo
+  sobre el arbol de trabajo (el agente temporal no se commitea):
+
+  ```
+  $ diff <(sed -n '/^hooks:/,/^---/p' .claude/agents/session-closer.md) <(sed -n '/^hooks:/,/^---/p' .claude/agents/hook-probe.md); echo "salida=$?"
+  salida=0
+  ```
+
+- **Por que:** el riesgo real de `T-032` no depende del reinicio, sino de que esa cabecera, dentro del
+  agente, bloquee lo ajeno **y** deje cargar su propio protocolo. Si el caso permitido fallara, el cierre
+  no podria arrancar, y eso no lo cubre ni `A-006` ni el test del script.
+- **Alternativas descartadas:**
+  - **Esperar a un reinicio y relanzar la sonda de `A-006`:** repite una prueba ya hecha y deja sin probar
+    el caso permitido.
+  - **Probarlo en el cierre real de esta sesion:** solo ejercita el caso permitido, y un fallo dejaria la
+    sesion sin cerrar.
+  - **Lanzar `session-closer` con la orden de intentar `protocol-audit`:** es el agente de cierre con
+    instrucciones ajenas a su protocolo; si las ignora, ejecuta un cierre a destiempo.
+- **Supuesto:** `A-007`. **Tarea:** `T-032`.
+
+### D-051 - Se abre el artefacto de necesidades y se declara N-XXX
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario pide empezar `T-029`: crear `005_discovery/` y llevar ahi la plantilla
+  `_templates/005_discovery/005_needs.md`. La carpeta ya estaba declarada en «Carpetas propias» y en
+  «Rutas» de `project.md`. La plantilla usa `N-XXX`, y `project.md` exige declarar un codigo del producto
+  en la tabla «Codigos» en la misma pasada en que se escribe el primer artefacto que lo usa.
+- **Decision:** se crea `005_discovery/005_needs.md` copiando la plantilla. Solo se rellenan el nombre del
+  proyecto y las fechas de la cabecera (`Abierto` `2026-09-17`, `Cerrado` `—`); el resto queda con sus
+  huecos hasta la conversacion. Se anade `N-XXX` a la tabla «Codigos» de `project.md`, apuntando a ese
+  archivo. La plantilla no se toca.
+- **Por que:** es la forma que fijan la etapa y `T-029`, y el codigo declarado antes del primer `N-001`
+  evita el desfase que `project.md` describe.
+- **Alternativas descartadas:**
+  - **Declarar `N-XXX` cuando se escriba la primera necesidad:** la copia de la plantilla ya cita
+    `N-001`, y una plantilla que cita un codigo no declarado lo esta usando.
+- **Verificacion:** sobre el arbol de trabajo, antes del commit:
+
+  ```
+  $ git diff --no-index --stat _templates/005_discovery/005_needs.md 005_discovery/005_needs.md
+   {_templates/005_discovery => 005_discovery}/005_needs.md | 6 +++---
+   1 file changed, 3 insertions(+), 3 deletions(-)
+  ```
+
+- **Tarea:** `T-029`.
+
+### D-052 - El producto reproduce el metodo del jugador, no una generacion aleatoria
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Revocada en parte por D-053 |
+| Origen | usuario |
+
+- **Contexto:** Pasos 1 y 2 de `005_discovery` (`T-029`). `_brief/client_brief.md` pide en su §6 una
+  generacion **aleatoria** y en su §26 excluir los numeros del ultimo sorteo **de un solo juego**, segun
+  una prioridad; su ultima seccion, en cambio, describe un metodo **determinista** del jugador. Al
+  preguntarle cual de los dos es el problema, el patrocinador zanja el metodo y sus puntos abiertos.
+- **Decision:** lo que se necesita es **reproducir el metodo del jugador** en un minuto como maximo,
+  informando por que se elige cada numero (`N-001`, `N-002`). El metodo, en palabras del patrocinador:
+  1. **NUM1**, el numero de arranque: manda el criterio **«proximo a salir»** (cuando salio por ultima
+     vez, cada cuanto sale, cuando se espera que vuelva a salir).
+  2. **NUM2 y NUM3:** las dos mejores parejas de NUM1.
+  3. **NUM4:** la mejor pareja de NUM2. **NUM5:** la mejor pareja de NUM3.
+  4. **Las parejas se cuentan sobre los ultimos 48 sorteos** (unos cuatro meses).
+  5. **Superbalota** (1–16): el criterio «proximo a salir», y distinta de NUM1..NUM5.
+  6. **Se excluye siempre** cualquier numero que haya salido en el ultimo sorteo, **de Baloto o de
+     Revancha**.
+  7. **Nunca tres o mas numeros consecutivos**; como maximo dos.
+  8. **Si un numero queda excluido**, se pasa al siguiente mejor segun el mismo criterio con que se eligio.
+- **Por que:** el tiempo que el jugador quiere recuperar es el de aplicar **su** metodo; una combinacion
+  aleatoria no sustituye ese trabajo, y sin el porque de cada numero no la usaria.
+- **Alternativas descartadas:**
+  - **Generacion aleatoria con restricciones (brief §6):** el patrocinador la descarta.
+  - **Excluir solo el ultimo sorteo del juego con prioridad (brief §26):** se excluye siempre lo de los
+    dos juegos.
+  - **Dos numeros de arranque:** una respuesta anterior lo sugeria; el patrocinador fija uno solo.
+  - **«Numero caliente» (el mas repetido en los ultimos 10 sorteos sin el ultimo) como criterio de
+    arranque:** entre caliente y proximo a salir, manda el segundo.
+- **Lo que queda sin fijar:** se pregunta en la misma conversacion; lo que no tenga respuesta va a
+  `assumptions.md`. La formula exacta de «proximo a salir» es del diseno tecnico (brief §23), no de esta
+  etapa.
+- **Tarea:** `T-029`.
+
+### D-053 - Ventanas, prioridad y desempates del metodo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** al preguntar por lo que `D-052` dejaba sin fijar —sobre que historico se mide, si se
+  cuentan los dos juegos, que pasa con los empates y si la exclusion cruza universos—, el patrocinador
+  responde y, al hacerlo, cambia dos puntos de `D-052`.
+- **Decision:** se fija lo siguiente, y **se revocan dos puntos de `D-052`**: el punto 4 (las parejas
+  sobre 48 sorteos) y el descarte de la prioridad del encargo. `D-052` sigue rigiendo en todo lo demas.
+  1. **La prioridad existe y se puede elegir:** `Baloto` o `Revancha`, por defecto `Baloto`. No decide
+     donde se juega la combinacion —se juega en los dos—, sino **sobre que juego se miden las
+     ventanas**.
+  2. **Parejas: los ultimos 72 sorteos** (unos seis meses) **del juego con prioridad**.
+  3. **NUM1 y la superbalota: los ultimos 48 sorteos** (unos cuatro meses) **del juego con prioridad**.
+  4. **Empates:** si dos numeros estan igual de proximos a salir, gana **el mas caliente** (el que mas se
+     repite en los ultimos 10 sorteos, sin contar el ultimo). Lo mismo para dos parejas que salen el
+     mismo numero de veces.
+  5. **La exclusion del ultimo sorteo cruza los dos universos:** un numero que salio como balota o como
+     superbalota queda fuera de los dos papeles.
+  6. **Una pareja que ya esta en la combinacion no se repite:** se pasa a la siguiente mejor.
+- **Por que:** son las reglas que el jugador aplica hoy a mano; sin ellas el metodo no es ejecutable.
+- **Alternativas descartadas:**
+  - **Contar las ventanas sobre los dos juegos a la vez (96 resultados por cada 48 fechas):** el
+    patrocinador mide sobre un juego, el que tenga la prioridad.
+  - **Una sola ventana para todo:** son dos, 72 para parejas y 48 para NUM1 y superbalota.
+  - **Descartar la prioridad del encargo (§26), como decidio `D-052`:** la prioridad se conserva, pero
+    **cambia de funcion**: ya no elige que sorteo se excluye —se excluyen los dos—, sino que historico se
+    mide.
+- **Lo que sigue sin fijar:** la formula exacta de «proximo a salir» es del diseno tecnico
+  (`_brief/client_brief.md` §23), no de esta etapa.
+- **Tarea:** `T-029`. **Necesidades:** `N-001`, `N-002`.
+
+### D-054 - La revision del sorteo anterior entra en lo que se construye
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** la rutina del jugador tiene tres momentos: ver si cayo el premio, comparar su apuesta con
+  el resultado y armar la combinacion. El tiempo se va entero en el tercero (`N-001`), asi que se
+  pregunto si los dos primeros entran en lo que se construye o si solo importa la combinacion. En la
+  misma vuelta se cierran los dos ultimos huecos del metodo.
+- **Decision:**
+  1. **Los tres momentos entran**, y los dos primeros quedan como `N-003` (saber cuantos numeros acerto)
+     y `N-004` (saber con que acumulado se juega). No se sostienen por el tiempo que ahorran, sino
+     porque son la rutina de cada dia de sorteo y hoy obligan a ir a la web.
+  2. **El desempate por numero caliente usa los ultimos 10 sorteos**, sin contar el ultimo, del juego con
+     prioridad, como las demas ventanas de `D-053`.
+  3. **Si el juego con prioridad no tiene sorteos suficientes** para una ventana —el caso de Revancha,
+     con menos historia—, se usa hasta donde haya informacion.
+- **Por que:** el patrocinador quiere la rutina entera, no solo su parte cara; y una ventana sin regla
+  para el historico corto se rompe sola el dia que se elija prioridad Revancha.
+- **Alternativas descartadas:**
+  - **Construir solo la generacion de la combinacion:** el jugador seguiria yendo a la web a comparar y a
+    mirar el acumulado.
+  - **Esperar a tener la ventana completa antes de calcular:** dejaria el metodo sin resultado justo
+    cuando se cambia de prioridad.
+- **Necesidades:** `N-003`, `N-004`. **Tarea:** `T-029`.
+
+### D-055 - Actores del producto y veredicto del Actor Generador
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** Pasos 3 y 4 de `005_discovery` (`T-029`), sobre `005_discovery/010_actors.md`. `manager`
+  propuso la clasificacion y el patrocinador la decidio, que es el reparto de `D-044`.
+- **Decision:**
+  1. **Dos actores.** **Generador:** JD Rodriguez, el jugador que prepara su apuesta. **Integrador:** la
+     web oficial de Baloto, que entrega el historico y los acumulados.
+  2. **Cuatro tipos ausentes,** declarados con su motivo: Coordinador, Ejecutor, Supervisor y
+     Administrador de Plataforma. El ultimo podria aparecer si algun dia la usara otra persona; hoy el
+     patrocinador confirma que sera el unico usuario.
+  3. **Veredicto del Paso 4: hay Generador real y alcanzable, y la etapa continua.** Lo firma el
+     patrocinador, que es el propio Generador: existe, es alcanzable y hoy hace el proceso a mano tres
+     veces por semana.
+  4. **§4 del artefacto se conserva vacia, con su advertencia, en vez de borrarse.** La plantilla dice
+     que se borre si no tiene filas, pero su propia comprobacion de §5 busca alli la advertencia sobre el
+     «Actor Invitado», y `CLAUDE.md` prohibe omitir secciones de una plantilla. Se anota dentro por que
+     queda vacia.
+- **Por que:** el producto lo usa una sola persona; inventar los seis tipos crearia actores sin nadie
+  detras, que es el error que el artefacto existe para evitar.
+- **Alternativas descartadas:**
+  - **Anotar un Administrador de Plataforma:** no hay usuarios, roles ni permisos que administrar.
+  - **Tratar la web de Baloto como una fuente y no como actor:** es un sistema externo que intercambia
+    informacion, que es la definicion de Integrador.
+  - **Borrar §4 por estar vacia, como sugiere la plantilla:** dejaria sin objeto su propia comprobacion.
+- **Lo que esto abre:** la tension entre la sugerencia de la plantilla y su comprobacion es un defecto de
+  la plantilla, no de este proyecto. Se trata al cerrar la etapa, con la cosecha.
+- **Tarea:** `T-029`. **Necesidades:** `N-001`..`N-004`.
+
+### D-056 - La aplicacion no guarda identidad, y A-001 queda refutado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `A-001` estaba `Abierto` desde `S-001` con su disparador en la clasificacion de actores,
+  que se hizo en esta sesion (`D-055`). Su forma de refutarlo era justamente esta: un solo usuario sin
+  identidad guardada lo refuta; varios usuarios identificables lo confirman.
+- **Decision:** la aplicacion **no guarda ningun dato personal**: ni identidad, ni usuario, ni contrasena,
+  ni correo, ni nada que identifique a una persona. `A-001` queda **`Refutado`** con su nota fechada, y el
+  limite entra en `constraints.md` como `C-005`.
+- **Por que:** el unico usuario es el propio patrocinador; guardar quien juego una combinacion no aporta
+  nada cuando solo hay uno, y evita entrar en datos de personas.
+- **Alternativas descartadas:**
+  - **Cuenta con usuario y contrasena para restringir el acceso:** introduce datos personales para
+    proteger informacion que el patrocinador no considera sensible.
+- **Lo que esto abre, y se dice:** con `C-003` la aplicacion se despliega en internet y sin identidad no
+  hay a quien reconocer, asi que cualquiera con la direccion podria usarla y registrar juegos. El
+  patrocinador lo acepta en esta etapa; **como se limita el acceso sin identidad es cosa del diseno
+  tecnico**, no de `005_discovery`.
+- **Supuesto:** `A-001`. **Restriccion:** `C-005`. **Tarea:** `T-029`.
+
+### D-057 - Interesados del proyecto y declaracion de I-XXX
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** Paso 5 de `005_discovery` (`T-029`), sobre `005_discovery/015_stakeholders.md`. `manager`
+  propuso tres candidatos y el patrocinador decidio. La plantilla usa `I-XXX`, que no estaba en la tabla
+  «Codigos» de `project.md`.
+- **Decision:**
+  1. **Dos interesados.** `I-001`, JD Rodriguez como patrocinador, que decide, financia y aprueba; e
+     `I-002`, Baloto como operadora oficial, que impone las condiciones sobre la informacion que publica.
+     Los dos son ademas actores, y asi queda escrito en §5 del artefacto.
+  2. **Vercel queda fuera:** no decide ni aporta conocimiento, y sus limites ya viven en `C-003`.
+  3. **Todas las aprobaciones son del patrocinador.** No hay ninguna decision que dependa de otra persona,
+     y el lo confirma.
+  4. **`I-XXX` se declara en la tabla «Codigos» de `project.md`**, apuntando al artefacto de interesados.
+  5. **`I-002` queda `TODAVIA NO` consultado**, lo que abre `A-008`: si las condiciones de uso del sitio
+     oficial permiten leer el historico de forma automatica. El patrocinador comprobo que tecnicamente es
+     posible; el permiso no se ha contrastado.
+- **Por que:** los dos que quedan son los unicos que pueden parar algo: uno decide el proyecto entero, el
+  otro puede dejarlo sin datos.
+- **Alternativas descartadas:**
+  - **Incluir a Vercel como `I-003`:** seria un espectador en la tabla, y eso la vuelve inutil.
+  - **Dejar a Baloto solo como Integrador, sin ficha de interesado:** entrega los datos, pero tambien es
+    quien puede impedir el acceso, y eso es influencia, no uso.
+  - **Dar `A-008` por resuelto con la comprobacion tecnica del patrocinador:** que se pueda extraer no
+    dice que este permitido.
+- **Tarea:** `T-029`. **Supuesto:** `A-008`.
+
+### D-058 - Hipotesis sellada de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** Paso 7 de `005_discovery` (`T-029`). El artefacto nace `SELLADA` y admite **un solo
+  commit**: se discutio entero antes de escribirlo. `manager` propuso hipotesis, falsacion y perfil; el
+  patrocinador los aprobo, y fijo la ventana y el umbral tras pedir que se le explicaran.
+- **Decision:** se sella la hipotesis «JD Rodriguez obtiene, sin ayuda y en menos de un minuto, la
+  combinacion de 6 numeros que hoy arma a mano, y puede decir de donde salio cada uno de los 6 con lo que
+  la aplicacion le muestra».
+  1. **Falsacion:** queda tumbada si en dos o mas de las cinco sesiones tarda mas de un minuto, necesita
+     ayuda, o no puede decir de donde salio alguno de los 6 numeros.
+  2. **Ventana y umbral, fijados antes del primer dato:** 5 sesiones, una por dia de sorteo, y umbral de
+     4 de 5. Solo cuenta `Exito autonomo`.
+  3. **El sesgo del participante unico se acepta y se declara** (§5 del artefacto): el unico Generador es
+     tambien el patrocinador y quien construye, asi que la parte de comprension queda debilitada a
+     proposito. No se busca un tercero.
+  4. **§6 conserva sus dos primeras ordenes aunque no puedan dar vacio aqui.** Se anota dentro por que, y
+     la salida acotada al cuerpo del artefacto va en el bloque de abajo.
+- **Por que:** el umbral de un minuto es el que el patrocinador fijo en el encargo; 4 de 5 deja margen
+  para un fallo ajeno al producto —la fuente caida, el sorteo sin publicar— sin admitir una herramienta
+  que falle dos de cada cinco veces.
+- **Alternativas descartadas:**
+  - **3 sesiones con umbral 3 de 3:** un solo dia malo la tumbaria.
+  - **6 sesiones con umbral 5 de 6:** mismo margen proporcional, una semana mas de espera.
+  - **Buscar un segundo participante para la comprension:** mediria si un tercero entiende el metodo, que
+    no es lo que el producto necesita.
+  - **Dos hipotesis, una de tiempo y otra de trazabilidad:** una combinacion instantanea sin explicacion
+    no resuelve el problema; separarlas dejaria pasar media solucion.
+- **Verificacion.** Las dos primeras ordenes de §6 del artefacto no pueden dar vacio, porque la propia
+  seccion las escribe; acotadas al cuerpo —de la cabecera a §5, lineas 1-109— no hay ni un hueco, y la
+  guia de llenado se borro:
+
+  ```
+  $ sed -n '1,109p' 005_discovery/020_hypothesis.md | grep -nE '<|Guia de llenado'; echo "salida=$?"
+  salida=1
+  $ grep -n '<' 005_discovery/020_hypothesis.md
+  124:- [x] **No queda ni un solo `<` en el archivo.**
+  129:grep -n "<" 005_discovery/020_hypothesis.md                 # debe no devolver nada
+  137:unicas lineas que quedan con `<` y con «Guia de llenado» son **las de esta misma seccion**, que los
+  ```
+
+  La tercera orden, la que mira `report_auditor`, no se puede correr todavia: el archivo aun no esta
+  commiteado, y su unico commit sera el de esta sesion.
+- **Criterio de cierre:** a ese commit, el artefacto esta sellado y `git` ve un solo commit sobre el.
+
+  ```
+  $ git log --oneline -- 005_discovery/020_hypothesis.md | wc -l
+  1
+  $ git show <hash>:005_discovery/020_hypothesis.md | grep -c '^| Estado | `SELLADA` |$'
+  1
+  ```
+
+- **Tarea:** `T-029`. **Necesidades:** `N-001`, `N-002`.

@@ -21,12 +21,14 @@
 
 | Codigo | Supuesto | Fecha | Estado |
 |---|---|---|---|
-| [A-001](#a-001---los-juegos-registrados-pueden-ser-datos-de-personas) | Los juegos registrados pueden ser datos de personas | 2026-09-15 | Abierto |
+| [A-001](#a-001---los-juegos-registrados-pueden-ser-datos-de-personas) | Los juegos registrados pueden ser datos de personas | 2026-09-15 | Refutado |
 | [A-002](#a-002---los-agentes-de-gate-y-de-acta-se-cargan-al-reiniciar-claude-code) | Los agentes de Gate y de acta se cargan al reiniciar Claude Code | 2026-09-15 | Refutado |
 | [A-003](#a-003---con-la-cabecera-yaml-valida-los-agentes-de-gate-y-de-acta-cargan) | Con la cabecera YAML valida, los agentes de Gate y de acta cargan | 2026-09-15 | Confirmado |
 | [A-004](#a-004---el-patrocinador-revisa-cada-salida-de-la-ia-antes-de-que-entre-al-registro) | El patrocinador revisa cada salida de la IA antes de que entre al registro | 2026-09-17 | Abierto |
 | [A-005](#a-005---hay-acceso-a-personas-que-conocen-el-proceso-real-ademas-del-patrocinador) | Hay acceso a personas que conocen el proceso real, ademas del patrocinador | 2026-09-17 | Abierto |
 | [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
+| [A-007](#a-007---la-cabecera-exacta-de-session-closer-deja-pasar-protocol-close-y-bloquea-las-demas-skills) | La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills | 2026-09-17 | Confirmado |
+| [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Abierto |
 
 ---
 
@@ -89,7 +91,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-15 |
-| Estado | Abierto |
+| Estado | Refutado |
 | Origen | manager |
 | Dueno | manager |
 
@@ -102,6 +104,12 @@ Plantilla:
   usuario sin cuenta ni identidad guardada (se refuta) o varios usuarios identificables (se
   confirma y pasa a `constraints.md`).
 - **Disparador:** la clasificacion de actores de `005_discovery` (`_templates/005_discovery/010_actors.md`).
+- 🕐 **Nota 2026-09-17 (refutado, `D-056`):** el disparador se cumplio al clasificar los actores
+  (`D-055`). Hay un solo usuario, el propio patrocinador, y el decide que la aplicacion **no guardara
+  ningun dato personal, identidad, usuario, contrasena ni correo**: nada que identifique a una persona.
+  Sin identidad guardada, el historial de juegos no queda asociado a nadie identificable, asi que el
+  supuesto queda **refutado** y no pasa a `constraints.md` como dato de personas. Lo que si entra alli,
+  por decision del patrocinador, es el limite de no recoger ninguno (`C-005`).
 
 ### A-002 - Los agentes de Gate y de acta se cargan al reiniciar Claude Code
 | Campo | Valor |
@@ -239,3 +247,60 @@ Plantilla:
   Ese texto solo lo escribe el script, asi que el hook se disparo dentro del agente y su salida `2`
   bloqueo la llamada. `.claude/agents/hook-probe.md` se borro despues. Lo que no se probo es el caso
   permitido dentro del agente; el test del script lo cubre fuera.
+
+### A-007 - La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Confirmado |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** dentro de un agente con la cabecera literal de `session-closer` (hook `PreToolUse` sobre
+  `Skill` con `node .claude/hooks/allow-only-skill.js protocol-close`), una llamada a `Skill` con
+  `protocol-close` pasa y una con cualquier otra skill queda bloqueada.
+- **Sobre que se construye encima:** `T-032`. `A-006` probo solo el caso bloqueado, y con otra skill
+  permitida (`protocol-start`); si el caso permitido fallara dentro del agente, el cierre no podria cargar
+  su propio protocolo.
+- **Como se refuta:** `manager` lanza el agente temporal `.claude/agents/hook-probe.md`, con esa cabecera
+  copiada literal y solo la herramienta `Skill`, que hace dos llamadas: `protocol-audit` y
+  `protocol-close`, sin ejecutar nada de lo que carguen. Se refuta si `protocol-audit` pasa o si
+  `protocol-close` queda bloqueada. En los dos casos se borra `.claude/agents/hook-probe.md` en la misma
+  sesion.
+- **Disparador:** esta sesion, `S-015`, antes de su cierre.
+- 🕐 **Nota 2026-09-17 (primer intento):** justo despues de crear `.claude/agents/hook-probe.md`,
+  lanzarlo devolvio literal `Agent type 'hook-probe' not found. Available agents: claude,
+  claude-code-guide, Explore, gate1_auditor, gate2_auditor, general-purpose, phase_exit_auditor, Plan,
+  report_auditor, session-closer, session-starter, statusline-setup`. En el turno siguiente, sin reiniciar,
+  Claude Code anuncio `hook-probe` como disponible. La sonda **no se ha lanzado todavia**: el supuesto
+  sigue `Abierto`.
+- 🕐 **Nota 2026-09-17 (confirmado, `D-050`):** lanzada la sonda, hizo sus dos llamadas y devolvio literal:
+
+  ```
+  1. protocol-audit →
+  PreToolUse:Skill hook error: [node .claude/hooks/allow-only-skill.js protocol-close]: Bloqueado: este agente solo puede invocar la skill "protocol-close", no "protocol-audit". No intentes ejecutar ese protocolo por otra via: detente y dilo en tu reporte.
+  2. protocol-close → cargo. Primera linea: Base directory for this skill: C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\YouOtto\.claude\skills\protocol-close
+  ```
+
+  Los dos casos quedan probados dentro del agente: la skill ajena bloqueada y la propia cargando. El texto
+  del bloqueo solo lo escribe `.claude/hooks/allow-only-skill.js`. `.claude/agents/hook-probe.md` se borro
+  despues, en la misma sesion, y nunca se commiteo.
+
+### A-008 - Las condiciones de uso de Baloto permiten leer su historico de forma automatica
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Abierto |
+| Origen | manager |
+| Dueno | usuario (JD Rodriguez) |
+
+- **Supuesto:** leer de forma automatica el historico de sorteos y los acumulados del sitio oficial de
+  Baloto esta permitido por sus condiciones de uso.
+- **Sobre que se construye encima:** `N-001`, `N-003` y `N-004`, que no tienen otra fuente de datos, e
+  `I-002` en `005_discovery/015_stakeholders.md`, cuya casilla «Consultado el» dice `TODAVIA NO`.
+- **Como se refuta:** se leen las condiciones de uso publicadas en el sitio oficial y su `robots.txt`. Si
+  prohiben la extraccion automatica, queda refutado y hay que buscar otra via —carga manual, otra fuente—
+  o replantear el alcance. El patrocinador ya comprobo que **tecnicamente** es posible extraerlos; lo que
+  no se ha contrastado es el permiso.
+- **Disparador:** antes de escribir la primera linea de codigo que lea el sitio, es decir al arrancar la
+  etapa del prototipo.
