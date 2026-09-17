@@ -65,6 +65,10 @@
 | [D-042](#d-042---el-commit-de-anclaje-lleva-tambien-el-trailer-de-coautoria) | El commit de anclaje lleva tambien el trailer de coautoria | 2026-09-17 | Vigente |
 | [D-043](#d-043---cada-hallazgo-de-auditoria-lleva-urgencia-ademas-de-gravedad) | Cada hallazgo de auditoria lleva urgencia ademas de gravedad | 2026-09-17 | Vigente |
 | [D-044](#d-044---reparto-del-trabajo-de-005_discovery) | Reparto del trabajo de 005_discovery | 2026-09-17 | Vigente |
+| [D-045](#d-045---promocion-al-esqueleto-de-los-cuatro-archivos-de-s-013) | Promocion al esqueleto de los cuatro archivos de S-013 | 2026-09-17 | Vigente |
+| [D-046](#d-046---f-016-y-f-017-se-aceptan-y-su-correccion-se-aplaza) | F-016 y F-017 se aceptan y su correccion se aplaza | 2026-09-17 | Vigente |
+| [D-047](#d-047---r-014-y-f-015-quedan-retirados-por-la-auditoria-revertida) | R-014 y F-015 quedan retirados por la auditoria revertida | 2026-09-17 | Vigente |
+| [D-048](#d-048---el-agente-de-cierre-solo-puede-invocar-protocol-close) | El agente de cierre solo puede invocar protocol-close | 2026-09-17 | Vigente |
 
 ---
 
@@ -2536,3 +2540,270 @@ Plantilla:
   ```
 
   📌 **Ancladas por el Paso 7c-bis al commit `d54e314`.** Las dos reproducen lo publicado arriba.
+
+### D-045 - Promocion al esqueleto de los cuatro archivos de S-013
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-041`, `D-042` y `D-043` dejaron cuatro archivos del andamiaje por delante del
+  esqueleto; el cambio ya tiene su cierre (`S-013`) y su auditoria (`R-015`). Por `L-012`, la promocion
+  va al principio de la sesion, antes de tocar el andamiaje por `F-016`, `F-017` o `D-048`. Disparadores
+  y Paso 1 sobre el origen:
+
+  ```
+  $ git status --short -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  $ git status -sb
+  ## main...origin/main
+  $ git rev-parse HEAD
+  2063f095af1b8264d247860d72e7614b96a47d86
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-audit/SKILL.md and .claude/skills/protocol-audit/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-close/SKILL.md and .claude/skills/protocol-close/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/.claude/skills/protocol-start/SKILL.md and .claude/skills/protocol-start/SKILL.md differ
+  Files C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS/_templates/000_preproject/050_audit_findings.md and _templates/000_preproject/050_audit_findings.md differ
+  ```
+
+  (`ESQ="C:/Users/USUARIO/Documents/Company_TripleS/SDAI_TripleS"`.) Paso 1b: nueve copias de la raiz
+  dan `0` y `_audit/findings.md` da `21`, el mismo cambio de su plantilla.
+- **Decision:** el usuario **aprueba los cinco**: `protocol-audit/SKILL.md` (10 entran, 2 salen),
+  `protocol-close/SKILL.md` (32 entran, 1 sale), `protocol-start/SKILL.md` (6 entran, 4 salen),
+  `_templates/000_preproject/050_audit_findings.md` (18 entran, 3 salen) y la copia `_audit/findings.md`
+  del esqueleto, regenerada desde esa plantilla. Origen `2063f09`; commit del esqueleto `1bec59a`, subido
+  (`## main...origin/main`). No se dejo nada fuera.
+- **Por que:** con el arbol limpio y lo promovido ya auditado, promover antes de tocar `.claude/` evita
+  el circulo de `L-012`.
+- **Alternativas descartadas:**
+  - **Promover al final, junto con `D-048`:** `D-048` no tiene cierre ni auditoria, y el protocolo
+    prohibe depositar en el esqueleto lo que no se ejercito.
+- **Hallazgos:** ninguno. Nada existia solo en el esqueleto.
+- **Comprobacion del supuesto del Paso 2:** se leyeron las 10 lineas que se borran. `protocol-audit`: 2,
+  la version anterior del apartado a) sin gravedad ni urgencia. `protocol-close`: 1, el commit de anclaje
+  sin trailer (`D-042`). `protocol-start`: 4, el anuncio «por codigo y gravedad» y las dos lineas de la
+  plantilla del reporte sin urgencia (`D-043`). Plantilla: 3, la cabecera, separador y fila vacia de la
+  tabla sin columna `Urgencia`. Todas son versiones anteriores de lo reescrito.
+- **Final de linea:** los cinco destinos en LF. `protocol-close` salia en CRLF **del arbol de trabajo**,
+  y se copio quitando los CR. ⚠️ En la puerta se dijo que ese CRLF venia de `d54e314`; es falso: el blob
+  del commit esta en LF, el CRLF es solo la copia de trabajo:
+
+  ```
+  $ git show 4409bb9:.claude/skills/protocol-close/SKILL.md | tr -dc "\r" | wc -c; git show d54e314:.claude/skills/protocol-close/SKILL.md | tr -dc "\r" | wc -c
+  0
+  0
+  ```
+
+- **Verificacion.** Controles de agnosticismo, antes de la puerta:
+
+  ```
+  $ git grep -nE "YouOtto|Proyectos_TripleS|github\.com" -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' -- _phases _workflow | grep -vE ':PI-[0-9]+$'
+  $ git grep -nE "jdrodriguez|USUARIO|C:\\Users|C:/Users|TripleS|gmail|SDAI|Otto" -- .claude/skills/protocol-audit/SKILL.md .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md _templates/000_preproject/050_audit_findings.md; echo "salida=$?"
+  salida=1
+  ```
+
+  El commit del esqueleto y la identidad de contenido con el origen:
+
+  ```
+  $ git -C "$ESQ" show --stat --format="%h %s" 1bec59a | tail -6
+   .claude/skills/protocol-audit/SKILL.md          | 12 +++++++--
+   .claude/skills/protocol-close/SKILL.md          | 33 ++++++++++++++++++++++++-
+   .claude/skills/protocol-start/SKILL.md          | 10 +++++---
+   _audit/findings.md                              | 21 +++++++++++++---
+   _templates/000_preproject/050_audit_findings.md | 21 +++++++++++++---
+   5 files changed, 84 insertions(+), 13 deletions(-)
+  $ for F in .claude/skills/protocol-audit/SKILL.md .claude/skills/protocol-close/SKILL.md .claude/skills/protocol-start/SKILL.md _templates/000_preproject/050_audit_findings.md; do cmp -s <(git show 2063f09:$F | tr -d "\r") <(git -C "$ESQ" show 1bec59a:$F) && echo "igual $F" || echo "DISTINTO $F"; done
+  igual .claude/skills/protocol-audit/SKILL.md
+  igual .claude/skills/protocol-close/SKILL.md
+  igual .claude/skills/protocol-start/SKILL.md
+  igual _templates/000_preproject/050_audit_findings.md
+  ```
+
+  Barrido del Paso 1 despues de promover, antes de tocar `.claude/` por `D-048`: salida vacia. Paso 1b
+  sobre `1bec59a` (plantilla y copia leidas con `git -C "$ESQ" show 1bec59a:`): las diez parejas dan `0`.
+- **Criterio de cierre:** el commit del esqueleto `1bec59a` contiene los cinco archivos con el contenido
+  del origen `2063f09`: son las dos ordenes del bloque anterior, ya ancladas a los dos hashes. El
+  esqueleto queda fuera de lo que la auditoria ve, y por eso van los dos hashes delante.
+
+### D-046 - F-016 y F-017 se aceptan y su correccion se aplaza
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-015` abrio `F-016` y `F-017` sobre `S-013` (`d54e314`), los dos `Baja` y `No
+  bloqueante`. Verificados contra `HEAD` (`2063f09`):
+
+  ```
+  $ git show 2063f09:_persistence/decisions.md | grep -nF 'salta en `079b0a4`'
+  2323:    meter su fila, con su fecha de entonces. Probado sobre los commits de sesion, salta en `079b0a4`,
+  $ git show 2063f09:_persistence/decisions.md | sed -n '/^### D-041 /,/^### D-042 /p' | grep -nE '079b0a4|^\s*\$ ' | cut -c1-60
+  13:  $ git log --format='%h %ad' --date=iso -1 1fc3264; git l
+  16:  $ git show 4409bb9:_persistence/decisions.md | grep -E '
+  18:  $ git show 4409bb9:_persistence/decisions.md | sed -n '/
+  20:  $ git show 4409bb9:_persistence/lessons.md | grep -cE '^
+  22:  $ git show 4409bb9:_persistence/lessons.md | sed -n '/^#
+  24:  $ git show 4409bb9:_audit/S-011.md | grep -c "Nota 2026-
+  46:    meter su fila, con su fecha de entonces. Probado sobre
+  52:  $ fechas() { d=$(git log -1 --format=%ad --date=short $
+  53:  $ for c in $(git log --format='%h %s' | grep -E ' S-0[0-
+  72:  da 11 lineas sobre `cf2992f` y ninguna sobre `079b0a4`.
+  76:  $ git show d54e314:_persistence/decisions.md | grep -c '
+  78:  $ git show d54e314:_persistence/lessons.md | grep -c '🕐
+  80:  $ git show d54e314:_audit/S-011.md | grep -c '🕐 \*\*Nota
+  82:  $ for c in cf2992f 079b0a4; do echo "== 7d fechas @ $c: 
+  85:  $ git show d54e314:_audit/findings.md | grep -cE '^\| \[F
+  $ git show 2063f09:_audit/S-013.md | grep -nF 'dieciseis lineas'
+  497:Ninguna de las dieciseis lineas afirma una cifra que no salga del bloque inmediatamente anterior o de
+  ```
+
+  `F-016` sigue vivo: detras de la frase de la linea 46 del bloque de `D-041` no hay ninguna orden sin el
+  filtro de entradas nuevas. Las dos ordenes que corren el control (52-53 y 82) llevan el filtro. `F-017`
+  sigue vivo: la linea 497 dice «dieciseis», y el bloque publicado encima tiene 17 lineas de salida
+  (`R-015`, con su orden).
+- **Decision:** se aceptan los dos. Por decision del usuario, al ser `No bloqueante` **no se corrigen en
+  esta sesion**: quedan `Aceptado — pendiente` con su tarea abierta.
+  - `F-016` → `T-030`: nota fechada en `D-041` que publica la orden sin filtro, anclada, con su salida.
+  - `F-017` → `T-031`: nota fechada en `_audit/S-013.md`, debajo de la linea 497, con la cifra correcta
+    (17). La linea publicada no se reescribe.
+- **Por que:** los dos se sostienen contra el repositorio y ninguno contamina lo que venga despues; la
+  urgencia de `D-043` existe para poder aplazarlos sin perderlos.
+- **Alternativas descartadas:**
+  - **Corregirlos ahora:** el usuario prioriza la retirada de `R-014` y el bloqueo de `D-048`.
+  - **Rechazar `F-016` porque el resultado es cierto:** `CLAUDE.md` exige orden y salida para todo
+    resultado que el registro afirme, y lo que el hallazgo senala es su ausencia, no un error.
+- **Criterio de cierre:** a ese commit, los dos hallazgos citan su tarea en indice y ficha.
+
+  ```
+  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-01[67]\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-03[01], D-046 \|$'
+  4
+  ```
+
+### D-047 - R-014 y F-015 quedan retirados por la auditoria revertida
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** primera recomendacion sin hallazgo de `R-015`. `798500e` creo `R-014` y `F-015`, y
+  `c180fd5` los revirtio porque esa auditoria la hizo el propio `session-closer`, no `report_auditor`.
+  Es la segunda vez, tras `R-011`/`F-012` (`D-038`):
+
+  ```
+  $ git log --all --format=%h -- _audit/R-014.md
+  c180fd5
+  798500e
+  $ git show 798500e:_audit/findings.md | grep -oE "^### F-015 - .*"
+  ### F-015 - El CONTROL DE CIFRA ADYACENTE publicado en la NOTA DE CIERRE de S-013 no reproduce contra el commit de anclaje, por su propia insercion
+  $ git log -1 --format=%B c180fd5 | sed -n 3,6p
+  This reverts commit 798500e. R-014 la ejecuto el propio session-closer
+  sobre su cierre, no report_auditor: no es revision independiente. S-013
+  vuelve a Pendiente para que la audite report_auditor en frio. R-014 y
+  F-015 quedan retirados (L-013).
+  $ git show 2063f09:_audit/findings.md | grep -cE "^(\| \[F-015\]|### F-015 )"
+  0
+  $ git ls-tree --name-only 2063f09 _audit/ | grep -c R-014
+  0
+  $ git show -s --format="%h %ad %s" --date=iso 709050c 798500e
+  709050c 2026-09-16 21:03:06 -0500 auditoria R-011 sobre S-011 (079b0a4)
+  798500e 2026-09-17 08:06:30 -0500 auditoria R-014 sobre S-013 (d54e314)
+  ```
+
+- **Decision:** `R-014` y `F-015` quedan **retirados** y no se reutilizan. Su contenido no vale como
+  auditoria. Igual que en `D-038`, no llevan fila en `_audit/index.md` ni en `findings.md`: esta decision
+  explica el hueco. `R-015` ya los salto sin usar el contenido retirado (su apartado «Sobre el id»).
+- **Por que:** lo mismo que en `D-038`: los codigos no se reutilizan, y recuperar el contenido daria
+  validez a una autoevaluacion.
+- **Lo que senalaba `F-015` no se reabre por aqui:** un hallazgo solo lo abre una auditoria independiente.
+  `R-015`, en frio, abrio `F-017` sobre el mismo control.
+- **Alternativas descartadas:** las mismas de `D-038` (filas `Retirado`, reutilizar los ids).
+- **Leccion:** `L-014`. **Prevencion:** `D-048`.
+- **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
+
+  ```
+  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-047\]|### D-047 )'
+  2
+  ```
+
+### D-048 - El agente de cierre solo puede invocar protocol-close
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario pide decidir como impedir que el cierre vuelva a auditarse a si mismo: van
+  dos veces (`D-038`, `D-047`) y las dos subieron la auditoria antes de detectarse. `L-013` solo detecta
+  despues. La causa: `session-closer` tiene la herramienta `Skill`, y la exclusividad de `protocol-audit`
+  solo esta escrita.
+
+  ```
+  $ git show 2063f09:.claude/agents/session-closer.md | grep -nE "^tools:"
+  4:tools: Read, Write, Edit, Glob, Grep, Bash, Skill
+  $ git show 2063f09:.claude/skills/protocol-close/SKILL.md | grep -nF "Tu no lanzas la auditoria"
+  2262:- 🚨 **Tu no lanzas la auditoria, pero la reclamas.** El agente `report_auditor` corre despues de ti,
+  ```
+
+  La documentacion de Claude Code (consultada con `ctx7`, `/websites/code_claude`) dice que un agente
+  puede declarar hooks `PreToolUse` en su cabecera, que **solo corren mientras ese agente esta activo**, y
+  que un hook con salida `2` bloquea la llamada.
+- **Decision:** la cabecera de `.claude/agents/session-closer.md` declara un hook `PreToolUse` sobre
+  `Skill` que corre `node .claude/hooks/allow-only-skill.js protocol-close`. El script deja pasar solo
+  esa skill y bloquea cualquier otra, y tambien una entrada ilegible o sin nombre. Test:
+  `.claude/hooks/allow-only-skill.test.js`. `L-013` se mantiene como segunda barrera.
+- **Por que:** la exclusividad deja de depender de que el agente lea y obedezca un texto, y se aplica
+  justo en el camino por el que fallo las dos veces.
+- **Alternativas descartadas:**
+  - **Reforzar el texto de `protocol-close` o del agente:** ya dice que no lanza la auditoria, y fallo
+    dos veces.
+  - **Quitar `Skill` al agente:** la necesita para cargar `protocol-close`.
+  - **`disable-model-invocation` en `protocol-audit`:** tambien impediria a `report_auditor` cargarla.
+  - **Hook global en `settings.json` que mire `agent_type`:** funcionaria igual, pero saca la regla del
+    agente al que pertenece.
+  - **El mismo bloqueo en los demas agentes:** no hay fallo observado en ellos (`PI-2`); se anade con una
+    linea si aparece.
+- **Limites, dichos:**
+  1. No impide que el agente escriba `_audit/R-XXX.md` a mano con `Bash` o `Write`, sin la skill. No ha
+     ocurrido, y `L-013` lo detectaria.
+  2. Las definiciones de agente se cargan al arrancar Claude Code: **el cierre de esta misma sesion corre
+     todavia sin el hook**, y `L-013` es la unica barrera para el.
+  3. Que el hook se dispare de verdad dentro del agente no esta probado: es `A-006`, con el agente
+     temporal `.claude/agents/hook-probe.md`. Lanzarlo en esta sesion devolvio
+     `Agent type 'hook-probe' not found`.
+- **Verificacion:**
+
+  ```
+  $ node --test .claude/hooks/allow-only-skill.test.js
+  ✔ bloquea una skill distinta de la permitida (54.1937ms)
+  ✔ deja pasar la skill permitida (48.8013ms)
+  ✔ no toca otras herramientas (52.6394ms)
+  ✔ bloquea si la entrada no es JSON (47.234ms)
+  ✔ bloquea una skill sin nombre (53.7684ms)
+  ℹ tests 5
+  ℹ suites 0
+  ℹ pass 5
+  ℹ fail 0
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 340.6615
+  ```
+
+- **Tarea:** `T-032`. **Supuesto:** `A-006`. **Leccion:** `L-014`.
+- **Criterio de cierre:** a ese commit, la cabecera del agente declara el hook y existen el script y su
+  test.
+
+  ```
+  $ git show <hash>:.claude/agents/session-closer.md | grep -cF 'command: node .claude/hooks/allow-only-skill.js protocol-close'
+  1
+  $ git ls-tree --name-only <hash> .claude/hooks/ | wc -l
+  2
+  ```
+
+- 🕐 **Nota 2026-09-17 (`A-006`):** el limite 3 queda resuelto: `A-006` esta `Confirmado` en la misma
+  sesion, con la salida de `hook-probe`, y ese agente temporal se borro. El limite 2 se escribio antes de
+  ver que las definiciones de agente se recargaron sin reiniciar: si el cierre de esta sesion ya corre con
+  el hook **no se comprobo**, y `L-013` sigue siendo la barrera que se aplica despues del cierre.

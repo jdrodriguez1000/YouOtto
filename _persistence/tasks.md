@@ -46,6 +46,9 @@
 | [T-027](#t-027---anadir-el-trailer-de-coautoria-al-commit-de-anclaje) | Anadir el trailer de coautoria al commit de anclaje | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-028](#t-028---anadir-la-urgencia-a-los-hallazgos-de-auditoria) | Anadir la urgencia a los hallazgos de auditoria | Implementada | Media | No bloqueante | 005_discovery |
 | [T-029](#t-029---pasos-1-y-2-de-005_discovery-con-el-patrocinador) | Pasos 1 y 2 de 005_discovery con el patrocinador | No implementada | Alta | Bloqueante | 005_discovery |
+| [T-030](#t-030---publicar-por-nota-la-orden-sin-filtro-que-d-041-cita) | Publicar por nota la orden sin filtro que D-041 cita | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-031](#t-031---corregir-por-nota-la-cifra-de-la-nota-de-cierre-de-s-013) | Corregir por nota la cifra de la NOTA DE CIERRE de S-013 | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-032](#t-032---limitar-las-skills-que-puede-invocar-el-agente-de-cierre) | Limitar las skills que puede invocar el agente de cierre | No implementada | Alta | No bloqueante | 005_discovery |
 
 ---
 
@@ -749,3 +752,49 @@ Plantilla:
 - **Criterio de cierre:** existe `005_discovery/` con el artefacto de necesidades, con al menos una
   `N-XXX` enunciada sin nombrar una pantalla, y `N-XXX` esta en la tabla «Codigos» de `project.md`. Las
   ordenes se escriben cuando exista el artefacto, con las de comprobacion que trae su plantilla.
+
+### T-030 - Publicar por nota la orden sin filtro que D-041 cita
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-014 |
+
+- **Que:** `F-016`. Nota fechada en `D-041` que publica, anclada, la orden del Paso 7d **sin** el filtro
+  de entradas nuevas sobre los commits de sesion, con su salida, que respalda «salta en `079b0a4`…». La
+  frase publicada no se reescribe. Segun `D-046`.
+- **Por que:** un resultado sin su orden no es reproducible.
+- **Criterio de cierre:** la nota existe en `D-041` con la orden y su salida; se escribe al hacerla.
+
+### T-031 - Corregir por nota la cifra de la NOTA DE CIERRE de S-013
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | S-014 |
+
+- **Que:** `F-017`. Nota fechada en `_audit/S-013.md`, debajo de la linea que dice «dieciseis lineas»,
+  con la cifra que publica el bloque (17) y la orden que la cuenta. Segun `D-046`.
+- **Por que:** la cifra contradice el bloque que tiene encima.
+- **Criterio de cierre:** la nota existe con la orden y su salida; se escribe al hacerla.
+
+### T-032 - Limitar las skills que puede invocar el agente de cierre
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | usuario |
+| Sesion | S-014 |
+
+- **Que:** hook `PreToolUse` en la cabecera de `session-closer` que solo deja invocar `protocol-close`,
+  con su script y su test en `.claude/hooks/`. Segun `D-048`.
+- **Por que:** el cierre ejecuto dos veces `protocol-audit` sobre su propia sesion (`D-038`, `D-047`).
+- **Criterio de cierre:** el de `D-048`; y `A-006` confirmado tras reiniciar Claude Code.

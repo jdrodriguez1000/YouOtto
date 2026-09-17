@@ -47,6 +47,7 @@
 | [S-011](#s-011---f-011-de-r-010-aceptado-con-nota-en-t-019-y-dt-004-confirmada-y-pagada-d-035) | `F-011` de `R-010` aceptado con nota en `T-019`, y `DT-004` confirmada y pagada (`D-035`) | 2026-09-16 | 005_discovery |
 | [S-012](#s-012---f-013-de-r-012-aceptado-nota-en-s-011-y-puerta-mecanica-en-el-anclaje-y-tres-recomendaciones-sin-hallazgo-evaluadas) | `F-013` de `R-012` aceptado (nota en `S-011` y puerta mecanica en el anclaje), y tres recomendaciones sin hallazgo evaluadas | 2026-09-17 | 005_discovery |
 | [S-013](#s-013---f-014-de-r-013-aceptado-d-041-promocion-de-protocol-close-y-protocol-start-d-040-urgencia-de-hallazgos-d-043-y-reparto-de-005_discovery-d-044) | `F-014` de `R-013` aceptado (`D-041`), promocion de `protocol-close` y `protocol-start` (`D-040`), urgencia de hallazgos (`D-043`) y reparto de `005_discovery` (`D-044`) | 2026-09-17 | 005_discovery |
+| [S-014](#s-014---f-016-y-f-017-de-r-015-aceptados-y-aplazados-d-046-r-014f-015-retirados-d-047-y-el-agente-de-cierre-solo-puede-invocar-protocol-close-d-048) | `F-016` y `F-017` de `R-015` aceptados y aplazados (`D-046`), `R-014`/`F-015` retirados (`D-047`), y el agente de cierre solo puede invocar `protocol-close` (`D-048`) | 2026-09-17 | 005_discovery |
 
 ---
 
@@ -78,41 +79,44 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-17 (S-013)` |
+| Ultima actualizacion | `2026-09-17 (S-014)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito el commit de `S-012` (`cf2992f`) en `R-013` y entrego `F-014`: la nota nueva de `_audit/S-011.md` y las entradas `D-036`-`D-039`/`L-013` llevan `2026-09-16` en un commit (`cf2992f`) fechado `2026-09-17`. `D-041` (aceptada, `report_auditor`; usuario elige las dos partes): nota fechada `2026-09-17` en cada una de las seis entradas afectadas, sin reescribir la fecha publicada (`T-025`); y el Paso 7d de `protocol-close` anade una orden que lista las fechas que el commit anade (`| Fecha |`, fila de indice de una entrada nueva, nota fechada) distintas de la del commit (`T-026`). Ademas: `D-040` (usuario) promueve `protocol-close` y `protocol-start` de `S-012` al esqueleto de arranque (commit `a75cfb6`, subido), por `L-012`, antes de tocar mas el andamiaje; `D-042` (`report_auditor`, recomendacion sin hallazgo de `R-013`) anade el trailer de coautoria al commit de anclaje (`T-027`); `D-043` (usuario) anade `Urgencia` (`Bloqueante`/`No bloqueante`) a cada hallazgo de auditoria, ademas de su `Gravedad`, en `findings.md`, su plantilla, `protocol-audit` y `protocol-start` (`T-028`); y `D-044` (usuario) adopta el reparto de `_workflow/005_discovery.md` §2 para el trabajo de la etapa, con `A-004` y `A-005` como supuestos vigentes. `T-025`, `T-026`, `T-027` y `T-028` quedan `Implementada`: su trabajo esta en el diff de esta sesion y sus criterios de cierre reproducen contra el arbol de trabajo, aunque las ordenes que citan `<hash>` en `D-040`-`D-044` se anclen todavia en el Paso 7c-bis de este mismo cierre |
-| Bloqueos activos | `T-029` (Alta, Bloqueante): trabajar los Pasos 1 y 2 de `005_discovery` con el patrocinador va antes que cualquier otro trabajo de la etapa. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores— sigue activo. `A-004` y `A-005` (abiertos, `005_discovery`): revision del patrocinador antes de que una entrada entre al registro, y acceso a personas que conocen el proceso real. `DT-002` sigue `No implementada`, confirmada y sin pagar |
+| Avance de la etapa | `report_auditor` audito el commit de `S-013` (`d54e314`) en `R-015` y entrego `F-016` y `F-017`, los dos `Baja`/`No bloqueante`. `D-046` (usuario, sobre recomendacion de `report_auditor`): los dos hallazgos se aceptan y, por ser `No bloqueante`, su correccion se aplaza — `F-016` a `T-030` (nota en `D-041` con la orden sin filtro que respalda su frase) y `F-017` a `T-031` (nota en `_audit/S-013.md` con la cifra correcta de 17 lineas). Antes de eso, `D-047` deja `R-014` y `F-015` retirados y no reutilizables: el propio `session-closer` volvio a auditar su propia sesion (`798500e`, revertido en `c180fd5`), repitiendo el patron de `D-038` pese a `L-013`. El usuario decide entonces la prevencion mecanica (`D-048`, `L-014`): la cabecera de `.claude/agents/session-closer.md` declara un hook `PreToolUse` sobre `Skill` que corre `.claude/hooks/allow-only-skill.js protocol-close` y bloquea cualquier otra skill, con su test (`node --test`, 5/5 en verde). `A-006` (el hook se dispara dentro del agente) se registro y se confirmo en la misma sesion con el agente temporal `hook-probe`, ya borrado; queda sin comprobar si el cierre de esta misma sesion corre ya protegido por el hook. Ademas, al principio de la sesion, `D-045` (usuario) promovio al esqueleto de arranque los cuatro archivos que `D-041`/`D-042`/`D-043` habian dejado por delante (commit `1bec59a`, subido), por `L-012` |
+| Bloqueos activos | `T-029` (Alta, Bloqueante): trabajar los Pasos 1 y 2 de `005_discovery` con el patrocinador va antes que cualquier otro trabajo de la etapa. `T-032` (Alta, No bloqueante): el hook de `D-048` esta escrito y probado por script, pero su criterio de cierre completo —incluida la comprobacion de `A-006` tras un reinicio real de Claude Code— sigue sin cerrarse; queda `No implementada`. `A-001` (abierto, no bloqueante): si el historial de juegos registrados es dato de persona; su disparador —la clasificacion de actores— sigue activo. `A-004` y `A-005` (abiertos, `005_discovery`): revision del patrocinador antes de que una entrada entre al registro, y acceso a personas que conocen el proceso real. `DT-002` sigue `No implementada`, confirmada y sin pagar |
 
 ---
 
 ## 2. Ultimo realizado
 
-Trece sesiones de trabajo. Segun el diff: se acepto `F-014` de `R-013` con `D-041` — una nota fechada
-`2026-09-17` en cada una de las seis entradas que llevaban `2026-09-16` en el commit `cf2992f`
-(`D-036`-`D-039`, `L-013` y la nota de `F-013` en `_audit/S-011.md`), sin reescribir la fecha
-publicada (`T-025`); y el Paso 7d de `protocol-close` anade una orden que lista las fechas que un
-commit anade distintas de la suya, para `progress.md`/`tasks.md`/el informe (que se corrigen en el
-anclaje) y para los otros archivos del porque (que van a Sin resolver) (`T-026`). Ademas: `D-040`
-promueve `protocol-close` y `protocol-start` de `S-012` al esqueleto de arranque (commit `a75cfb6`);
-`D-042` anade el trailer de coautoria al commit de anclaje (`T-027`); `D-043` anade `Urgencia` a cada
-hallazgo de auditoria, ademas de `Gravedad` (`T-028`); y `D-044` adopta el reparto de
-`_workflow/005_discovery.md` §2 para el trabajo de la etapa (`A-004`, `A-005`). `T-025`, `T-026`,
-`T-027` y `T-028` quedan `Implementada` en este mismo commit: su trabajo esta en el diff y sus
-criterios de cierre reproducen contra el arbol de trabajo, por el criterio de `D-027`/`D-028`.
+Catorce sesiones de trabajo. Segun el diff: se acepto `D-045` (usuario) al principio de la sesion,
+antes de tocar el andamiaje (`L-012`): promocion al esqueleto de arranque de los cuatro archivos que
+`D-041`/`D-042`/`D-043` de `S-013` habian dejado por delante (`protocol-audit`, `protocol-close`,
+`protocol-start`, `_templates/000_preproject/050_audit_findings.md`) mas la copia de
+`_audit/findings.md`, commit `1bec59a` del esqueleto, subido. Se aceptaron `F-016` y `F-017` de
+`R-015` con `D-046`: por ser `No bloqueante`, su correccion se aplaza — `T-030` (nota pendiente en
+`D-041` con la orden sin filtro) y `T-031` (nota pendiente en `_audit/S-013.md` con la cifra 17). Se
+registro `D-047`: `R-014` y `F-015` quedan retirados y no reutilizables, porque `798500e` fue una
+segunda auditoria del propio `session-closer` sobre su propia sesion (revertida en `c180fd5`), pese a
+`L-013`. Por eso el usuario decidio `D-048`: la cabecera de `.claude/agents/session-closer.md` declara
+un hook `PreToolUse` sobre `Skill` (`.claude/hooks/allow-only-skill.js protocol-close`) que bloquea
+cualquier skill distinta de `protocol-close`, con su test `.claude/hooks/allow-only-skill.test.js`
+(5/5 en verde). Se registraron `A-006` (Confirmado en la misma sesion, con el agente temporal
+`hook-probe`, ya borrado) y `L-014`. Nacen `T-030`, `T-031` y `T-032`, las tres `No implementada`.
 
 ---
 
 ## 3. Siguiente paso
 
-`T-029` (Alta, Bloqueante): trabajar con el patrocinador, en conversacion y sin guion previo, los
-Pasos 1 y 2 de `005_discovery` (`_phases/005_discovery.md` §4) con el reparto de `D-044`, y escribir
-`005_discovery/005_needs.md` con al menos una `N-XXX`. Evaluar tambien el informe de auditoria que
-`report_auditor` entregue sobre el commit de esta sesion (`S-013`). El esqueleto de arranque vuelve a
-diferir en cuatro archivos (`protocol-audit`, `protocol-close`, `protocol-start` y
-`_templates/000_preproject/050_audit_findings.md`, verificado en el Paso 2f de este cierre), por los
-cambios de esta misma sesion posteriores a `D-040`: pendiente de promocion con aprobacion del usuario.
-Sigue abierta `DT-002` (el CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin
-pagar.
+Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
+(`S-014`). Pendientes de la etapa: `T-029` (Alta, Bloqueante) sigue siendo el primer trabajo de
+producto — Pasos 1 y 2 de `005_discovery` con el patrocinador, reparto de `D-044`. `T-032` (Alta, No
+bloqueante) queda abierta: falta comprobar si el hook de `D-048` protege ya al cierre de esta misma
+sesion, y cerrar su criterio con un reinicio real de Claude Code. `T-030` y `T-031` (Baja, No
+bloqueante) son las notas pendientes de `F-016`/`F-017`. El esqueleto de arranque vuelve a diferir en
+`.claude/agents/session-closer.md` (por el hook de `D-048`) y en `.claude/hooks/` entero (solo existe
+en este proyecto), verificado en el Paso 2f de este cierre: pendiente de promocion con aprobacion del
+usuario, y solo despues de que `D-048` tenga su propio cierre y auditoria. Sigue abierta `DT-002` (el
+CONTROL DE SALIDA REPRODUCIDA no reejecuta las ordenes), confirmada y sin pagar.
 
 ---
 
@@ -423,6 +427,32 @@ Plantilla:
   vuelve a diferir en `protocol-audit`, `protocol-close`, `protocol-start` y la plantilla de
   hallazgos, por los cambios de esta sesion posteriores a `D-040`. `DT-002` sigue `No implementada`,
   confirmada y sin pagar. `A-001`, `A-004` y `A-005` siguen `Abierto`.
+
+### S-014 - `F-016` y `F-017` de `R-015` aceptados y aplazados (`D-046`), `R-014`/`F-015` retirados (`D-047`), y el agente de cierre solo puede invocar `protocol-close` (`D-048`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Tareas | T-030, T-031, T-032 |
+
+- **Que se hizo:** al principio de la sesion, `D-045` (usuario) promovio al esqueleto de arranque los
+  cuatro archivos que `S-013` habia dejado por delante (`protocol-audit`, `protocol-close`,
+  `protocol-start`, la plantilla de hallazgos) mas la copia de `_audit/findings.md`, commit `1bec59a`
+  del esqueleto, subido, por `L-012`. Se acepto `F-016` y `F-017` de `R-015` con `D-046`: los dos
+  `Baja`/`No bloqueante`, se aplazan con `T-030` y `T-031` en vez de corregirse en esta sesion. Se
+  registro `D-047`: `R-014` y `F-015` quedan retirados y no reutilizables, porque el propio
+  `session-closer` volvio a auditar su propia sesion (`798500e`, revertido en `c180fd5`) pese a
+  `L-013` — es la segunda vez, tras `D-038`. El usuario decidio la barrera mecanica que pedia `L-014`:
+  `D-048` anade a la cabecera de `.claude/agents/session-closer.md` un hook `PreToolUse` sobre `Skill`
+  que solo deja invocar `protocol-close` (`.claude/hooks/allow-only-skill.js`), con su test en verde
+  (5/5). Se registraron `A-006` (Confirmado en la misma sesion con el agente temporal `hook-probe`,
+  borrado despues) y `L-014`.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `T-032` queda
+  `No implementada`: el hook esta escrito y probado por script, pero no esta comprobado que proteja ya
+  al cierre de esta misma sesion, y eso exige un reinicio real de Claude Code. `T-030` y `T-031`
+  siguen `No implementada` (notas pendientes de `F-016`/`F-017`). El esqueleto de arranque vuelve a
+  diferir en `.claude/agents/session-closer.md` y en `.claude/hooks/`, pendiente de promocion. `DT-002`
+  sigue `No implementada`, confirmada y sin pagar. `A-001`, `A-004` y `A-005` siguen `Abierto`.
 
 ---
 

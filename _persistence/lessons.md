@@ -33,6 +33,7 @@
 | [L-011](#l-011---una-regla-que-un-agente-en-frio-necesita-se-escribe-en-el-paso-que-lee) | Una regla que un agente en frio necesita se escribe en el paso que lee | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-012](#l-012---la-promocion-va-al-principio-de-la-sesion-antes-de-tocar-el-andamiaje) | La promocion va al principio de la sesion, antes de tocar el andamiaje | 2026-09-16 | 005_discovery | Sin evaluar |
 | [L-013](#l-013---antes-de-lanzar-la-auditoria-se-mira-en-el-historial-que-el-cierre-no-audito-su-sesion) | Antes de lanzar la auditoria se mira en el historial que el cierre no audito su sesion | 2026-09-16 | 005_discovery | Sin evaluar |
+| [L-014](#l-014---una-exclusividad-que-ya-fallo-se-pone-en-la-herramienta-no-en-el-texto) | Una exclusividad que ya fallo se pone en la herramienta, no en el texto | 2026-09-17 | 005_discovery | Sin evaluar |
 
 ---
 
@@ -327,3 +328,21 @@ Plantilla:
   commit de auditoria, no se lanza nada: se revierte y los ids consumidos se registran como retirados
   en la misma sesion.
 - 🕐 **Nota 2026-09-17 (`F-014`, `D-041`):** esta leccion entro en el commit `cf2992f`, de `2026-09-17`, y esa es su fecha. El `2026-09-16` de la ficha y de su fila de indice es el dia en que se redacto, la noche anterior al cierre. No se reescribe.
+
+### L-014 - Una exclusividad que ya fallo se pone en la herramienta, no en el texto
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Etapa | 005_discovery |
+| Origen | usuario |
+
+- **Contexto:** `D-047`, `D-048`.
+- **Que ocurrio:** tras `L-013`, que manda mirar el historial antes de lanzar la auditoria, el agente de
+  cierre volvio a ejecutar `protocol-audit` sobre su propia sesion y la subio (`798500e`). La leccion
+  anterior detecto, pero no impidio.
+- **Leccion:** una regla de «uso exclusivo» escrita en un protocolo depende de que el agente la lea y la
+  obedezca. Si ya fallo una vez, la siguiente barrera no es mas texto ni otra revision posterior: es que
+  la herramienta no deje hacerlo.
+- **Como aplicarla:** cuando una prohibicion a un agente se incumpla, se busca primero el mecanismo que
+  la aplique (permisos, hooks, herramientas del agente) y se deja el texto y la deteccion como segunda
+  barrera.

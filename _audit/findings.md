@@ -35,8 +35,8 @@
 | [F-011](#f-011---t-019-queda-implementada-con-un-alcance-que-su-propio-commit-declara-no-cumplido) | T-019 queda Implementada con un alcance que su propio commit declara no cumplido | R-010 | Media | — | Implementado |
 | [F-013](#f-013---el-anclaje-de-s-011-se-commiteo-con-la-nota-de-cierre-vacia-y-el-7c-ter-fallando-y-se-completo-en-un-tercer-commit-que-la-nota-no-declara) | El anclaje de S-011 se commiteo con la NOTA DE CIERRE vacia y el 7c-ter fallando, y se completo en un tercer commit que la nota no declara | R-012 | Media | — | Implementado |
 | [F-014](#f-014---la-nota-fechada-de-s-011-y-las-entradas-d-036d-039-y-l-013-llevan-2026-09-16-en-un-commit-de-2026-09-17) | La nota fechada de S-011 y las entradas D-036..D-039 y L-013 llevan 2026-09-16 en un commit de 2026-09-17 | R-013 | Media | — | Implementado |
-| [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Abierto |
-| [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Abierto |
+| [F-016](#f-016---d-041-afirma-el-resultado-de-una-prueba-sobre-commits-historicos-sin-publicar-la-orden) | D-041 afirma el resultado de una prueba sobre commits historicos sin publicar la orden | R-015 | Baja | No bloqueante | Aceptado — pendiente |
+| [F-017](#f-017---la-nota-de-cierre-de-s-013-dice-dieciseis-lineas-debajo-de-un-control-de-cifra-adyacente-que-publica-diecisiete) | La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete | R-015 | Baja | No bloqueante | Aceptado — pendiente |
 
 ---
 
@@ -422,8 +422,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-030, D-046 |
 | Cerrado en | |
 
 - **Que se observo:** en `d54e314`, `D-041` descarta «mirar todas las filas de indice del diff» diciendo
@@ -434,7 +434,8 @@ Plantilla:
 - **Por que importa:** `CLAUDE.md` exige patron y ambito para todo resultado que el registro afirme. La
   justificacion del filtro del Paso 7d no es reproducible desde el registro. `Baja`: el resultado es
   cierto y ningun control depende de el. `No bloqueante`: nada posterior hereda el defecto.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`2063f09`), con orden y salida en `D-046`.
+  Por ser `No bloqueante`, su correccion se aplaza con `T-030` abierta.
 
 ### F-017 - La NOTA DE CIERRE de S-013 dice «dieciseis lineas» debajo de un CONTROL DE CIFRA ADYACENTE que publica diecisiete
 | Campo | Valor |
@@ -443,8 +444,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | |
+| Estado | Aceptado — pendiente |
+| Registrado en | T-031, D-046 |
 | Cerrado en | |
 
 - **Que se observo:** en `17d769f`, el bloque «CONTROL DE CIFRA ADYACENTE — salida» de `_audit/S-013.md`
@@ -452,4 +453,5 @@ Plantilla:
   las dieciseis lineas…».
 - **Por que importa:** es el defecto que ese control existe para atrapar, dentro de la lectura del propio
   control. `Baja`: la salida esta entera y nada depende de la cifra. `No bloqueante`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado. Verificado vigente contra `HEAD` (`2063f09`), con orden y salida en `D-046`.
+  Por ser `No bloqueante`, su correccion se aplaza con `T-031` abierta.

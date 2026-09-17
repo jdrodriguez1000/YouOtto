@@ -26,6 +26,7 @@
 | [A-003](#a-003---con-la-cabecera-yaml-valida-los-agentes-de-gate-y-de-acta-cargan) | Con la cabecera YAML valida, los agentes de Gate y de acta cargan | 2026-09-15 | Confirmado |
 | [A-004](#a-004---el-patrocinador-revisa-cada-salida-de-la-ia-antes-de-que-entre-al-registro) | El patrocinador revisa cada salida de la IA antes de que entre al registro | 2026-09-17 | Abierto |
 | [A-005](#a-005---hay-acceso-a-personas-que-conocen-el-proceso-real-ademas-del-patrocinador) | Hay acceso a personas que conocen el proceso real, ademas del patrocinador | 2026-09-17 | Abierto |
+| [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
 
 ---
 
@@ -209,3 +210,32 @@ Plantilla:
 - **Como se refuta:** en los Pasos 1 y 2 se pregunta al patrocinador quien juega hoy y como lleva sus
   juegos y resultados. Si no es el mismo y no hay nadie alcanzable que lo haga, se refuta y se escala.
 - **Disparador:** el Paso 2 de `005_discovery` (`T-029`), en la sesion siguiente.
+
+### A-006 - El hook de la cabecera de session-closer se dispara dentro del agente
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-17 |
+| Estado | Confirmado |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** en esta maquina (Windows), el hook `PreToolUse` declarado en la cabecera de un agente
+  corre `node .claude/hooks/allow-only-skill.js <skill>` desde la raiz del repositorio, y su salida `2`
+  bloquea la llamada a `Skill`.
+- **Sobre que se construye encima:** `D-048`. El test solo prueba el script; si el hook no se dispara o
+  el comando falla con otra salida, la llamada pasa sin aviso.
+- **Como se refuta:** tras reiniciar Claude Code, `manager` lanza el agente temporal `hook-probe`, que
+  lleva el mismo hook permitiendo solo `protocol-start` e intenta invocar `keybindings-help`. Si la
+  herramienta devuelve exito, se refuta; si devuelve «Bloqueado: …», se confirma. En los dos casos se
+  borra `.claude/agents/hook-probe.md` en la misma sesion.
+- **Disparador:** la primera sesion tras reiniciar Claude Code, antes de su cierre.
+- 🕐 **Nota 2026-09-17 (confirmado):** en la misma sesion, cuando `hook-probe` aparecio disponible sin
+  reiniciar, `manager` lo lanzo. Hizo una sola llamada a `Skill` y devolvio literal:
+
+  ```
+  PreToolUse:Skill hook error: [node .claude/hooks/allow-only-skill.js protocol-start]: Bloqueado: este agente solo puede invocar la skill "protocol-start", no "keybindings-help". No intentes ejecutar ese protocolo por otra via: detente y dilo en tu reporte.
+  ```
+
+  Ese texto solo lo escribe el script, asi que el hook se disparo dentro del agente y su salida `2`
+  bloqueo la llamada. `.claude/agents/hook-probe.md` se borro despues. Lo que no se probo es el caso
+  permitido dentro del agente; el test del script lo cubre fuera.

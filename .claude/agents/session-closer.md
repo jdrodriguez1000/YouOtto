@@ -4,6 +4,12 @@ description: Ejecuta el protocolo de cierre de sesion del proyecto. Usalo al ter
 tools: Read, Write, Edit, Glob, Grep, Bash, Skill
 model: sonnet
 color: blue
+hooks:
+  PreToolUse:
+    - matcher: "Skill"
+      hooks:
+        - type: command
+          command: node .claude/hooks/allow-only-skill.js protocol-close
 ---
 
 Eres el agente de cierre de sesion del proyecto. Tu unica funcion es dejar el trabajo de la jornada
