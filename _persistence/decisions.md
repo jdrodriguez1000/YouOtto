@@ -1986,9 +1986,9 @@ Plantilla:
   abre sobre `1358c3c`. `F-013` esta `Aceptado — pendiente` en indice y ficha.
 
   ```
-  $ git show <hash>:_audit/S-011.md | grep -cE 'Nota 2026-09-16 \(`F-013`, `T-021`\)|^> `1358c3c`\*\*, y el informe no lo decia'
+  $ git show cf2992f:_audit/S-011.md | grep -cE 'Nota 2026-09-16 \(`F-013`, `T-021`\)|^> `1358c3c`\*\*, y el informe no lo decia'
   2
-  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show <hash>:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/git commit -m \(.*\) \&\& git push/echo "COMMIT \1"/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh); done
+  $ SP=$(mktemp -d); mkdir "$SP/_audit"; git show cf2992f:.claude/skills/protocol-close/SKILL.md | awk '/^git add _audit\/S-XXX.md _persistence\/decisions.md$/{f=1} f&&/^```$/{exit} f' | sed -e 's/<hash[>]/079b0a4/g; s/S-XXX/S-011/g' -e 's/^git add .*/: add/' -e 's/git commit -m \(.*\) \&\& git push/echo "COMMIT \1"/' -e 's/^git status -sb$/:/' > "$SP/puerta.sh"; for c in fdfca7b 1358c3c; do echo "== puerta @ $c"; git show $c:_audit/S-011.md > "$SP/_audit/S-011.md"; (cd "$SP" && bash puerta.sh); done
   == puerta @ fdfca7b
   FALTA en la NOTA DE CIERRE: **BARRIDO DE ANCLAJE — salida:**
   FALTA en la NOTA DE CIERRE: **CONTROL DE PROSA BORRADA — salida:**
@@ -1999,7 +1999,7 @@ Plantilla:
   PUERTA CERRADA: no se commitea el anclaje
   == puerta @ 1358c3c
   COMMIT S-011: ancla el informe y los criterios de cierre al hash 079b0a4
-  $ git show <hash>:_audit/findings.md | grep -cE '^\| \[F-013\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-021, T-022, D-036 \|$'
+  $ git show cf2992f:_audit/findings.md | grep -cE '^\| \[F-013\].*\| Aceptado — pendiente \|$|^\| Registrado en \| T-021, T-022, D-036 \|$'
   2
   ```
 
@@ -2007,6 +2007,8 @@ Plantilla:
   tambien ahi y la orden dejaria de extraer la puerta. Las dos ramas del 7c-quater se probaron aparte,
   sobre la version `1358c3c`: una inyectando una orden de staging con tuberia en la seccion 1, y otra
   quitando `--format=`. Las dos imprimen su linea y `PUERTA CERRADA`.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `cf2992f`.** Las tres reproducen lo publicado arriba.
 
 ### D-037 - El desfase 4 del arranque ignora los commits de solo anclaje
 | Campo | Valor |
@@ -2057,9 +2059,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, `protocol-start` lleva la tercera orden del desfase 4.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-start/SKILL.md | grep -cF "s/<hash>|\b[0-9a-f]{7}\b/<H>/g"
+  $ git show cf2992f:.claude/skills/protocol-start/SKILL.md | grep -cF "s/<hash>|\b[0-9a-f]{7}\b/<H>/g"
   1
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `cf2992f`.** Reproduce lo publicado arriba.
 
 ### D-038 - R-011 y F-012 quedan retirados por la auditoria revertida
 | Campo | Valor |
@@ -2104,9 +2108,11 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, esta decision existe en indice y detalle.
 
   ```
-  $ git show <hash>:_persistence/decisions.md | grep -cE '^(\| \[D-038\]|### D-038 )'
+  $ git show cf2992f:_persistence/decisions.md | grep -cE '^(\| \[D-038\]|### D-038 )'
   2
   ```
+
+  📌 **Anclada por el Paso 7c-bis al commit `cf2992f`.** Reproduce lo publicado arriba.
 
 ### D-039 - El trailer del cierre nombra el modelo que lo ejecuta
 | Campo | Valor |
@@ -2146,8 +2152,10 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, la skill ya no fija el literal y pide `<modelo>`.
 
   ```
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude Opus 5'
+  $ git show cf2992f:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude Opus 5'
   0
-  $ git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude <modelo> <noreply@anthropic.com>'
+  $ git show cf2992f:.claude/skills/protocol-close/SKILL.md | grep -cF 'Co-Authored-By: Claude <modelo> <noreply@anthropic.com>'
   1
   ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `cf2992f`.** Las dos reproducen lo publicado arriba.
