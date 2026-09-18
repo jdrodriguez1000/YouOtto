@@ -54,7 +54,7 @@
 | [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Implementado | D-095 / T-052 |
 | [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Implementado | D-096 / T-053 |
 | [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Aceptado — pendiente | D-100 / T-056 |
-| [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Aceptado — pendiente | D-101 / T-057 |
+| [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Implementado | D-101 / T-057 |
 
 ---
 
@@ -1291,9 +1291,9 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | D-101 / T-057 |
-| Cerrado en | |
+| Cerrado en | `d802324` (verificado en `R-026`) |
 
 - **Que se observo:** la seccion 0 de `_audit/S-023.md` afirma que las dos correcciones ya estaban
   en el commit anterior a la sesion, y que «ninguno de los siete se toca en este cierre»:
