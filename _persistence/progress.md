@@ -55,6 +55,7 @@
 | [S-019](#s-019---005_discovery-cerrada-y-firmada-por-el-patrocinador-d-074-y-f-025f-026f-027-de-r-020-evaluados-d-075-d-077) | `005_discovery` cerrada y firmada por el patrocinador (`D-074`), y `F-025`/`F-026`/`F-027` de `R-020` evaluados (`D-075`-`D-077`) | 2026-09-18 | 010_prototype |
 | [S-020](#s-020---f-028f-029-de-r-021-evaluados-d-080d-081-promocion-al-esqueleto-de-los-seis-candidatos-d-082-y-leccion-l-022-sobre-el-error-de-la-puerta) | `F-028`/`F-029` de `R-021` evaluados (`D-080`/`D-081`), promocion al esqueleto de los seis candidatos (`D-082`), y leccion `L-022` sobre el error de la puerta | 2026-09-18 | 010_prototype |
 | [S-021](#s-021---a-008-confirmado-d-083c-006-y-pasos-1-a-4-de-010_prototype-sellados-y-decididos-d-084-d-090-el-prototipo-aun-no-se-construyo) | `A-008` confirmado (`D-083`/`C-006`) y Pasos 1 a 4 de `010_prototype` sellados y decididos (`D-084`-`D-090`); el prototipo aun no se construyo | 2026-09-18 | 010_prototype |
+| [S-022](#s-022---f-031-evaluado-d-092t-051-el-prototipo-se-construye-d-093-y-el-patrocinador-lo-aprueba-d-094-cierra-el-paso-4-de-010_prototype) | `F-031` evaluado (`D-092`/`T-051`), el prototipo se construye (`D-093`) y el patrocinador lo aprueba (`D-094`), cierra el Paso 4 de `010_prototype` | 2026-09-18 | 010_prototype |
 
 ---
 
@@ -86,51 +87,52 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `010_prototype` |
-| Ultima actualizacion | `2026-09-18 (S-021)` |
+| Ultima actualizacion | `2026-09-18 (S-022)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `A-008` se confirma (`D-083`): el `robots.txt` de baloto.com no prohibe la ruta de resultados que el producto necesita, y el unico documento legal del sitio no cubre uso automatizado sobre el sitio informativo — nace `C-006` con el limite que si aplica. Se declara por adelantado `010_prototype/` como carpeta de entregables y `010_prototype/app/` como destino del codigo descartable (`D-084`). Se adopta tal cual el reparto de `_workflow/010_prototype.md` (`D-085`). Pasos 1 y 2 de la etapa sellados: un unico camino feliz y su tarea, con seis numeros arbitrarios que el prototipo va a enseñar (`D-086`, en `010_prototype/005_happy_path.md`). Paso 3 sellado: 1 participante y 5 sesiones, umbral 4 de 5 (`D-087`, en `010_prototype/010_participants.md`), con su espaciado desviado por decision del patrocinador a una sesion por jornada de trabajo en vez de un dia de sorteo por sesion (`D-088`, declarado en §5 sin tocar la hipotesis sellada). Se suma una facilitadora externa a las sesiones, ajena a la construccion del prototipo, con su guion en `010_prototype/012_facilitator_guide.md` (`D-089`). Paso 4 decidido y aun sin construir: el prototipo sera un unico archivo HTML, sin build ni dependencias, que muestra los seis numeros y sus razones de golpe al abrir, sin cronometro en pantalla (`D-090`). `F-030` de `R-022` se acepta en sus dos mitades: la nota fechada que completa el commit de anclaje de `S-020` ya esta escrita en `_audit/S-020.md` (`30276a9`), y queda pendiente ampliar el control de huecos de `protocol-close` a los marcadores inline (`T-049`, `D-091`) |
-| Bloqueos activos | Ninguna casilla de `010_prototype` verificada todavia salvo Pasos 1, 2 y 3 (sellados). `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `A-008` ya no bloquea: paso a `Confirmado` (`D-083`). `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037`, `T-042`, `T-046`, `T-047` y `T-048` siguen abiertas, sin cambios. Nacen `T-049` (Media, No bloqueante, `Origen: report_auditor`) y `T-050` (Baja, No bloqueante, `Origen: session-closer`) |
+| Avance de la etapa | `F-031` (`R-023`) se evalua y se acepta: la NOTA DE CIERRE de `S-021` repetia el hueco de plantilla del commit de anclaje; se completa por nota fechada en `_audit/S-021.md`, sin reescribir la linea sellada (`D-092`, `T-051` ya `Implementada`); el control que deja pasar el hueco sigue siendo `T-049`, sin duplicar. Se construye el Paso 4 de `010_prototype`: `010_prototype/app/index.html`, un unico archivo HTML sin dependencias, con la fila de seis numeros ascendente arriba y las razones encadenadas debajo, sin violar a simple vista las reglas visibles del metodo (`D-093`). El patrocinador revisa el prototipo entero y lo da por bueno: el Paso 4 queda cerrado y la etapa pasa al Paso 5 (`D-094`). Nace `A-009` (abierto): que los seis numeros arbitrarios no desvien la atencion del participante durante la sesion, con disparador en el cierre de la primera sesion. Nace `L-025`: un bloque de verificacion se escribe despues de correr la orden, nunca antes — dos cifras estimadas en `T-051` resultaron falsas al correr las ordenes de verdad, y se corrigieron antes de commitear |
+| Bloqueos activos | Pasos 1 a 4 de `010_prototype` sellados y cerrados; Paso 5 (correr la primera sesion) sin empezar. `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037`, `T-042`, `T-046`, `T-047`, `T-048`, `T-049` y `T-050` siguen abiertas, sin cambios. Falta lanzar `report_auditor` sobre el commit de esta sesion |
 
 ---
 
 ## 2. Ultimo realizado
 
-Veintiuna sesiones de trabajo. Segun el diff: `A-008` se confirma con evidencia del `robots.txt` y
-del unico documento legal del sitio de la fuente externa (`D-083`), y nace `C-006` con el limite que
-si rige. Se declara la carpeta de entregables de la etapa y el destino del prototipo (`D-084`), y se
-adopta el reparto de `_workflow/010_prototype.md` (`D-085`). Se sellan, en este orden y antes de
-escribir codigo, los Pasos 1 a 3 del procedimiento de la etapa: camino feliz y tarea (`D-086`,
-`010_prototype/005_happy_path.md`), participantes y sesiones (`D-087`, `010_prototype/010_participants.md`,
-con su espaciado desviado despues por `D-088` sin tocar la hipotesis sellada), y se suma una
-facilitadora externa con su guion (`D-089`, `010_prototype/012_facilitator_guide.md`). Se decide la
-forma del Paso 4 —un unico HTML sin dependencias, con los seis numeros y sus razones visibles al
-abrir— pero **no se construyo todavia** (`D-090`). Se evalua `F-030` de `R-022`: la nota fechada que
-completa el commit de anclaje de `S-020` ya esta en `_audit/S-020.md`, y se abre `T-049` para
-ampliar el control que debio verla (`D-091`). Nacen `L-023` y `L-024`.
+Veintidos sesiones de trabajo. Segun el diff: se evalua `F-031` (`R-023`) y se acepta — la NOTA DE
+CIERRE de `S-021` repetia el hueco de plantilla del commit de anclaje ya aceptado en `F-030`; se
+completa por nota fechada en `_audit/S-021.md`, sin reescribir la linea sellada, y no se duplica
+tarea para el control (`D-092`, `T-051` ya `Implementada`). Se construye el Paso 4 de
+`010_prototype`: nace `010_prototype/app/index.html`, un unico archivo HTML sin build ni
+dependencias, sin `localStorage`/`fetch`/cronometro/formularios (verificado con `grep` de ausencia),
+con la fila de seis numeros en orden ascendente arriba y la lista de razones encadenada debajo, y
+numeros que no violan a simple vista las reglas visibles del metodo (`D-093`). El patrocinador abre
+el prototipo, lo revisa entero contra la tarea sellada y lo da por bueno: el Paso 4 queda cerrado y
+la etapa pasa al Paso 5 (`D-094`). Nace `A-009` (abierto, disparador: cierre de la primera sesion):
+que los seis numeros arbitrarios no desvien la atencion del participante. Nace `L-025`: un bloque de
+verificacion se escribe despues de correr la orden, nunca antes.
 
 ---
 
 ## 3. Siguiente paso
 
-🎯 **Construir el prototipo — Paso 4 de `010_prototype` (`_phases/010_prototype.md`).** Es la
-actividad principal de la proxima sesion; todo lo demas es secundario. La forma ya esta decidida en
-`D-090`: un unico archivo HTML en `010_prototype/app/` (declarado en `D-084`), sin build, sin
-servidor y sin dependencias, que al abrirse muestra de golpe los seis numeros y la razon de cada uno,
-sin cronometro en pantalla, siguiendo el camino feliz sellado en `010_prototype/005_happy_path.md`
-§2. Al terminar, el patrocinador **revisa el prototipo entero contra la tarea sellada, no por
-muestreo** (`D-085`), antes de la primera sesion con el participante.
+🎯 **Correr la primera sesion — Paso 5 de `010_prototype` (`_phases/010_prototype.md`).** Es la
+actividad principal de la proxima sesion. El prototipo esta construido y aprobado
+(`010_prototype/app/index.html`, `D-093`/`D-094`); a partir de ahora **no se toca entre sesiones**
+(`_phases/010_prototype.md` §2, recordado en `D-094`). La facilitadora externa guia con
+`010_prototype/012_facilitator_guide.md` (`D-089`), el patrocinador observa sin responder preguntas
+del participante, y se registra cada sesion mientras ocurre (Paso 7 de la etapa). `A-009` (abierto)
+se dispara al cerrar esta primera sesion: si el participante dedica una parte apreciable del tiempo
+a la discrepancia con su metodo, el supuesto queda refutado.
 
-Secundario, si queda tiempo: lanzar `report_auditor` sobre el commit de esta sesion (`S-021`).
+Secundario, si queda tiempo: lanzar `report_auditor` sobre el commit de esta sesion (`S-022`).
 `T-049` (Media, No bloqueante, `Origen: report_auditor`): ampliar el control de huecos de
-`protocol-close` a los marcadores entre angulos que van inline en la NOTA DE CIERRE, no solo a
-principio de linea. `T-050` (Baja, No bloqueante, `Origen: session-closer`): anclar o corregir los
-numeros de linea de las verificaciones de `D-086`/`D-087`, que ya no reproducen sobre el archivo
-final. `T-047` y `T-048` (`010_prototype`, `Origen: report_auditor`) siguen con sus correcciones
-pendientes. `T-046`, `T-042`, `T-037` y `T-035` siguen con el mismo pendiente (anclar o fechar
-ordenes que ya no reproducen). `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007`
-sustituye el criterio literal de «tras reiniciar Claude Code». `T-030`, `T-031` y `T-033` (Baja, No
-bloqueante) siguen pendientes. `DT-002` sigue `No implementada`, sin pagar; `DT-005` sigue
-`No implementada`, `Propuesta (pendiente del usuario)`.
+`protocol-close` a los marcadores entre angulos que van inline en la NOTA DE CIERRE. `T-050` (Baja,
+No bloqueante, `Origen: session-closer`): anclar o corregir los numeros de linea de las
+verificaciones de `D-086`/`D-087`, que ya no reproducen sobre el archivo final. `T-047` y `T-048`
+(`010_prototype`, `Origen: report_auditor`) siguen con sus correcciones pendientes. `T-046`, `T-042`,
+`T-037` y `T-035` siguen con el mismo pendiente (anclar o fechar ordenes que ya no reproducen).
+`T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal
+de «tras reiniciar Claude Code». `T-030`, `T-031` y `T-033` (Baja, No bloqueante) siguen pendientes.
+`DT-002` sigue `No implementada`, sin pagar; `DT-005` sigue `No implementada`,
+`Propuesta (pendiente del usuario)`.
 
 ---
 
@@ -732,6 +734,34 @@ Plantilla:
   (`010_prototype`, `Origen: report_auditor`) siguen `No implementada`. `T-046`, `T-042`, `T-037`,
   `T-035`, `T-032`, `T-030`, `T-031` y `T-033` siguen abiertas, sin cambios. `DT-002` y `DT-005` sin
   cambios.
+
+### S-022 - `F-031` evaluado (`D-092`/`T-051`), el prototipo se construye (`D-093`) y el patrocinador lo aprueba (`D-094`), cierra el Paso 4 de `010_prototype`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Tareas | T-051 (nueva, `report_auditor`, `Implementada`) |
+
+- **Que se hizo:** se evalua `F-031` de `R-023`, verificado vigente contra `HEAD` (`386159b`): la
+  NOTA DE CIERRE de `_audit/S-021.md` repetia, dentro de la misma sesion que acepto `F-030`, el hueco
+  de plantilla en el rotulo del commit de anclaje. Se acepta y se corrige solo el archivo con una nota
+  fechada que declara `6a7d7f7`, sin reescribir la linea 287 sellada; no se abre tarea nueva para el
+  control, que sigue siendo `T-049` (`D-092`, `T-051` hecha en esta misma jornada). Se construye el
+  Paso 4 de `010_prototype/`: `010_prototype/app/index.html`, un unico archivo HTML sin build ni
+  dependencias externas, sin `localStorage`/`fetch`/cronometro/formularios, con la fila de seis
+  numeros en orden ascendente arriba (lo que se copia al tiquete) y la lista de razones encadenada
+  debajo (lo que se comprueba), y numeros que respetan a simple vista las restricciones visibles del
+  metodo (`D-093`). Se abre `A-009` (abierto): que esos numeros arbitrarios no desvien la atencion del
+  participante durante la sesion, con disparador al cerrar la primera. El patrocinador abre el
+  prototipo, lo revisa entero contra la tarea sellada —no por muestreo, `D-085`— y responde que lo da
+  por bueno: el Paso 4 queda cerrado y la etapa pasa al Paso 5 (`D-094`). Nace `L-025`: un bloque de
+  verificacion se escribe despues de correr la orden, nunca antes — dos cifras que `T-051` estimo de
+  memoria resultaron falsas al correrlas, y se corrigieron con la salida real antes de commitear.
+- **Que quedo abierto:** el Paso 5 —correr la primera sesion con el participante— no se ejecuto en
+  esta sesion; es el siguiente paso concreto. Falta lanzar `report_auditor` sobre el commit de esta
+  sesion. `T-047`, `T-048`, `T-049` y `T-050` (`010_prototype`) siguen `No implementada`. `T-046`,
+  `T-042`, `T-037`, `T-035`, `T-032`, `T-030`, `T-031` y `T-033` siguen abiertas, sin cambios. `DT-002`
+  y `DT-005` sin cambios.
 
 ---
 

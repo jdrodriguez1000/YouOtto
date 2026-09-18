@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouOtto</title>
+<style>
+  :root {
+    --tinta: #16181d;
+    --tinta-suave: #5b6472;
+    --fondo: #f4f5f7;
+    --papel: #ffffff;
+    --linea: #e0e3e8;
+    --acento: #1d6fd0;
+    --super: #c2410c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 56px;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+
+  header { margin-bottom: 20px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sorteo { color: var(--tinta-suave); font-size: 15px; margin: 0; }
+
+  .combinacion {
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 20px 18px;
+  }
+  .rotulo {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--tinta-suave);
+    margin: 0 0 14px;
+  }
+
+  .numeros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .bola {
+    width: 58px; height: 58px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 650;
+    background: #eef2f8;
+    border: 2px solid var(--acento);
+    color: var(--acento);
+  }
+  .bola.super {
+    background: #fdf1ea;
+    border-color: var(--super);
+    color: var(--super);
+  }
+  .separador {
+    width: 1px; align-self: stretch;
+    background: var(--linea);
+    margin: 4px 4px;
+  }
+
+  .razones { display: grid; gap: 0; }
+  .razon {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 0;
+    border-top: 1px solid var(--linea);
+  }
+  .razon .n {
+    font-size: 19px; font-weight: 650;
+    color: var(--acento);
+    text-align: right;
+    padding-top: 1px;
+  }
+  .razon.super .n { color: var(--super); }
+  .razon .papel { font-size: 13px; color: var(--tinta-suave); margin: 0 0 3px; }
+  .razon p.texto { margin: 0; }
+
+  .cierre { margin-top: 26px; }
+  button {
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--acento);
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 22px;
+    cursor: pointer;
+  }
+  button:hover { background: #1a5fb4; }
+
+  .confirmacion {
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-left: 5px solid #15803d;
+    border-radius: 12px;
+    padding: 22px 20px;
+  }
+  .confirmacion h2 { margin: 0 0 8px; font-size: 19px; color: #15803d; }
+  .confirmacion p { margin: 0 0 16px; color: var(--tinta-suave); }
+
+  @media (max-width: 420px) {
+    .bola { width: 48px; height: 48px; font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header>
+    <h1>YouOtto</h1>
+    <p class="sorteo">Tu combinación para el próximo sorteo &middot; Baloto</p>
+  </header>
+
+  <!-- Pantalla 1: la combinación, visible al abrir, sin pedirla -->
+  <section class="combinacion" id="pantalla-combinacion">
+    <p class="rotulo">Tus seis números</p>
+
+    <div class="numeros">
+      <span class="bola">07</span>
+      <span class="bola">19</span>
+      <span class="bola">24</span>
+      <span class="bola">31</span>
+      <span class="bola">38</span>
+      <span class="separador"></span>
+      <span class="bola super">11</span>
+    </div>
+
+    <div class="razones">
+
+      <div class="razon">
+        <span class="n">19</span>
+        <div>
+          <p class="papel">Número de arranque</p>
+          <p class="texto">Es el más próximo a salir: sale cada 9 sorteos en promedio y lleva 14 sin
+          aparecer, el retraso más largo de los 48 últimos sorteos de Baloto.</p>
+        </div>
+      </div>
+
+      <div class="razon">
+        <span class="n">07</span>
+        <div>
+          <p class="papel">Mejor pareja de 19</p>
+          <p class="texto">Ha salido junto al 19 en 6 de los últimos 72 sorteos de Baloto, más que
+          cualquier otro número.</p>
+        </div>
+      </div>
+
+      <div class="razon">
+        <span class="n">31</span>
+        <div>
+          <p class="papel">Segunda mejor pareja de 19</p>
+          <p class="texto">Acompañó al 19 en 5 de los últimos 72 sorteos. Empataba con el 26, y entró
+          el 31 por ser el más caliente de los dos en los últimos 10 sorteos.</p>
+        </div>
+      </div>
+
+      <div class="razon">
+        <span class="n">24</span>
+        <div>
+          <p class="papel">Mejor pareja de 07</p>
+          <p class="texto">Salió con el 07 en 5 de los últimos 72 sorteos. El 41 tenía la misma
+          cuenta, pero quedó fuera por haber salido en el sorteo anterior.</p>
+        </div>
+      </div>
+
+      <div class="razon">
+        <span class="n">38</span>
+        <div>
+          <p class="papel">Mejor pareja de 31</p>
+          <p class="texto">Salió con el 31 en 4 de los últimos 72 sorteos, la cuenta más alta una vez
+          descartado el 30, que habría dejado tres números seguidos.</p>
+        </div>
+      </div>
+
+      <div class="razon super">
+        <span class="n">11</span>
+        <div>
+          <p class="papel">Superbalota</p>
+          <p class="texto">La más próxima a salir entre 1 y 16: sale cada 12 sorteos y lleva 17 sin
+          aparecer en los 48 últimos. No repite ninguno de los cinco números de arriba.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cierre">
+      <button type="button" id="darla-por-buena">Dar por buena esta combinación</button>
+    </div>
+  </section>
+
+  <!-- Pantalla 2: la confirmación que cierra el camino feliz -->
+  <section class="confirmacion" id="pantalla-confirmacion" hidden>
+    <h2>Combinación elegida</h2>
+    <p>Esta es tu combinación para el próximo sorteo de Baloto.</p>
+    <div class="numeros">
+      <span class="bola">07</span>
+      <span class="bola">19</span>
+      <span class="bola">24</span>
+      <span class="bola">31</span>
+      <span class="bola">38</span>
+      <span class="separador"></span>
+      <span class="bola super">11</span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Unico comportamiento del prototipo: pasar de la combinacion a la confirmacion.
+  // No guarda nada; la confirmacion es aparente (005_happy_path.md §4).
+  document.getElementById('darla-por-buena').addEventListener('click', function () {
+    document.getElementById('pantalla-combinacion').hidden = true;
+    document.getElementById('pantalla-confirmacion').hidden = false;
+    window.scrollTo(0, 0);
+  });
+</script>
+</body>
+</html>

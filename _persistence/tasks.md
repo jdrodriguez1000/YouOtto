@@ -67,6 +67,7 @@
 | [T-048](#t-048---instanciar-a-d-074-la-fila-de-firma-del-acta-de-005_discovery-y-ampliar-el-control-de-huecos) | Instanciar a D-074 la fila de firma del acta de 005_discovery y ampliar el control de huecos | No implementada | Baja | No bloqueante | 010_prototype |
 | [T-049](#t-049---ampliar-el-control-de-huecos-del-cierre-a-los-marcadores-inline-de-la-nota-de-cierre) | Ampliar el control de huecos del cierre a los marcadores inline de la NOTA DE CIERRE | No implementada | Media | No bloqueante | 010_prototype |
 | [T-050](#t-050---anclar-o-corregir-los-numeros-de-linea-de-las-verificaciones-de-d-086d-087-que-ya-no-reproducen) | Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-051](#t-051---completar-por-nota-fechada-el-commit-de-anclaje-de-s-021) | Completar por nota fechada el commit de anclaje de S-021 | Implementada | Media | No bloqueante | 010_prototype |
 
 ---
 
@@ -1368,3 +1369,36 @@ Plantilla:
 - **Criterio de cierre:** `manager` decide, por cada bloque, si ancla los numeros al hash del commit
   de esta sesion (ya que a partir de ahi el archivo queda sellado y no deberia volver a moverse) o si
   los deja con una nota fechada que explique el desplazamiento.
+
+### T-051 - Completar por nota fechada el commit de anclaje de S-021
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-031` (`Media`/`No bloqueante`), aceptado en `D-092`. Añadir al final de
+  `_audit/S-021.md` una nota fechada que declare `6a7d7f7` como commit de anclaje, con la salida de
+  `git rev-parse --short` corrida y pegada, **sin reescribir la linea 287**.
+- **Por que:** la NOTA DE CIERRE dejo el commit de anclaje con el texto literal de la plantilla, asi
+  que el registro de `S-021` no dice donde quedo su anclaje. El dato es recuperable con una orden,
+  pero mientras no este escrito la unica cronologia fiable es `git log`, que es justo lo contrario de
+  para lo que la nota existe.
+- **Que NO cubre:** el **control** que dejo pasar el hueco. Eso es `T-049`, abierta desde `D-091` y
+  todavia `No implementada`; `D-092` explica por que no se duplica aqui.
+- **Criterio de cierre:** `_audit/S-021.md` termina en una nota fechada que nombra `6a7d7f7`, la
+  linea 287 sigue literal, y la orden de derivacion queda publicada con su salida.
+
+  **Verificacion:**
+
+  ```
+  $ tail -22 _audit/S-021.md | grep -c '6a7d7f7'
+  6
+  $ sed -n '287p' _audit/S-021.md
+  **NOTA DE CIERRE — commit de sesion `22747a9`, commit de anclaje `<se completa tras commitear el
+  $ grep -c 'rev-parse' _audit/S-021.md
+  8
+  ```

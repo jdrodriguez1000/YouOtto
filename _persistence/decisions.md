@@ -112,6 +112,9 @@
 | [D-089](#d-089---facilitador-externo-para-las-sesiones-y-su-guion-vive-en-la-carpeta-de-la-etapa) | Facilitador externo para las sesiones, y su guion vive en la carpeta de la etapa | 2026-09-18 | Vigente |
 | [D-090](#d-090---el-prototipo-es-un-unico-archivo-html-con-la-combinacion-y-sus-razones-visibles-al-abrir) | El prototipo es un unico archivo HTML, con la combinacion y sus razones visibles al abrir | 2026-09-18 | Vigente |
 | [D-091](#d-091---f-030-se-acepta-el-anclaje-de-s-020-se-completa-por-nota-y-el-control-pasa-a-ver-los-huecos-inline) | F-030 se acepta: el anclaje de S-020 se completa por nota y el control pasa a ver los huecos inline | 2026-09-18 | Vigente |
+| [D-092](#d-092---f-031-se-acepta-el-anclaje-de-s-021-se-completa-por-nota-y-el-control-sigue-siendo-t-049) | F-031 se acepta: el anclaje de S-021 se completa por nota, y el control sigue siendo T-049 | 2026-09-18 | Vigente |
+| [D-093](#d-093---lo-que-quedo-elegido-al-construir-el-prototipo-un-indexhtml-orden-ascendente-arriba-y-razones-encadenadas-debajo) | Lo que quedo elegido al construir el prototipo: un index.html, orden ascendente arriba y razones encadenadas debajo | 2026-09-18 | Vigente |
+| [D-094](#d-094---el-patrocinador-da-el-prototipo-por-bueno-y-el-paso-4-queda-cerrado) | El patrocinador da el prototipo por bueno y el Paso 4 queda cerrado | 2026-09-18 | Vigente |
 
 ---
 
@@ -5582,3 +5585,177 @@ la trate en la sesion siguiente.
   - **Rechazarlo por menor:** el hallazgo se sostiene contra la evidencia del repositorio —la orden de
     arriba lo muestra vivo en `HEAD`— y `protocol-close` lo exige literal en sus lineas 1316-1322.
 - **Tarea:** `T-049`.
+
+---
+
+### D-092 - F-031 se acepta: el anclaje de S-021 se completa por nota, y el control sigue siendo T-049
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-023` abrio `F-031` (`Media`/`No bloqueante`): la NOTA DE CIERRE de `_audit/S-021.md`
+  publico el commit de sesion y dejo el de anclaje con el texto literal de la plantilla, dentro de la
+  misma jornada que acepto `F-030` por el mismo motivo.
+- **Verificado contra `HEAD` antes de evaluarlo**, como exige el tratamiento de una auditoria: el
+  hallazgo **sigue vivo**.
+
+  ```
+  $ git rev-parse --short HEAD
+  386159b
+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-021.md
+  228:15	+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-020.md
+  272:| 15 | `grep -nE '<se completa\|<pendiente\|<en blanco\|<rellenar' _audit/S-020.md` | Si | mismas dos lineas (123 y 261) que publica `D-091` |
+  287:**NOTA DE CIERRE — commit de sesion `22747a9`, commit de anclaje `<se completa tras commitear el
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-021.md
+  6a7d7f7 2026-09-18 S-021: ancla el informe al hash 22747a9
+  22747a9 2026-09-18 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  $ grep -n "grep -nE '\^<' _audit/S-XXX.md" .claude/skills/protocol-close/SKILL.md
+  1498:grep -nE '^<' _audit/S-XXX.md
+  ```
+
+  Las lineas 228 y 272 son citas del patron dentro de la evidencia del Paso 2d, como el propio
+  hallazgo señala; el hueco real es la 287 y no hay commit posterior que lo complete. El control
+  sigue anclado en `^<`, que es la razon mecanica de que el defecto se repitiera.
+- **Decision: se acepta, y se corrige solo el archivo.** `_audit/S-021.md` recibe una **nota fechada**
+  que declara `6a7d7f7` como commit de anclaje, con la salida de `git rev-parse --short` corrida y
+  pegada. **La linea 287 no se reescribe.** Hecho en esta jornada como `T-051`.
+- **Por que NO nace una tarea para el control:** ya existe y es `T-049`, abierta por `D-091` la
+  sesion anterior y todavia `No implementada`. `F-031` no descubre un defecto nuevo del mecanismo:
+  **es la prueba de que el defecto que `T-049` corrige seguia produciendo daño el mismo dia en que se
+  diagnostico.** Abrir una segunda tarea para lo mismo dividiria el hallazgo en dos filas que se
+  cierran por separado, y ninguna de las dos diria la verdad entera.
+- **Por que no se reescribe la linea 287:** mismo motivo que `D-091` publica para la 261 de `S-020`.
+  Reescribirla convertiria «falta evidencia» en «hay evidencia falsa», esta vez sin nadie que lo note.
+  El repositorio corrige **añadiendo una nota fechada**, y el valor entero de esa nota esta en decir
+  **cuando** se supo.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-031` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**, aunque la nota quede hecha hoy. Ese estado
+  significa «corregido **y verificado por una auditoria posterior**», y `manager` no es esa auditoria.
+- **Alternativas descartadas:**
+  - **Reescribir la linea 287 con el hash correcto:** descartada arriba, con su motivo.
+  - **Rechazarlo como duplicado de `F-030`:** comparten mecanismo pero no archivo. `F-030` corrige
+    `S-020`; nada de lo hecho por `F-030` toca el rotulo de `S-021`, asi que rechazarlo dejaria el
+    defecto en pie con la excusa de que ya se trato otro caso.
+  - **Rechazarlo por menor y esperar a `T-049`:** `T-049` arregla el control **hacia adelante** y no
+    reescribe ningun archivo ya cerrado. Esperar dejaria `S-021` sin decir donde quedo su anclaje
+    para siempre.
+- **Tarea:** `T-051`.
+
+---
+
+### D-093 - Lo que quedo elegido al construir el prototipo: un index.html, orden ascendente arriba y razones encadenadas debajo
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** Paso 4 de `010_prototype`. `D-090` fijo la forma (un unico HTML sin dependencias) y
+  que la combinacion aparece sola con los seis numeros de golpe y las razones a la vista. Construirlo
+  obligo a cuatro elecciones que `D-090` no cierra; se registran aqui para que no sean silenciosas.
+- **Decision 1 — ubicacion y nombre:** `010_prototype/app/index.html`, un solo archivo, CSS y JS
+  dentro. `index.html` porque es el nombre que un navegador abre por convencion; el nombre esta en
+  ingles, como exige la regla de nombres del proyecto.
+- **Decision 2 — los numeros van en fila ascendente arriba y las razones encadenadas debajo:** la
+  fila superior muestra `07 19 24 31 38` y, separada, la superbalota `11`; la lista de razones va en
+  el orden del metodo (arranque `19`, sus dos parejas, y las parejas de esas). **Las dos cosas en la
+  misma pantalla, sin ningun gesto previo.**
+- **Por que asi, que es la eleccion menos obvia de las cuatro:** son dos lecturas distintas y el
+  usuario hace las dos. La fila de arriba es **lo que se copia al tiquete**, y ahi el orden natural
+  es el ascendente. La lista de abajo es **lo que se comprueba**, y ahi el orden ascendente
+  romperia el hilo: «mejor pareja de 19» no se puede leer antes que el 19. `D-090` descarto mostrar
+  los numeros de uno en uno **encadenados**, y esto no lo contradice: los seis siguen apareciendo de
+  golpe, juntos y sin pedirlos; lo que se encadena es el texto que los explica.
+- **Decision 3 — los seis numeros arbitrarios respetan las restricciones visibles del metodo:** no
+  hay tres consecutivos, la superbalota esta entre 1 y 16 y no repite ninguna balota, y los textos
+  citan las ventanas reales (48 sorteos para arranque y superbalota, 72 para parejas), el desempate
+  por «mas caliente» y la exclusion del ultimo sorteo, tal como los fijan `D-052` y `D-053`.
+- **Por que, si `D-086` ya dice que los numeros no se juzgan:** lo que la sesion observa es si el
+  participante puede **decir de donde salio cada numero** (`N-002`). Una combinacion que violara a
+  simple vista una regla que el conoce de memoria le daria de que hablar en vez de leer las razones,
+  y contaminaria justo lo que se mide. Los numeros siguen sin salir del metodo y eso sigue sin
+  defenderse en sesion; lo que se evita es un tropiezo gratuito.
+- **Decision 4 — la confirmacion sustituye a la pantalla anterior:** al dar la combinacion por buena,
+  la vista de razones se oculta y aparece un bloque con los seis numeros y la frase «Esta es tu
+  combinacion para el proximo sorteo de Baloto». No guarda nada (`005_happy_path.md` §4).
+- **Lo que NO lleva, verificado y no afirmado:** sin dependencias externas, sin persistencia, sin
+  cronometro en pantalla, sin formularios ni validaciones. Un solo archivo.
+
+  **Verificacion:**
+
+  ```
+  $ grep -ncE "http://|https://|src=|<link|cdn|import |require\(" 010_prototype/app/index.html
+  0
+  $ grep -ncE "localStorage|sessionStorage|indexedDB|fetch\(|XMLHttpRequest|cookie" 010_prototype/app/index.html
+  0
+  $ grep -ncE "setInterval|setTimeout|Date\(|performance\.now|cronom" 010_prototype/app/index.html
+  0
+  $ grep -ncE "<input|<form|<select|required|validat" 010_prototype/app/index.html
+  0
+  $ find 010_prototype/app -type f | wc -l
+  1
+  ```
+
+- **Verificacion del orden que exige el Gate — la tarea se sello ANTES que el codigo:**
+
+  ```
+  $ git log --diff-filter=A --format='%h %ad %s' --date=short -- 010_prototype/005_happy_path.md
+  22747a9 2026-09-18 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  $ git log --diff-filter=A --format='%h %ad' --date=short -- 010_prototype/app/
+  (sin salida)
+  ```
+
+  El artefacto sellado nacio en `22747a9`; el codigo del prototipo no existe todavia en el historial
+  y nace en el commit de esta sesion, posterior. ⚠️ **Esta salida hay que releerla despues del
+  commit**, porque la segunda orden solo devuelve algo a partir de entonces.
+- **Lo que sigue pendiente:** el patrocinador revisa el prototipo **entero** contra la tarea sellada,
+  no por muestreo (`D-085`), antes de la primera sesion. `manager` no declara que el prototipo
+  funcione: no lo ha visto renderizado en un navegador.
+- **Alternativas descartadas:**
+  - **Los cinco numeros en orden del metodo tambien arriba:** haria coincidir las dos lecturas, pero
+    deja la fila que se copia al tiquete en un orden que el jugador no usa.
+  - **Las razones en orden ascendente, igual que la fila:** rompe el hilo del encadenamiento, como se
+    explica arriba.
+  - **Añadir la fecha del sorteo:** obligaria a mantenerla viva durante las cinco sesiones, o a
+    mostrar una fecha falsa el dia de la sesion. «Proximo sorteo» no envejece.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-094 - El patrocinador da el prototipo por bueno y el Paso 4 queda cerrado
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-085` fija que el artefacto lo construye la IA con autonomia de **impacto
+  relevante**, y que el patrocinador **lo revisa entero contra la tarea sellada, no por muestreo**,
+  antes de la primera sesion. Construido el prototipo (`D-093`) y abierto en su navegador, el
+  patrocinador responde: «ok lo doy por bueno».
+- **Decision: el prototipo queda aprobado y el Paso 4 de `010_prototype` cerrado.** La etapa pasa al
+  Paso 5, correr la primera sesion, que sera el trabajo de la sesion siguiente.
+- **Lo que esta aprobacion es, y lo que no:** es la **firma de negocio** de la doble validacion —una
+  de las dos que exige `CLAUDE.md`—, y cierra el Paso 4. **No es la revision tecnica independiente**,
+  que en esta etapa no la emite `manager` ni el patrocinador: el veredicto sobre si el prototipo
+  sirvio lo emite el **Gate 1**, y `_phases/010_prototype.md` §2 prohibe expresamente que lo declare
+  quien construyo lo que se evalua.
+- ⚠️ **Lo que `manager` no puede firmar y por tanto no firma:** que el prototipo se vea y se comporte
+  como se espera en un navegador. No lo ha visto renderizado; lo que publica `D-093` son controles de
+  ausencia sobre el archivo, no una comprobacion visual. La revision visual es del patrocinador, y es
+  la que acaba de ocurrir.
+- **Lo que queda congelado desde ahora:** `_phases/010_prototype.md` §2 prohibe **modificar el
+  prototipo entre sesiones**, porque rompe la comparabilidad de la ronda. Aprobado el artefacto, un
+  cambio en `010_prototype/app/index.html` deja de ser una correccion y pasa a ser una decision que
+  invalida las sesiones ya corridas.
+- **Alternativas descartadas:**
+  - **Pedir una segunda pasada de revision antes de cerrar el paso:** el patrocinador ya dio su
+    respuesta; insistir seria pedirle que firme dos veces lo mismo.
+  - **Dar el paso por cerrado sin registrar la firma:** la aprobacion del stakeholder es una de las
+    dos validaciones obligatorias, y una firma que no se escribe no existe para la auditoria.
+- **Necesidades:** `N-001`, `N-002`.

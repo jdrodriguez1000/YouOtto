@@ -44,6 +44,7 @@
 | [L-022](#l-022---el-estado-de-una-tarea-no-dice-si-su-mecanismo-funciona-eso-lo-dicen-los-supuestos-que-la-respaldan) | El estado de una tarea no dice si su mecanismo funciona: eso lo dicen los supuestos que la respaldan | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-023](#l-023---un-documento-legal-enlazado-desde-un-sitio-no-siempre-regula-ese-sitio-se-lee-su-alcance-antes-de-citarlo) | Un documento legal enlazado desde un sitio no siempre regula ese sitio: se lee su alcance antes de citarlo | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-024](#l-024---un-defecto-que-reaparece-por-cuarta-vez-no-es-un-descuido-es-un-control-que-no-mira-donde-hace-falta) | Un defecto que reaparece por cuarta vez no es un descuido: es un control que no mira donde hace falta | 2026-09-18 | 010_prototype | Sin evaluar |
+| [L-025](#l-025---un-bloque-de-verificacion-se-escribe-despues-de-correr-la-orden-nunca-antes) | Un bloque de verificacion se escribe DESPUES de correr la orden, nunca antes | 2026-09-18 | 010_prototype | Sin evaluar |
 
 ---
 
@@ -616,3 +617,26 @@ Plantilla:
   contarlos. A partir del segundo, la correccion aceptable tiene **dos mitades**: el caso, y el
   control que no lo vio. Si la segunda mitad no cabe en la sesion, se abre como tarea con el recuento
   escrito dentro — de modo que quien la lea vea la serie, y no un caso aislado mas.
+
+### L-025 - Un bloque de verificacion se escribe DESPUES de correr la orden, nunca antes
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Origen | manager |
+
+- **Contexto:** al registrar la tarea que completaba por nota el anclaje de una sesion anterior,
+  `manager` redacto la ficha entera de un tiron —incluido su bloque «Verificacion»— y **puso las
+  cifras que esperaba** de tres ordenes: dos recuentos y una linea literal.
+- **Que ocurrio:** al correrlas de verdad, dos de las tres cifras eran falsas. Los recuentos reales
+  eran el doble y el cuadruple de lo escrito, porque el archivo ya contenia menciones previas que la
+  estimacion no considero. Se corrigieron pegando la salida cruda antes de commitear, y el error se
+  declaro en la respuesta al usuario.
+- **Leccion:** escribir la salida antes de correr la orden produce **evidencia falsa, no evidencia que
+  falta** — y es peor que no poner el bloque, porque un numero concreto se lee como comprobado. El
+  riesgo no esta en las ordenes dificiles: las dos que fallaron eran `grep -c`, las mas faciles del
+  bloque, y precisamente por eso parecieron seguras de estimar.
+- **Como aplicarla:** la orden se corre **primero**, y su salida se pega **copiada**, nunca tecleada
+  ni reconstruida de memoria. Si al redactar una ficha hace falta dejar el bloque para despues, se
+  deja **vacio**: un hueco visible se corrige, una cifra plausible no se vuelve a mirar. Vale igual
+  para los recuentos que uno «ya sabe» cuanto dan.

@@ -29,6 +29,7 @@
 | [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
 | [A-007](#a-007---la-cabecera-exacta-de-session-closer-deja-pasar-protocol-close-y-bloquea-las-demas-skills) | La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills | 2026-09-17 | Confirmado |
 | [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Confirmado |
+| [A-009](#a-009---los-seis-numeros-arbitrarios-no-desviaran-la-atencion-del-participante-durante-la-sesion) | Los seis numeros arbitrarios no desviaran la atencion del participante durante la sesion | 2026-09-18 | Abierto |
 
 ---
 
@@ -346,3 +347,32 @@ Plantilla:
   calcular con ellos una combinacion propia. **El supuesto queda `Confirmado`**, y el limite que el
   `robots.txt` si impone se registra aparte como `C-006`. Las ordenes y sus salidas crudas estan en
   `D-083`.
+
+### A-009 - Los seis numeros arbitrarios no desviaran la atencion del participante durante la sesion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Abierto |
+| Origen | manager |
+| Dueno | manager |
+
+- **Supuesto:** el unico participante conoce el metodo de memoria y vera una combinacion que su
+  metodo no habria producido (`D-086`). Se supone que lo comentara **como mucho de pasada** y seguira
+  con la tarea, sin que la discrepancia le ocupe la sesion ni le impida leer las razones.
+- **Sobre que se construye encima:** el prototipo entero y la ronda de cinco sesiones. Si el supuesto
+  falla, lo que se mide —tiempo hasta tener la combinacion y trazabilidad de cada numero— queda
+  contaminado en todas las sesiones a la vez, porque la combinacion es la misma en las cinco.
+- **Que ya se hizo para reducirlo, y por que no lo elimina:** `D-093` eligio numeros que no violan a
+  simple vista las reglas que el participante conoce (sin tres consecutivos, superbalota en rango y
+  sin repetir). Eso evita un tropiezo evidente, pero **no evita que reconozca que no son los suyos**:
+  para eso tendria que ejecutarse el metodo de verdad, que es justo lo que la etapa prohibe.
+- **Como se refuta:** en la primera sesion. Queda refutado si el participante dedica una parte
+  apreciable de la sesion a la discrepancia —vuelve sobre ella mas de una vez, o se detiene a
+  recalcular— en vez de comentarla y seguir. El guion ya fija que la facilitadora **no lo corrige ni
+  lo defiende** y anota la frase entrecomillada como comentario espontaneo
+  (`010_prototype/012_facilitator_guide.md` §2).
+- **Disparador:** al cerrar la **primera sesion**, antes de correr la segunda.
+- ⚠️ **Lo que NO se puede hacer si queda refutado, y conviene decirlo ahora:**
+  `_phases/010_prototype.md` §2 prohibe modificar el prototipo entre sesiones. Cambiar los numeros a
+  mitad de ronda romperia la comparabilidad de las cinco. La salida seria registrarlo como limitacion
+  de la ronda y llevarlo al Gate 1, no retocar el artefacto.
