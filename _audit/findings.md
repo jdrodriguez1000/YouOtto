@@ -51,8 +51,10 @@
 | [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
 | [F-030](#f-030---la-nota-de-cierre-de-s-020-deja-el-commit-de-anclaje-como-hueco-de-plantilla-sin-instanciar-y-sin-derivar) | La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar | R-022 | Media | No bloqueante | Aceptado — pendiente | `T-049`, `D-091` |
 | [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Implementado | D-092 / T-051 |
-| [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Aceptado — pendiente | D-095 / T-052 |
-| [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Aceptado — pendiente | D-096 / T-053 |
+| [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Implementado | D-095 / T-052 |
+| [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Implementado | D-096 / T-053 |
+| [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Abierto | — |
+| [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Abierto | — |
 
 ---
 
@@ -1126,9 +1128,9 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | D-095 / T-052 |
-| Cerrado en | |
+| Cerrado en | `66e6413` (verificado en `R-025`) |
 
 - **Que se observo:** el commit de anclaje `07ca614` escribio la NOTA DE CIERRE entera de `S-022` y
   dejo el commit de anclaje con el texto literal de la plantilla, sin instanciar y sin derivar.
@@ -1179,9 +1181,9 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | D-096 / T-053 |
-| Cerrado en | |
+| Cerrado en | `66e6413` (verificado en `R-025`) |
 
 - **Que se observo:** el bloque «Verificacion del orden que exige el Gate» de `D-093` publica dos
   ordenes; la segunda, la que demuestra que el codigo nacio despues del artefacto sellado, se publica
@@ -1230,4 +1232,97 @@ Plantilla:
 - **Que lo corregiria:** una nota fechada en `D-093` que publique la salida anclada posterior al
   commit —`e45185d 2026-09-18` para `010_prototype/app/`— sin reescribir el bloque original; o
   ampliar a `D-093` el tratamiento que `manager` decida para `T-050`.
+  ⚠️ Es una recomendacion, no una orden.
+
+### F-034 - El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco
+| Campo | Valor |
+|---|---|
+| Auditoria | R-025 |
+| Fecha | 2026-09-18 |
+| Gravedad | Media |
+| Urgencia | Bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** `_persistence/progress.md` y `_audit/S-023.md`, en el commit `66e6413`, dan la
+  ronda del Paso 5 por **cuatro** sesiones y enumeran como pendientes solo `002`, `003` y `004`:
+
+  ```
+  $ git show 66e6413:_persistence/progress.md | grep -n "cuatro sesiones\|sesiones restantes\|002\`, \`003\`"
+  107:`T-053`). Se corre la primera de las cuatro sesiones del Paso 5 de `010_prototype`:
+  128:alguna de las tres sesiones restantes el participante vuelve sobre la discrepancia, se anota en su
+  791:  primera de las cuatro sesiones del Paso 5: `010_prototype/015_session_001.md`, con JD Rodriguez
+  803:- **Que quedo abierto:** faltan las sesiones `002`, `003` y `004` del Paso 5; el prototipo sigue sin
+  ```
+
+  El informe repite la cifra en su seccion 2 («Faltan las sesiones `002`, `003` y `004`»), su
+  seccion 4 («una sola de las cuatro sesiones previstas») y su seccion 5. Lo sellado es cinco:
+
+  ```
+  $ git show 66e6413:_persistence/decisions.md | sed -n '5308,5309p'
+  - **Decision:** **1 participante** y **5 sesiones**, en **cinco dias de sorteo distintos**. Umbral
+    `4 de 5`, y solo cuenta `Exito autonomo`. Queda escrito en
+  $ git show 66e6413:010_prototype/010_participants.md | grep -n '^| `00[1-5]`'
+  121:| `001` | 2026-09-18 | Unico | si | `015_session_001.md` | Sin reclutamiento: es el Actor Generador |
+  122:| `002` | pendiente | Unico | pendiente | `015_session_002.md` | Sin reclutamiento: es el Actor Generador |
+  123:| `003` | pendiente | Unico | pendiente | `015_session_003.md` | Sin reclutamiento: es el Actor Generador |
+  124:| `004` | pendiente | Unico | pendiente | `015_session_004.md` | Sin reclutamiento: es el Actor Generador |
+  125:| `005` | pendiente | Unico | pendiente | `015_session_005.md` | Sin reclutamiento: es el Actor Generador |
+  ```
+
+  `A-009` («la ronda de cinco sesiones») y `D-098` («no las cuatro siguientes»), del mismo commit,
+  tambien dicen cinco.
+- **Por que importa:** `progress.md` es lo primero que se lee al abrir sesion, y la tarea siguiente
+  es justamente correr la ronda. Leido tal cual, la ronda terminaria en `004`, y el umbral sellado
+  `4 de 5` no se podria evaluar. El mismo commit se contradice a si mismo (`D-098`/`A-009` frente a
+  `progress.md`/`S-023`). `Media` porque la cifra correcta sigue escrita en `D-087`, `D-088` y
+  `010_participants.md`; `Bloqueante` porque el registro que guia la sesion siguiente afirma un
+  estado falso sobre el trabajo que esa sesion va a hacer.
+- **Que lo corregiria:** una nota fechada en `progress.md` (y en `_audit/S-023.md`, sin reescribir
+  lo sellado) que declare que la ronda es de cinco sesiones y que faltan `002` a `005`; y que el
+  siguiente cierre sobrescriba las secciones 2 y 3 de `progress.md` con la cifra correcta.
+  ⚠️ Es una recomendacion, no una orden.
+
+### F-035 - La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-025 |
+| Fecha | 2026-09-18 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la seccion 0 de `_audit/S-023.md` afirma que las dos correcciones ya estaban
+  en el commit anterior a la sesion, y que «ninguno de los siete se toca en este cierre»:
+
+  ```
+  $ git show 66e6413:_audit/S-023.md | grep -n "ya en el commit anterior\|que precede a esta sesion"
+  24:| F-032 — La NOTA DE CIERRE de S-022 repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | Aceptado — pendiente | `D-095`, `T-052` (`Implementada`): se completo por nota fechada en `_audit/S-022.md`, ya en el commit anterior a este cierre |
+  25:| F-033 — La verificacion de orden de D-093 publica «(sin salida)» para una orden que a partir del commit devuelve una linea | Aceptado — pendiente | `D-096`, `T-053` (`Implementada`): se completo por nota fechada en `D-093`, ya en el commit anterior a este cierre |
+  28:commit `e45185d`/`07ca614` que precede a esta sesion (evaluados por `manager` como `D-095`/`D-096`,
+  ```
+
+  Las dos notas nacen en `66e6413`, no antes:
+
+  ```
+  $ for h in e45185d 07ca614 cc16375 66e6413; do printf "%s S-022-nota=%s D-093-nota=%s\n" $h "$(git show $h:_audit/S-022.md | grep -c 'NOTA 2026-09-18 (`F-032`')" "$(git show $h:_persistence/decisions.md | grep -c 'NOTA 2026-09-18 (`F-033`')"; done
+  e45185d S-022-nota=0 D-093-nota=0
+  07ca614 S-022-nota=0 D-093-nota=0
+  cc16375 S-022-nota=0 D-093-nota=0
+  66e6413 S-022-nota=1 D-093-nota=1
+  ```
+
+  `F-032` y `F-033` los abrio `R-024` en `cc16375`, auditando `e45185d`: la correccion no podia estar
+  en ninguno de esos dos commits. La seccion 1 del mismo informe lo dice bien («ya venia editado por
+  manager al llegar a este cierre»), y el `--stat` de `66e6413` lista `_audit/S-022.md` (+24) y
+  `_audit/findings.md`.
+- **Por que importa:** la seccion 0 es la que lee la auditoria para saber donde verificar una
+  correccion; quien la siga buscara las notas en `e45185d`/`07ca614` y no las encontrara. `Baja`
+  porque la seccion 1 y el diff la contradicen y el dato es recuperable; `No bloqueante` porque esta
+  auditoria ya cierra los dos hallazgos contra el commit correcto y nada posterior hereda el error.
+- **Que lo corregiria:** una nota fechada al final de `_audit/S-023.md` que declare que las dos
+  correcciones van en el commit de sesion `66e6413`, sin reescribir la seccion 0.
   ⚠️ Es una recomendacion, no una orden.
