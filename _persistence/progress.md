@@ -53,6 +53,7 @@
 | [S-017](#s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018--d-063d-065d-067-y-se-cierra-005_needsmd-d-066) | `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`) | 2026-09-17 | 005_discovery |
 | [S-018](#s-018---f-021f-022f-023f-024-de-r-019-evaluados-d-068-d-071-paso-2b-bis-anadido-a-protocol-close-y-cosecha-de-l-019l-020-d-072) | `F-021`/`F-022`/`F-023`/`F-024` de `R-019` evaluados (`D-068`-`D-071`), Paso 2b-bis anadido a `protocol-close`, y cosecha de `L-019`/`L-020` (`D-072`) | 2026-09-17 | 005_discovery |
 | [S-019](#s-019---005_discovery-cerrada-y-firmada-por-el-patrocinador-d-074-y-f-025f-026f-027-de-r-020-evaluados-d-075-d-077) | `005_discovery` cerrada y firmada por el patrocinador (`D-074`), y `F-025`/`F-026`/`F-027` de `R-020` evaluados (`D-075`-`D-077`) | 2026-09-18 | 010_prototype |
+| [S-020](#s-020---f-028f-029-de-r-021-evaluados-d-080d-081-promocion-al-esqueleto-de-los-seis-candidatos-d-082-y-leccion-l-022-sobre-el-error-de-la-puerta) | `F-028`/`F-029` de `R-021` evaluados (`D-080`/`D-081`), promocion al esqueleto de los seis candidatos (`D-082`), y leccion `L-022` sobre el error de la puerta | 2026-09-18 | 010_prototype |
 
 ---
 
@@ -84,42 +85,45 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `010_prototype` |
-| Ultima actualizacion | `2026-09-18 (S-019)` |
+| Ultima actualizacion | `2026-09-18 (S-020)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `005_discovery` quedo **cerrada**: el agente `phase_exit_auditor` levanto el acta sobre el commit `d09abc6` (`_audit/005_discovery/005_phase_exit_record_001.md`, commit `e9846f6`), dictamen `CASILLAS SATISFECHAS`, `7` de `7` en `CUMPLE`, cero `NO CUMPLE`, cero `NO COMPROBABLE`, cero hallazgos; el patrocinador (JD Rodriguez, Main Sponsor) firmo la seccion 5.2 con fecha `2026-09-18` y decision `ETAPA CERRADA` (`D-074`), lo que satisface la tercera entrada obligatoria de `010_prototype` (§3.3). Antes de la firma, se decidio el orden de la jornada (`D-073`, usuario): el acta primero, y los tres hallazgos `Abierto` de `R-020` despues, dentro de la misma sesion. Se evaluaron los tres: `D-075` acepta `F-025` (la cifra de `T-042` es ocho, no seis; corregido por nota); `D-076` acepta `F-026` (la NOTA DE CIERRE de `S-018` nombraba `ed64348` como commit de anclaje cuando es `a22ef55`; corregido por nota y nueva regla en `protocol-close` para derivar los dos hashes con `git rev-parse --short HEAD`/`HEAD^`); `D-077` acepta y corrige de inmediato `F-027` (el CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis era ciego al formato `**Ordenes:**`/`**Salidas:**` y clasificaba ordenes como salidas: la funcion `salidas()` aprende las dos etiquetas). Sexta pasada de `protocol-harvest` sobre `005_discovery` (`D-078`): `L-021` **no sube** (`Ya cubierta por LG-32`); el repositorio de lecciones globales no se toco (sigue en `e915383`). `A-004` y `A-005` se confirman (`D-079`): sus disparadores —el acta de cierre y `T-029`— ya corrieron |
-| Bloqueos activos | Ninguna casilla de `010_prototype` verificada todavia: la etapa acaba de abrirse con la firma de `D-074`. `T-032` (Alta, No bloqueante) sigue abierta. `A-008` sigue `Abierto`, en el camino critico del producto — su disparador es la primera linea de codigo del prototipo, que no ha empezado. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037` y `T-042` (Baja, No bloqueante, `Origen: session-closer`) siguen abiertas, sin cambios. Nace `T-046` (`Origen: session-closer`, esta sesion): el Paso 2d detecto que la orden de «Verificacion» de `D-073` sobre `F-025`/`F-026`/`F-027` publica `3` y hoy devuelve `0`, porque esos tres hallazgos cambiaron de estado mas tarde en la misma sesion |
+| Avance de la etapa | Se evaluaron los dos hallazgos `Abierto` de `R-021` (`D-080`, `D-081`), verificados vigentes contra `HEAD` antes de tratarlos: `D-080` acepta `F-028` (la nota fechada de `S-019` afirmaba que el commit de anclaje `70fe40c` era «este mismo, el que anadio esta nota», y la nota esta en `e610906`; se abre `T-047` para la nota correctiva y la prohibicion del autorreferente en `protocol-close`); `D-081` acepta `F-029` (la fila «Donde queda registrada» del acta de cierre de `005_discovery` quedo con el `D-XXX` generico de la plantilla; se abre `T-048` para instanciarla a `D-074` y ampliar el control de huecos de `protocol-phase-exit`). El usuario pidio promover, y se promovieron al esqueleto de arranque los seis candidatos que el barrido del Paso 1 media: `.claude/agents/session-closer.md`, `.claude/skills/protocol-close/SKILL.md`, `_templates/005_discovery/015_stakeholders.md`, `_workflow/005_discovery.md`, `.claude/checks/` y `.claude/hooks/` (`D-082`, commit del esqueleto `5b3fb6e`, desde el origen `00f09e1`); el barrido del Paso 1 corrido despues de promover salio vacio. `D-082` registra ademas que la recomendacion inicial de `manager` en la puerta del Paso 5 —dejar fuera `session-closer.md` y `.claude/hooks/` por «mecanismo no ejercitado»— estaba mal fundada: `A-006` y `A-007` ya estaban `Confirmado`, con la sonda probando los dos casos dentro de un agente con la cabecera literal de `session-closer`; lo unico pendiente en `T-032` es una casilla formal (el criterio literal exige un reinicio que no hizo falta). El usuario aprobo promover los seis de todas formas. Nace `L-022`: el estado de una tarea no dice si su mecanismo funciona, eso lo dicen los supuestos que la respaldan |
+| Bloqueos activos | Ninguna casilla de `010_prototype` verificada todavia. `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `A-008` sigue `Abierto`, en el camino critico del producto. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037`, `T-042` y `T-046` (Baja, No bloqueante, `Origen: session-closer`) siguen abiertas, sin cambios. Nacen `T-047` (Media, No bloqueante, `Origen: report_auditor`) y `T-048` (Baja, No bloqueante, `Origen: report_auditor`), ambas `010_prototype` |
 
 ---
 
 ## 2. Ultimo realizado
 
-Diecinueve sesiones de trabajo. Segun el diff: `005_discovery` cerrada por firma del patrocinador
-(`D-074`), sobre el acta que `phase_exit_auditor` dejo en `_audit/005_discovery/005_phase_exit_record_001.md`
-(commits `d09abc6` y `e9846f6`, ya subidos antes de este cierre). Se decidio el orden de la jornada
-(`D-073`). Se evaluaron los tres hallazgos `Abierto` de `R-020`: `D-075` (`F-025`, cifra de `T-042`),
-`D-076` (`F-026`, commit de anclaje de `S-018` mal nombrado, con regla nueva en `protocol-close`) y
-`D-077` (`F-027`, corregido en el acto: `salidas()` del Paso 7c-bis aprende el formato
-`**Ordenes:**`/`**Salidas:**`). `T-043`, `T-044` y `T-045` quedan `Implementada`. Sexta pasada de la
-cosecha (`D-078`): `L-021` no sube. Dos supuestos confirmados (`D-079`): `A-004` y `A-005`.
+Veinte sesiones de trabajo. Segun el diff: se evaluaron los dos hallazgos `Abierto` de `R-021`
+(`D-080` acepta `F-028`, la nota de anclaje de `S-019` se autorreferenciaba mal, con `T-047` para la
+correccion; `D-081` acepta `F-029`, la fila de firma del acta de `005_discovery` sin instanciar, con
+`T-048` para la correccion). Se promovieron al esqueleto de arranque los seis candidatos pendientes
+—`.claude/agents/session-closer.md`, `.claude/skills/protocol-close/SKILL.md`,
+`_templates/005_discovery/015_stakeholders.md`, `_workflow/005_discovery.md`, `.claude/checks/` y
+`.claude/hooks/`— con aprobacion del usuario (`D-082`, commit del esqueleto `5b3fb6e`, desde el
+origen `00f09e1`). `D-082` registra ademas que `manager` recomendo dejar dos de los seis fuera con un
+argumento mal fundado (confundir el estado `No implementada` de `T-032` con que su mecanismo no
+funcionara), y el usuario aprobo promover los seis de todas formas. Nace `L-022` sobre ese error.
 
 ---
 
 ## 3. Siguiente paso
 
-Lanzar `report_auditor` sobre el commit de esta sesion (`S-019`). La etapa declarada es ahora
-`010_prototype`: el siguiente paso de fondo es leer su archivo en `_phases/010_prototype.md` y
-`_workflow/010_prototype.md` para fijar el primer paso del procedimiento. `T-046` (nueva,
-`Origen: session-closer`): la orden de «Verificacion» de `D-073` sobre `F-025`/`F-026`/`F-027` ya no
-reproduce (publica `3`, da `0`); corregirla por nota fechada o anclarla al commit anterior al cambio
-de estado. `T-042` sigue con el mismo pendiente (anclar o fechar seis ordenes de `D-068`-`D-072`).
-`T-037` y `T-035` siguen abiertas con el mismo pendiente. `T-032` (Alta, No bloqueante) sigue abierta:
-decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-030`,
-`T-031` y `T-033` (Baja, No bloqueante) siguen pendientes. `A-008` (abierto, camino critico) sigue
-igual. El esqueleto de arranque vuelve a diferir en `.claude/agents/session-closer.md`,
-`.claude/checks/`, `.claude/hooks/`, `.claude/skills/protocol-close/SKILL.md`,
-`_templates/005_discovery/015_stakeholders.md` y `_workflow/005_discovery.md`: pendiente de promocion
-con aprobacion del usuario. `DT-002` sigue `No implementada`, sin pagar; `DT-005` sigue
-`No implementada`, `Propuesta (pendiente del usuario)`.
+Lanzar `report_auditor` sobre el commit de esta sesion (`S-020`). `T-047` (Media, No bloqueante,
+`Origen: report_auditor`, nueva): escribir la nota fechada que declara `e610906` como commit que
+contiene la nota de anclaje de `S-019`, y anadir a la plantilla de la NOTA DE CIERRE de
+`protocol-close` la prohibicion del autorreferente. `T-048` (Baja, No bloqueante,
+`Origen: report_auditor`, nueva): instanciar a `D-074` la fila «Donde queda registrada» del acta de
+cierre de `005_discovery`, y ampliar el control de huecos de `protocol-phase-exit` a los codigos
+genericos sin instanciar en las secciones de firma. La etapa declarada sigue siendo `010_prototype`:
+el siguiente paso de fondo, aun pendiente, es leer `_phases/010_prototype.md` y
+`_workflow/010_prototype.md` para fijar el primer paso de su procedimiento. `T-046`, `T-042`, `T-037`
+y `T-035` siguen con el mismo pendiente (anclar o fechar ordenes que ya no reproducen). `T-032`
+(Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de
+«tras reiniciar Claude Code». `T-030`, `T-031` y `T-033` (Baja, No bloqueante) siguen pendientes.
+`A-008` (abierto, camino critico) sigue igual. El esqueleto de arranque queda al dia tras la
+promocion de esta sesion (`D-082`); el barrido del Paso 2f de este cierre salio vacio. `DT-002` sigue
+`No implementada`, sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`.
 
 ---
 
@@ -643,6 +647,43 @@ Plantilla:
   abiertas, sin cambios. `A-008` sigue `Abierto`, en el camino critico. `DT-002` y `DT-005` sin cambios.
   El siguiente paso de fondo es leer `_phases/010_prototype.md` y `_workflow/010_prototype.md` para
   fijar el primer paso del procedimiento de la nueva etapa.
+
+### S-020 - `F-028`/`F-029` de `R-021` evaluados (`D-080`/`D-081`), promocion al esqueleto de los seis candidatos (`D-082`), y leccion `L-022` sobre el error de la puerta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Tareas | T-047, T-048 (nuevas) |
+
+- **Que se hizo:** se evaluaron los dos hallazgos `Abierto` de `R-021`, verificados vigentes contra
+  `HEAD` antes de tratarlos. `D-080` acepta `F-028`: la nota fechada que completa el commit de
+  anclaje de `S-019` afirmaba que `70fe40c` era «este mismo, el que anadio esta nota», y la nota esta
+  en realidad en `e610906`; se acepta en dos mitades — nota correctiva (pendiente, `T-047`) y
+  prohibicion del autorreferente en la plantilla de la NOTA DE CIERRE de `protocol-close`. `D-081`
+  acepta `F-029`: la fila «Donde queda registrada» (seccion 5.2) del acta de cierre de
+  `005_discovery` quedo con el `D-XXX` generico de la plantilla en vez de `D-074`; se acepta en dos
+  mitades — instanciar la fila (pendiente, `T-048`) y ampliar el control de huecos del acta en
+  `protocol-phase-exit` a los codigos genericos sin instanciar en las secciones de firma. El usuario
+  pidio promover al esqueleto de arranque: se promovieron los seis candidatos que el barrido del
+  Paso 1 de `protocol-promote` media —`.claude/agents/session-closer.md`,
+  `.claude/skills/protocol-close/SKILL.md`, `_templates/005_discovery/015_stakeholders.md`,
+  `_workflow/005_discovery.md`, `.claude/checks/` y `.claude/hooks/`— con cero diferencias en la
+  direccion contraria (`D-082`, commit del esqueleto `5b3fb6e`, desde el origen `00f09e1`). `D-082`
+  deja registrado que `manager` habia recomendado, en la puerta del Paso 5 de esa promocion, dejar
+  fuera `session-closer.md` y `.claude/hooks/` alegando que su mecanismo «no estaba ejercitado» — un
+  argumento falso: `A-006` y `A-007` ya estaban `Confirmado`, con la sonda `hook-probe` probando los
+  dos casos dentro de un agente con la cabecera literal de `session-closer`; lo unico pendiente en
+  `T-032` es una casilla formal (su criterio literal exige un reinicio de Claude Code que no hizo
+  falta). El usuario aprobo promover los seis de todas formas, y esa aprobacion resulto correcta. Nace
+  `L-022`: el estado de una tarea no dice si su mecanismo funciona, eso lo dicen los supuestos que la
+  respaldan.
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. `T-047` y
+  `T-048` quedan `No implementada`: sus criterios de cierre son prosa hasta que se implementen, y sus
+  ordenes se publicaran ancladas en la sesion que lo haga. `T-046`, `T-042`, `T-037`, `T-035`,
+  `T-032`, `T-030`, `T-031` y `T-033` siguen abiertas, sin cambios. `A-008` sigue `Abierto`, en el
+  camino critico. `DT-002` y `DT-005` sin cambios. El siguiente paso de fondo sigue siendo leer
+  `_phases/010_prototype.md` y `_workflow/010_prototype.md` para fijar el primer paso del
+  procedimiento de `010_prototype`, que esta sesion no abordo.
 
 ---
 

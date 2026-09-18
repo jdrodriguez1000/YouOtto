@@ -100,6 +100,9 @@
 | [D-077](#d-077---f-027-se-acepta-y-se-corrige-ahora-el-control-aprende-el-formato-ordenessalidas) | F-027 se acepta y se corrige ahora: el control aprende el formato Ordenes/Salidas | 2026-09-18 | Vigente |
 | [D-078](#d-078---l-021-no-sube-ya-cubierta-por-lg-32-sexta-pasada-de-la-cosecha-de-005_discovery) | L-021 no sube: ya cubierta por LG-32, sexta pasada de la cosecha de 005_discovery | 2026-09-18 | Vigente |
 | [D-079](#d-079---a-004-y-a-005-se-confirman-sus-disparadores-corrieron-con-el-cierre-de-la-etapa) | A-004 y A-005 se confirman: sus disparadores corrieron con el cierre de la etapa | 2026-09-18 | Vigente |
+| [D-080](#d-080---f-028-se-acepta-la-nota-de-anclaje-declara-donde-vive-y-el-autorreferente-queda-prohibido) | F-028 se acepta: la nota de anclaje declara donde vive, y el autorreferente queda prohibido | 2026-09-18 | Vigente |
+| [D-081](#d-081---f-029-se-acepta-la-fila-de-firma-se-instancia-a-d-074-y-el-control-de-huecos-ve-los-codigos-genericos) | F-029 se acepta: la fila de firma se instancia a D-074 y el control de huecos ve los codigos genericos | 2026-09-18 | Vigente |
+| [D-082](#d-082---promocion-al-esqueleto-de-arranque-de-los-seis-candidatos-del-desfase) | Promocion al esqueleto de arranque de los seis candidatos del desfase | 2026-09-18 | Vigente |
 
 ---
 
@@ -4797,3 +4800,244 @@ Plantilla:
      ```
 
   📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
+
+### D-080 - F-028 se acepta: la nota de anclaje declara donde vive, y el autorreferente queda prohibido
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-028` (`R-021`, `Media`/`No bloqueante`) observa que la nota fechada de
+  `_audit/S-019.md` afirma, del commit de anclaje `70fe40c`, «este mismo, el que anadio esta nota».
+  La nota no esta en `70fe40c`: entro en un tercer commit, `e610906`. Verificado vigente contra
+  `HEAD` antes de tratarlo.
+- **Decision:** se acepta en sus dos mitades. **La primera:** una nota fechada mas bajo la anterior,
+  que declare que la nota de anclaje vive en `e610906`, con el hash derivado, sin reescribir ninguna
+  linea previa. **La segunda:** la plantilla de la NOTA DE CIERRE de `protocol-close` prohibe el
+  autorreferente —«este mismo commit», «el que anadio esta nota»— dentro de una nota que se redacta
+  **antes** del commit que la contiene. Tarea: `T-047`.
+- **Por que la nota nueva no reintroduce el defecto:** la anterior fallo por afirmar algo sobre **su
+  propio** commit, que todavia no existia al redactarla. La nueva afirma algo sobre un commit
+  **anterior y ya existente** (`e610906`), asi que el hecho es comprobable en el momento de
+  escribirlo. Eso corta la recursion: no hace falta una cuarta pasada.
+- **Por que la segunda mitad no es opcional:** `D-076` puso el control sobre *que hashes* se
+  escriben, y funciono —los dos que la nota publica son correctos—; lo que quedo sin control es *a
+  que commit se atribuye la nota*. Corregir solo el caso deja el mismo hueco abierto para el cierre
+  siguiente, que es `L-019` otra vez.
+- **Alternativas descartadas:**
+  - **Reescribir el parentesis de la linea 289:** convertiria «falta evidencia» en «hay evidencia
+    falsa», que es justo lo que las notas fechadas existen para no hacer.
+  - **Solo la nota, sin tocar la skill:** el autorreferente es comodo de escribir y volvera en el
+    proximo anclaje; el hallazgo volveria con otro numero.
+  - **Solo la regla, sin la nota:** `_audit/S-019.md` seguiria afirmando algo comprobablemente falso
+    sobre su propia trazabilidad, ya commiteado.
+  - **Exigir un cuarto commit que se autorreferencie bien:** imposible por construccion — una nota no
+    puede nombrar el commit que aun no la contiene. El problema no es el numero de pasadas, es el
+    autorreferente.
+- **Verificacion.** La nota no esta en el commit que se atribuye, y si en el siguiente:
+
+  ```
+  $ git show 70fe40c:_audit/S-019.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es'
+  0
+  $ git show e610906:_audit/S-019.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es'
+  1
+  ```
+
+  Y el hash derivado como lo derivara la nota nueva, sobre el arbol de trabajo en `HEAD` (`00f09e1`):
+
+  ```
+  $ git log -1 --format=%h -- _audit/S-019.md
+  e610906
+  ```
+
+- **Criterio de cierre:** `manager` escribe la nota fechada en `_audit/S-019.md` declarando
+  `e610906` como commit que contiene la nota de anclaje, y anade a la plantilla de la NOTA DE CIERRE
+  de `protocol-close` la prohibicion del autorreferente. Mientras `T-047` este `No implementada`, el
+  criterio es prosa: sus ordenes se publicaran ancladas en la sesion que la implemente.
+
+### D-081 - F-029 se acepta: la fila de firma se instancia a D-074 y el control de huecos ve los codigos genericos
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-029` (`R-021`, `Baja`/`No bloqueante`) observa que la seccion 5.2 del acta
+  `_audit/005_discovery/005_phase_exit_record_001.md` dejo la fila «Donde queda registrada» con el
+  `D-XXX` generico de la plantilla, sin instanciar a `D-074`. Verificado vigente contra `HEAD` antes
+  de tratarlo.
+- **Decision:** se acepta en sus dos mitades. **La primera:** instanciar la fila a `D-074`, siguiendo
+  la forma que el acta de `000_preproject` ya establecio. **La segunda:** el control de huecos del
+  acta, en `protocol-phase-exit`, pasa a barrer tambien los codigos genericos sin instanciar
+  —`D-XXX`, `T-XXX`, `F-NNN`— sobre las secciones de firma. Tarea: `T-048`.
+- **Por que esto no es «reescribir el registro»:** la fila no afirma nada falso ni publica una
+  salida: es un hueco que quedo con el texto de la plantilla. Instanciarlo anade el puntero que
+  faltaba, no cambia un hecho ya afirmado. Es la misma clase de reparacion que `T-010` hizo sobre la
+  tabla 5.2 del acta anterior.
+- **Por que la segunda mitad no es opcional:** el control existente busca `<en blanco>` y esta fila
+  nunca llevo ese marcador, asi que **paso el control estando sin rellenar**. Un control que no ve el
+  defecto que acaba de ocurrir no protege al acta siguiente; y toda plantilla agnostica deja codigos
+  genericos por construccion, asi que el caso se repetira en cada etapa que cierre.
+- **Alternativas descartadas:**
+  - **Solo instanciar la fila:** deja el control ciego al mismo defecto en la siguiente acta, que es
+    el unico sitio donde volveria a ocurrir.
+  - **Corregir la plantilla para que no lleve `D-XXX`:** la plantilla debe llevarlo — es el hueco. El
+    defecto esta en no rellenarlo al copiar, no en que exista.
+  - **Barrer los codigos genericos en todo el acta:** produciria falsos positivos donde el acta cita
+    la forma de un codigo legitimamente; se acota a las secciones de firma, que es donde el hueco es
+    siempre un hueco.
+- **Verificacion.** La fila de la instancia es identica a la de la plantilla, y el acta anterior si
+  la instancio:
+
+  ```
+  $ sed -n '/^| Donde queda/p' _audit/005_discovery/005_phase_exit_record_001.md
+  | Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |
+  $ sed -n '/^| Donde queda/p' _templates/phase_exit_record.md
+  | Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |
+  $ sed -n '/^| Donde queda/p' _audit/000_preproject/005_phase_exit_record_001.md
+  | Donde queda registrada | `_persistence/decisions.md`, con `D-015` (decision) y `D-020` (firma escrita en esta tabla) |
+  ```
+
+  Y `D-074` existe y es el codigo que la fila debe citar:
+
+  ```
+  $ grep -c '^### D-074 - El patrocinador firma el acta y 005_discovery queda cerrada' _persistence/decisions.md
+  1
+  ```
+
+- **Criterio de cierre:** `manager` instancia la fila 5.2 del acta a `D-074` y amplia el control de
+  huecos de `protocol-phase-exit` a los codigos genericos de las secciones de firma. Mientras `T-048`
+  este `No implementada`, el criterio es prosa: sus ordenes se publicaran ancladas en la sesion que
+  la implemente.
+
+### D-082 - Promocion al esqueleto de arranque de los seis candidatos del desfase
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el usuario pide promover. El barrido del Paso 1 mide **seis diferencias**: cuatro
+  archivos que difieren (`.claude/agents/session-closer.md`,
+  `.claude/skills/protocol-close/SKILL.md`, `_templates/005_discovery/015_stakeholders.md`,
+  `_workflow/005_discovery.md`) y dos carpetas que solo existen aqui (`.claude/checks/`,
+  `.claude/hooks/`). **Cero** diferencias en la direccion del esqueleto: sin hallazgos.
+- **Decision:** se promueven **los seis**, aprobados por el usuario en la puerta del Paso 5. Commit
+  del esqueleto `5b3fb6e`, desde el origen `00f09e1` de este repositorio.
+- **Lo que `manager` recomendo, y por que la recomendacion estaba mal fundada:** recomendo dejar
+  fuera `session-closer.md` y `.claude/hooks/` alegando que son el producto de `T-032`, que sigue
+  `No implementada`, y que por tanto el mecanismo **no estaba ejercitado**. 🚨 **Esa segunda mitad es
+  falsa, y se detecto al revisar `_persistence/` antes del cierre de esta misma sesion.** El
+  mecanismo si esta ejercitado: `A-006` y `A-007` estan `Confirmado`, y `A-007` probo **los dos
+  casos** —skill ajena bloqueada y `protocol-close` cargando— dentro de un agente con la cabecera
+  literal de `session-closer`, con la salida cruda pegada en su ficha.
+- **Que sigue realmente pendiente en `T-032`, que no es lo mismo:** su criterio de cierre **literal**
+  dice «`A-006` confirmado **tras reiniciar Claude Code**», y no hubo reinicio: la sonda `hook-probe`
+  aparecio disponible sin el. La nota de `session-closer` en esa tarea deja dicho que, si `D-050` se
+  toma como reemplazo valido de ese criterio, hace falta que `manager` lo escriba asi. Mientras no lo
+  escriba, la tarea sigue `No implementada` — pero eso es una casilla formal sin cerrar, **no un
+  mecanismo sin probar**.
+- **Por que se registra el error en vez de corregirlo en silencio:** la recomendacion equivocada se
+  presento al usuario en la puerta del Paso 5, que es donde se decide lo que se hereda hacia
+  adelante. Se le dio una razon para dudar que no se sostenia. El usuario aprobo «todo» de todas
+  formas —y esa aprobacion resulto ser la correcta—, pero lo que hay que conservar es que **la puerta
+  se contesto sobre una premisa falsa**.
+- ⚠️ **El mensaje del commit `5b3fb6e` del esqueleto arrastra esa misma afirmacion, y no se
+  reescribe.** Dice que la tarea «sigue No implementada — su verificacion exige un reinicio real de
+  Claude Code — y el esqueleto recibe andamiaje ya ejercitado». Reescribir historia en el esqueleto
+  esta prohibido por el protocolo, y ademas convertiria «falta evidencia» en «hay evidencia falsa».
+  **Esta entrada es la correccion**, y es a donde lleva el puntero del hash de origen que ese commit
+  cita. Lo que el commit afirma de mas es el juicio, no los hechos: los seis archivos que nombra y
+  las cifras que publica son correctos.
+- **Por que los dos del lote no ejercitado van juntos:** la cabecera de `session-closer.md`
+  referencia `node .claude/hooks/allow-only-skill.js`. Promover uno sin el otro dejaria el esqueleto
+  declarando un hook inexistente.
+- **Las lineas que la promocion borro en el esqueleto, leidas una a una (Paso 2):** seis en total.
+  Cuatro en `protocol-close/SKILL.md` (la version anterior de `salidas()`, el `awk` anterior del
+  control indice/ficha y dos lineas de prosa del CONTROL DE SALIDA REPRODUCIDA), una en
+  `015_stakeholders.md` y una en `_workflow/005_discovery.md` (las dos, «seis condiciones/casillas»
+  sustituido por «siete»). **Todas eran versiones anteriores de parrafos ya reescritos aqui:** el
+  supuesto del sentido unico se sostiene tambien en esta pasada. `session-closer.md` y las dos
+  carpetas nuevas no borraron ninguna linea.
+- **Alternativas descartadas:**
+  - **Promover solo el lote ejercitado:** era la recomendacion de `manager`; el usuario decidio lo
+    contrario y esa eleccion es suya.
+  - **Mejorar algo de paso en el esqueleto:** prohibido por el protocolo — alli no corre ningun cierre
+    ni ningun auditor, asi que seria una mejora que nadie ha ejercitado ni revisado.
+  - **Esperar a commitear antes la evaluacion de `F-028`/`F-029`:** esos tres archivos estan fuera de
+    las seis areas agnosticas y no entran en ninguna promocion; el disparador del Paso 0 se cumplia.
+- **Verificacion.** Los finales de linea, medidos por pareja antes de copiar: los dos archivos de
+  `.claude/` estaban en CRLF aqui y en LF alli, y se convirtieron a LF (el final del destino); los
+  demas coincidian. En el destino, tras copiar:
+
+  ```
+  $ tr -dc '\r' < "$ESQ/.claude/agents/session-closer.md" | wc -c
+  0
+  $ tr -dc '\r' < "$ESQ/.claude/skills/protocol-close/SKILL.md" | wc -c
+  0
+  ```
+
+  Los tres barridos del Paso 3, con sus patrones y sobre las seis areas:
+
+  ```
+  $ git grep -nE "YouOtto|Company_TripleS|github\.com" -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  (sin salida)
+  $ git grep -noE '\b[A-Z]{1,2}-[0-9]+\b' -- _phases _workflow | grep -vE ':PI-[0-9]+$'
+  (sin salida)
+  $ git grep -nE "C:\\|C:/|/Users/|/home/|USUARIO|jdrodriguez|@gmail|SDAI_TripleS|[Bb]aloto|localhost|https?://|[0-9]{1,3}(\.[0-9]{1,3}){3}" -- .claude CLAUDE.md _phases _methodology _templates _workflow
+  _templates/010_prototype/025_business_validation.md:14:> 🚨 **SESION APARTE, CON EL PATROCINADOR, SIN USUARIOS DELANTE.**
+  ```
+
+  📌 **La unica linea del tercero es un falso positivo declarado:** `USUARIOS` es la palabra, no el
+  segmento de la ruta `C:\Users\USUARIO`. El patron se publica entero porque un barrido sin su patron
+  no es reproducible; el enunciado que sostiene es «esos patrones, en esas seis areas, no devuelven
+  ningun dato propio».
+
+  El Paso 1b sobre el commit del esqueleto, plantilla y copia leidas las dos de `5b3fb6e`:
+
+  ```
+  $ for p in 005_project.md:project.md 010_progress.md:_persistence/progress.md 015_tasks.md:_persistence/tasks.md 020_decisions.md:_persistence/decisions.md 025_constraints.md:_persistence/constraints.md 030_assumptions.md:_persistence/assumptions.md 035_lessons.md:_persistence/lessons.md 040_techdebt.md:_persistence/techdebt.md 045_audit_index.md:_audit/index.md 050_audit_findings.md:_audit/findings.md; do t=${p%%:*}; c=${p#*:}; printf '%3d  %s\n' "$(diff --strip-trailing-cr <(git -C "$ESQ" show "5b3fb6e:_templates/000_preproject/$t") <(git -C "$ESQ" show "5b3fb6e:$c") | grep -c '^[<>]')" "$c"; done
+    0  project.md
+    0  _persistence/progress.md
+    0  _persistence/tasks.md
+    0  _persistence/decisions.md
+    0  _persistence/constraints.md
+    0  _persistence/assumptions.md
+    0  _persistence/lessons.md
+    0  _persistence/techdebt.md
+    0  _audit/index.md
+    0  _audit/findings.md
+  ```
+
+  Ninguna plantilla de las diez estaba entre los candidatos, asi que ninguna copia quedo por detras.
+
+  Y el barrido del Paso 1 corrido **despues** de promover, que es lo que demuestra que el desfase
+  cerro:
+
+  ```
+  $ for d in .claude _phases _methodology _templates _workflow; do diff -rq --strip-trailing-cr "$ESQ/$d" "$d"; done; diff -q --strip-trailing-cr "$ESQ/CLAUDE.md" CLAUDE.md
+  (sin salida)
+  ```
+
+  El commit del esqueleto y su push:
+
+  ```
+  $ git -C "$ESQ" log --oneline -1
+  5b3fb6e promocion desde el proyecto YouOtto (origen 00f09e1)
+  $ git -C "$ESQ" status -sb
+  ## main...origin/main
+  ```
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, el registro de este repositorio cita los dos hashes de la promocion.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/decisions.md | grep -c 'Commit del esqueleto `5b3fb6e`'
+     git show <hash>:_persistence/decisions.md | grep -c 'desde el origen `00f09e1`'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     ```

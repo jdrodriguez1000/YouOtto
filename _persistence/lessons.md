@@ -41,6 +41,7 @@
 | [L-019](#l-019---corregir-el-caso-que-cita-un-hallazgo-sin-poner-el-control-deja-el-defecto-reapareciendo) | Corregir el caso que cita un hallazgo, sin poner el control, deja el defecto reapareciendo | 2026-09-17 | 005_discovery | Promovida a LG-100 |
 | [L-020](#l-020---al-cambiar-la-estructura-de-un-archivo-los-controles-que-lo-miden-se-reejecutan-en-la-misma-pasada) | Al cambiar la estructura de un archivo, los controles que lo miden se reejecutan en la misma pasada | 2026-09-17 | 005_discovery | Ya cubierta por LG-06 |
 | [L-021](#l-021---una-salida-se-pega-de-la-ejecucion-nunca-se-predice-por-trivial-que-parezca-la-orden) | Una salida se pega de la ejecucion, nunca se predice, por trivial que parezca la orden | 2026-09-18 | 005_discovery | Ya cubierta por LG-32 |
+| [L-022](#l-022---el-estado-de-una-tarea-no-dice-si-su-mecanismo-funciona-eso-lo-dicen-los-supuestos-que-la-respaldan) | El estado de una tarea no dice si su mecanismo funciona: eso lo dicen los supuestos que la respaldan | 2026-09-18 | 010_prototype | Sin evaluar |
 
 ---
 
@@ -530,3 +531,35 @@ Plantilla:
   el literal buscado, o bien la explicacion que acompana a la cifra; nunca la cifra. ⚠️ **Y la senal de
   alarma util es la confianza:** cuanto mas obvia parezca la salida, mas barato es correrla y mas caro
   es equivocarse, porque nadie la va a revisar.
+
+### L-022 - El estado de una tarea no dice si su mecanismo funciona: eso lo dicen los supuestos que la respaldan
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Origen | manager |
+
+- **Contexto:** en la puerta del protocolo de promocion —el punto donde se decide que se hereda al
+  esqueleto del que partiran todos los proyectos siguientes—, dos de los seis candidatos eran el hook
+  de cierre y la cabecera que lo declara.
+- **Que ocurrio:** `manager` leyo la **fila del indice** de la tarea que los escribio, vio
+  `No implementada`, y recomendo al usuario no promoverlos «porque el mecanismo no esta ejercitado».
+  No abrio la ficha de la tarea ni los supuestos que la respaldan. Los dos existian y decian lo
+  contrario: `A-006` y `A-007` estaban `Confirmado`, con la salida cruda de una sonda que probo los
+  dos casos —el bloqueado y el permitido— dentro de un agente con la cabecera literal. Lo unico
+  pendiente era una casilla formal: el criterio literal de la tarea pedia un reinicio que no hizo
+  falta. El error se detecto al revisar `_persistence/` antes del cierre, **despues** de que la
+  puerta se contestara y el commit del esqueleto estuviera subido.
+- **Leccion:** `No implementada` responde «¿se cumplio el criterio de cierre tal como esta escrito?»,
+  y **no** responde «¿funciona esto?». Las dos preguntas se separan en cuanto un criterio se redacta
+  con una condicion que luego resulta innecesaria — y entonces el estado de la tarea se queda
+  congelado en el `No` mientras la evidencia real vive en otro archivo. Citar el estado como si
+  contestara la segunda pregunta es un error barato de cometer y caro de detectar, porque el dato que
+  se cita es verdadero: lo falso es lo que se deduce de el.
+- **Como aplicarla:** **antes de afirmar en una puerta que algo no esta probado, abrir la ficha de la
+  tarea y los supuestos que nombra**, no la fila del indice. La fila sirve para priorizar; no sirve
+  para fundamentar una recomendacion. ⚠️ **Y la senal de alarma es la forma del argumento:** en
+  cuanto una recomendacion se apoya en un *estado* («sigue abierta», «no implementada», «pendiente»)
+  en vez de en una *evidencia* («la sonda devolvio esto»), hay que ir a buscar la evidencia antes de
+  decirla en voz alta. Vale doble donde la decision es dificil de revertir: en una puerta que escribe
+  fuera del repositorio, una premisa falsa no la corrige nadie despues.

@@ -63,6 +63,8 @@
 | [T-044](#t-044---corregir-por-nota-el-commit-de-anclaje-de-s-018-y-hacer-que-el-cierre-derive-los-dos-hashes) | Corregir por nota el commit de anclaje de S-018 y hacer que el cierre derive los dos hashes | Implementada | Media | No bloqueante | 005_discovery |
 | [T-045](#t-045---ensenar-al-control-de-salida-reproducida-el-formato-ordenessalidas) | Ensenar al CONTROL DE SALIDA REPRODUCIDA el formato Ordenes/Salidas | Implementada | Media | No bloqueante | 005_discovery |
 | [T-046](#t-046---anclar-o-fechar-la-orden-de-verificacion-de-d-073-sobre-f-025f-026f-027-que-ya-no-reproduce) | Anclar o fechar la orden de Verificacion de D-073 sobre F-025/F-026/F-027 que ya no reproduce | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-047](#t-047---corregir-por-nota-el-commit-que-contiene-la-nota-de-anclaje-de-s-019-y-prohibir-el-autorreferente) | Corregir por nota el commit que contiene la nota de anclaje de S-019 y prohibir el autorreferente | No implementada | Media | No bloqueante | 010_prototype |
+| [T-048](#t-048---instanciar-a-d-074-la-fila-de-firma-del-acta-de-005_discovery-y-ampliar-el-control-de-huecos) | Instanciar a D-074 la fila de firma del acta de 005_discovery y ampliar el control de huecos | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1246,3 +1248,47 @@ Plantilla:
 - **Criterio de cierre:** `manager` corrige por nota fechada la salida de la seccion «Verificacion»
   de `D-073`, dejando las dos cifras a la vista (la de entonces y la de ahora) y explicando el motivo
   del cambio de estado, o ancla la orden al commit anterior a que `Abierto` cambiara.
+
+### T-047 - Corregir por nota el commit que contiene la nota de anclaje de S-019 y prohibir el autorreferente
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-028` (`Media`/`No bloqueante`). La nota fechada de `_audit/S-019.md` afirma que el
+  commit de anclaje `70fe40c` es «este mismo, el que anadio esta nota», y la nota esta en `e610906`.
+  Aceptado en sus dos mitades: nota fechada nueva que declare `e610906` como commit que la contiene,
+  con el hash derivado de `git log -1 --format=%h -- _audit/S-019.md`; y prohibicion del
+  autorreferente en la plantilla de la NOTA DE CIERRE de `protocol-close`. Registrado en `D-080`.
+- **Por que:** los dos hashes que la nota publica son correctos —`D-076` funciono—, pero la
+  atribucion de la nota a su propio commit es comprobablemente falsa, y quien siga el puntero para
+  reproducirla no la encontrara. La mitad que evita la repeticion es la regla, no la nota.
+- **Criterio de cierre:** a ese commit, `_audit/S-019.md` lleva la nota que declara `e610906`, y la
+  plantilla de la NOTA DE CIERRE de `protocol-close` prohibe el autorreferente. Se publicaran las dos
+  ordenes con su salida cruda, ancladas por el Paso 7c-bis, en la sesion que implemente esta tarea.
+
+### T-048 - Instanciar a D-074 la fila de firma del acta de 005_discovery y ampliar el control de huecos
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-029` (`Baja`/`No bloqueante`). La seccion 5.2 del acta
+  `_audit/005_discovery/005_phase_exit_record_001.md` dejo la fila «Donde queda registrada» con el
+  `D-XXX` generico de la plantilla. Aceptado en sus dos mitades: instanciar la fila a `D-074`, y
+  ampliar el control de huecos del acta en `protocol-phase-exit` a los codigos genericos sin
+  instanciar (`D-XXX`, `T-XXX`, `F-NNN`) sobre las secciones de firma. Registrado en `D-081`.
+- **Por que:** el control de huecos busca `<en blanco>` y esta fila nunca llevo ese marcador, asi que
+  paso el control estando sin rellenar. Toda plantilla agnostica deja codigos genericos por
+  construccion, de modo que el caso se repite en cada etapa que cierre.
+- **Criterio de cierre:** a ese commit, la fila 5.2 del acta cita `D-074` y el control de huecos de
+  `protocol-phase-exit` barre los codigos genericos de las secciones de firma. Se publicaran las dos
+  ordenes con su salida cruda, ancladas por el Paso 7c-bis, en la sesion que implemente esta tarea.

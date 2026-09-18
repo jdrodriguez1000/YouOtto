@@ -47,8 +47,8 @@
 | [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Implementado | `T-043` y `D-075` |
 | [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Implementado | `T-044` y `D-076` |
 | [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Implementado | `T-045` y `D-077` |
-| [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Abierto | — |
-| [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Abierto | — |
+| [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Aceptado — pendiente | `T-047`, `D-080` |
+| [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
 
 ---
 
@@ -918,8 +918,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-047`, `D-080` |
 | Cerrado en | |
 
 - **Que se observo:** la nota fechada que completa el commit de anclaje de `S-019` afirma, literal:
@@ -957,8 +957,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-048`, `D-081` |
 | Cerrado en | |
 
 - **Que se observo:** la firma del patrocinador se relleno en tres filas (`Quien`, `Fecha`,
