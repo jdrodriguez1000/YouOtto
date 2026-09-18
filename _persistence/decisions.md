@@ -4051,14 +4051,16 @@ Plantilla:
      comprueba existe con su test.
   2. **Ordenes:**
      ```
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c '^## Paso 2b-bis'
-     git show <hash>:_persistence/progress.md | grep -cE '\(#s-0(07|08|10|15|16|17)---'
+     git show ed64348:.claude/skills/protocol-close/SKILL.md | grep -c '^## Paso 2b-bis'
+     git show ed64348:_persistence/progress.md | grep -cE '\(#s-0(07|08|10|15|16|17)---'
      ```
   3. **Salidas:**
      ```
      1
      6
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** Las dos reproducen lo publicado arriba.
 
   📌 **El test del control se corre en el arbol de trabajo, no anclado, porque ejecuta:**
 
@@ -4127,9 +4129,9 @@ Plantilla:
      control del Paso 2b lee la columna correcta.
   2. **Ordenes:**
      ```
-     git show <hash>:_audit/findings.md | grep -c '^| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado | Registrado en |'
-     git show <hash>:_audit/findings.md | grep -c '^| Registrado en | la `T-XXX` o la `D-XXX`'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'e=$(NF - 2)'
+     git show ed64348:_audit/findings.md | grep -c '^| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado | Registrado en |'
+     git show ed64348:_audit/findings.md | grep -c '^| Registrado en | la `T-XXX` o la `D-XXX`'
+     git show ed64348:.claude/skills/protocol-close/SKILL.md | grep -cF 'e=$(NF - 2)'
      ```
   3. **Salidas:**
      ```
@@ -4137,6 +4139,8 @@ Plantilla:
      1
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** Las tres reproducen lo publicado arriba.
 
 ### D-070 - F-023 se acepta: la confirmacion de DT-005 es del usuario, y se escribe con su dueno
 | Campo | Valor |
@@ -4173,8 +4177,8 @@ Plantilla:
      nombra a su dueno en el indice y en la ficha.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/techdebt.md | grep -cE '\| Sin confirmar \|'
-     git show <hash>:_persistence/techdebt.md | grep -cF 'Propuesta (pendiente del usuario)'
+     git show ed64348:_persistence/techdebt.md | grep -cE '\| Sin confirmar \|'
+     git show ed64348:_persistence/techdebt.md | grep -cF 'Propuesta (pendiente del usuario)'
      ```
   3. **Salidas:**
      ```
@@ -4184,6 +4188,8 @@ Plantilla:
 
   📌 **El `3` son las tres apariciones legitimas:** la fila del indice, la ficha, y la linea de la
   convencion que usa ese mismo valor como ejemplo de la forma correcta.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** Las dos reproducen lo publicado arriba.
 
 ### D-071 - F-024 se acepta en su parte comprobable, y se rechaza lo que atribuye a la skill
 | Campo | Valor |
@@ -4237,14 +4243,16 @@ Plantilla:
   1. **Enunciado:** las dos entradas llevan su nota fechada, y el 7c-bis prohibe ese puntero.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/decisions.md | grep -cE 'NOTA 2026-09-17 — (la remision a|esa remision no resuelve)'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -cF 'no remite a «Sin resolver»'
+     git show ed64348:_persistence/decisions.md | grep -cE 'NOTA 2026-09-17 — (la remision a|esa remision no resuelve)'
+     git show ed64348:.claude/skills/protocol-close/SKILL.md | grep -cF 'no remite a «Sin resolver»'
      ```
   3. **Salidas:**
      ```
      2
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** Las dos reproducen lo publicado arriba.
 
 ### D-072 - L-019 sube como enmienda de LG-100 y L-020 no sube: quinta pasada de la cosecha de 005_discovery
 | Campo | Valor |
@@ -4310,7 +4318,7 @@ Plantilla:
      git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show e915383:global_lessons.md | grep -cF '`YouOtto` · L-019'
      git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" show e915383:global_lessons.md | grep -nE '^> \*\*Versión: 7'
      git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" status -sb | head -1
-     git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+     git show ed64348:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
      ```
   3. **Salidas:**
      ```
@@ -4324,3 +4332,7 @@ Plantilla:
   📌 **`## main...origin/main` sin `[ahead N]` es la confirmacion del push**, y es la unica de las cinco
   ordenes que no se puede reproducir desde este repositorio: las tres primeras hablan de un archivo que
   el auditor **no puede ver**, y por eso van con el hash `e915383` delante.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** La quinta (sobre `_persistence/lessons.md`)
+  reproduce lo publicado arriba; las cuatro primeras no son de este repositorio y no las toca este
+  paso.
