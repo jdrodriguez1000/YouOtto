@@ -50,6 +50,7 @@
 | [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Aceptado — pendiente | `T-047`, `D-080` |
 | [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
 | [F-030](#f-030---la-nota-de-cierre-de-s-020-deja-el-commit-de-anclaje-como-hueco-de-plantilla-sin-instanciar-y-sin-derivar) | La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar | R-022 | Media | No bloqueante | Aceptado — pendiente | `T-049`, `D-091` |
+| [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Abierto | — |
 
 ---
 
@@ -1046,3 +1047,55 @@ Plantilla:
   reescribir la linea 261; y un control en `protocol-close` que, antes de commitear el anclaje, busque
   marcadores entre angulos en cualquier posicion de la NOTA DE CIERRE, no solo a principio de linea.
   ⚠️ Es una recomendacion, no una orden.
+
+### F-031 - La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-023 |
+| Fecha | 2026-09-18 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** el commit de anclaje `6a7d7f7` escribio la NOTA DE CIERRE entera de `S-021` y
+  dejo el commit de anclaje con el texto literal de la plantilla, sin instanciar y sin derivar.
+
+  ```
+  $ git show 6a7d7f7:_audit/S-021.md | grep -nE '<se completa|<pendiente|<en blanco|<rellenar'
+  228:15	+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-020.md
+  272:| 15 | `grep -nE '<se completa\|<pendiente\|<en blanco\|<rellenar' _audit/S-020.md` | Si | mismas dos lineas (123 y 261) que publica `D-091` |
+  287:**NOTA DE CIERRE — commit de sesion `22747a9`, commit de anclaje `<se completa tras commitear el
+  ```
+
+  Las lineas 228 y 272 son citas legitimas del patron dentro de la evidencia del Paso 2d. El hueco
+  real es la 287, y es el unico. No hay commit posterior que lo complete:
+
+  ```
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-021.md
+  6a7d7f7 2026-09-18 S-021: ancla el informe al hash 22747a9
+  22747a9 2026-09-18 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  ```
+
+  El control que debia verlo sigue sin ampliarse, porque la segunda mitad de `F-030` (`T-049`) esta
+  `No implementada` y `.claude/` no se toco en el commit de sesion:
+
+  ```
+  $ git diff --name-only 22747a9^ 22747a9 -- .claude | wc -l
+  0
+  $ grep -n "^grep -nE '\^<' _audit/S-XXX.md" .claude/skills/protocol-close/SKILL.md
+  1498:grep -nE '^<' _audit/S-XXX.md
+  ```
+
+- **Por que importa:** es la quinta instancia de la misma familia (`F-013`, `F-026`, `F-028`,
+  `F-030`), y la primera que ocurre **despues** de que el mecanismo fallido quedara diagnosticado por
+  escrito en `D-091` y `L-024`, en la misma jornada. El registro de `S-021` no dice donde quedo su
+  anclaje, igual que no lo decia el de `S-020`. `Media` porque el registro queda incompleto justo en
+  el punto que la nota existe para cubrir, sin afirmar nada falso; `No bloqueante` porque el dato es
+  recuperable con una orden y nada posterior hereda un valor erroneo.
+- **Que lo corregiria:** `T-049` arregla el control hacia adelante, pero **no corrige este archivo**:
+  su criterio de cierre habla del control, no del rotulo de `S-021.md`. Hace falta ademas una nota
+  fechada en `_audit/S-021.md` que declare `6a7d7f7` como commit de anclaje, con la salida de
+  `git rev-parse --short` corrida, sin reescribir la linea 287. ⚠️ Es una recomendacion, no una
+  orden.
