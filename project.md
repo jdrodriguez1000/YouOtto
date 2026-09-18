@@ -210,6 +210,7 @@ apagado.**
 | `_templates/` | **Con que forma** se escribe cada artefacto: una subcarpeta por etapa o gate con artefactos con plantilla, y dentro una plantilla por artefacto. Guarda solo plantillas en blanco. Agnostica — el Paso 1b lo comprueba |
 | `_workflow/` | **Quien hace cada cosa y con cuanto sistema**: `team.md`, el reparto entre Humano, Software e IA; `ai_levels.md`, los niveles y la rubrica para elegir uno; y un archivo por etapa que aplica los dos a sus actividades. Agnostica — el Paso 1b lo comprueba |
 | `005_discovery/` | **Los entregables de la etapa del mismo nombre** |
+| `010_prototype/` | **Los entregables de la etapa del mismo nombre**, y dentro `app/`, el prototipo: codigo **descartable**, que se archiva o se borra al cerrar el Gate 1 y no se muda a ninguna parte. Declarada por adelantado en `D-084` |
 | `temporal/` | Area de trabajo del usuario. **Fuera del repositorio**, excluida en `.gitignore` |
 
 🚨 **Esta tabla se contrasta contra el arbol en cada cierre de sesion** (Paso 2c de `protocol-close`):

@@ -42,6 +42,8 @@
 | [L-020](#l-020---al-cambiar-la-estructura-de-un-archivo-los-controles-que-lo-miden-se-reejecutan-en-la-misma-pasada) | Al cambiar la estructura de un archivo, los controles que lo miden se reejecutan en la misma pasada | 2026-09-17 | 005_discovery | Ya cubierta por LG-06 |
 | [L-021](#l-021---una-salida-se-pega-de-la-ejecucion-nunca-se-predice-por-trivial-que-parezca-la-orden) | Una salida se pega de la ejecucion, nunca se predice, por trivial que parezca la orden | 2026-09-18 | 005_discovery | Ya cubierta por LG-32 |
 | [L-022](#l-022---el-estado-de-una-tarea-no-dice-si-su-mecanismo-funciona-eso-lo-dicen-los-supuestos-que-la-respaldan) | El estado de una tarea no dice si su mecanismo funciona: eso lo dicen los supuestos que la respaldan | 2026-09-18 | 010_prototype | Sin evaluar |
+| [L-023](#l-023---un-documento-legal-enlazado-desde-un-sitio-no-siempre-regula-ese-sitio-se-lee-su-alcance-antes-de-citarlo) | Un documento legal enlazado desde un sitio no siempre regula ese sitio: se lee su alcance antes de citarlo | 2026-09-18 | 010_prototype | Sin evaluar |
+| [L-024](#l-024---un-defecto-que-reaparece-por-cuarta-vez-no-es-un-descuido-es-un-control-que-no-mira-donde-hace-falta) | Un defecto que reaparece por cuarta vez no es un descuido: es un control que no mira donde hace falta | 2026-09-18 | 010_prototype | Sin evaluar |
 
 ---
 
@@ -563,3 +565,54 @@ Plantilla:
   en vez de en una *evidencia* («la sonda devolvio esto»), hay que ir a buscar la evidencia antes de
   decirla en voz alta. Vale doble donde la decision es dificil de revertir: en una puerta que escribe
   fuera del repositorio, una premisa falsa no la corrige nadie despues.
+
+### L-023 - Un documento legal enlazado desde un sitio no siempre regula ese sitio: se lee su alcance antes de citarlo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Origen | manager |
+
+- **Contexto:** cerrar el supuesto de si estaba permitido leer de forma automatizada el historico
+  publicado por la fuente externa del producto. Su forma de refutarlo, escrita de antemano, era leer
+  las condiciones de uso publicadas y el `robots.txt`.
+- **Que ocurrio:** el unico documento legal enlazado desde el pie del sitio resulto declarar en su
+  encabezado **el alcance de otra plataforma del mismo grupo**, no el del sitio que se iba a leer. Si
+  no se hubiera mirado esa linea, el documento se habria citado como «las condiciones de uso del
+  sitio» —tanto para aprobar como para rechazar—, y el registro habria quedado afirmando algo que su
+  propia fuente no dice. La conclusion practica no cambio; lo que cambio fue **sobre que se apoya**.
+- **Leccion:** un documento enlazado desde un sitio no regula ese sitio **por estar enlazado ahi**.
+  Antes de citarlo hay que leer que dice cubrir, y decirlo en el registro. Un texto legal
+  fuera de alcance no se distingue de uno dentro de alcance por su contenido: los dos suenan a
+  condiciones de uso, y el contenido es justo lo que se va a citar.
+- **Como aplicarla:** al usar un documento externo como evidencia, **buscar primero su alcance
+  declarado** —encabezado, objeto, ambito— y registrarlo junto a la cita. Y cuando resulte que no
+  cubre lo que hace falta, **escribir que no existe documento aplicable** en vez de dejar que el mas
+  parecido ocupe su sitio en silencio: «no hay condiciones de uso del sitio» es un hallazgo, y uno
+  distinto de «las condiciones de uso lo permiten».
+
+### L-024 - Un defecto que reaparece por cuarta vez no es un descuido: es un control que no mira donde hace falta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Origen | manager |
+
+- **Contexto:** la auditoria de la sesion anterior abrio un hallazgo sobre un hash que la nota de
+  cierre debia publicar y dejo sin instanciar. Es el **cuarto** hallazgo de la misma familia: en los
+  tres anteriores el hash estaba mal atribuido, o llegaba en un commit no declarado, o se
+  autorreferenciaba.
+- **Que ocurrio:** los tres anteriores se cerraron **corrigiendo el caso concreto por nota**, cada vez
+  con su tarea y su decision, sin tocar el control que debia haberlo visto. El control ancla su patron
+  a principio de linea y el marcador va **inline**; el otro control comprueba que los rotulos
+  **existan**, no que su contenido este relleno. Entre los dos dejaban sin vigilar exactamente el dato
+  que el mecanismo existe para publicar.
+- **Leccion:** la reincidencia **es el dato**, y llega gratis: no hay que investigarla, basta con
+  contar. Una vez es un descuido; cuatro veces con el mismo mecanismo fallando por cuatro caras
+  distintas es un control mal colocado, y corregir el caso sin corregir el control **garantiza la
+  quinta**. Ademas cada correccion por nota se siente como progreso —hay una tarea, hay una decision,
+  hay evidencia—, y eso es justo lo que permite que la serie siga sin que nadie la sume.
+- **Como aplicarla:** al evaluar un hallazgo, **preguntar si ya hubo otros de la misma familia** y
+  contarlos. A partir del segundo, la correccion aceptable tiene **dos mitades**: el caso, y el
+  control que no lo vio. Si la segunda mitad no cabe en la sesion, se abre como tarea con el recuento
+  escrito dentro — de modo que quien la lea vea la serie, y no un caso aislado mas.

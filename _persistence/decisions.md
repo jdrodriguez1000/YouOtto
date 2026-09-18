@@ -103,6 +103,15 @@
 | [D-080](#d-080---f-028-se-acepta-la-nota-de-anclaje-declara-donde-vive-y-el-autorreferente-queda-prohibido) | F-028 se acepta: la nota de anclaje declara donde vive, y el autorreferente queda prohibido | 2026-09-18 | Vigente |
 | [D-081](#d-081---f-029-se-acepta-la-fila-de-firma-se-instancia-a-d-074-y-el-control-de-huecos-ve-los-codigos-genericos) | F-029 se acepta: la fila de firma se instancia a D-074 y el control de huecos ve los codigos genericos | 2026-09-18 | Vigente |
 | [D-082](#d-082---promocion-al-esqueleto-de-arranque-de-los-seis-candidatos-del-desfase) | Promocion al esqueleto de arranque de los seis candidatos del desfase | 2026-09-18 | Vigente |
+| [D-083](#d-083---a-008-se-confirma-se-lee-el-historico-publicado-de-balotocom-no-su-software) | A-008 se confirma: se lee el historico publicado de baloto.com, no su software | 2026-09-18 | Vigente |
+| [D-084](#d-084---la-etapa-010_prototype-entrega-en-010_prototype-y-el-prototipo-vive-en-010_prototypeapp) | La etapa 010_prototype entrega en 010_prototype/, y el prototipo vive en 010_prototype/app/ | 2026-09-18 | Vigente |
+| [D-085](#d-085---se-adopta-el-reparto-de-_workflow010_prototypemd-para-esta-etapa) | Se adopta el reparto de _workflow/010_prototype.md para esta etapa | 2026-09-18 | Vigente |
+| [D-086](#d-086---camino-feliz-tarea-sellada-y-combinacion-arbitraria-en-el-prototipo) | Camino feliz, tarea sellada y combinacion arbitraria en el prototipo | 2026-09-18 | Vigente |
+| [D-087](#d-087---cinco-sesiones-con-un-unico-participante-y-el-espaciado-es-parte-de-lo-sellado) | Cinco sesiones con un unico participante, y el espaciado es parte de lo sellado | 2026-09-18 | Vigente — su espaciado desviado por D-088 |
+| [D-088](#d-088---las-5-sesiones-se-corren-una-por-jornada-sin-esperar-a-los-dias-de-sorteo) | Las 5 sesiones se corren una por jornada, sin esperar a los dias de sorteo | 2026-09-18 | Vigente |
+| [D-089](#d-089---facilitador-externo-para-las-sesiones-y-su-guion-vive-en-la-carpeta-de-la-etapa) | Facilitador externo para las sesiones, y su guion vive en la carpeta de la etapa | 2026-09-18 | Vigente |
+| [D-090](#d-090---el-prototipo-es-un-unico-archivo-html-con-la-combinacion-y-sus-razones-visibles-al-abrir) | El prototipo es un unico archivo HTML, con la combinacion y sus razones visibles al abrir | 2026-09-18 | Vigente |
+| [D-091](#d-091---f-030-se-acepta-el-anclaje-de-s-020-se-completa-por-nota-y-el-control-pasa-a-ver-los-huecos-inline) | F-030 se acepta: el anclaje de S-020 se completa por nota y el control pasa a ver los huecos inline | 2026-09-18 | Vigente |
 
 ---
 
@@ -5053,3 +5062,523 @@ La segunda publica `1` y la version anclada devuelve `2`: la cadena buscada, «d
 `00f09e1`», aparece tambien dentro de su propio bloque «Ordenes» — la orden se hace match a si
 misma. No se corrige aqui: la discrepancia queda con las dos salidas a la vista, para que `manager`
 la trate en la sesion siguiente.
+
+### D-083 - A-008 se confirma: se lee el historico publicado de baloto.com, no su software
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `A-008` estaba `Abierto` con el disparador ya cumplido —se entro en la etapa del
+  prototipo—, y bloqueaba `N-001`, `N-003`, `N-004` e `I-002`. Su forma de refutarlo, escrita en la
+  propia ficha, era leer las condiciones de uso publicadas y el `robots.txt` del sitio oficial.
+- **Lo que se encontro, y el matiz que obligo a consultar al patrocinador:** el `robots.txt` autoriza
+  la ruta que el producto necesita y prohibe otras dos; el unico documento legal enlazado desde el
+  pie del sitio **no regula el sitio informativo** —su encabezado declara el alcance de otra
+  plataforma, la de apuestas en linea— y **no contiene ni una clausula** sobre uso automatizado. Su
+  unica prohibicion es de propiedad intelectual y recae sobre el **software**, la marca, el nombre y
+  el logo.
+- **Decision:** `A-008` pasa a `Confirmado`. El patrocinador zanjo el matiz: el producto **no
+  reproduce ni redistribuye el software de Baloto** — lee los resultados publicados de sorteos ya
+  celebrados, que son hechos publicos, para calcular con ellos una combinacion propia. La clausula de
+  propiedad intelectual no alcanza a ese uso, y no hay ninguna otra que lo limite.
+- **Que se lleva a `constraints.md`:** el `robots.txt` si obliga, y obliga hacia adelante. Nace
+  `C-006` con los limites de lectura que fija.
+- **Alternativas descartadas:**
+  - **Dejar `A-008` abierto a la espera de una respuesta del operador:** `I-002` sigue con
+    `Consultado el: TODAVIA NO`, y esperarla detendria la etapa por tiempo indefinido contra una
+    evidencia que ya es concluyente en lo que se preguntaba. Preguntar sigue siendo posible; bloquear
+    no estaba justificado.
+  - **Refutarlo por la clausula de propiedad intelectual:** se descarto porque la clausula dice
+    «software, sus partes, la marca, el nombre, el logo», no «los resultados». Leerla como una
+    prohibicion de consultar resultados publicados le da un alcance que su propio texto no tiene.
+  - **Replantear la fuente hacia la carga manual:** era la alternativa que `D-061` ya habia
+    descartado, y nada de lo hallado la reabre.
+- **Verificacion.**
+
+  Condiciones que el sitio publica para los robots:
+
+  ```
+  $ WebFetch https://www.baloto.com/robots.txt
+  User-agent: *
+  Disallow: /admin-baloto/
+  Disallow: /api/
+  ```
+
+  Alcance real del unico documento legal del pie de pagina
+  (`https://static.baloto.com/static/docs/terminos-cookies-v2.pdf`, extraido a texto plano y
+  compactado sin espacios en `flat.txt`, 245.986 caracteres):
+
+  ```
+  $ grep -a -o -i -E ".{80}Alcance.{60}" flat.txt | head -1
+  POLITICADECOOKIESCodigoGJ-PL-01Version10TipoPoliticaImplementacionXX/05/2025AlcanceAtodala
+  organizacionDEAPUESTAAQUI.COM
+  ```
+
+  Barrido de clausulas sobre uso automatizado en ese mismo documento:
+
+  ```
+  $ grep -a -o -i -E "automatiz[a-z]*|robot[a-z]*|scrap[a-z]*|spider|crawl[a-z]*|ingenieriainversa" flat.txt | sort | uniq -c
+  (sin salida)
+  ```
+
+  La unica prohibicion que el documento si contiene, citada entera:
+
+  ```
+  $ grep -a -o -i -E ".{150}prohibid[a-z]*.{250}" flat.txt | head -1
+  ...PropiedadIntelectual:LosderechosdeLAAPLICACIONsonreservadosydepropiedaddeOperadorNacionalde
+  elcorrectofuncionamientodelsistema.Estatotalmenteprohibidalaventa,copia,alteraciony/o
+  distribuciondelsoftware,suspartes,asicomolamarca,elnombre,ellogo,y/ocualquieradesus
+  componentesquehacepartedeesta,amenosqueexistaautorizacionexpresadadaauntercero...
+  ```
+
+  Que la ruta que el producto necesita sirve los datos en el HTML, sin pasar por `/api/`: la lectura
+  de `https://www.baloto.com/resultados` devolvio el sorteo 2710 del 2026-09-16 con los numeros de
+  Baloto y Revancha, los dos acumulados y un historico paginado, con los datos embebidos en el HTML.
+
+### D-084 - La etapa 010_prototype entrega en 010_prototype/, y el prototipo vive en 010_prototype/app/
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** al abrir la etapa hay que declarar donde van sus entregables **antes** de que exista
+  el primero, que es cuando esa decision cuesta cero. `project.md` exige `D-XXX` para toda carpeta
+  declarada por adelantado, porque `git` no versiona carpetas vacias y el control de cierre la
+  senalaria sin motivo escrito.
+- **Decision, parte 1 — los entregables:** los cinco artefactos de registro de la etapa van a
+  **`010_prototype/`, en la raiz, a la misma altura que `005_discovery/`**. Lo fijo el patrocinador,
+  y coincide con la convencion ya escrita en `project.md`: una carpeta de primer nivel con el mismo
+  nombre que la etapa, el mismo que llevan su archivo en `_phases/`, su subcarpeta en `_templates/` y
+  su archivo en `_workflow/`.
+- **Decision, parte 2 — el prototipo:** el codigo descartable vive en **`010_prototype/app/`**.
+  `_phases/010_prototype.md` §5 exige que el prototipo tenga **carpeta propia, separada de cualquier
+  codigo de producto**, y que al cerrar el Gate **se archive o se borre, nunca se mude**. Una
+  subcarpeta lo cumple: hoy no existe ningun codigo de producto del que separarlo, y lo que la regla
+  protege es que nadie lo confunda con producto ni lo promueva sin decidirlo.
+- **Por que el prototipo no lleva fila propia en `project.md`:** el control del Paso 2c contrasta las
+  carpetas de **primer nivel**, y `010_prototype/app/` no lo es. Su destino al cerrar el Gate queda
+  escrito en la fila de la carpeta que la contiene, que es donde el control lo va a leer.
+- **Alternativas descartadas:**
+  - **Una carpeta de primer nivel aparte para el prototipo** (del tipo `prototype/`): rompe la
+    convencion de que el nombre de la etapa es la unica coordenada que hay que recordar, y anade una
+    fila mas a un control que se contrasta en cada cierre. La separacion que la regla pide ya la da
+    la subcarpeta.
+  - **Mezclar el codigo con los artefactos, sin subcarpeta:** dejaria el codigo descartable al lado
+    de los registros que si se conservan, que es justo la confusion que `_phases/010_prototype.md` §5
+    existe para evitar. Ademas complicaria borrarlo limpiamente al cerrar el Gate.
+  - **Dejar la carpeta sin declarar hasta escribir el primer artefacto:** `project.md` lo prohibe en
+    la practica, porque su control mira en las dos direcciones y una carpeta sin fila es un defecto.
+
+### D-085 - Se adopta el reparto de _workflow/010_prototype.md para esta etapa
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** `_workflow/010_prototype.md` es **condicion de entrada** de la etapa, no material de
+  consulta: `_phases/010_prototype.md` §5 dice que sin el —y sin las plantillas— la etapa no puede
+  abrirse aunque sus cinco entradas esten completas. Y el propio archivo advierte que **leer la tabla
+  no reparte nada**: repartir es escribir esta decision.
+- **Decision:** se adopta **tal cual**, sin alterar ni una fila, para los nueve pasos del
+  procedimiento. En este proyecto, «Humano» es el patrocinador, JD Rodriguez; «IA» es `manager` y los
+  agentes de este repositorio; «Software» son los controles mecanicos y el historial de `git` que ya
+  existen.
+- **Las tres consecuencias que cambian como se trabaja desde hoy, y por eso se escriben:**
+  - **La IA construye el prototipo (Paso 4), y es la primera vez en todo el metodo.** La autonomia no
+    es la de bajo impacto: el patrocinador **revisa el prototipo entero contra la tarea sellada antes
+    de la primera sesion**, no por muestreo. La razon es propia de la etapa: el prototipo se puede
+    rehacer, la ronda **no** se puede repetir.
+  - **La IA no entra en las sesiones (Pasos 5 y 9), ni para observar.** Prepara antes el guion de las
+    preguntas posteriores y nada mas. Un usuario simulado produce evidencia inventada con forma de
+    evidencia validada, y sobre ella decidiria el Gate.
+  - **El vigilante de la inmovilidad del prototipo entre sesiones (Paso 6) es el historial, no una
+    promesa.** Un humano promete no tocarlo; `git` **muestra** si se toco.
+- **La anomalia que este reparto arrastra, y que ya venia declarada:** el unico Generador es tambien
+  el patrocinador y quien dirige la construccion. La columna «Humano» de los pasos 5 y 9 y la firma
+  que revisa el prototipo recaen todas en la misma persona. No se puede repartir —no hay segunda
+  persona—, y `005_discovery/020_hypothesis.md` §4 y §5 ya lo declararon a sabiendas, debilitando a
+  proposito la dimension de comprension. Se anota aqui porque el Gate lo va a leer.
+- **Alternativas descartadas:**
+  - **Adoptarlo con cambios,** para reflejar que una sola persona ejerce varios roles: se descarto
+    porque `_workflow/010_prototype.md` es agnostico y describe lo que **puede** hacer cada
+    participante; lo que este proyecto adopta se registra aqui, que es exactamente lo que este
+    parrafo hace. Tocar el archivo agnostico le meteria un dato propio del proyecto, y el Paso 1b del
+    cierre lo senalaria.
+  - **No escribir la decision y limitarse a leer el archivo:** es lo que el propio archivo prohibe en
+    su §1, y dejaria la etapa abierta sin su condicion de entrada cumplida.
+
+### D-086 - Camino feliz, tarea sellada y combinacion arbitraria en el prototipo
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** Pasos 1 y 2 de `010_prototype`. Los dos se sellan **antes** de construir, y el orden
+  es lo unico que hace auditable la etapa entera: una tarea escrita despues del prototipo se escribe
+  a la medida de lo que el prototipo hace bien.
+- **Decision, parte 1 — el camino feliz:** uno solo. Arranca el dia de sorteo por la manana, cuando
+  el Generador tiene que decidir que 6 numeros juega esa noche; termina cuando **ha dado la
+  combinacion por buena** y la aplicacion le confirma que esa es la elegida para el proximo sorteo.
+  Recorre `N-001` y `N-002`. El patrocinador fijo los dos extremos en la conversacion de esta sesion.
+- **Decision, parte 2 — la tarea:** aprobada por el patrocinador con el texto literal que quedo en
+  `010_prototype/005_happy_path.md` §2, y **no se toca durante el resto de la etapa**. Da la
+  situacion, no el camino: no nombra pantalla, boton ni orden de pasos.
+- **Decision, parte 3 — la combinacion que enseña el prototipo:** **seis numeros arbitrarios**, y el
+  participante **se compromete a no juzgarlos**. Es lo que el patrocinador eligio.
+- **Lo que `manager` recomendo, y por que el patrocinador eligio lo contrario:** `manager` propuso
+  quemar una combinacion **calculada a mano** aplicando `D-052` y `D-053` a un sorteo concreto, para
+  que el participante —que conoce el metodo de memoria— no acabara discutiendo el calculo en plena
+  sesion. El patrocinador prefirio numeros arbitrarios y asumio el compromiso. **La eleccion es
+  suya**, y tiene a favor que le ahorra el trabajo previo y que la hipotesis sellada ya declara, en
+  `005_discovery/020_hypothesis.md` §5, que **no afirma nada sobre el calculo**.
+- **El riesgo que el compromiso no elimina, y como se trata en sesion:** un compromiso no borra lo
+  que se piensa al ver seis numeros que el metodo propio no habria dado. Por eso
+  `010_prototype/005_happy_path.md` §4 deja escrito **que hace el facilitador si aparece**: no
+  corrige ni defiende, devuelve la pelota, y la frase se registra como **comentario espontaneo**. No
+  cuenta como bloqueo ni como problema funcional — esta fuera de lo que se apuesta. Lo que si cuenta
+  es que no sepa decir **de donde salio** un numero con lo que la aplicacion le muestra: eso es
+  `N-002`, y esta dentro de la hipotesis.
+- **Alternativas descartadas:**
+  - **Combinacion calculada a mano antes de construir:** era la recomendacion de `manager`; el
+    patrocinador la descarto por el trabajo previo que exige.
+  - **Que el prototipo calcule de verdad el metodo:** prohibido por `_phases/010_prototype.md` §2 —
+    el prototipo no calcula, aparenta— y ademas encarece tirarlo, que es lo que hay que hacer con el.
+  - **Meter `N-003` o `N-004` en el mismo recorrido:** son otras necesidades con su propio camino, y
+    la hipotesis sellada no las pone a prueba. Dos caminos felices no caben en una sesion.
+  - **Dejar elegir la prioridad entre Baloto y Revancha dentro del camino:** es configuracion. El
+    prototipo trabaja con el valor por defecto que fija `D-053`, que es `Baloto`.
+- **Verificacion.** Las tres ordenes que la plantilla trae para el sello, corridas antes del `git
+  add`:
+
+  ```
+  $ grep -n "<" 010_prototype/005_happy_path.md
+  137:- [x] **No queda ni un solo `<` en el archivo.**
+  142:grep -n "<" 010_prototype/005_happy_path.md                 # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/005_happy_path.md
+  138:- [x] La seccion «Guia de llenado» **esta borrada**.
+  143:grep -n "Guia de llenado" 010_prototype/005_happy_path.md   # debe no devolver nada
+  $ grep -niE "clic|boton|menu|pestaña|luego|despues|primero|selecciona" 010_prototype/005_happy_path.md
+  11:> 🚨 **ESTE ARCHIVO SE SELLA ANTES DE CONSTRUIR EL PROTOTIPO. No despues.**
+  22:> 🔑 **Por que este orden, y no es una preferencia:** si la tarea se escribe despues del prototipo,
+  73:| «Haz clic en *tal opcion* y luego selecciona la fecha.» | «Imagina que estas en *tal situacion* y necesitas *tal cosa*. Usa esta aplicacion para conseguirlo.» |
+  75:🚨 **La revision independiente del Gate lee exactamente este recuadro.** Si la tarea nombra un boton,
+  76:un menu o un orden de pasos, las sesiones midieron **si el usuario sabe seguir indicaciones** — que
+  134:- [x] La tarea **no nombra** ningun boton, menu, pestaña ni orden de pasos.
+  144:grep -niE "clic|boton|menu|pestaña|luego|despues|primero|selecciona" \
+  ```
+
+  ⚠️ **Ninguna de las tres devuelve vacio, y no es un hueco sin rellenar.** Las lineas que salen son
+  **de la plantilla**: la seccion «Comprobacion antes del sello», que nombra los patrones para
+  enunciar la comprobacion, y los avisos que la plantilla trae en su cabecera y en §2. **Ni una sola
+  pertenece al cuerpo del artefacto**, y en el tercero —el que importa— **no aparece el recuadro 📋**,
+  que es lo que la plantilla manda comprobar. Es el mismo fenomeno que `D-058` ya registro con la
+  hipotesis, y por el mismo motivo.
+
+  El orden que mira el Gate, medido despues del commit de esta sesion: el artefacto tiene que nacer
+  antes que el codigo del prototipo. Hoy no existe `010_prototype/app/`, asi que la segunda orden no
+  devuelve nada todavia.
+
+### D-087 - Cinco sesiones con un unico participante, y el espaciado es parte de lo sellado
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente — su espaciado desviado por `D-088` |
+| Origen | manager |
+
+- **Contexto:** Paso 3 de `010_prototype`. El paso exige fijar **un numero concreto** de
+  participantes y sesiones **antes de la primera sesion**, y escribir **por que ese y no otro**,
+  porque la guia de metodo exige «usuarios representativos» y **no fija ninguna cantidad**.
+- **Decision:** **1 participante** y **5 sesiones**, en **cinco dias de sorteo distintos**. Umbral
+  `4 de 5`, y solo cuenta `Exito autonomo`. Queda escrito en
+  `010_prototype/010_participants.md` §2 y §3.
+- **Por que ese numero, dicho como es:** no sale de un criterio de muestreo, y ocultarlo lo haria
+  parecer una regla del metodo. El **1** es 1 porque solo existe un Generador (`010_actors.md` §2);
+  no es una muestra elegida, es la poblacion entera. El **5** y el `4 de 5` no se eligen aqui:
+  **vienen sellados** de `005_discovery/020_hypothesis.md` §2, escritos antes del primer dato. Con
+  una sola persona lo que se repite no es la muestra, sino **la ocasion**: cinco dias de sorteo con
+  la necesidad real delante cada vez.
+- **El espaciado, que el patrocinador pregunto si se podia saltar, y no se puede:** correr las cinco
+  el mismo dia esta descartado por dos motivos independientes. **Uno formal:** la ventana —«una por
+  dia de sorteo, en dias de sorteo consecutivos»— es parte de la hipotesis **sellada**, y
+  `_phases/010_prototype.md` §2 prohibe cambiar la hipotesis dentro de la etapa. **Uno de fondo, que
+  seguiria valiendo aunque no estuviera sellada:** con un solo participante, a partir de la segunda
+  pasada el minuto se gana **por memoria**, no porque la aplicacion sirva. Se estaria midiendo su
+  curva de aprendizaje, y el resultado saldria verde sin decir nada. Si el calendario obligara a
+  recortar, **se recorta el numero** —con su decision escrita antes de empezar—, nunca el espaciado.
+- **La anomalia que este numero arrastra, y que no se disimula:** el unico participante conoce el
+  proyecto, lo patrocina, lo dirige y vera construir el prototipo. Contra la lista habitual de
+  descalificacion quedaria fuera por cuatro motivos. **Se acepta a sabiendas**, porque excluirlo
+  dejaria la etapa sin nadie a quien observar, y el limite ya venia declarado en
+  `005_discovery/020_hypothesis.md` §4 y §5: la hipotesis **no afirma que otra persona pueda usar la
+  aplicacion**, y la dimension de comprension queda debilitada a proposito. La revision del Gate lo
+  va a leer, y tiene que leerlo escrito de antemano, no descubierto por su cuenta.
+- **Alternativas descartadas:**
+  - **Las cinco sesiones el mismo dia:** lo pregunto el patrocinador; descartada por los dos motivos
+    de arriba.
+  - **Reclutar a otras personas para llegar a un numero mayor:** cambiaria el perfil del usuario
+    representativo, que `_phases/010_prototype.md` §2 prohibe cambiar dentro de la etapa. Ademas
+    nadie mas aplica este metodo, asi que no serian Generadores: serian gente probando el metodo de
+    otro.
+  - **Fijar menos de cinco sesiones para acabar antes:** el 5 viene sellado del descubrimiento;
+    bajarlo aqui seria recortar la ventana con el prototipo ya en mente. Si hiciera falta, se decide
+    **antes** de la primera sesion y se declara la desviacion en §5, no se corrige §3.
+- **Verificacion.** Las cuatro ordenes de la plantilla, corridas antes del `git add`:
+
+  ```
+  $ grep -n "<" 010_prototype/010_participants.md
+  162:- [x] `<` y «Guia de llenado» fuera de §1–§3.
+  170:- [ ] **No queda ni un solo `<` en el archivo.**
+  174:grep -n "<" 010_prototype/010_participants.md               # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/010_participants.md
+  162:- [x] `<` y «Guia de llenado» fuera de §1–§3.
+  175:grep -n "Guia de llenado" 010_prototype/010_participants.md # debe no devolver nada
+  $ ls 010_prototype/015_session_*.md
+  ls: cannot access '010_prototype/015_session_*.md': No such file or directory
+  $ git log -p -- 010_prototype/010_participants.md | grep "^-"
+  (sin salida)
+  ```
+
+  ⚠️ **Las dos primeras no devuelven vacio, y las tres lineas que salen son de la plantilla**: la
+  casilla de §6 que nombra los dos patrones para enunciar la comprobacion, y la orden misma. **Ni una
+  pertenece a §1–§3**, que es lo que el sello protege. Mismo fenomeno que `D-058` y `D-086`.
+
+  ⚠️ **La tercera falla a proposito y su salida se publica tal cual:** no hay ningun archivo de
+  sesion todavia, porque el prototipo no se ha construido. Cuadrara con el 5 de §3 cuando la ronda
+  termine, o la diferencia ira a §5.
+
+  La cuarta es la que mira el Gate, y hoy no puede decir nada: el archivo aun **no esta commiteado**,
+  asi que no tiene historial. Volvera a correrse en cada cierre mientras la etapa siga abierta.
+
+### D-088 - Las 5 sesiones se corren una por jornada, sin esperar a los dias de sorteo
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `D-087` acababa de fijar las 5 sesiones en 5 dias de sorteo distintos, que es la
+  ventana sellada en `005_discovery/020_hypothesis.md` §2. El patrocinador reabre el asunto: el
+  calendario aprieta y considera que, tratandose de un prototipo, el espaciado no aporta.
+- **Decision:** las 5 sesiones se corren **una por jornada de trabajo**, seguidas, en cuanto el
+  prototipo este construido: se corre la sesion, se redacta su archivo, **se cierra la jornada**, y la
+  siguiente sesion abre una jornada nueva. **No se espera al calendario de sorteos.** Lo decide el
+  patrocinador y la decision es suya.
+- **Lo que NO se hace, y es lo que hace que esto siga siendo auditable:** **la hipotesis no se toca.**
+  Sigue diciendo «una por dia de sorteo, en dias de sorteo consecutivos», y el Gate juzgara contra
+  eso. `_phases/010_prototype.md` §2 prohibe cambiar la hipotesis dentro de la etapa, y romper su
+  sello —un segundo commit en un archivo cuya unica garantia es tener uno solo— es **irreversible**:
+  dejaria al Gate sin forma de saber cual era la apuesta original. Por eso la diferencia se registra
+  como **desviacion declarada** en `010_prototype/010_participants.md` §5, que es la mitad del
+  artefacto que puede crecer, y **§1–§3 quedan intactos**.
+- **Lo que `manager` objeto, y que parte de la objecion se sostuvo:** `manager` advirtio que correr
+  las cinco **el mismo dia** no produce cinco sesiones, porque con un solo participante el tiempo se
+  gana por memoria. Esa advertencia **no aplica entera a lo que el patrocinador propuso**: su
+  propuesta separa cada sesion en una jornada distinta, con su cierre en medio, asi que hay
+  separacion real y el efecto memoria es mucho menor que en el escenario que `manager` temia. Lo que
+  si se sostiene es lo de abajo.
+- **El coste que queda, escrito antes de la ronda y no despues:** la ventana sellada buscaba cinco
+  **ocasiones reales** —dia de sorteo, necesidad delante, memoria fria—. Al juntarlas, la ocasion pasa
+  a estar **simulada por la tarea** en vez de ser real, y el participante llega a la sesion `002`
+  recordando la `001`. El tiempo de `N-001` se abarata sesion a sesion por esa via, no por la
+  aplicacion. **`N-002` aguanta mejor**: lo que se observa ahi es si la explicacion basta para decir
+  de donde salio cada numero, y eso no se abarata con la repeticion de la misma forma.
+- **Por que se registra en vez de discutirse:** el patrocinador reafirmo despues de oir la objecion,
+  y decidir el calendario es suyo. Lo que no es negociable es que la evidencia diga lo que de verdad
+  paso — y eso queda cubierto, porque la desviacion se declara **antes** de la primera sesion. Una
+  muestra desviada y declarada es evidencia con un limite conocido; la misma callada es una cifra que
+  no se sabe que mide.
+- **Alternativas descartadas:**
+  - **Reescribir la ventana en la hipotesis para que encaje:** prohibido por `_phases/010_prototype.md`
+    §2, e irreversible. Ademas es el defecto exacto que la etapa existe para impedir: escribir la
+    apuesta despues de saber como se va a jugar.
+  - **Correr las cinco el mismo dia, en una sola jornada:** ni el patrocinador lo pidio ni `manager`
+    lo acepta. Ahi la advertencia de la memoria si valdria entera.
+  - **Mantener el calendario de sorteos y retrasar la ronda unas dos semanas:** es lo que `D-087`
+    fijaba; el patrocinador lo descarta por plazo.
+  - **Recortar el numero de sesiones para acabar antes:** no se toca. El 5 sigue siendo 5; lo que
+    cambia es cuando se corren, no cuantas.
+
+### D-089 - Facilitador externo para las sesiones, y su guion vive en la carpeta de la etapa
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `manager` señalo al cerrar el Paso 3 que el unico participante es tambien el
+  patrocinador y quien dirige, asi que las sesiones se correrian en autorreporte: la misma persona se
+  entrega la tarea, no se responde, se cronometra y anota sus propias intervenciones. El patrocinador
+  propuso incorporar **dos personas** y pregunto si podian participar.
+- **Decision, parte 1 — que NO se hace:** esas personas **no entran como participantes**. El perfil
+  del usuario representativo esta sellado en `005_discovery/020_hypothesis.md` §4 —quien juega con el
+  metodo de `D-052` y `D-053` **y hoy lo aplica a mano**, y hay una sola persona asi—, la hipotesis
+  nombra a un actor concreto, y `_phases/010_prototype.md` §2 prohibe cambiar el perfil dentro de la
+  etapa. Dos personas que no aplican ese metodo no son Generadores: serian gente probando el metodo
+  de otro. Ya estaba escrito como alternativa descartada en `D-087`.
+- **Decision, parte 2 — que SI se hace:** **una de las dos ejerce de facilitadora.** Entrega la tarea
+  literal, cronometra, observa, anota las intervenciones y conduce las preguntas posteriores. El
+  patrocinador confirmo ademas que **ninguna de las dos trabaja en la construccion del prototipo**,
+  que es la condicion que lo hace valido: quien conoce el artefacto por dentro no puede callarse
+  viendo a alguien tropezar con el.
+- **Que gana la evidencia con esto, que es el motivo entero:** la seccion de intervenciones del
+  facilitador deja de ser **autorreporte**. Quien facilita no tiene interes en que el estado salga
+  autonomo, y es la casilla donde `_phases/010_prototype.md` §4 avisa de que la regla se dobla sin
+  querer —«solo le di un empujoncito»— porque quien la dobla es quien la anota.
+- **Lo que esto NO arregla, y sigue declarado:** el participante sigue siendo el patrocinador, que
+  conoce el proyecto, lo dirige y vera construir el prototipo. La anomalia de
+  `010_prototype/010_participants.md` §2 sigue entera; lo que mejora es la observacion, no el perfil.
+- **Decision, parte 3 — donde vive el guion:** en **`010_prototype/012_facilitator_guide.md`**, en la
+  carpeta de la etapa, por decision del patrocinador. El numero lo coloca entre participantes y
+  sesiones, que es su orden de uso.
+- 🚨 **Y se declara que es un sexto archivo en una carpeta que la etapa describe con cinco.**
+  `_phases/010_prototype.md` §5 enumera cinco artefactos de registro mas el ejecutable, y este no es
+  ninguno de ellos: **es una hoja de apoyo, no un artefacto**, y asi lo dice en su cabecera. Se
+  escribe aqui para que una revision que cuente los archivos de la carpeta encuentre el motivo en vez
+  de un hallazgo. Lo que si autoriza el metodo es su contenido: `_workflow/010_prototype.md` asigna a
+  la IA **preparar antes el guion de las preguntas posteriores** para los Pasos 5 y 9.
+- **Que lleva dentro, y que deliberadamente no:** lleva la tarea literal, el arranque y la parada del
+  cronometro, la regla de devolver la pelota, las cinco preguntas, los cuatro estados y las
+  prohibiciones de la etapa. **No lleva la hipotesis, ni el umbral, ni que resultado se espera**, y su
+  primera instruccion es no leer el resto del repositorio: un facilitador que sabe que resultado hace
+  falta deja de observar y pasa a confirmar.
+- **El aviso concreto que incluye, por `D-086`:** el participante vera seis numeros arbitrarios que su
+  propio metodo no habria dado. El guion instruye a **no corregir ni defender**, devolver la pelota y
+  anotar la frase entrecomillada como comentario espontaneo.
+- **Alternativas descartadas:**
+  - **Que las dos personas participen como usuarios:** lo pregunto el patrocinador; descartada por los
+    tres motivos de la parte 1.
+  - **Correr las sesiones con el patrocinador solo, en autorreporte:** era el escenario por defecto
+    hasta hoy. Se descarta porque ahora hay alguien disponible que no conoce el prototipo.
+  - **Dejar el guion fuera de la carpeta de la etapa,** en un area temporal: el patrocinador decidio
+    que viva con los artefactos que acompaña.
+  - **Que la facilitadora ayude ademas a construir el prototipo:** el patrocinador ya lo excluyo, y es
+    la condicion que sostiene el resto.
+- 🕐 **Nota 2026-09-18 (cerrado por el patrocinador):** la **segunda** persona **no interviene en
+  ninguna operacion durante las sesiones**. No facilita, no observa con rol asignado y no participa.
+  Queda fuera del procedimiento de la etapa, asi que no aparece en ningun artefacto de sesion — y si
+  algun dia estuviera presente y dijera algo, eso seria una **intervencion** y va a la tabla de
+  intervenciones del facilitador con su rol, como cualquier otra.
+
+### D-090 - El prototipo es un unico archivo HTML, con la combinacion y sus razones visibles al abrir
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** Paso 4 de `010_prototype`, antes de escribir una linea. El reparto de `D-085` asigna a
+  la IA construir el artefacto, con autonomia de **impacto relevante**: el patrocinador lo revisa
+  entero contra la tarea sellada antes de la primera sesion.
+- **Decision, parte 1 — la forma:** **un unico archivo HTML**, con su CSS y su JS dentro. Sin
+  framework, sin build, sin servidor y sin dependencias: se abre con doble clic en el navegador.
+- **Por que esa forma:** es la mas barata de tirar, y tirarlo es el requisito central de la etapa —
+  borrar el prototipo sera borrar un archivo. Ademas evita instalar o levantar nada el dia de la
+  sesion, con el cronometro corriendo delante del usuario. Cumple `PI-2`: nada de capas, patrones ni
+  configurabilidad que nadie pidio.
+- **Decision, parte 2 — que se ve al abrir:** la combinacion aparece **sola**, sin pedirla, con los
+  **seis numeros de golpe** —las 5 balotas y la superbalota— y **la razon de cada uno visible en la
+  misma pantalla**. Lo zanjo el patrocinador en las dos preguntas que `manager` dejo abiertas.
+- **Que mide cada una de esas dos elecciones, que es el motivo de haberlas preguntado:**
+  - **Razones a la vista, no ocultas tras un gesto:** asi se observa **si la explicacion le basta**,
+    que es lo que dice `N-002`. Escondidas, se observaria ademas si se le ocurre buscarlas —otra
+    cosa, y mas exigente—, y un fallo ahi se habria leido como un fallo de comprension del metodo.
+  - **Sin gesto previo para pedirla:** el minuto de `N-001` se lo come entero **leer y decidir**, que
+    es donde esta la apuesta. Un paso previo habria añadido un punto de tropiezo que la hipotesis no
+    mide.
+- **Decision, parte 3 — lo que el prototipo NO lleva, y es deliberado:** no guarda nada, no hay
+  autenticacion, no hay historial, no cubre `N-003` ni `N-004`, no deja elegir la prioridad entre
+  Baloto y Revancha, no trata casos de error, no valida entradas, no tiene capas ni tests. Todo eso
+  esta prohibido por `_phases/010_prototype.md` §2 o queda fuera por `010_prototype/005_happy_path.md`
+  §3.
+- 🚨 **Y no cronometra.** El tiempo lo mide la facilitadora con su cronometro, fuera de la pantalla.
+  Un contador a la vista presionaria al usuario y contaminaria justo la variable que la hipotesis
+  observa.
+- **Compatibilidad con lo ya sellado:** `010_prototype/005_happy_path.md` §1 escribe el paso 2 como
+  «obtiene la combinacion», sin decir si la pide o si le aparece. Esta decision lo concreta **sin
+  tocar el artefacto sellado**, que es lo que hay que hacer: el artefacto fija el recorrido, no la
+  interfaz.
+- **Alternativas descartadas:**
+  - **Un wireframe o mockup estatico:** no sirve para esta hipotesis. Se mide **tiempo hasta tener la
+    combinacion** y el gesto de **darla por buena**; las dos cosas exigen que se pueda tocar. Un
+    dibujo no se puede cronometrar.
+  - **Los seis numeros uno a uno, en el orden en que los encadena el metodo** (NUM1 manda, NUM2 y
+    NUM3 de NUM1, NUM4 de NUM2, NUM5 de NUM3): refleja mejor como piensa el jugador, pero alarga la
+    lectura y el patrocinador eligio verlos de golpe.
+  - **Razones ocultas tras tocar cada numero:** descartada arriba, con su motivo.
+  - **Pedir la combinacion con un gesto:** descartada arriba, con su motivo.
+  - **Una aplicacion con framework, build o servidor local:** encarece tirarla y añade una
+    instalacion que puede fallar el dia de la sesion. Ademas es justo la clase de cuidado que
+    convierte un prototipo en algo que nadie quiere tirar.
+- **Lo que sigue pendiente antes de la primera sesion:** el patrocinador **revisa el prototipo entero
+  contra la tarea sellada**, no por muestreo (`D-085`). Y los seis numeros seran arbitrarios, con el
+  compromiso de no juzgarlos (`D-086`).
+
+### D-091 - F-030 se acepta: el anclaje de S-020 se completa por nota y el control pasa a ver los huecos inline
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-022` abrio `F-030` (`Media`/`No bloqueante`): la NOTA DE CIERRE de `_audit/S-020.md`
+  publico el commit de sesion y dejo el de anclaje con el texto literal de la plantilla.
+- **Verificado contra `HEAD` antes de evaluarlo**, como exige el tratamiento de una auditoria: el
+  hallazgo **sigue vivo**.
+
+  ```
+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-020.md
+  123:  sobre las secciones de firma, porque el control existente busca `<en blanco>` y esta fila nunca
+  261:**NOTA DE CIERRE — commit de sesion `7b0c48f`, commit de anclaje `<se completa tras commitear el anclaje>`.**
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-020.md
+  30276a9 2026-09-18 S-020: ancla el informe y los criterios de cierre al hash 7b0c48f
+  7b0c48f 2026-09-18 S-020: F-028/F-029 de R-021 evaluados (D-080/D-081), promocion al esqueleto (D-082), y leccion L-022
+  $ grep -c 'rev-parse' _audit/S-020.md
+  0
+  ```
+
+  La linea 123 es una cita legitima del marcador dentro de la prosa de `D-081`, como el propio
+  hallazgo señala; el hueco real es la 261. No hay commit posterior que lo complete y no se publico
+  la orden que lo derivaria.
+- **Decision: se acepta entero, en sus dos mitades.**
+  - **La primera, hecha en esta jornada:** `_audit/S-020.md` recibe una **nota fechada** que declara
+    `30276a9` como commit de anclaje, con la salida de `git rev-parse --short` corrida y pegada.
+    **La linea 261 no se reescribe.**
+  - **La segunda, abierta como `T-049`:** que el control de huecos de `protocol-close` busque
+    marcadores entre angulos **en cualquier posicion** de la NOTA DE CIERRE, no solo a principio de
+    linea.
+- **Por que no se reescribe la linea 261, que es la parte que parece mas facil:** reescribirla
+  convertiria «falta evidencia» en «hay evidencia falsa», esta vez sin nadie que lo note. El
+  repositorio corrige **añadiendo una nota fechada**, nunca alterando lo que se escribio el dia que se
+  escribio — y el valor entero de esa nota esta en decir **cuando** se supo.
+- **Por que la segunda mitad importa mas que la primera, aunque su gravedad sea la misma:** esta es
+  la **cuarta** vez que la familia aparece. `F-013`, `F-026` y `F-028` fueron el mismo mecanismo
+  fallando por otras caras, y las tres se cerraron corrigiendo el caso concreto **sin tocar el
+  control**. Un defecto que reaparece cuatro veces no es una serie de descuidos: es un control que no
+  mira donde hace falta. El de huecos ancla en `^<` y este marcador va **inline**; el `7c-ter` solo
+  comprueba que los seis rotulos **existan**, no que su contenido este instanciado. Entre los dos
+  dejan sin vigilar justo el dato que la nota existe para publicar.
+- **Lo que NO se escribe en `findings.md`, y es deliberado:** la fila de `F-030` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**, aunque la primera mitad quede hecha hoy. Ese estado
+  significa «corregido **y verificado por una auditoria posterior**», y `manager` no es esa auditoria.
+  Lo cierra la pasada siguiente del auditor si de verdad quedo hecho.
+- **Alternativas descartadas:**
+  - **Reescribir la linea 261 con el hash correcto:** descartada arriba, con su motivo.
+  - **Aceptar solo la nota y no tocar el control:** es lo que se hizo las tres veces anteriores con la
+    misma familia, y por eso hay una cuarta. Dejarlo asi garantiza una quinta.
+  - **Rechazarlo por menor:** el hallazgo se sostiene contra la evidencia del repositorio —la orden de
+    arriba lo muestra vivo en `HEAD`— y `protocol-close` lo exige literal en sus lineas 1316-1322.
+- **Tarea:** `T-049`.

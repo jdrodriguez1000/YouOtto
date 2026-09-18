@@ -28,7 +28,7 @@
 | [A-005](#a-005---hay-acceso-a-personas-que-conocen-el-proceso-real-ademas-del-patrocinador) | Hay acceso a personas que conocen el proceso real, ademas del patrocinador | 2026-09-17 | Confirmado |
 | [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
 | [A-007](#a-007---la-cabecera-exacta-de-session-closer-deja-pasar-protocol-close-y-bloquea-las-demas-skills) | La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills | 2026-09-17 | Confirmado |
-| [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Abierto |
+| [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Confirmado |
 
 ---
 
@@ -314,7 +314,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-17 |
-| Estado | Abierto |
+| Estado | Confirmado |
 | Origen | manager |
 | Dueno | usuario (JD Rodriguez) |
 
@@ -334,3 +334,15 @@ Plantilla:
   de esa decision, y obliga a replantear la fuente para `N-001`, `N-003` y `N-004`. La alternativa que lo
   sacaria del camino critico —que el jugador pegue el resultado de cada sorteo— esta escrita como
   alternativa descartada en `D-061`, con su motivo.
+- 🕐 **Nota 2026-09-18 (confirmado, `D-083`):** se ejecuto la forma de refutarlo escrita arriba. El
+  `robots.txt` del sitio oficial devolvio literal `User-agent: *` con `Disallow: /admin-baloto/` y
+  `Disallow: /api/`: la pagina publica de resultados, que es la que el producto necesita, **no esta
+  prohibida**. El unico documento legal enlazado desde el pie del sitio declara en su encabezado un
+  alcance que **no es el del sitio informativo** —`AlcanceAtodalaorganizacionDEAPUESTAAQUI.COM`—, y
+  el barrido de clausulas sobre uso automatizado sobre sus 245.986 caracteres devolvio **cero
+  coincidencias**. Su unica prohibicion recae sobre «la venta, copia, alteracion y/o distribucion
+  **del software**, sus partes, asi como la marca, el nombre, el logo». El patrocinador zanjo que el
+  producto no reproduce nada de eso: lee resultados ya publicados de sorteos ya celebrados para
+  calcular con ellos una combinacion propia. **El supuesto queda `Confirmado`**, y el limite que el
+  `robots.txt` si impone se registra aparte como `C-006`. Las ordenes y sus salidas crudas estan en
+  `D-083`.

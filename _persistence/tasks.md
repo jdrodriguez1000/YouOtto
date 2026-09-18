@@ -65,6 +65,8 @@
 | [T-046](#t-046---anclar-o-fechar-la-orden-de-verificacion-de-d-073-sobre-f-025f-026f-027-que-ya-no-reproduce) | Anclar o fechar la orden de Verificacion de D-073 sobre F-025/F-026/F-027 que ya no reproduce | No implementada | Baja | No bloqueante | 005_discovery |
 | [T-047](#t-047---corregir-por-nota-el-commit-que-contiene-la-nota-de-anclaje-de-s-019-y-prohibir-el-autorreferente) | Corregir por nota el commit que contiene la nota de anclaje de S-019 y prohibir el autorreferente | No implementada | Media | No bloqueante | 010_prototype |
 | [T-048](#t-048---instanciar-a-d-074-la-fila-de-firma-del-acta-de-005_discovery-y-ampliar-el-control-de-huecos) | Instanciar a D-074 la fila de firma del acta de 005_discovery y ampliar el control de huecos | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-049](#t-049---ampliar-el-control-de-huecos-del-cierre-a-los-marcadores-inline-de-la-nota-de-cierre) | Ampliar el control de huecos del cierre a los marcadores inline de la NOTA DE CIERRE | No implementada | Media | No bloqueante | 010_prototype |
+| [T-050](#t-050---anclar-o-corregir-los-numeros-de-linea-de-las-verificaciones-de-d-086d-087-que-ya-no-reproducen) | Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1292,3 +1294,77 @@ Plantilla:
 - **Criterio de cierre:** a ese commit, la fila 5.2 del acta cita `D-074` y el control de huecos de
   `protocol-phase-exit` barre los codigos genericos de las secciones de firma. Se publicaran las dos
   ordenes con su salida cruda, ancladas por el Paso 7c-bis, en la sesion que implemente esta tarea.
+
+### T-049 - Ampliar el control de huecos del cierre a los marcadores inline de la NOTA DE CIERRE
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-030` (`Media`/`No bloqueante`). Aceptado en sus dos mitades. **La primera ya esta
+  hecha en esta jornada:** `_audit/S-020.md` lleva una nota fechada que declara `30276a9` como commit
+  de anclaje, con la salida de `git rev-parse` corrida, sin reescribir la linea 261. **Lo que queda
+  pendiente es la segunda:** que el control de huecos de `protocol-close` busque marcadores entre
+  angulos **en cualquier posicion** de la NOTA DE CIERRE, y no solo a principio de linea. Registrado
+  en `D-091`.
+- **Por que:** el control ancla en `^<` y el hueco de la NOTA DE CIERRE va **inline**, detras del
+  rotulo, asi que pasa sin que nadie lo vea; y el control `7c-ter` solo comprueba que los seis
+  rotulos existan, no que su contenido este instanciado. Entre los dos dejan sin vigilar justo el
+  dato que la nota existe para publicar. Es la cuarta vez que la familia aparece —`F-013`, `F-026`,
+  `F-028` fueron el mismo mecanismo fallando por otra cara—, y las tres anteriores se cerraron
+  corrigiendo el caso concreto sin tocar el control.
+- **Criterio de cierre:** a ese commit, el control de huecos de `protocol-close` devuelve la linea de
+  una NOTA DE CIERRE con un marcador entre angulos inline. Se publicara la orden con su salida cruda,
+  anclada por el Paso 7c-bis, en la sesion que implemente esta tarea.
+
+### T-050 - Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d de `protocol-close` encontro que tres ordenes publicadas hoy en el bloque
+  «Verificacion» de `D-086` y dos en el de `D-087` (todas `grep -n` sobre
+  `010_prototype/005_happy_path.md` y `010_prototype/010_participants.md`) devuelven, al
+  reejecutarlas contra el arbol que va a commitearse, los mismos textos pero en **numeros de linea
+  distintos** a los publicados. El contenido de cada linea coincide letra por letra; solo se desplazo
+  su posicion.
+- **Evidencia — orden literal y lo que publica cada decision frente a lo que da hoy:**
+
+  ```
+  $ grep -n "<" 010_prototype/005_happy_path.md
+  D-086 publica: 137, 142
+  Hoy da:        144, 149
+
+  $ grep -n "Guia de llenado" 010_prototype/005_happy_path.md
+  D-086 publica: 138, 143
+  Hoy da:        145, 150
+
+  $ grep -niE "clic|boton|menu|pestaña|luego|despues|primero|selecciona" 010_prototype/005_happy_path.md
+  D-086 publica (ultimas dos lineas): 134, 144
+  Hoy da:                             141, 151
+  (las cinco lineas de contenido anteriores —11, 22, 73, 75, 76— coinciden)
+
+  $ grep -n "<" 010_prototype/010_participants.md
+  D-087 publica: 162, 170, 174
+  Hoy da:        174, 182, 186
+
+  $ grep -n "Guia de llenado" 010_prototype/010_participants.md
+  D-087 publica: 162, 175
+  Hoy da:        174, 187
+  ```
+
+- **Por que no lo corrijo yo:** el bloque vive en `_persistence/decisions.md`, uno de los cuatro
+  archivos del porque que este protocolo no puede tocar. El texto en si no es falso —las lineas
+  citadas existen y dicen lo mismo—, pero el numero ya no localiza esa linea en el archivo final.
+- **Criterio de cierre:** `manager` decide, por cada bloque, si ancla los numeros al hash del commit
+  de esta sesion (ya que a partir de ahi el archivo queda sellado y no deberia volver a moverse) o si
+  los deja con una nota fechada que explique el desplazamiento.

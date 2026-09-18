@@ -26,6 +26,7 @@
 | [C-003](#c-003---el-producto-se-despliega-en-vercel) | El producto se despliega en Vercel | Tecnica | Vigente |
 | [C-004](#c-004---la-aplicacion-se-mantiene-lo-mas-sencilla-posible) | La aplicacion se mantiene lo mas sencilla posible | Tecnica | Vigente |
 | [C-005](#c-005---la-aplicacion-no-recoge-ningun-dato-personal) | La aplicacion no recoge ningun dato personal | Negocio | Vigente |
+| [C-006](#c-006---la-lectura-del-sitio-oficial-de-baloto-se-limita-a-lo-que-su-robotstxt-autoriza) | La lectura del sitio oficial de Baloto se limita a lo que su robots.txt autoriza | Tecnica | Vigente |
 
 ---
 
@@ -164,3 +165,21 @@ Plantilla:
 - **Que implica:** el historial de juegos se guarda sin dueno; no hay cuentas ni registro de usuarios, y
   ninguna decision posterior puede introducirlos sin levantar esta restriccion. Como consecuencia, el
   despliegue no puede apoyarse en una identidad para restringir el acceso.
+
+### C-006 - La lectura del sitio oficial de Baloto se limita a lo que su robots.txt autoriza
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Tipo | Tecnica |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Restriccion:** el producto lee el historico de sorteos y los acumulados **desde la pagina publica
+  de resultados, en HTML**. No usa la ruta `/api/` ni la ruta `/admin-baloto/`, que el `robots.txt`
+  del sitio prohibe a todo agente. Tampoco redistribuye el contenido leido: lo consume para calcular.
+- **De donde viene:** el `robots.txt` publicado por el sitio oficial, leido al cerrar `A-008`
+  (`D-083`), que es donde estan la orden y su salida cruda.
+- **Que implica:** si algun dia la pagina dejara de servir los datos en el HTML y solo los expusiera
+  por `/api/`, **esta restriccion no se sortea llamando a esa ruta**: habria que levantarla con su
+  decision, o replantear la fuente. Que la ruta prohibida sea la comoda no la vuelve disponible.
