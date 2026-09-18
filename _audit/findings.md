@@ -49,6 +49,7 @@
 | [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Implementado | `T-045` y `D-077` |
 | [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Aceptado — pendiente | `T-047`, `D-080` |
 | [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
+| [F-030](#f-030---la-nota-de-cierre-de-s-020-deja-el-commit-de-anclaje-como-hueco-de-plantilla-sin-instanciar-y-sin-derivar) | La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar | R-022 | Media | No bloqueante | Abierto | — |
 
 ---
 
@@ -985,3 +986,63 @@ Plantilla:
   barrido de codigos genericos sin instanciar (`D-XXX`, `T-XXX`, `F-NNN`) sobre las secciones de
   firma, que es donde una plantilla agnostica los deja por construccion. ⚠️ Es una recomendacion, no
   una orden.
+
+### F-030 - La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar
+| Campo | Valor |
+|---|---|
+| Auditoria | R-022 |
+| Fecha | 2026-09-18 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** el rotulo de la NOTA DE CIERRE de `_audit/S-020.md` (linea 261) publica el
+  commit de sesion y deja el de anclaje con el texto literal de la plantilla.
+
+  ```
+  $ git show 30276a9:_audit/S-020.md | grep -nE '<se completa|<pendiente|<en blanco|<rellenar'
+  123:  sobre las secciones de firma, porque el control existente busca `<en blanco>` y esta fila nunca
+  261:**NOTA DE CIERRE — commit de sesion `7b0c48f`, commit de anclaje `<se completa tras commitear el anclaje>`.**
+  ```
+
+  La linea 123 es una cita legitima del marcador dentro de la prosa de `D-081`; el hueco real es la
+  261. No hay commit posterior que lo complete, y no se publico la orden que lo derivaria:
+
+  ```
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-020.md
+  30276a9 2026-09-18 S-020: ancla el informe y los criterios de cierre al hash 7b0c48f
+  7b0c48f 2026-09-18 S-020: F-028/F-029 de R-021 evaluados (D-080/D-081), promocion al esqueleto (D-082), y leccion L-022
+  $ grep -c 'rev-parse' _audit/S-020.md
+  0
+  $ git rev-parse --short 30276a9
+  30276a9
+  $ git rev-parse --short 30276a9^
+  7b0c48f
+  ```
+
+  `protocol-close` lo exige literal (`.claude/skills/protocol-close/SKILL.md`, lineas 1316-1322):
+  «los DOS hashes que la nota nombra —el commit de sesion y el commit de anclaje— se DERIVAN con una
+  orden y se pega su salida, nunca se teclean». Y ningun control del cierre lo ve: el de huecos de
+  plantilla ancla en `^<` y este hueco esta inline; el `7c-ter` solo comprueba que los seis rotulos
+  existan, no que su contenido este instanciado.
+
+  ```
+  $ git show 30276a9:_audit/S-020.md | grep -nE '^<'
+  (sin salida; exit=1)
+  ```
+
+- **Por que importa:** la NOTA DE CIERRE existe precisamente para distinguir el commit de sesion del
+  de anclaje. Sin el segundo, el registro no dice donde quedaron escritas las salidas ancladas ni los
+  criterios del Paso 7c-bis, y quien lo busque tiene que reconstruirlo con `git log`. Es la misma
+  familia que `F-013`, `F-026` y `F-028`, que ya costaron tres correcciones por nota: alli el hash
+  estaba mal atribuido o llegaba en un tercer commit no declarado; aqui directamente no esta. `Media`
+  porque el registro queda incompleto en el punto que el mecanismo existe para cubrir, aunque no
+  afirma nada falso; `No bloqueante` porque la informacion es recuperable con una orden y nada de lo
+  que venga despues hereda un dato erroneo.
+- **Que lo corregiria:** una nota fechada en `_audit/S-020.md` que declare `30276a9` como commit de
+  anclaje, con la salida de `git rev-parse --short HEAD`/`HEAD^` corrida tras el anclaje, sin
+  reescribir la linea 261; y un control en `protocol-close` que, antes de commitear el anclaje, busque
+  marcadores entre angulos en cualquier posicion de la NOTA DE CIERRE, no solo a principio de linea.
+  ⚠️ Es una recomendacion, no una orden.
