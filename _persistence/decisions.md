@@ -4399,14 +4399,16 @@ Plantilla:
      acta de `005_discovery` existe en `_audit/005_discovery/`.
   2. **Ordenes:**
      ```
-     git show <hash>:_audit/findings.md | grep -cE '^\| \[F-02[567]\].*\| No bloqueante \|'
-     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '^## 5. Las dos firmas'
+     git show d80a965:_audit/findings.md | grep -cE '^\| \[F-02[567]\].*\| No bloqueante \|'
+     git show d80a965:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '^## 5. Las dos firmas'
      ```
   3. **Salidas:**
      ```
      3
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### D-074 - El patrocinador firma el acta y 005_discovery queda cerrada
 | Campo | Valor |
@@ -4462,9 +4464,9 @@ Plantilla:
   1. **Enunciado:** a ese commit, el acta lleva las dos firmas y no queda ni un hueco.
   2. **Ordenes:**
      ```
-     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '<en blanco>'
-     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Decision | `ETAPA CERRADA` |'
-     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Quien | agente `phase_exit_auditor` |'
+     git show d80a965:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '<en blanco>'
+     git show d80a965:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Decision | `ETAPA CERRADA` |'
+     git show d80a965:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Quien | agente `phase_exit_auditor` |'
      ```
   3. **Salidas:**
      ```
@@ -4472,6 +4474,8 @@ Plantilla:
      1
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las tres reproducen lo publicado arriba.
 
 ### D-075 - F-025 se acepta: la cifra se deriva de la enumeracion y se corrige por nota
 | Campo | Valor |
@@ -4517,8 +4521,8 @@ Plantilla:
   1. **Enunciado:** a ese commit, la ficha de `T-042` lleva su nota y las ocho vinetas.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
-     git show <hash>:_persistence/tasks.md | grep -c 'la cifra correcta es OCHO'
+     git show d80a965:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
+     git show d80a965:_persistence/tasks.md | grep -c 'la cifra correcta es OCHO'
      ```
   3. **Salidas:**
      ```
@@ -4527,6 +4531,8 @@ Plantilla:
      ```
 
   📌 **El `2` es `LG-101`:** la nota y la linea de la orden de `T-043` que la cita.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### D-076 - F-026 se acepta, y los dos hashes de la NOTA DE CIERRE pasan a derivarse
 | Campo | Valor |
@@ -4579,14 +4585,16 @@ Plantilla:
   1. **Enunciado:** a ese commit, el informe lleva su nota y la skill exige derivar los dos hashes.
   2. **Ordenes:**
      ```
-     git show <hash>:_audit/S-018.md | grep -c 'el commit de anclaje es `a22ef55`'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
+     git show d80a965:_audit/S-018.md | grep -c 'el commit de anclaje es `a22ef55`'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
      ```
   3. **Salidas:**
      ```
      1
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### D-077 - F-027 se acepta y se corrige ahora: el control aprende el formato Ordenes/Salidas
 | Campo | Valor |
@@ -4641,14 +4649,16 @@ Plantilla:
   1. **Enunciado:** a ese commit, la skill lleva la condicion de etiqueta y la prosa que la explica.
   2. **Ordenes:**
      ```
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
      ```
   3. **Salidas:**
      ```
      1
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### D-078 - L-021 no sube: ya cubierta por LG-32, sexta pasada de la cosecha de 005_discovery
 | Campo | Valor |
@@ -4719,14 +4729,16 @@ Plantilla:
      `Global candidata`, y `L-021` remite a `LG-32`.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
-     git show <hash>:_persistence/lessons.md | grep -cE '^\| \[L-021\].*\| Ya cubierta por LG-32 \|'
+     git show d80a965:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+     git show d80a965:_persistence/lessons.md | grep -cE '^\| \[L-021\].*\| Ya cubierta por LG-32 \|'
      ```
   3. **Salidas:**
      ```
      0
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### D-079 - A-004 y A-005 se confirman: sus disparadores corrieron con el cierre de la etapa
 | Campo | Valor |
@@ -4775,11 +4787,13 @@ Plantilla:
      `A-008` sigue `Abierto`.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/assumptions.md | grep -cE '^\| \[A-00[45]\].*\| Confirmado \|'
-     git show <hash>:_persistence/assumptions.md | grep -cE '^\| \[A-008\].*\| Abierto \|'
+     git show d80a965:_persistence/assumptions.md | grep -cE '^\| \[A-00[45]\].*\| Confirmado \|'
+     git show d80a965:_persistence/assumptions.md | grep -cE '^\| \[A-008\].*\| Abierto \|'
      ```
   3. **Salidas:**
      ```
      2
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.

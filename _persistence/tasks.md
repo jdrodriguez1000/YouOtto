@@ -1127,8 +1127,8 @@ Plantilla:
      orden, y las ocho vinetas siguen ahi.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
-     git show <hash>:_persistence/tasks.md | grep -c 'NOTA 2026-09-18 — la cifra correcta es OCHO'
+     git show d80a965:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
+     git show d80a965:_persistence/tasks.md | grep -c 'NOTA 2026-09-18 — la cifra correcta es OCHO'
      ```
   3. **Salidas:**
      ```
@@ -1138,6 +1138,8 @@ Plantilla:
 
   📌 **El `2` no es un error, es `LG-101`:** la nota fechada de `T-042` y **la linea de esta misma
   orden**, que la cita literal. Una busqueda de texto encuentra tambien las citas de ese texto.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### T-044 - Corregir por nota el commit de anclaje de S-018 y hacer que el cierre derive los dos hashes
 | Campo | Valor |
@@ -1163,14 +1165,16 @@ Plantilla:
      skill exige derivarlos.
   2. **Ordenes:**
      ```
-     git show <hash>:_audit/S-018.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es `a22ef55`'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
+     git show d80a965:_audit/S-018.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es `a22ef55`'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
      ```
   3. **Salidas:**
      ```
      1
      1
      ```
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### T-045 - Ensenar al CONTROL DE SALIDA REPRODUCIDA el formato Ordenes/Salidas
 | Campo | Valor |
@@ -1197,8 +1201,8 @@ Plantilla:
      show` dentro.
   2. **Ordenes:**
      ```
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
-     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
+     git show d80a965:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
      ```
   3. **Salidas:**
      ```
@@ -1208,6 +1212,8 @@ Plantilla:
 
   📌 **El segundo literal es «los dos formatos» y no «Reconoce» a proposito:** esa palabra ya aparece
   en un parrafo ajeno del mismo archivo, asi que contaba dos y no distinguia el cambio.
+
+  📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
 ### T-046 - Anclar o fechar la orden de Verificacion de D-073 sobre F-025/F-026/F-027 que ya no reproduce
 | Campo | Valor |
