@@ -40,10 +40,13 @@
 | [F-018](#f-018---d-045-publica-en-resumen-sin-orden-ni-salida-los-resultados-del-paso-1b-de-la-promocion) | D-045 publica en resumen, sin orden ni salida, los resultados del Paso 1b de la promocion | R-016 | Baja | No bloqueante | Implementado | T-033, D-049 |
 | [F-019](#f-019---el-criterio-de-cierre-de-t-029-publica-4-donde-su-orden-devuelve-5-y-el-informe-lo-da-por-reproducido) | El criterio de cierre de T-029 publica `4` donde su orden devuelve `5`, y el informe lo da por reproducido | R-017 | Media | No bloqueante | Implementado | T-034, D-059 |
 | [F-020](#f-020---015_stakeholdersmd-queda-cerrado-afirmando-seis-condiciones-de-salida-donde-su-etapa-enumera-siete) | `015_stakeholders.md` queda `CERRADO` afirmando «seis condiciones de salida» donde su etapa enumera siete | R-018 | Baja | No bloqueante | Implementado | `T-036` y `D-064` |
-| [F-021](#f-021---ancla-rota-en-el-indice-de-progressmd-para-s-017-la-flecha-del-titulo) | Ancla rota en el indice de `progress.md` para `S-017`: la flecha del titulo | R-019 | Baja | No bloqueante | Aceptado — pendiente | `T-038` y `D-068` |
-| [F-022](#f-022---la-fila-de-f-020-publica-un-valor-de-estado-que-la-convencion-de-findingsmd-no-declara) | La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara | R-019 | Baja | No bloqueante | Aceptado — pendiente | `T-039` y `D-069` |
-| [F-023](#f-023---dt-005-lleva-confirmacion-sin-confirmar-un-valor-que-la-convencion-de-techdebtmd-no-declara) | `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara | R-019 | Baja | No bloqueante | Aceptado — pendiente | `T-040` y `D-070` |
-| [F-024](#f-024---la-nota-de-anclaje-de-d-064-remite-a-una-seccion-sin-resolver-que-no-existe) | La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe | R-019 | Baja | No bloqueante | Aceptado — pendiente | `T-041` y `D-071` |
+| [F-021](#f-021---ancla-rota-en-el-indice-de-progressmd-para-s-017-la-flecha-del-titulo) | Ancla rota en el indice de `progress.md` para `S-017`: la flecha del titulo | R-019 | Baja | No bloqueante | Implementado | `T-038` y `D-068` |
+| [F-022](#f-022---la-fila-de-f-020-publica-un-valor-de-estado-que-la-convencion-de-findingsmd-no-declara) | La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-039` y `D-069` |
+| [F-023](#f-023---dt-005-lleva-confirmacion-sin-confirmar-un-valor-que-la-convencion-de-techdebtmd-no-declara) | `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-040` y `D-070` |
+| [F-024](#f-024---la-nota-de-anclaje-de-d-064-remite-a-una-seccion-sin-resolver-que-no-existe) | La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe | R-019 | Baja | No bloqueante | Implementado | `T-041` y `D-071` |
+| [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Abierto | — |
+| [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Abierto | — |
+| [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Abierto | — |
 
 ---
 
@@ -596,9 +599,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-038` y `D-068` |
-| Cerrado en | |
+| Cerrado en | `ed64348` (verificado en `R-020`) |
 
 - **Que se observo:** el titulo de `S-017` lleva un `→` entre espacios y el ancla del indice lo omite
   junto con uno de sus dos espacios.
@@ -631,9 +634,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-039` y `D-069` |
-| Cerrado en | |
+| Cerrado en | `ed64348` (verificado en `R-020`) |
 
 - **Que se observo:** la fila del indice pega la cita dentro de la celda de `Estado`; la ficha usa el
   valor limpio y su campo `Registrado en`.
@@ -675,9 +678,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-040` y `D-070` |
-| Cerrado en | |
+| Cerrado en | `ed64348` (verificado en `R-020`) |
 
 - **Que se observo:** el valor no esta en la lista declarada, y es el unico caso del archivo.
 
@@ -721,9 +724,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-041` y `D-071` |
-| Cerrado en | |
+| Cerrado en | `ed64348` (verificado en `R-020`) |
 
 - **Que se observo:** la nota que el Paso 7c-bis anadio en el commit de anclaje `0854fd3` cierra con un
   puntero que no resuelve.
@@ -773,3 +776,135 @@ Plantilla:
   sustituya la remision por lo que si persiste: «ver las dos salidas publicadas arriba en esta misma
   entrada», sin reescribir la linea original. Y, de fondo, que `protocol-close` no mande citar desde el
   registro una seccion que solo existe en pantalla. ⚠️ Es una recomendacion, no una orden.
+
+### F-025 - `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra
+| Campo | Valor |
+|---|---|
+| Auditoria | R-020 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** el titulo de `T-042`, su fila del indice y la seccion 5 de `_audit/S-018.md`
+  dicen «seis ordenes»; la ficha enumera ocho vinetas y nueve ordenes, y su propia prosa dice «los
+  ocho casos de arriba».
+
+  ```
+  $ git show ed64348:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
+  8
+  $ git show ed64348:_persistence/tasks.md | grep -n 'T-042' | grep -coE 'seis'
+  3
+  ```
+
+  Las vinetas, una por una:
+
+  ```
+  $ git show ed64348:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -E '^  - \*\*D-0'
+    - **D-068:** `grep -n '(#s-017' _persistence/progress.md | grep -oE 'l-018-+d-063'`. Publica
+    - **D-068:** `node .claude/checks/anchors.js _persistence/*.md _audit/*.md`. Publica la lista de seis
+    - **D-068:** `node slug.mjs '...'` y `node validate2.mjs ...`. Los dos scripts eran deliberadamente
+    - **D-069:** `grep -E '^\| \[F-020\]' _audit/findings.md | awk -F'|' '{print $(NF-1)}'`. Publica
+    - **D-069:** `grep -A7 '^### F-003' _audit/findings.md | grep -E '^\| (Estado|Cerrado en) \|'`.
+    - **D-070:** `grep -cE '^\|.*\| Sin confirmar \|' _persistence/techdebt.md`. Publica `1`; reejecutada
+    - **D-071:** `grep -c "Sin resolver" .claude/skills/protocol-close/SKILL.md`. Publica `16`;
+    - **D-072:** `grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'`.
+  ```
+
+  Ninguna lectura da seis: **siete** ordenes que ya no reproducen (las siete `No` de la tabla de la
+  seccion 7 del informe), **ocho** vinetas, **nueve** ordenes contando los dos scripts temporales de
+  la tercera vineta.
+- **Por que importa:** es una cifra tecleada que su propia enumeracion contradice, y es el tercer caso
+  del mismo patron en este registro (`F-017`, `F-019`). Quien retome la tarea comparara «seis» con lo
+  que encuentre y tendra que decidir cual cifra vale, sin nada que lo zanje. `Media` porque el registro
+  afirma un numero falso en tres sitios y ademas se contradice dentro de la misma ficha; no `Alta`
+  porque el contenido esta completo y no se pierde informacion. `No bloqueante` porque ningun control
+  lee esa cifra.
+- **Que lo corregiria:** derivar la cifra de la enumeracion y publicarla con la orden que la cuenta,
+  declarando cual de las tres se cuenta; y, como ya esta commiteada, hacerlo por nota fechada en vez
+  de reescribir. ⚠️ Es una recomendacion, no una orden.
+
+### F-026 - La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-020 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la nota nombra el mismo hash para el commit de sesion y para el de anclaje.
+
+  ```
+  $ git show a22ef55:_audit/S-018.md | grep -n 'NOTA DE CIERRE'
+  249:**NOTA DE CIERRE — commit de anclaje `ed64348`, informe sobre el commit de sesion `ed64348`.**
+  $ git show ed64348:_audit/S-018.md | grep -n 'NOTA DE CIERRE' | sed -n '2p'
+  247:**NOTA DE CIERRE:** <se completa en el Paso 7c/7c-bis, despues del commit>
+  $ git show --stat --name-only --format= a22ef55
+  _audit/S-018.md
+  _persistence/decisions.md
+  $ git diff a22ef55^ a22ef55 -- _audit/S-018.md | grep -c '^+.*ed64348'
+  25
+  ```
+
+  En `ed64348` la NOTA DE CIERRE seguia en su marcador de pendiente: la nota, la cabecera anclada y
+  los cinco criterios de cierre nacen en `a22ef55`.
+- **Por que importa:** el protocolo de auditoria distingue commit de sesion y commit de anclaje porque
+  los dos mandan a estados distintos, y la nota es donde esa distincion queda para quien lea despues.
+  Publicar `ed64348` como commit de anclaje manda a buscar el anclaje a un commit que no lo contiene —
+  el mismo defecto que `F-013` abrio en su version anterior. `Media` porque el registro afirma algo
+  comprobablemente falso sobre su propia trazabilidad; no `Alta` porque el contenido anclado reproduce
+  y el hash del estado auditado es correcto. `No bloqueante` porque nada posterior lo hereda.
+- **Que lo corregiria:** una nota fechada bajo la NOTA DE CIERRE que declare `a22ef55` como commit de
+  anclaje y `ed64348` como commit de sesion, sin reescribir la linea original; y que `protocol-close`
+  derive los dos hashes con una orden en vez de teclearlos. ⚠️ Es una recomendacion, no una orden.
+
+### F-027 - El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado
+| Campo | Valor |
+|---|---|
+| Auditoria | R-020 |
+| Fecha | 2026-09-17 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la funcion `salidas()` del Paso 7c-bis excluye del computo las lineas que
+  empiezan por `$ `, y las decisiones de este proyecto ya no escriben sus ordenes con ese prefijo:
+  usan dos cercas separadas, «Ordenes:» y «Salidas:». El control clasifica entonces lineas de **orden**
+  como si fueran salidas.
+
+  ```
+  $ salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Criterio de cierre/{c=1} /^---$/{c=0} /^[[:space:]]*```/{f=!f; next} c&&f&&!/^[[:space:]]*\$ /{sub(/^[[:space:]]+/,""); print d" | "$0}'; }; salidas < _persistence/decisions.md | grep -E '^D-(068|069|070|071|072) ' | grep -c 'git show'
+  10
+  $ salidas < _persistence/decisions.md | grep -E '^D-(068|069|070|071|072) ' | grep 'git show' | head -4
+  D-068 | git show ed64348:.claude/skills/protocol-close/SKILL.md | grep -c '^## Paso 2b-bis'
+  D-068 | git show ed64348:_persistence/progress.md | grep -cE '\(#s-0(07|08|10|15|16|17)---'
+  D-069 | git show ed64348:_audit/findings.md | grep -c '^| Codigo | Hallazgo | Auditoria | Gravedad | Urgencia | Estado | Registrado en |'
+  D-069 | git show ed64348:_audit/findings.md | grep -c '^| Registrado en | la `T-XXX` o la `D-XXX`'
+  ```
+
+  El informe de `S-018` declara el limite y lo suple con una verificacion aparte —extrae solo los
+  bloques «Salidas:» y los compara byte a byte antes y despues—, asi que esta sesion **no sustituyo
+  ninguna evidencia**: se verifico y es cierto. Lo que falta es el registro del defecto.
+
+  ```
+  $ git show ed64348:_persistence/techdebt.md | sed -n '/^## Indice/,/^---/p' | grep -c 'salidas()\|formato'
+  0
+  ```
+
+  `DT-002` cubre otra limitacion del mismo control («no reejecuta las ordenes»), no esta.
+- **Por que importa:** el 7c-bis es obligatorio y su salida ruidosa se repetira en cada cierre, porque
+  todas las decisiones nuevas usan el formato que el control no entiende. Un control que siempre avisa
+  deja de leerse —lo dice la convencion de este mismo archivo—, y el cierre siguiente puede dar por
+  declarado lo que no reviso. `Media` porque produce ruido, no una afirmacion falsa; no `Alta` porque
+  el cierre publico la verificacion sustitutiva entera. `No bloqueante` porque nada de lo commiteado
+  hereda un dato falso.
+- **Que lo corregiria:** adaptar `salidas()` para que reconozca la cerca «Salidas:» como la de salidas
+  y la cerca «Ordenes:» como ordenes; o, si se decide no tocarlo ahora, registrarlo como `DT-XXX` con
+  su coste, porque hoy es un limite conocido sin dueno. ⚠️ Es una recomendacion, no una orden.
