@@ -57,6 +57,7 @@
 | [S-021](#s-021---a-008-confirmado-d-083c-006-y-pasos-1-a-4-de-010_prototype-sellados-y-decididos-d-084-d-090-el-prototipo-aun-no-se-construyo) | `A-008` confirmado (`D-083`/`C-006`) y Pasos 1 a 4 de `010_prototype` sellados y decididos (`D-084`-`D-090`); el prototipo aun no se construyo | 2026-09-18 | 010_prototype |
 | [S-022](#s-022---f-031-evaluado-d-092t-051-el-prototipo-se-construye-d-093-y-el-patrocinador-lo-aprueba-d-094-cierra-el-paso-4-de-010_prototype) | `F-031` evaluado (`D-092`/`T-051`), el prototipo se construye (`D-093`) y el patrocinador lo aprueba (`D-094`), cierra el Paso 4 de `010_prototype` | 2026-09-18 | 010_prototype |
 | [S-023](#s-023---f-032f-033-de-r-024-evaluados-d-095d-096-primera-sesion-del-paso-5-corrida-d-097-y-a-009-confirmado-d-098) | `F-032`/`F-033` de `R-024` evaluados (`D-095`/`D-096`), primera sesion del Paso 5 corrida (`D-097`), y `A-009` confirmado (`D-098`) | 2026-09-18 | 010_prototype |
+| [S-024](#s-024---segunda-sesion-del-paso-5-corrida-d-099-y-f-034f-035-de-r-025-evaluados-d-100d-101) | Segunda sesion del Paso 5 corrida (`D-099`), y `F-034`/`F-035` de `R-025` evaluados (`D-100`/`D-101`) | 2026-09-18 | 010_prototype |
 
 ---
 
@@ -88,57 +89,57 @@ entrada en la [Bitacora](#5-bitacora).
 | Campo | Valor |
 |---|---|
 | Etapa actual | `010_prototype` |
-| Ultima actualizacion | `2026-09-18 (S-023)` |
+| Ultima actualizacion | `2026-09-18 (S-024)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `F-032` y `F-033` de `R-024` evaluados y aceptados: el commit de anclaje de `S-022` se completa por nota fechada en `_audit/S-022.md` (`D-095`, `T-052`), y la salida pendiente de la «Verificacion del orden que exige el Gate» de `D-093` se publica anclada por nota (`D-096`, `T-053`); las dos con el mecanismo de fondo dejado a `T-049`, sin duplicar. Se corre la primera sesion del Paso 5 de `010_prototype`: `010_prototype/015_session_001.md`, con JD Rodriguez como Actor Generador y Juana Ramirez como facilitadora, transcrita al dictado por `manager` (`D-097`); estado asignado `Exito autonomo`, cero intervenciones que dieran informacion, 57.61 s de duracion. `010_prototype/010_participants.md` se actualiza con la fecha y el encaje de la sesion `001`. `A-009` se confirma con la evidencia de esa sesion (`D-098`) |
-| Bloqueos activos | Paso 5 de `010_prototype` en marcha: sesion `001` de cuatro corrida, faltan `002`-`004`; el prototipo no se toca entre sesiones. `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-049` (Media, No bloqueante) sigue abierta y ahora necesita una decision del usuario antes de implementarse (`D-095`): la plantilla pide publicar, dentro del commit de anclaje, el hash de ese mismo commit. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`; nace `DT-006` (`No implementada`, `Propuesta (pendiente del usuario)`). `T-030`, `T-031`, `T-033`, `T-035`, `T-037`, `T-042`, `T-046`, `T-047`, `T-048` y `T-050` siguen abiertas, sin cambios. Falta lanzar `report_auditor` sobre el commit de esta sesion |
+| Avance de la etapa | Se corre la segunda de las cinco sesiones del Paso 5 de `010_prototype`: `010_prototype/015_session_002.md`, con JD Rodriguez como Actor Generador y Juana Ramirez como facilitadora, transcrita al dictado por `manager` (`D-099`); estado asignado `Exito autonomo`, cero intervenciones que dieran informacion, 58.10 s de duracion. La respuesta 5 llego dictada («No hubo») y con una aclaracion aparte durante la transcripcion; las dos quedan registradas con su procedencia, y se escribe `L-026` sobre como tratar una respuesta dictada ambigua. `010_prototype/010_participants.md` se actualiza con la fecha y el encaje de la sesion `002`. Se evaluan `F-034` y `F-035` de `R-025`: `F-034` (`Media`/`Bloqueante`) se acepta — el registro daba la ronda del Paso 5 por cuatro sesiones donde la sellada es de cinco (`010_participants.md` §3) —, y se corrige por nota fechada en `_audit/S-023.md` y en esta misma entrada de la bitacora, sin reescribir las lineas selladas (`D-100`, `T-056`); `F-035` (`Baja`/`No bloqueante`) se acepta — la seccion 0 de `S-023.md` situaba las correcciones de `F-032`/`F-033` en el commit anterior, cuando estan en `66e6413` —, y se corrige por nota fechada en el mismo informe (`D-101`, `T-057`) |
+| Bloqueos activos | Paso 5 de `010_prototype` en marcha: sesiones `001` y `002` de cinco corridas, faltan `003`-`005`; el prototipo no se toca entre sesiones. `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-049` (Media, No bloqueante) sigue abierta y sigue necesitando una decision del usuario antes de implementarse (`D-095`): la plantilla pide publicar, dentro del commit de anclaje, el hash de ese mismo commit. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` y `DT-006` siguen `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037`, `T-042`, `T-046`, `T-047`, `T-048`, `T-050`, `T-054` y `T-055` siguen abiertas, sin cambios. Falta lanzar `report_auditor` sobre el commit de esta sesion |
 
 ---
 
 ## 2. Ultimo realizado
 
-Veintitres sesiones de trabajo. Segun el diff: se evaluan `F-032` y `F-033` (`R-024`) y se aceptan
-los dos. `F-032` — la NOTA DE CIERRE de `S-022` repitio por tercera sesion consecutiva el hueco de
-plantilla en el commit de anclaje —; se completa por nota fechada en `_audit/S-022.md` declarando
-`07ca614`, sin reescribir la linea sellada, y se deja escrito que `T-049` no basta tal como esta
-escrita: la plantilla pide un dato que un commit no puede contener (`D-095`, `T-052`). `F-033` — el
-bloque «Verificacion del orden que exige el Gate» de `D-093` publicaba `(sin salida)` para una orden
-que ya reproduce —; se completa con una nota fechada que publica la salida anclada a `HEAD` (`D-096`,
-`T-053`). Se corre la primera de las cuatro sesiones del Paso 5 de `010_prototype`:
-`010_prototype/015_session_001.md`, con JD Rodriguez (el Actor Generador) como unico participante y
-Juana Ramirez como facilitadora externa; el registro se transcribe al dictado por `manager`, y la
-respuesta 5 se aclara con una pregunta de seguimiento sin borrar la original (`D-097`). Estado
-asignado: `Exito autonomo`, cero intervenciones que dieran informacion, 57.61 s de duracion, sin
-comentarios espontaneos sobre la discrepancia entre los numeros mostrados y su metodo habitual.
-`010_prototype/010_participants.md` §4 se actualiza: sesion `001`, fecha `2026-09-18`, `¿Encajo?
-= si`. `A-009` se confirma con esa evidencia (`D-098`); se propone `DT-006` (pendiente del usuario):
-la comprobacion §9 de la plantilla de sesion de prototipo nunca puede salir vacia, observado en
-`D-097` y sin corregir en esta jornada porque `_templates/` es agnostica.
+Veinticuatro sesiones de trabajo. Segun el diff: se corre la segunda de las cinco sesiones del Paso
+5 de `010_prototype`: `010_prototype/015_session_002.md`, con JD Rodriguez (el Actor Generador) como
+unico participante y Juana Ramirez como facilitadora externa; el registro se transcribe al dictado
+por `manager` (`D-099`). Estado asignado: `Exito autonomo`, cero intervenciones que dieran
+informacion, 58.10 s de duracion; la unica vacilacion registrada es la doble lectura del boton de
+confirmacion antes del clic, sin duda expresada en voz alta. La respuesta 5 llego dictada («No
+hubo»), y su aclaracion («no hace nada diferente al metodo que realiza hoy en dia») llego aparte,
+durante la transcripcion y no durante la sesion: el registro conserva las dos con su procedencia
+declarada, y se escribe `L-026` sobre como tratar una respuesta dictada que admite mas de una
+lectura. `010_prototype/010_participants.md` §4 se actualiza: sesion `002`, fecha `2026-09-18`,
+`¿Encajo? = si`. Se evaluan `F-034` y `F-035` de `R-025`, los dos `Aceptado — pendiente`: `F-034`
+(`Media`/`Bloqueante`) — el registro de `S-023` daba la ronda del Paso 5 por cuatro sesiones donde la
+sellada es de cinco — se corrige por nota fechada en `_audit/S-023.md` y en la entrada `S-023` de
+esta bitacora, sin reescribir las lineas selladas (`D-100`, `T-056`); `F-035` (`Baja`/`No
+bloqueante`) — la seccion 0 de `S-023.md` situaba las correcciones de `F-032`/`F-033` en el commit
+anterior a esa sesion, cuando estan en `66e6413`, el commit de esa misma sesion — se corrige por nota
+fechada en el mismo informe (`D-101`, `T-057`).
 
 ---
 
 ## 3. Siguiente paso
 
-🎯 **Correr la segunda sesion — Paso 5 de `010_prototype` (`_phases/010_prototype.md`).** Es la
+🎯 **Correr la tercera sesion — Paso 5 de `010_prototype` (`_phases/010_prototype.md`).** Es la
 actividad principal de la proxima sesion. El prototipo sigue sin tocarse desde su aprobacion
 (`010_prototype/app/index.html`, `D-093`/`D-094`; `_phases/010_prototype.md` §2). La facilitadora
 externa guia con `010_prototype/012_facilitator_guide.md` (`D-089`), el patrocinador observa sin
-responder preguntas del participante, y se registra en `010_prototype/015_session_002.md` mientras
+responder preguntas del participante, y se registra en `010_prototype/015_session_003.md` mientras
 ocurre. `A-009` ya quedo `Confirmado` con la sesion `001` (`D-098`); su limite sigue vigente: si en
-alguna de las tres sesiones restantes el participante vuelve sobre la discrepancia, se anota en su
+alguna de las dos sesiones restantes el participante vuelve sobre la discrepancia, se anota en su
 registro como limite de la ronda para el Gate 1.
 
-Secundario, si queda tiempo: lanzar `report_auditor` sobre el commit de esta sesion (`S-023`).
+Secundario, si queda tiempo: lanzar `report_auditor` sobre el commit de esta sesion (`S-024`).
 `T-049` (Media, No bloqueante, `Origen: report_auditor`) necesita que el usuario decida, antes de
 implementarla, que dato publica el rotulo del commit de anclaje en vez del hash que no puede
-contener (`D-095`). `T-050` (Baja, No bloqueante, `Origen: session-closer`): anclar o corregir los
-numeros de linea de las verificaciones de `D-086`/`D-087`, que ya no reproducen sobre el archivo
-final. `T-047` y `T-048` (`010_prototype`, `Origen: report_auditor`) siguen con sus correcciones
-pendientes. `T-046`, `T-042`, `T-037` y `T-035` siguen con el mismo pendiente (anclar o fechar
-ordenes que ya no reproducen). `T-032` (Alta, No bloqueante) sigue abierta: decidir si
-`D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-030`, `T-031` y
-`T-033` (Baja, No bloqueante) siguen pendientes. `DT-002` sigue `No implementada`, sin pagar;
-`DT-005` y `DT-006` siguen `No implementada`, `Propuesta (pendiente del usuario)`.
+contener (`D-095`). `T-050` y `T-054` (Baja, No bloqueante, `Origen: session-closer`) y `T-055`
+(Baja, No bloqueante): anclar o corregir citas que ya no reproducen sobre el archivo final. `T-047`
+y `T-048` (`010_prototype`, `Origen: report_auditor`) siguen con sus correcciones pendientes.
+`T-046`, `T-042`, `T-037` y `T-035` siguen con el mismo pendiente (anclar o fechar ordenes que ya no
+reproducen). `T-032` (Alta, No bloqueante) sigue abierta: decidir si `D-050`/`A-007` sustituye el
+criterio literal de «tras reiniciar Claude Code». `T-030`, `T-031` y `T-033` (Baja, No bloqueante)
+siguen pendientes. `DT-002` sigue `No implementada`, sin pagar; `DT-005` y `DT-006` siguen `No
+implementada`, `Propuesta (pendiente del usuario)`.
 
 ---
 
@@ -806,6 +807,44 @@ Plantilla:
   `T-047`, `T-048` y `T-050` (`010_prototype`) siguen `No implementada`, sin cambios. `T-046`,
   `T-042`, `T-037`, `T-035`, `T-032`, `T-030`, `T-031` y `T-033` siguen abiertas, sin cambios.
   `DT-002` y `DT-005` sin cambios; nace `DT-006` sin confirmar.
+
+  🕐 **NOTA 2026-09-18 (`F-034`, `D-100`):** esta entrada da la ronda del Paso 5 por «cuatro
+  sesiones» y pone como pendientes solo la `002`, la `003` y la `004`. **La ronda sellada es de 5**
+  (`D-087`, `D-088`, `010_prototype/010_participants.md` §3): al cerrar `S-023` faltaban de la `002`
+  a la `005`. La entrada no se reescribe; esta nota la corrige.
+
+### S-024 - Segunda sesion del Paso 5 corrida (`D-099`), y `F-034`/`F-035` de `R-025` evaluados (`D-100`/`D-101`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Tareas | T-056 (nueva, `report_auditor`, `Implementada`), T-057 (nueva, `report_auditor`, `Implementada`) |
+
+- **Que se hizo:** se corre la segunda de las cinco sesiones del Paso 5:
+  `010_prototype/015_session_002.md`, con JD Rodriguez como unico participante (el Actor Generador) y
+  Juana Ramirez como facilitadora externa; el registro se transcribe al dictado por `manager`
+  (`D-099`). Estado asignado: `Exito autonomo` — cero intervenciones que dieran informacion (§5), la
+  unica fila de §4 es la doble lectura del boton de confirmacion antes del clic, sin duda expresada
+  en voz alta, 58.10 s de duracion (§8). La respuesta 5 de §7 llego dictada («No hubo»), y su
+  aclaracion («no hace nada diferente al metodo que realiza hoy en dia») llego aparte, durante la
+  transcripcion y sin pregunta de seguimiento de la facilitadora: el registro conserva las dos con su
+  procedencia declarada (`D-099`), y se escribe `L-026` sobre tratar una respuesta dictada que admite
+  mas de una lectura. `010_prototype/010_participants.md` §4 se actualiza: sesion `002`, fecha
+  `2026-09-18`, `¿Encajo? = si`. Se evaluan `F-034` y `F-035` de `R-025`, verificados vigentes contra
+  `HEAD` (`6f175d1`). `F-034` (`Media`/`Bloqueante`) — el registro de `S-023` daba la ronda del Paso 5
+  por cuatro sesiones donde la sellada es de cinco — se acepta y se corrige por nota fechada en
+  `_audit/S-023.md` y en la entrada `S-023` de esta bitacora, sin reescribir las lineas selladas
+  (`D-100`, `T-056`). `F-035` (`Baja`/`No bloqueante`) — la seccion 0 de `_audit/S-023.md` situaba las
+  correcciones de `F-032`/`F-033` en el commit anterior a esa sesion, cuando estan en `66e6413`, el
+  commit de esa misma sesion — se acepta y se corrige por nota fechada en el mismo informe (`D-101`,
+  `T-057`). Las dos evaluaciones pasan a `Aceptado — pendiente` en `_audit/findings.md`, no a
+  `Implementado`: eso lo cierra la proxima auditoria.
+- **Que quedo abierto:** faltan las sesiones `003`, `004` y `005` del Paso 5; el prototipo sigue sin
+  tocarse entre ellas. Falta lanzar `report_auditor` sobre el commit de esta sesion. `T-047`, `T-048`,
+  `T-050`, `T-054` y `T-055` (`010_prototype`) siguen `No implementada`, sin cambios. `T-049` sigue
+  `No implementada`, pendiente de la decision del usuario sobre que dato publica su rotulo. `T-046`,
+  `T-042`, `T-037`, `T-035`, `T-032`, `T-030`, `T-031` y `T-033` siguen abiertas, sin cambios.
+  `DT-002`, `DT-005` y `DT-006` sin cambios.
 
 ---
 

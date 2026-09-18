@@ -72,6 +72,8 @@
 | [T-053](#t-053---publicar-por-nota-la-salida-anclada-de-la-verificacion-de-orden-de-d-093) | Publicar por nota la salida anclada de la verificacion de orden de D-093 | Implementada | Baja | No bloqueante | 010_prototype |
 | [T-054](#t-054---anclar-o-fechar-la-orden-de-historial-de-s-022md-que-el-commit-de-esta-sesion-deja-de-reproducir) | Anclar o fechar la orden de historial de S-022.md que el commit de esta sesion deja de reproducir | No implementada | Baja | No bloqueante | 010_prototype |
 | [T-055](#t-055---corregir-por-nota-el-grep--tail--1-de-d-096-que-ya-apunta-a-su-propia-prosa) | Corregir por nota el `grep \| tail -1` de D-096 que ya apunta a su propia prosa | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-056](#t-056---corregir-por-nota-la-cifra-de-la-ronda-del-paso-5-en-s-023-y-en-progressmd) | Corregir por nota la cifra de la ronda del Paso 5 en S-023 y en progress.md | Implementada | Media | Bloqueante | 010_prototype |
+| [T-057](#t-057---situar-por-nota-en-66e6413-las-correcciones-de-f-032-y-f-033-en-s-023) | Situar por nota en 66e6413 las correcciones de F-032 y F-033 en S-023 | Implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1543,3 +1545,62 @@ se consulta al usuario. Esta nota no cambia el estado de la tarea.
   La escribe `manager` en la sesion siguiente.
 - **Criterio de cierre:** la cita queda anclada o fechada, y reejecutada devuelve exactamente lo que
   la nota declare.
+
+### T-056 - Corregir por nota la cifra de la ronda del Paso 5 en S-023 y en progress.md
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | Bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-034` (`Media`/`Bloqueante`), aceptado en `D-100`. Anadir una nota fechada al final de
+  `_audit/S-023.md` y otra bajo la entrada de `S-023` en la bitacora de `_persistence/progress.md`,
+  que declaren la ronda de cinco sesiones y que faltaban de la `002` a la `005`. **Sin reescribir las
+  lineas selladas.**
+- **Por que:** el registro que guia la sesion siguiente daba la ronda por cuatro, y con eso el umbral
+  sellado `4 de 5` no se podria evaluar.
+- **Que NO cubre:** las secciones 2 y 3 de `progress.md`, que sobrescribe el cierre.
+- **Criterio de cierre:** hay una nota `F-034` en cada archivo, y las lineas 97 y 164 de `S-023`
+  siguen literales.
+
+  **Verificacion:**
+
+  ```
+  $ grep -c "NOTA 2026-09-18 (\`F-034\`, \`D-100\`)" _audit/S-023.md _persistence/progress.md
+  _audit/S-023.md:1
+  _persistence/progress.md:1
+  $ sed -n "97p;164p" _audit/S-023.md
+  Faltan las sesiones `002`, `003` y `004` del Paso 5 de `010_prototype`: solo se corrio la primera. El
+  cuatro sesiones previstas. `D-098` limita explicitamente el alcance de esa confirmacion a la sesion
+  ```
+
+### T-057 - Situar por nota en 66e6413 las correcciones de F-032 y F-033 en S-023
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-035` (`Baja`/`No bloqueante`), aceptado en `D-101`. Anadir una nota fechada al final de
+  `_audit/S-023.md` que situe en `66e6413` las notas de `F-032` y `F-033`, **sin reescribir la
+  seccion 0**.
+- **Por que:** la seccion 0 es la que lee la auditoria para saber donde verificar, y apuntaba a un
+  commit que no contiene las correcciones.
+- **Criterio de cierre:** hay una nota `F-035` en `S-023`, y las filas 24 y 25 de su seccion 0 siguen
+  literales.
+
+  **Verificacion:**
+
+  ```
+  $ grep -c "NOTA 2026-09-18 (\`F-035\`, \`D-101\`)" _audit/S-023.md
+  1
+  $ sed -n "24,25p" _audit/S-023.md | cut -c1-60
+  | F-032 — La NOTA DE CIERRE de S-022 repite por tercera se
+  | F-033 — La verificacion de orden de D-093 publica «(sin
+  ```

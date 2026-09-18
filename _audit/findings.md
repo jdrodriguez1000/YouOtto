@@ -53,8 +53,8 @@
 | [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Implementado | D-092 / T-051 |
 | [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Implementado | D-095 / T-052 |
 | [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Implementado | D-096 / T-053 |
-| [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Abierto | — |
-| [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Abierto | — |
+| [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Aceptado — pendiente | D-100 / T-056 |
+| [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Aceptado — pendiente | D-101 / T-057 |
 
 ---
 
@@ -1241,8 +1241,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Media |
 | Urgencia | Bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-100 / T-056 |
 | Cerrado en | |
 
 - **Que se observo:** `_persistence/progress.md` y `_audit/S-023.md`, en el commit `66e6413`, dan la
@@ -1291,8 +1291,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-101 / T-057 |
 | Cerrado en | |
 
 - **Que se observo:** la seccion 0 de `_audit/S-023.md` afirma que las dos correcciones ya estaban

@@ -45,6 +45,7 @@
 | [L-023](#l-023---un-documento-legal-enlazado-desde-un-sitio-no-siempre-regula-ese-sitio-se-lee-su-alcance-antes-de-citarlo) | Un documento legal enlazado desde un sitio no siempre regula ese sitio: se lee su alcance antes de citarlo | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-024](#l-024---un-defecto-que-reaparece-por-cuarta-vez-no-es-un-descuido-es-un-control-que-no-mira-donde-hace-falta) | Un defecto que reaparece por cuarta vez no es un descuido: es un control que no mira donde hace falta | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-025](#l-025---un-bloque-de-verificacion-se-escribe-despues-de-correr-la-orden-nunca-antes) | Un bloque de verificacion se escribe DESPUES de correr la orden, nunca antes | 2026-09-18 | 010_prototype | Sin evaluar |
+| [L-026](#l-026---una-respuesta-dictada-que-admite-dos-lecturas-se-pregunta-antes-de-escribirla-y-se-declara-de-donde-salio-la-aclaracion) | Una respuesta dictada que admite dos lecturas se pregunta antes de escribirla, y se declara de donde salio la aclaracion | 2026-09-18 | 010_prototype | Sin evaluar |
 
 ---
 
@@ -640,3 +641,27 @@ Plantilla:
   ni reconstruida de memoria. Si al redactar una ficha hace falta dejar el bloque para despues, se
   deja **vacio**: un hueco visible se corrige, una cifra plausible no se vuelve a mirar. Vale igual
   para los recuentos que uno «ya sabe» cuanto dan.
+
+### L-026 - Una respuesta dictada que admite dos lecturas se pregunta antes de escribirla, y se declara de donde salio la aclaracion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Origen | manager |
+
+- **Contexto:** los registros de sesion del prototipo los transcribe `manager` al dictado de la
+  facilitadora. En dos sesiones seguidas, la respuesta a «¿Como haces esto hoy?» llego en una forma
+  que admitia mas de una lectura: «Realmente hoy no lo hago» en la primera y «No hubo» en la segunda.
+- **Que ocurrio:** en la segunda, «No hubo» podia significar que no se hizo la pregunta, que no hubo
+  respuesta o que no hubo seguimiento. `manager` no relleno ninguna de las tres: pregunto, y la
+  aclaracion llego durante la transcripcion, no durante la sesion. Se escribio lo dictado y, aparte,
+  la aclaracion con su procedencia (`D-099`). De esa respuesta dependian tres casillas de §1, entre
+  ellas «¿Encajo en el perfil?».
+- **Leccion:** en un registro que decide un Gate, elegir en silencio la lectura mas plausible de una
+  respuesta ambigua es fabricar el dato. Y una aclaracion obtenida despues de la sesion no pesa lo
+  mismo que una respuesta dada en ella: si el registro no dice de donde salio, las dos se leen igual.
+- **Como aplicarla:** ante una respuesta dictada que admite mas de una lectura, se ofrecen al que
+  dicta las lecturas posibles y se espera su eleccion antes de escribir. La respuesta original se
+  conserva literal, y la aclaracion se anade al lado diciendo **cuando y por quien** se dio. Si la
+  misma pregunta resulta ambigua en sesiones seguidas, la facilitadora puede hacer el seguimiento
+  **en la sesion**, como en la primera, en vez de dejarlo para la transcripcion.

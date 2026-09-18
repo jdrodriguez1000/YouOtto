@@ -119,6 +119,9 @@
 | [D-096](#d-096---f-033-se-acepta-la-salida-de-d-093-se-publica-anclada-por-nota) | F-033 se acepta: la salida de D-093 se publica anclada por nota | 2026-09-18 | Vigente |
 | [D-097](#d-097---el-registro-de-la-sesion-001-se-transcribe-al-dictado-y-la-respuesta-5-se-aclara-despues) | El registro de la sesion 001 se transcribe al dictado, y la respuesta 5 se aclara despues | 2026-09-18 | Vigente |
 | [D-098](#d-098---a-009-se-confirma-con-la-sesion-001) | A-009 se confirma con la sesion 001 | 2026-09-18 | Vigente |
+| [D-099](#d-099---el-registro-de-la-sesion-002-se-transcribe-al-dictado-y-la-respuesta-5-lleva-su-aclaracion-aparte) | El registro de la sesion 002 se transcribe al dictado, y la respuesta 5 lleva su aclaracion aparte | 2026-09-18 | Vigente |
+| [D-100](#d-100---f-034-se-acepta-la-ronda-de-cinco-sesiones-se-corrige-por-nota-en-s-023-y-en-progressmd) | F-034 se acepta: la ronda de cinco sesiones se corrige por nota en S-023 y en progress.md | 2026-09-18 | Vigente |
+| [D-101](#d-101---f-035-se-acepta-las-correcciones-de-f-032f-033-se-situan-por-nota-en-66e6413) | F-035 se acepta: las correcciones de F-032/F-033 se situan por nota en 66e6413 | 2026-09-18 | Vigente |
 
 ---
 
@@ -5973,3 +5976,165 @@ $ git merge-base --is-ancestor 22747a9 e45185d && echo "22747a9 es anterior a e4
   - **Dejarlo `Abierto` hasta la quinta sesion:** cambiaria el disparador despues de ver el
     resultado, que es justo lo que sellarlo antes existia para impedir.
 - **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-099 - El registro de la sesion 002 se transcribe al dictado, y la respuesta 5 lleva su aclaracion aparte
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la sesion `002` de `010_prototype` se corrio el 2026-09-18, de 17:32 a 17:33, con
+  JD Rodriguez como participante y Juana Ramirez como facilitadora, en una jornada distinta de la
+  sesion `001` (`D-088`). El prototipo es el mismo: el unico commit que toca `010_prototype/app/`
+  sigue siendo `e45185d`.
+- **Decision 1: el registro se transcribe al dictado, igual que en la `001` (`D-097`).** `manager`
+  copio la plantilla, dejo escritos antes de la sesion solo los datos ya conocidos (numero, fecha,
+  participante, perfil y tarea literal) y relleno el resto con lo que dicto la facilitadora. El
+  estado `Exito autonomo` lo asigno ella. La frase que lo justifica la redacto `manager` a partir de
+  sus datos y ella la confirmo antes de escribirla.
+- **Decision 2: la doble lectura del boton se registra como comportamiento, y la frase del estado
+  se ocupa de ella.** La facilitadora anoto que el participante leyo dos veces en voz alta el texto
+  del boton «Dar por buena esta combinación» antes de pulsarlo, y dijo que eso le genero duda. Va a
+  §4 como hecho, con la frase de ella entrecomillada, y no se convierte en interpretacion. Como
+  justo esa vacilacion podia apuntar a `Exito con dudas`, `manager` pidio que la justificacion la
+  nombrara. La razon que se escribio es que el participante no dijo en ningun momento que no supiera
+  si lo estaba haciendo bien.
+- **Decision 3: la respuesta 5 queda con lo que se dicto y, aparte, con su aclaracion.** Se dicto
+  «No hubo». Al pedir la respuesta literal, llego la aclaracion «quizo decir que no hace nada
+  diferente al metodo que realiza hoy en dia», **durante la transcripcion y no durante la sesion**, y
+  sin pregunta de seguimiento de la facilitadora. El registro conserva las dos y declara de donde
+  sale cada una. «¿Encajo en el perfil?» se responde `si` a partir de esa aclaracion y de lo que dijo
+  en la sesion `001` («Sigo jugando con el metodo a mano»).
+- **Por que se deja escrito:** a diferencia de la `001`, esta aclaracion no la oyo la facilitadora
+  del participante durante la sesion: llego despues, por quien transmitia el dictado. La revision
+  del Gate tiene que poder pesarla como lo que es.
+- **Alternativas descartadas:**
+  - **Escribir la aclaracion como si fuera la respuesta:** reescribiria lo que se dicto.
+  - **Dejar «¿Encajo?» en blanco:** la aclaracion responde a la duda, y el unico descalificador en
+    juego es el mismo que se despejo en la `001`.
+- **Evidencia:** las cuatro ordenes de §9 del registro, corridas antes del commit:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_002.md
+  198:- [ ] **No queda ni un solo `<` en el archivo.**
+  202:grep -n "<" 010_prototype/015_session_002.md                 # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/015_session_002.md
+  199:- [ ] La seccion «Guia de llenado» **esta borrada**.
+  203:grep -n "Guia de llenado" 010_prototype/015_session_002.md   # debe no devolver nada
+  $ git log --diff-filter=A --format=%ad -- 010_prototype/015_session_002.md
+  $ git log --oneline --name-only -- 010_prototype/
+  66e6413 S-023: F-032/F-033 evaluados (D-095/D-096), primera sesion del Paso 5 corrida (D-097), y A-009 confirmado (D-098)
+  010_prototype/010_participants.md
+  010_prototype/015_session_001.md
+  e45185d S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  010_prototype/app/index.html
+  22747a9 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  010_prototype/005_happy_path.md
+  010_prototype/010_participants.md
+  010_prototype/012_facilitator_guide.md
+  ```
+
+  Las dos primeras devuelven la casilla y la orden, no huecos: es el falso positivo que ya describio
+  `D-097`. La tercera sale vacia porque el archivo aun no esta commiteado; su fecha la contrasta el
+  cierre. La cuarta muestra que ningun commit toco `010_prototype/app/` despues de `e45185d`.
+- **Sobre `A-009`:** el participante no comento la discrepancia de los numeros («Lo unico que dijo
+  fue la lectura en voz alta de todo lo que aparecia en pantalla»), asi que no hay nada que anotar
+  segun el limite de `D-098`.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-100 - F-034 se acepta: la ronda de cinco sesiones se corrige por nota en S-023 y en progress.md
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-025` abrio `F-034` (`Media`/`Bloqueante`): `_persistence/progress.md` y
+  `_audit/S-023.md` dan la ronda del Paso 5 por cuatro sesiones, y la sellada es de cinco.
+- **Verificado contra `HEAD` antes de evaluarlo**: el hallazgo **sigue vivo**.
+
+  ```
+  $ git rev-parse --short HEAD
+  6f175d1
+  $ git show 6f175d1:_persistence/progress.md | grep -n "cuatro sesiones\|sesiones restantes\|002\`, \`003\`"
+  107:`T-053`). Se corre la primera de las cuatro sesiones del Paso 5 de `010_prototype`:
+  128:alguna de las tres sesiones restantes el participante vuelve sobre la discrepancia, se anota en su
+  791:  primera de las cuatro sesiones del Paso 5: `010_prototype/015_session_001.md`, con JD Rodriguez
+  803:- **Que quedo abierto:** faltan las sesiones `002`, `003` y `004` del Paso 5; el prototipo sigue sin
+  $ git show 6f175d1:_audit/S-023.md | grep -n "cuatro sesiones\|sesiones restantes\|002\`, \`003\`"
+  97:Faltan las sesiones `002`, `003` y `004` del Paso 5 de `010_prototype`: solo se corrio la primera. El
+  164:cuatro sesiones previstas. `D-098` limita explicitamente el alcance de esa confirmacion a la sesion
+  173:de la ronda de cuatro sesiones restantes). Al cerrarla, revisar si algun comentario del participante
+  $ git show 6f175d1:010_prototype/010_participants.md | grep -n "| \*\*Total de sesiones\*\*"
+  86:| **Total de sesiones** | 5 |
+  ```
+
+  Una precision al hallazgo, que no lo debilita: la linea 173 de `S-023` («cuatro sesiones
+  restantes») es **correcta**, porque despues de la `001` quedaban cuatro. Las erroneas son la 97, la
+  164 y la «tres restantes» de la 165.
+- **Decision: se acepta, y se corrige como recomienda el auditor.**
+  - `_audit/S-023.md` recibe al final una **nota fechada** que declara la ronda de cinco y que
+    faltaban de la `002` a la `005`. **Las lineas selladas no se reescriben.**
+  - `_persistence/progress.md` recibe una nota fechada bajo la entrada de `S-023` de su bitacora, que
+    es la parte del archivo que el cierre no sobrescribe. Las lineas 107 y 128 estan en las
+    secciones 2 y 3, que el `session-closer` sobrescribe en cada cierre: **no se tocan aqui**, y el
+    cierre de esta jornada las escribe de nuevo desde `010_participants.md` §4 y desde `D-099`, donde
+    ya constan dos sesiones corridas de cinco.
+  - Hecho en esta jornada como `T-056`.
+- **Sobre la urgencia `Bloqueante`:** no impidio correr la sesion `002` antes de esta evaluacion, y
+  se dejo escrito antes de correrla. El numero que rige la ronda estaba sellado en
+  `010_participants.md` §3 y en la guia del facilitador, y ninguno de los dos estaba mal. Lo que el
+  hallazgo bloquea de verdad es que **otra jornada arranque leyendo «cuatro»**, y por eso se corrige
+  en esta misma jornada, antes del cierre. El orden (sesion `002` primero, hallazgo despues) lo
+  pidio el usuario.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-034` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**.
+- **Alternativas descartadas:**
+  - **Reescribir las lineas de `S-023` o de la bitacora con la cifra correcta:** convertiria «el
+    registro dijo cuatro» en «el registro siempre dijo cinco». Mismo motivo que `D-095`.
+  - **Editar las secciones 2 y 3 de `progress.md` a mano:** son del cierre, y el cierre de esta
+    jornada las sobrescribe igual.
+  - **No correr la `002` hasta evaluar el hallazgo:** el usuario eligio otro orden, y el error no
+    cambiaba nada de como se corre la sesion.
+- **Tarea:** `T-056`.
+
+---
+
+### D-101 - F-035 se acepta: las correcciones de F-032/F-033 se situan por nota en 66e6413
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-025` abrio `F-035` (`Baja`/`No bloqueante`): la seccion 0 de `_audit/S-023.md`
+  dice que las notas de `F-032` y `F-033` estaban «ya en el commit anterior a este cierre», y en
+  realidad nacen en `66e6413`, el commit de esa misma sesion.
+- **Verificado contra `HEAD` (`6f175d1`) antes de evaluarlo**: el hallazgo **sigue vivo**.
+
+  ```
+  $ git show 6f175d1:_audit/S-023.md | grep -c "ya en el commit anterior a este cierre"
+  2
+  $ for h in 07ca614 66e6413; do printf "%s S-022-nota=%s D-093-nota=%s\n" $h "$(git show $h:_audit/S-022.md | grep -c "NOTA 2026-09-18 (\`F-032\`")" "$(git show $h:_persistence/decisions.md | grep -c "NOTA 2026-09-18 (\`F-033\`")"; done
+  07ca614 S-022-nota=0 D-093-nota=0
+  66e6413 S-022-nota=1 D-093-nota=1
+  ```
+
+- **Decision: se acepta, y se corrige como recomienda el auditor.** Se anade al final de
+  `_audit/S-023.md` una nota fechada que situa las dos correcciones en `66e6413`, **sin reescribir la
+  seccion 0**. Hecho en esta jornada como `T-057`.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-035` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**.
+- **Alternativas descartadas:**
+  - **Reescribir la seccion 0:** mismo motivo que en `D-100`.
+  - **Rechazarlo porque la seccion 1 ya lo dice bien:** la seccion 0 es la que lee la auditoria para
+    saber donde verificar, y el informe se contradice a si mismo.
+- **Tarea:** `T-057`.
