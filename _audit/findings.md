@@ -50,7 +50,9 @@
 | [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Aceptado — pendiente | `T-047`, `D-080` |
 | [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
 | [F-030](#f-030---la-nota-de-cierre-de-s-020-deja-el-commit-de-anclaje-como-hueco-de-plantilla-sin-instanciar-y-sin-derivar) | La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar | R-022 | Media | No bloqueante | Aceptado — pendiente | `T-049`, `D-091` |
-| [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Aceptado — pendiente | D-092 / T-051 |
+| [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Implementado | D-092 / T-051 |
+| [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Abierto | — |
+| [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Abierto | — |
 
 ---
 
@@ -1055,9 +1057,9 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | D-092 / T-051 |
-| Cerrado en | |
+| Cerrado en | `e45185d` (verificado en `R-024`) |
 
 - **Que se observo:** el commit de anclaje `6a7d7f7` escribio la NOTA DE CIERRE entera de `S-021` y
   dejo el commit de anclaje con el texto literal de la plantilla, sin instanciar y sin derivar.
@@ -1099,3 +1101,133 @@ Plantilla:
   fechada en `_audit/S-021.md` que declare `6a7d7f7` como commit de anclaje, con la salida de
   `git rev-parse --short` corrida, sin reescribir la linea 287. ⚠️ Es una recomendacion, no una
   orden.
+
+  🕐 **NOTA 2026-09-18 (`R-024`) — cerrado en `e45185d`.** La correccion esta en el diff:
+  `_audit/S-021.md` recibe al final una nota fechada que declara `6a7d7f7` como commit de anclaje,
+  con la orden de derivacion corrida y pegada, y la linea 287 sigue literal.
+
+  ```
+  $ git show e45185d --stat -- _audit/S-021.md
+   _audit/S-021.md | 25 +++++++++++++++++++++++++
+  $ git show e45185d:_audit/S-021.md | sed -n '287p'
+  **NOTA DE CIERRE — commit de sesion `22747a9`, commit de anclaje `<se completa tras commitear el
+  $ git show e45185d:_audit/S-021.md | tail -22 | grep -c '6a7d7f7'
+  6
+  ```
+
+  ⚠️ **Se cierra el archivo, no el mecanismo.** El control que dejo pasar el hueco es `T-049`, que
+  sigue abierta bajo `F-030` — y `F-032` documenta que el defecto volvio a ocurrir en la misma sesion
+  que corrigio este.
+
+### F-032 - La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje
+| Campo | Valor |
+|---|---|
+| Auditoria | R-024 |
+| Fecha | 2026-09-18 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** el commit de anclaje `07ca614` escribio la NOTA DE CIERRE entera de `S-022` y
+  dejo el commit de anclaje con el texto literal de la plantilla, sin instanciar y sin derivar.
+
+  ```
+  $ git show 07ca614:_audit/S-022.md | grep -nE '<se completa|<pendiente|<en blanco|<rellenar'
+  207: 5	+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-021.md
+  239:| 5 | `grep -nE '<se completa\|<pendiente\|<en blanco\|<rellenar' _audit/S-021.md` | Si | lineas 228, 272 y 287, coinciden con lo publicado en `D-092` |
+  258:**NOTA DE CIERRE — commit de sesion `e45185d`, commit de anclaje `<se completa tras commitear el
+  ```
+
+  Las lineas 207 y 239 son citas legitimas del patron dentro de la evidencia del Paso 2d. El hueco
+  real es la 258, y es el unico. No hay commit posterior que lo complete:
+
+  ```
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-022.md
+  07ca614 2026-09-18 S-022: ancla el informe al hash e45185d
+  e45185d 2026-09-18 S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  ```
+
+  El control que debia verlo sigue sin ampliarse, y `.claude/` no se toco en el commit de sesion:
+
+  ```
+  $ git diff --name-only e45185d^ e45185d -- .claude | wc -l
+  0
+  $ git show e45185d:_persistence/tasks.md | grep -E '^\| \[T-049\]'
+  | [T-049](#t-049---ampliar-el-control-de-huecos-del-cierre-a-los-marcadores-inline-de-la-nota-de-cierre) | Ampliar el control de huecos del cierre a los marcadores inline de la NOTA DE CIERRE | No implementada | Media | No bloqueante | 010_prototype |
+  ```
+
+- **Por que importa:** es la sexta instancia de la familia (`F-013`, `F-026`, `F-028`, `F-030`,
+  `F-031`) y la **tercera sesion consecutiva** con el mismo hueco en el mismo rotulo. El registro de
+  `S-022` no dice donde quedo su anclaje, igual que no lo decian `S-020` ni `S-021`. `Media` porque
+  el registro queda incompleto justo en el punto que la nota existe para cubrir, sin afirmar nada
+  falso; `No bloqueante` porque el dato es recuperable con una orden y nada posterior hereda un valor
+  erroneo.
+  ⚠️ La seccion 6 de `S-022` anticipa este hallazgo y lo declara «con conocimiento de causa».
+  Anticiparlo no lo corrige: el archivo sigue sin decir su commit de anclaje, y esa es la unica razon
+  por la que se abre — no la reincidencia.
+- **Que lo corregiria:** una nota fechada al final de `_audit/S-022.md` que declare `07ca614` como
+  commit de anclaje, con la salida de `git rev-parse --short` corrida y pegada, sin reescribir la
+  linea 258. El **mecanismo** sigue siendo `T-049`, que este hallazgo no duplica.
+  ⚠️ Es una recomendacion, no una orden.
+
+### F-033 - La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea
+| Campo | Valor |
+|---|---|
+| Auditoria | R-024 |
+| Fecha | 2026-09-18 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** el bloque «Verificacion del orden que exige el Gate» de `D-093` publica dos
+  ordenes; la segunda, la que demuestra que el codigo nacio despues del artefacto sellado, se publica
+  como `(sin salida)`, y la propia decision avisa de que hay que releerla tras el commit.
+
+  ```
+  $ git show e45185d:_persistence/decisions.md | sed -n '/Verificacion del orden que exige el Gate/,/releerla/p'
+  - **Verificacion del orden que exige el Gate — la tarea se sello ANTES que el codigo:**
+
+    ```
+    $ git log --diff-filter=A --format='%h %ad %s' --date=short -- 010_prototype/005_happy_path.md
+    22747a9 2026-09-18 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+    $ git log --diff-filter=A --format='%h %ad' --date=short -- 010_prototype/app/
+    (sin salida)
+    ```
+  ```
+
+  Reejecutada hoy, esa segunda orden ya no devuelve vacio:
+
+  ```
+  $ git log --diff-filter=A --format='%h %ad' --date=short -- 010_prototype/app/
+  e45185d 2026-09-18
+  ```
+
+  El Paso 2d de `S-022` la reejecuto **antes** del commit y la dio por reproducida (fila 14 de su
+  tabla), y el commit de anclaje no toco `_persistence/decisions.md`:
+
+  ```
+  $ git show --stat --name-only --format= 07ca614
+  _audit/S-022.md
+  ```
+
+  La tarea que cubre esta familia de desfases no alcanza a `D-093`:
+
+  ```
+  $ git show e45185d:_persistence/tasks.md | grep -E '^### T-050'
+  ### T-050 - Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen
+  ```
+
+- **Por que importa:** ese bloque es la evidencia del orden que el **Gate 1** exige comprobar —que el
+  artefacto se sellara antes que el codigo—, y es justo la mitad que lo demuestra la que quedo
+  publicada como `(sin salida)`. Quien reejecute la orden obtiene `e45185d` y no lo publicado; y
+  `(sin salida)` es ambiguo: se puede leer como «la carpeta no existe» en vez de «el codigo aun no
+  estaba commiteado». `Baja` porque la conclusion que el bloque sostiene es cierta y hoy es mas facil
+  de probar que entonces; `No bloqueante` porque nada construido encima hereda un valor erroneo.
+- **Que lo corregiria:** una nota fechada en `D-093` que publique la salida anclada posterior al
+  commit —`e45185d 2026-09-18` para `010_prototype/app/`— sin reescribir el bloque original; o
+  ampliar a `D-093` el tratamiento que `manager` decida para `T-050`.
+  ⚠️ Es una recomendacion, no una orden.
