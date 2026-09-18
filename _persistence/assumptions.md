@@ -24,8 +24,8 @@
 | [A-001](#a-001---los-juegos-registrados-pueden-ser-datos-de-personas) | Los juegos registrados pueden ser datos de personas | 2026-09-15 | Refutado |
 | [A-002](#a-002---los-agentes-de-gate-y-de-acta-se-cargan-al-reiniciar-claude-code) | Los agentes de Gate y de acta se cargan al reiniciar Claude Code | 2026-09-15 | Refutado |
 | [A-003](#a-003---con-la-cabecera-yaml-valida-los-agentes-de-gate-y-de-acta-cargan) | Con la cabecera YAML valida, los agentes de Gate y de acta cargan | 2026-09-15 | Confirmado |
-| [A-004](#a-004---el-patrocinador-revisa-cada-salida-de-la-ia-antes-de-que-entre-al-registro) | El patrocinador revisa cada salida de la IA antes de que entre al registro | 2026-09-17 | Abierto |
-| [A-005](#a-005---hay-acceso-a-personas-que-conocen-el-proceso-real-ademas-del-patrocinador) | Hay acceso a personas que conocen el proceso real, ademas del patrocinador | 2026-09-17 | Abierto |
+| [A-004](#a-004---el-patrocinador-revisa-cada-salida-de-la-ia-antes-de-que-entre-al-registro) | El patrocinador revisa cada salida de la IA antes de que entre al registro | 2026-09-17 | Confirmado |
+| [A-005](#a-005---hay-acceso-a-personas-que-conocen-el-proceso-real-ademas-del-patrocinador) | Hay acceso a personas que conocen el proceso real, ademas del patrocinador | 2026-09-17 | Confirmado |
 | [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
 | [A-007](#a-007---la-cabecera-exacta-de-session-closer-deja-pasar-protocol-close-y-bloquea-las-demas-skills) | La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills | 2026-09-17 | Confirmado |
 | [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Abierto |
@@ -201,6 +201,18 @@ Plantilla:
   Una entrada que llega al registro sin esa confirmacion lo refuta.
 - **Disparador:** el primer artefacto de `005_discovery` que se escriba, y de nuevo en el acta de cierre
   de la etapa.
+- 🕐 **Nota 2026-09-18 (confirmado, `D-079`):** el segundo disparador —el acta de cierre de la etapa—
+  disparo hoy. Las nueve decisiones que adoptaron el contenido de los cuatro artefactos llevan
+  `Origen: usuario`, y el acta de cierre no abrio ningun hallazgo:
+
+  ```
+  $ for d in 051 052 053 054 055 056 057 058 061; do sed -n "/^### D-$d /,/^- \*\*Contexto/p" _persistence/decisions.md | grep -c '^| Origen | usuario |'; done | sort -u
+  1
+  ```
+
+  📌 **El `1` unico es lo que se afirma:** las nueve fichas devuelven el mismo valor, asi que ninguna
+  adopto contenido sin que el patrocinador lo confirmara. Ninguna entrada llego al registro sin esa
+  confirmacion, que es lo que lo habria refutado.
 
 ### A-005 - Hay acceso a personas que conocen el proceso real, ademas del patrocinador
 | Campo | Valor |
@@ -218,6 +230,18 @@ Plantilla:
 - **Como se refuta:** en los Pasos 1 y 2 se pregunta al patrocinador quien juega hoy y como lleva sus
   juegos y resultados. Si no es el mismo y no hay nadie alcanzable que lo haga, se refuta y se escala.
 - **Disparador:** el Paso 2 de `005_discovery` (`T-029`), en la sesion siguiente.
+- 🕐 **Nota 2026-09-18 (confirmado, `D-079`):** el disparador ya corrio: `T-029` esta `Implementada`, y
+  lo que devolvio es la segunda rama del enunciado — el patrocinador **es** el usuario del proceso y
+  hablo de el con conocimiento directo. El acta de cierre lo recogio al verificar el actor originador:
+  «JD Rodriguez, jugador de Baloto y Revancha y patrocinador de este proyecto».
+
+  ```
+  $ grep -cE '^\| \[T-029\].*\| Implementada \|' _persistence/tasks.md
+  1
+  ```
+
+  📌 **No hizo falta escalar nada:** el supuesto se refutaba solo si el patrocinador no era el usuario
+  **y** no habia nadie alcanzable que lo fuera.
 
 ### A-006 - El hook de la cabecera de session-closer se dispara dentro del agente
 | Campo | Valor |

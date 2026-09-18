@@ -59,6 +59,10 @@
 | [T-040](#t-040---poner-dueno-a-la-confirmacion-de-dt-005) | Poner dueno a la confirmacion de DT-005 | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-041](#t-041---corregir-por-nota-las-dos-remisiones-a-sin-resolver-y-prohibirlas-hacia-adelante) | Corregir por nota las dos remisiones a «Sin resolver» y prohibirlas hacia adelante | Implementada | Baja | No bloqueante | 005_discovery |
 | [T-042](#t-042---anclar-o-fechar-seis-ordenes-de-contexto-en-d-068d-069d-070d-071d-072-que-ya-no-reproducen) | Anclar o fechar seis ordenes de Contexto en D-068/D-069/D-070/D-071/D-072 que ya no reproducen | No implementada | Baja | No bloqueante | 005_discovery |
+| [T-043](#t-043---corregir-por-nota-la-cifra-de-t-042-y-derivarla-de-su-enumeracion) | Corregir por nota la cifra de T-042 y derivarla de su enumeracion | Implementada | Baja | No bloqueante | 005_discovery |
+| [T-044](#t-044---corregir-por-nota-el-commit-de-anclaje-de-s-018-y-hacer-que-el-cierre-derive-los-dos-hashes) | Corregir por nota el commit de anclaje de S-018 y hacer que el cierre derive los dos hashes | Implementada | Media | No bloqueante | 005_discovery |
+| [T-045](#t-045---ensenar-al-control-de-salida-reproducida-el-formato-ordenessalidas) | Ensenar al CONTROL DE SALIDA REPRODUCIDA el formato Ordenes/Salidas | Implementada | Media | No bloqueante | 005_discovery |
+| [T-046](#t-046---anclar-o-fechar-la-orden-de-verificacion-de-d-073-sobre-f-025f-026f-027-que-ya-no-reproduce) | Anclar o fechar la orden de Verificacion de D-073 sobre F-025/F-026/F-027 que ya no reproduce | No implementada | Baja | No bloqueante | 005_discovery |
 
 ---
 
@@ -1003,6 +1007,22 @@ Plantilla:
 - **Por que:** `_persistence/decisions.md` no es un archivo que `session-closer` pueda editar fuera del
   anclaje mecanico del Paso 7c-bis, y ese paso solo toca bloques «Criterio de cierre»: los ocho casos
   de arriba viven en «Contexto», asi que no los puede corregir este cierre.
+
+  📌 **NOTA 2026-09-18 — la cifra correcta es OCHO, no «seis» (`F-025`, `D-075`).** El titulo, la
+  fila del indice y la seccion 5 de `_audit/S-018.md` dicen «seis ordenes»; la enumeracion de arriba
+  tiene **ocho** vinetas, y esta misma linea ya decia «los ocho casos». No se reescriben el titulo ni
+  la fila: estan commiteados, auditados, y el titulo ademas es el ancla del indice. La cifra se
+  deriva, no se teclea:
+
+  ```
+  $ sed -n '/^### T-042 /,/^### T-038 /p' _persistence/tasks.md | grep -cE '^  - \*\*D-0'
+  8
+  ```
+
+  📌 **Y hay tres lecturas distintas, que es lo que hizo posible el error.** `8` vinetas —la que vale
+  para esta tarea, porque una vineta es un caso a tratar—; `7` ordenes que dejaron de reproducir por
+  desfase —la octava vineta declara dos scripts no reproducibles **por construccion**, que no es lo
+  mismo—; y `9` ordenes en total contando esos dos scripts. Ninguna da seis.
 - **Criterio de cierre:** `manager` ancla cada orden reproducible al commit anterior a esta sesion
   (`31ece08`, el estado que realmente describen) o las marca explicitamente como «antes de la
   correccion de esta misma decision», por nota fechada en la entrada correspondiente. Las dos ordenes
@@ -1084,3 +1104,139 @@ Plantilla:
 - **Por que:** `decisions.md` se lee dentro de meses, y una de las dos entradas es justo la que declara
   una orden que no reproduce: el puntero al detalle no llevaba a ninguna parte. El contenido nunca se
   perdio —las dos salidas estan en la propia entrada—, asi que lo que fallaba era solo el puntero.
+
+### T-043 - Corregir por nota la cifra de T-042 y derivarla de su enumeracion
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-025` (`Media`/`No bloqueante`). El titulo de `T-042`, su fila del indice y la seccion 5
+  de `_audit/S-018.md` dicen «seis ordenes»; su propia enumeracion tiene ocho vinetas y su propia prosa
+  dice «los ocho casos». Aceptado y hecho: nota fechada dentro de la ficha de `T-042`, declarando que
+  la cifra correcta es **ocho** y derivandola con la orden que la cuenta. Registrado en `D-075`.
+- **Por que:** el titulo es el ancla del indice y esta commiteado y auditado; reescribirlo romperia la
+  navegacion y ademas borraria el error en vez de corregirlo. La nota deja las dos cifras a la vista y
+  dice cual vale.
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, la ficha de `T-042` lleva su nota fechada, la cifra se deriva con una
+     orden, y las ocho vinetas siguen ahi.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
+     git show <hash>:_persistence/tasks.md | grep -c 'NOTA 2026-09-18 — la cifra correcta es OCHO'
+     ```
+  3. **Salidas:**
+     ```
+     8
+     2
+     ```
+
+  📌 **El `2` no es un error, es `LG-101`:** la nota fechada de `T-042` y **la linea de esta misma
+  orden**, que la cita literal. Una busqueda de texto encuentra tambien las citas de ese texto.
+
+### T-044 - Corregir por nota el commit de anclaje de S-018 y hacer que el cierre derive los dos hashes
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-026` (`Media`/`No bloqueante`). La NOTA DE CIERRE de `_audit/S-018.md` nombra `ed64348`
+  como commit de anclaje y como commit de sesion, y solo lo segundo es cierto: el anclaje esta en
+  `a22ef55`. Aceptado y hecho en sus dos mitades: nota fechada bajo la NOTA DE CIERRE con los dos
+  hashes derivados, y regla nueva en la plantilla de la NOTA DE CIERRE de `protocol-close` que **exige
+  derivar los dos hashes** con `git rev-parse --short HEAD` y `HEAD^` despues del commit de anclaje.
+  Registrado en `D-076`.
+- **Por que:** corregir el caso sin poner el control deja el defecto reapareciendo — es `L-019`, la
+  leccion que esta misma etapa promovio como enmienda de `LG-100`. La mitad que evita la repeticion es
+  la regla, no la nota.
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, el informe lleva su nota fechada con los dos hashes distintos, y la
+     skill exige derivarlos.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_audit/S-018.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es `a22ef55`'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     ```
+
+### T-045 - Ensenar al CONTROL DE SALIDA REPRODUCIDA el formato Ordenes/Salidas
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-027` (`Media`/`No bloqueante`). La funcion `salidas()` del Paso 7c-bis solo excluia del
+  computo las lineas con prefijo `$ `, y las decisiones de este proyecto ya no lo usan: escriben el
+  criterio en tres puntos, con una cerca `**Ordenes:**` y otra `**Salidas:**`. El control clasificaba
+  cada orden como salida. Aceptado y hecho: `salidas()` reconoce las dos etiquetas —de `Ordenes:` no
+  extrae nada, de `Salidas:` lo extrae todo— y conserva el comportamiento anterior para las cercas
+  sueltas. Registrado en `D-077`.
+- **Por que:** el defecto crecia con cada decision nueva —diez ordenes coladas en el commit auditado,
+  dieciseis al empezar esta sesion— y el 7c-bis es obligatorio. Un control que siempre avisa deja de
+  leerse, y entonces el cierre da por revisado lo que no reviso.
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, la funcion copiada literalmente de la skill no cuela ninguna orden
+     `git show` como salida — salvo el caso legitimo de `D-008`, cuya salida ES una linea con `$ git
+     show` dentro.
+  2. **Ordenes:**
+     ```
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     ```
+
+  📌 **El segundo literal es «los dos formatos» y no «Reconoce» a proposito:** esa palabra ya aparece
+  en un parrafo ajeno del mismo archivo, asi que contaba dos y no distinguia el cambio.
+
+### T-046 - Anclar o fechar la orden de Verificacion de D-073 sobre F-025/F-026/F-027 que ya no reproduce
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 005_discovery |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d del cierre detecto que la orden de la seccion «Verificacion» de `D-073`
+  —`grep -cE '^\| \[F-02[567]\].*\| No bloqueante \| Abierto \|' _audit/findings.md`— publica `3`,
+  y al reejecutarla sobre el arbol de esta sesion devuelve `0`. No es un error de la orden: `D-073`
+  se escribio **antes** de que `D-075`/`D-076`/`D-077` evaluaran `F-025`/`F-026`/`F-027` y las
+  movieran de `Abierto` a `Aceptado — pendiente`, dentro de la misma sesion.
+- **Por que no lo corrige este cierre:** el bloque vive en la seccion «Verificacion» de una decision,
+  no en un bloque «Criterio de cierre» — el unico que el Paso 7c-bis puede tocar — y `decisions.md`
+  no es un archivo que `session-closer` pueda editar en prosa fuera de ese mecanismo.
+- **Verificacion (Paso 2d, sobre el arbol de esta sesion):**
+
+  ```
+  $ grep -cE '^\| \[F-02[567]\].*\| No bloqueante \| Abierto \|' _audit/findings.md
+  0
+  ```
+
+  contra la salida publicada en `D-073` (`3`). La orden hermana del `Criterio de cierre` de `D-073`
+  —sin el filtro `Abierto`— si reproduce (`git show <hash>:_audit/findings.md | grep -cE '^\|
+  \[F-02[567]\].*\| No bloqueante \|'` → `3`), porque no depende del estado.
+- **Criterio de cierre:** `manager` corrige por nota fechada la salida de la seccion «Verificacion»
+  de `D-073`, dejando las dos cifras a la vista (la de entonces y la de ahora) y explicando el motivo
+  del cambio de estado, o ancla la orden al commit anterior a que `Abierto` cambiara.

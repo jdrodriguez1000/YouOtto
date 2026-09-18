@@ -1313,6 +1313,14 @@ orden, tambien cuando sale limpia: sin ella, «no se borro prosa» y «nadie lo 
 DERIVA con una orden y se pega su salida, nunca se teclea: un desglose escrito a mano que no suma su
 propia cifra obliga a rehacer justo el trabajo que existe para ahorrar. La orden recorre el commit
 de ANCLAJE, no el sustantivo — es ahi donde el 7c-bis escribio los hashes>
+<y los DOS hashes que la nota nombra —el commit de sesion y el commit de anclaje— se DERIVAN con una
+orden y se pega su salida, nunca se teclean. Son commits distintos y la nota existe para distinguirlos:
+tecleados, salen iguales, y entonces la nota manda a buscar el anclaje a un commit que no lo contiene.
+El de sesion es `HEAD` cuando corre el Paso 7b; el de anclaje **todavia no existe** mientras se redacta
+la nota, asi que se lee DESPUES de commitear el anclaje y antes de publicarla:
+  git rev-parse --short HEAD        # corrido tras el commit de anclaje: ese es el de ANCLAJE
+  git rev-parse --short HEAD^       # su padre: ese es el de SESION
+un cierre que pegue el mismo hash en los dos rotulos tiene ahi su propia prueba de que no los derivo>
 <y dentro de esa misma nota, la SEGUNDA PASADA anclada del Paso 2e: sus tres ordenes y sus tres
 salidas, tambien cuando salen limpias, y cuantos archivos del commit quedaron fuera de la tabla de
 la seccion 8 — que es lo que esta pasada existe para ver>
@@ -1957,9 +1965,20 @@ haber producido —le faltaba un filtro que su gemela de otra entrada si llevaba
 afirmo que reproducia. Nadie lo vio hasta la auditoria. **«Coincide» se decidia a ojo; aqui se mide.**
 
 **Que hace:** extrae, para cada entrada, **las lineas de salida** de los bloques que siguen a su
-«Criterio de cierre» —todo lo que hay dentro del bloque salvo las lineas `$ …`—, en el commit de la
-sesion y en el arbol ya anclado, y las compara. Anclar cambia la orden, **nunca su salida**: si la
+«Criterio de cierre», en el commit de la sesion y en el arbol ya anclado, y las compara. **Reconoce
+los dos formatos** en que este registro escribe un criterio: la cerca suelta, donde la orden lleva el
+prefijo `$ ` y todo lo demas es salida; y el formato en tres puntos, donde una cerca va precedida de
+`**Ordenes:**` y otra de `**Salidas:**` — de la primera no extrae nada, de la segunda lo extrae todo. Anclar cambia la orden, **nunca su salida**: si la
 orden anclada contesta lo mismo, lo que devuelve es identico byte a byte a lo publicado.
+
+🚨 **Sin ese reconocimiento de etiquetas el control clasificaba ordenes como salidas**, y no era
+teorico: las decisiones dejaron de usar el prefijo `$ ` y pasaron al formato en tres puntos, asi que
+cada cerca «Ordenes:» entraba entera en el computo. La salida se volvia mas ruidosa con cada decision
+nueva, y un control que siempre avisa deja de leerse.
+
+⚠️ **Una salida puede contener `$ …` dentro y seguir siendo salida** — cuando lo que la orden
+devuelve es, a su vez, una linea de otra entrada del registro. Esas lineas cuentan, y no son un fallo
+del filtro.
 
 ⚠️ **Y compara texto: no reejecuta ninguna orden.** Detecta que el anclaje **sustituyo** una salida
 publicada; **no** detecta una salida que la orden nunca devolvio, si se publico asi desde el principio
@@ -1969,7 +1988,7 @@ no lo hace. Mientras no exista esa reejecucion, **esa comprobacion es de la audi
 paso: que el control salga limpio no dice que las salidas sean ciertas, dice que no se tocaron.
 
 ```bash
-salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Criterio de cierre/{c=1} /^---$/{c=0} /^[[:space:]]*```/{f=!f; next} c&&f&&!/^[[:space:]]*\$ /{sub(/^[[:space:]]+/,""); print d" | "$0}'; }
+salidas() { awk '/^### /{c=0} /^### [DT]-/{d=$2} /Criterio de cierre/{c=1} /^---$/{c=0} /\*\*Ordenes:\*\*/{m="O"} /\*\*Salidas:\*\*/{m="S"} /^[[:space:]]*```/{f=!f; if(!f) m=""; next} c&&f&&m!="O"&&!/^[[:space:]]*\$ /{sub(/^[[:space:]]+/,""); print d" | "$0}'; }
 for f in _persistence/decisions.md _persistence/tasks.md; do
   git show HEAD:"$f" | salidas > /tmp/salida_publicada
   salidas < "$f" > /tmp/salida_anclada

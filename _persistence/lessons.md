@@ -40,6 +40,7 @@
 | [L-018](#l-018---un-barrido-de-estado-encuentra-tambien-el-archivo-que-prohibe-ese-estado) | Un barrido de estado encuentra tambien el archivo que prohibe ese estado | 2026-09-17 | 005_discovery | Ya cubierta por LG-101 |
 | [L-019](#l-019---corregir-el-caso-que-cita-un-hallazgo-sin-poner-el-control-deja-el-defecto-reapareciendo) | Corregir el caso que cita un hallazgo, sin poner el control, deja el defecto reapareciendo | 2026-09-17 | 005_discovery | Promovida a LG-100 |
 | [L-020](#l-020---al-cambiar-la-estructura-de-un-archivo-los-controles-que-lo-miden-se-reejecutan-en-la-misma-pasada) | Al cambiar la estructura de un archivo, los controles que lo miden se reejecutan en la misma pasada | 2026-09-17 | 005_discovery | Ya cubierta por LG-06 |
+| [L-021](#l-021---una-salida-se-pega-de-la-ejecucion-nunca-se-predice-por-trivial-que-parezca-la-orden) | Una salida se pega de la ejecucion, nunca se predice, por trivial que parezca la orden | 2026-09-18 | 005_discovery | Ya cubierta por LG-32 |
 
 ---
 
@@ -502,3 +503,30 @@ Plantilla:
   aunque cueste dos lineas mas de `awk`. ⚠️ **Y cuando se diga como habria fallado, se corre:** aqui la
   version inicial de esta leccion afirmaba el verde silencioso, que es la forma mas alarmante y la que
   primero viene a la cabeza, y la comprobacion mostro un rojo.
+
+### L-021 - Una salida se pega de la ejecucion, nunca se predice, por trivial que parezca la orden
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 005_discovery |
+| Origen | manager |
+
+- **Contexto:** al escribir el bloque «Criterio de cierre» de tres tareas nacidas de aceptar unos
+  hallazgos, en la misma sesion en que se corregia un hallazgo cuyo defecto era exactamente ese: una
+  cifra tecleada que la propia enumeracion contradecia.
+- **Que ocurrio:** dos de las cifras publicadas se escribieron **antes** de correr su orden, porque
+  parecian evidentes — un `grep -c` de un literal que se acababa de escribir una sola vez. Al
+  reejecutarlas, las dos estaban mal: una devolvia `2` y no `1`, porque la propia linea de la orden
+  cita el literal que busca; la otra devolvia `2` y no `1`, porque la palabra elegida ya aparecia en un
+  parrafo ajeno del mismo archivo. Se corrigieron antes de commitear: una publicando el `2` verdadero
+  con su explicacion, la otra afinando el literal a uno que solo aparece una vez.
+- **Leccion:** la tentacion de teclear una salida es maxima justo cuando la orden parece trivial, y es
+  ahi donde el registro se vuelve falso sin que nadie sospeche. Un `grep -c` sobre un texto recien
+  escrito **no es predecible**: el archivo contiene tambien la orden que lo busca, las citas de ese
+  texto en otras entradas, y las apariciones previas de la palabra elegida. Escribir la cifra que
+  «tiene que salir» es hacer una prediccion y presentarla como evidencia.
+- **Como aplicarla:** **correr la orden y pegar lo que devuelva, siempre, antes de escribir la cifra**
+  — no despues, para «confirmar». Si el numero sorprende, la salida manda y lo que se ajusta es o bien
+  el literal buscado, o bien la explicacion que acompana a la cifra; nunca la cifra. ⚠️ **Y la senal de
+  alarma util es la confianza:** cuanto mas obvia parezca la salida, mas barato es correrla y mas caro
+  es equivocarse, porque nadie la va a revisar.

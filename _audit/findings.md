@@ -44,9 +44,9 @@
 | [F-022](#f-022---la-fila-de-f-020-publica-un-valor-de-estado-que-la-convencion-de-findingsmd-no-declara) | La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-039` y `D-069` |
 | [F-023](#f-023---dt-005-lleva-confirmacion-sin-confirmar-un-valor-que-la-convencion-de-techdebtmd-no-declara) | `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-040` y `D-070` |
 | [F-024](#f-024---la-nota-de-anclaje-de-d-064-remite-a-una-seccion-sin-resolver-que-no-existe) | La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe | R-019 | Baja | No bloqueante | Implementado | `T-041` y `D-071` |
-| [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Abierto | — |
-| [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Abierto | — |
-| [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Abierto | — |
+| [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-043` y `D-075` |
+| [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-044` y `D-076` |
+| [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-045` y `D-077` |
 
 ---
 
@@ -784,8 +784,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-043` y `D-075` |
 | Cerrado en | |
 
 - **Que se observo:** el titulo de `T-042`, su fila del indice y la seccion 5 de `_audit/S-018.md`
@@ -833,8 +833,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-044` y `D-076` |
 | Cerrado en | |
 
 - **Que se observo:** la nota nombra el mismo hash para el commit de sesion y para el de anclaje.
@@ -870,8 +870,8 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | `T-045` y `D-077` |
 | Cerrado en | |
 
 - **Que se observo:** la funcion `salidas()` del Paso 7c-bis excluye del computo las lineas que

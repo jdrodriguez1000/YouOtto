@@ -93,6 +93,13 @@
 | [D-070](#d-070---f-023-se-acepta-la-confirmacion-de-dt-005-es-del-usuario-y-se-escribe-con-su-dueno) | F-023 se acepta: la confirmacion de DT-005 es del usuario, y se escribe con su dueno | 2026-09-17 | Vigente |
 | [D-071](#d-071---f-024-se-acepta-en-su-parte-comprobable-y-se-rechaza-lo-que-atribuye-a-la-skill) | F-024 se acepta en su parte comprobable, y se rechaza lo que atribuye a la skill | 2026-09-17 | Vigente |
 | [D-072](#d-072---l-019-sube-como-enmienda-de-lg-100-y-l-020-no-sube-quinta-pasada-de-la-cosecha-de-005_discovery) | L-019 sube como enmienda de LG-100 y L-020 no sube: quinta pasada de la cosecha de 005_discovery | 2026-09-17 | Vigente |
+| [D-073](#d-073---el-acta-de-cierre-va-antes-que-los-hallazgos-abiertos-de-la-jornada) | El acta de cierre va antes que los hallazgos abiertos de la jornada | 2026-09-18 | Vigente |
+| [D-074](#d-074---el-patrocinador-firma-el-acta-y-005_discovery-queda-cerrada) | El patrocinador firma el acta y 005_discovery queda cerrada | 2026-09-18 | Vigente |
+| [D-075](#d-075---f-025-se-acepta-la-cifra-se-deriva-de-la-enumeracion-y-se-corrige-por-nota) | F-025 se acepta: la cifra se deriva de la enumeracion y se corrige por nota | 2026-09-18 | Vigente |
+| [D-076](#d-076---f-026-se-acepta-y-los-dos-hashes-de-la-nota-de-cierre-pasan-a-derivarse) | F-026 se acepta, y los dos hashes de la NOTA DE CIERRE pasan a derivarse | 2026-09-18 | Vigente |
+| [D-077](#d-077---f-027-se-acepta-y-se-corrige-ahora-el-control-aprende-el-formato-ordenessalidas) | F-027 se acepta y se corrige ahora: el control aprende el formato Ordenes/Salidas | 2026-09-18 | Vigente |
+| [D-078](#d-078---l-021-no-sube-ya-cubierta-por-lg-32-sexta-pasada-de-la-cosecha-de-005_discovery) | L-021 no sube: ya cubierta por LG-32, sexta pasada de la cosecha de 005_discovery | 2026-09-18 | Vigente |
+| [D-079](#d-079---a-004-y-a-005-se-confirman-sus-disparadores-corrieron-con-el-cierre-de-la-etapa) | A-004 y A-005 se confirman: sus disparadores corrieron con el cierre de la etapa | 2026-09-18 | Vigente |
 
 ---
 
@@ -4336,3 +4343,443 @@ Plantilla:
   📌 **Ancladas por el Paso 7c-bis al commit `ed64348`.** La quinta (sobre `_persistence/lessons.md`)
   reproduce lo publicado arriba; las cuatro primeras no son de este repositorio y no las toca este
   paso.
+
+### D-073 - El acta de cierre va antes que los hallazgos abiertos de la jornada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el arranque de la jornada dejo tres asuntos por delante: un desfase de `progress.md`
+  reportado por `session-starter`, los tres hallazgos `Abierto` de `R-020` (`F-025`, `F-026`,
+  `F-027`), y el acta de cierre de `005_discovery`. `CLAUDE.md` pone los hallazgos abiertos como
+  primer asunto del dia. El patrocinador fijo otra prioridad: el acta primero.
+- **Decision:** en esta sesion el acta de cierre de `005_discovery` se levanta **antes** de evaluar
+  los tres hallazgos de `R-020`. Los hallazgos se evaluan despues, en la misma sesion.
+- **Por que:** los tres son `No bloqueante`, y la convencion de `findings.md` dice de ese valor que
+  «el defecto no contamina lo que venga despues» y que su correccion «se puede aplazar con su `T-XXX`
+  abierta». Ninguna de las siete casillas de la condicion de salida de `005_discovery` menciona
+  hallazgos, asi que dejarlos abiertos no altera lo que el acta verifica. Lo que **no** se aplaza es
+  evaluarlos: siguen dentro de esta sesion.
+- **Alternativas descartadas:**
+  - **Evaluar los tres hallazgos primero, como pide `CLAUDE.md`:** es el orden por defecto y se
+    descarto por decision del patrocinador, no por ser incorrecto. Con los tres `No bloqueante`, el
+    coste de invertir el orden es nulo y el acta desbloquea la etapa siguiente.
+  - **Corregir el desfase de `progress.md` primero:** se descarto porque el desfase no existe. La
+    verificacion esta en el bloque de abajo.
+- **Verificacion.** El desfase reportado por `session-starter` no reproduce. Los dos commits
+  posteriores a `ed64348` son el anclaje y la auditoria —el patron normal de toda sesion— y el diff
+  de `_persistence/` no contiene nada que no sea anclaje:
+
+  ```
+  $ git diff ed64348..HEAD -- _persistence/ | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' | grep -vE 'ed64348|<hash>|Ancladas por el Paso 7c-bis'
+  +
+  +
+  +
+  +
+  +
+  +  reproduce lo publicado arriba; las cuatro primeras no son de este repositorio y no las toca este
+  +  paso.
+  ```
+
+  📌 **Siete lineas, y ninguna es contenido:** cinco en blanco y dos de continuacion de la propia nota
+  de anclaje. El filtro excluye las tres formas del anclaje —el hash puesto, el `<hash>` que sustituye
+  y la nota del Paso 7c-bis—, asi que lo que queda es lo que el anclaje no explica.
+
+  Y la urgencia de los tres hallazgos, que es lo que permite aplazarlos:
+
+  ```
+  $ grep -cE '^\| \[F-02[567]\].*\| No bloqueante \| Abierto \|' _audit/findings.md
+  3
+  ```
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, los tres hallazgos de `R-020` siguen siendo `No bloqueante` y el
+     acta de `005_discovery` existe en `_audit/005_discovery/`.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_audit/findings.md | grep -cE '^\| \[F-02[567]\].*\| No bloqueante \|'
+     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '^## 5. Las dos firmas'
+     ```
+  3. **Salidas:**
+     ```
+     3
+     1
+     ```
+
+### D-074 - El patrocinador firma el acta y 005_discovery queda cerrada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** el agente `phase_exit_auditor` levanto el acta de cierre de `005_discovery` sobre el
+  commit `d09abc6` y la dejo en `_audit/005_discovery/005_phase_exit_record_001.md` (commit `e9846f6`,
+  subido). Dictamen: `CASILLAS SATISFECHAS`, `7` de `7` en `CUMPLE`, cero `NO CUMPLE`, cero
+  `NO COMPROBABLE`, cero hallazgos. El acta dejo la seccion 5.2 en blanco a proposito: es la segunda
+  firma, y no la escribe quien verifica.
+- **Decision:** el patrocinador —JD Rodriguez, Main Sponsor— firma la seccion 5.2 del acta con fecha
+  `2026-09-18` y decision `ETAPA CERRADA`. **`005_discovery` queda cerrada.** Con ello se satisface la
+  tercera entrada obligatoria de `010_prototype` (§3.3): acta levantada y firmada.
+- **Por que:** son dos firmas distintas y ninguna sustituye a la otra. La del auditor dice que las
+  casillas se cumplen; la del patrocinador da la etapa por cerrada y asume la consecuencia. Con las
+  siete en `CUMPLE` no hay casilla caida que obligue a asumir deuda tecnica para cruzar la puerta.
+- **Que NO cierra esta decision:** los hallazgos `F-025`, `F-026` y `F-027` siguen `Abierto`, y
+  `F-016` y `F-017` siguen `Aceptado — pendiente`. Ninguno es casilla de salida, asi que cruzan la
+  puerta abiertos y se trabajan igual. Cerrarlos es de la auditoria, nunca de esta firma.
+- **Alternativas descartadas:**
+  - **No firmar todavia y esperar a que los cinco hallazgos esten cerrados:** ninguno de los cinco
+    aparece en la condicion de salida, y esperar a hallazgos cero no termina nunca — cada cierre de
+    sesion genera una auditoria que genera hallazgos nuevos. La etapa no cerraria jamas.
+  - **Dar la etapa por cerrada con el dictamen del auditor, sin firma del patrocinador:** es
+    exactamente lo que `010_prototype` §3.3 impide, y el defecto que ya se registro una vez en este
+    proyecto cuando un acta quedo con la firma en blanco mientras el registro daba la etapa por
+    cerrada.
+- **Verificacion.** El dictamen que se firma, leido del acta en el commit que la publico:
+
+  ```
+  $ git show e9846f6:_audit/005_discovery/005_phase_exit_record_001.md | grep -cE '^\| Casillas `CUMPLE` \| `7` de `7` \|'
+  1
+  $ git show e9846f6:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '<en blanco>'
+  3
+  ```
+
+  📌 **El `3` son los tres huecos de la seccion 5.2** —`Quien`, `Fecha` y `Decision`— tal y como el
+  auditor los dejo. Esta decision es la que los rellena, y por eso se leen aqui **antes** de escribir.
+
+  Y el acta ya firmada, en el arbol de trabajo:
+
+  ```
+  $ sed -n '/^### 5.2 Aprobacion del patrocinador/,/^| Donde queda/p' _audit/005_discovery/005_phase_exit_record_001.md | grep -cE '^\| (Quien \| JD Rodriguez - Main Sponsor|Fecha \| `2026-09-18`|Decision \| `ETAPA CERRADA`) \|'
+  3
+  $ grep -c '<en blanco>' _audit/005_discovery/005_phase_exit_record_001.md
+  0
+  ```
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, el acta lleva las dos firmas y no queda ni un hueco.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -c '<en blanco>'
+     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Decision | `ETAPA CERRADA` |'
+     git show <hash>:_audit/005_discovery/005_phase_exit_record_001.md | grep -cF '| Quien | agente `phase_exit_auditor` |'
+     ```
+  3. **Salidas:**
+     ```
+     0
+     1
+     1
+     ```
+
+### D-075 - F-025 se acepta: la cifra se deriva de la enumeracion y se corrige por nota
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-025` (`R-020`, `Media`/`No bloqueante`) observa que `T-042` publica «seis ordenes»
+  en su titulo, en su fila del indice y en la seccion 5 de `_audit/S-018.md`, mientras su propia
+  enumeracion tiene ocho vinetas y su propia prosa dice «los ocho casos». Verificado vigente contra
+  `HEAD` antes de tratarlo.
+- **Decision:** se acepta. La cifra correcta es **ocho** —una vineta por caso a tratar— y se corrige
+  **por nota fechada dentro de la ficha de `T-042`**, no reescribiendo el titulo ni la fila. La nota
+  publica la orden que cuenta las vinetas y declara las tres lecturas posibles. Tarea: `T-043`.
+- **Por que:** el titulo es el ancla del indice —reescribirlo rompe la navegacion— y ademas esta
+  commiteado y auditado; cambiarlo convertiria «el registro se equivoco y lo dice» en «el registro
+  nunca se equivoco». Que la cifra se derive, y no se teclee, es lo que impide que vuelva a pasar.
+- **Por que OCHO y no siete ni nueve:** las tres lecturas son ciertas y cuentan cosas distintas. `8`
+  son las vinetas, y es lo que la tarea trata: cada vineta es un caso con su decision propia. `7` son
+  las ordenes que dejaron de reproducir **por desfase** — la octava vineta declara dos scripts no
+  reproducibles **por construccion**, que no es un desfase. `9` son las ordenes contando esos dos
+  scripts. Lo que la tarea enumera para tratarlos es la vineta, asi que la cifra de la tarea es `8`.
+- **Alternativas descartadas:**
+  - **Reescribir el titulo de `T-042` a «ocho»:** rompe el ancla del indice, y borra el error en vez
+    de corregirlo. El proyecto ya fijo este criterio en `D-064` y `D-071`.
+  - **Publicar `7`, la cifra que el propio hallazgo destaca:** `7` responde a otra pregunta —cuantas
+    ordenes dejaron de reproducir— y dejaria la octava vineta fuera del recuento de una tarea que si
+    tiene que tratarla.
+- **Verificacion.** La enumeracion, contada en el arbol de trabajo:
+
+  ```
+  $ sed -n '/^### T-042 /,/^### T-038 /p' _persistence/tasks.md | grep -cE '^  - \*\*D-0'
+  8
+  $ grep -n 'T-042' _persistence/tasks.md | grep -oE 'seis' | wc -l
+  3
+  ```
+
+  📌 **El `3` son las tres apariciones de «seis» que la nota NO borra:** dos en la fila del indice (el
+  ancla y el titulo) y una en el encabezado de la ficha. Siguen ahi a proposito.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, la ficha de `T-042` lleva su nota y las ocho vinetas.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/tasks.md | sed -n '/^### T-042 /,/^### T-038 /p' | grep -cE '^  - \*\*D-0'
+     git show <hash>:_persistence/tasks.md | grep -c 'la cifra correcta es OCHO'
+     ```
+  3. **Salidas:**
+     ```
+     8
+     2
+     ```
+
+  📌 **El `2` es `LG-101`:** la nota y la linea de la orden de `T-043` que la cita.
+
+### D-076 - F-026 se acepta, y los dos hashes de la NOTA DE CIERRE pasan a derivarse
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-026` (`R-020`, `Media`/`No bloqueante`) observa que la NOTA DE CIERRE de
+  `_audit/S-018.md` nombra `ed64348` como commit de anclaje **y** como commit de sesion. Solo lo
+  segundo es cierto: el anclaje esta en `a22ef55`. Verificado vigente contra `HEAD` antes de tratarlo.
+- **Decision:** se acepta en sus dos mitades. **La primera:** nota fechada bajo la NOTA DE CIERRE que
+  declara `a22ef55` como commit de anclaje y `ed64348` como commit de sesion, con los dos derivados,
+  sin reescribir la linea original. **La segunda:** la plantilla de la NOTA DE CIERRE de
+  `protocol-close` exige ahora **derivar** los dos hashes con `git rev-parse --short HEAD` y `HEAD^`
+  despues del commit de anclaje, en vez de teclearlos. Tarea: `T-044`.
+- **Por que la segunda mitad no es opcional:** corregir el caso que cita un hallazgo sin poner el
+  control deja el defecto reapareciendo. Es `L-019`, la leccion que esta misma etapa promovio como
+  enmienda de `LG-100`, y aplicarla aqui es literalmente su primer uso. Dos hashes tecleados a mano
+  salen iguales con facilidad; derivados, no pueden.
+- **Por que `HEAD` y `HEAD^` y no dos ordenes cualesquiera:** el commit de anclaje no existe mientras
+  se redacta la nota —ese es el huevo-y-gallina que el Paso 7c ya resolvia para el informe—, asi que
+  los dos se leen **despues** de commitear el anclaje, y entonces son exactamente `HEAD` y su padre.
+- **Alternativas descartadas:**
+  - **Solo la nota fechada, sin tocar la skill:** deja el defecto listo para repetirse en el cierre
+    siguiente, y el hallazgo volveria con otro numero.
+  - **Solo la regla, sin la nota:** el informe de `S-018` seguiria afirmando algo falso sobre su propia
+    trazabilidad, y esta commiteado: nadie lo corregiria despues.
+  - **Reescribir la linea original del informe:** convertiria «falta evidencia» en «hay evidencia
+    falsa», esta vez sin nadie que lo note.
+- **Verificacion.** Los dos hashes, derivados con las dos ordenes que la skill pasa a exigir:
+
+  ```
+  $ git rev-parse --short a22ef55
+  a22ef55
+  $ git rev-parse --short a22ef55^
+  ed64348
+  ```
+
+  Y la prueba de que la nota no pudo nacer en el commit que se atribuia:
+
+  ```
+  $ git show ed64348:_audit/S-018.md | grep -c 'NOTA DE CIERRE — commit de anclaje'
+  0
+  $ git show a22ef55:_audit/S-018.md | grep -c 'NOTA DE CIERRE — commit de anclaje'
+  1
+  ```
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, el informe lleva su nota y la skill exige derivar los dos hashes.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_audit/S-018.md | grep -c 'el commit de anclaje es `a22ef55`'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'se DERIVAN con una'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     ```
+
+### D-077 - F-027 se acepta y se corrige ahora: el control aprende el formato Ordenes/Salidas
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `F-027` (`R-020`, `Media`/`No bloqueante`) observa que la funcion `salidas()` del
+  CONTROL DE SALIDA REPRODUCIDA (Paso 7c-bis de `protocol-close`) solo excluye del computo las lineas
+  con prefijo `$ `, y que las decisiones de este proyecto ya no usan ese prefijo: escriben el criterio
+  en tres puntos, con una cerca `**Ordenes:**` y otra `**Salidas:**`. El control clasificaba cada
+  orden como si fuera una salida. Verificado vigente contra `HEAD`, y **empeorando**.
+- **Decision:** se acepta y **se corrige ahora, no se aplaza a `DT-XXX`**. `salidas()` reconoce las dos
+  etiquetas: de una cerca precedida de `**Ordenes:**` no extrae nada, de una precedida de
+  `**Salidas:**` lo extrae todo, y una cerca sin etiqueta conserva el comportamiento anterior. Se
+  actualiza tambien la prosa que describe el control. Tarea: `T-045`.
+- **Por que ahora y no como deuda:** el defecto **crece solo**. Diez ordenes coladas en el commit
+  auditado, dieciseis al empezar esta sesion — y las seis nuevas son de las decisiones que esta misma
+  jornada escribio. Una deuda que se paga mas cara cada dia no es una deuda que convenga aplazar. Y el
+  7c-bis es obligatorio: un control que siempre avisa deja de leerse, lo dice la convencion de
+  `findings.md`, y entonces el cierre da por revisado lo que no reviso.
+- **Que NO cambia:** el control sigue comparando texto y **sigue sin reejecutar ninguna orden**. Esa
+  limitacion es `DT-002` y no se toca aqui.
+- **Alternativas descartadas:**
+  - **Registrarlo como `DT-XXX` y aplazarlo**, que es la segunda mitad de lo que el hallazgo propone:
+    se descarta porque el coste sube con cada decision nueva y el arreglo cabe en una condicion del
+    `awk`. Aplazar habria sido mas caro que hacerlo.
+  - **Obligar a todas las decisiones a volver al prefijo `$ `:** el formato en tres puntos es mejor
+    —separa orden de salida sin ambiguedad— y cambiarlo obligaria a reescribir entradas commiteadas.
+    Se adapta el control al registro, no el registro al control.
+  - **Prohibir una de las dos formas hacia adelante:** las dos conviven en entradas ya commiteadas, asi
+    que el control tiene que entender las dos de todas formas.
+- **Verificacion.** La funcion **copiada literalmente del archivo**, contra el registro entero:
+
+  ```
+  $ eval "$(grep -m1 '^salidas() {' .claude/skills/protocol-close/SKILL.md)"
+  $ salidas < _persistence/decisions.md | grep -c 'git show'
+  1
+  $ salidas < _persistence/decisions.md | grep 'git show'
+  D-008 | T-001 |   $ git show <hash>:project.md | grep -cE '<[A-Za-z]'
+  ```
+
+  📌 **El `1` no es una orden colada: es una salida legitima.** Lo que `D-008` publica como salida es,
+  a su vez, una linea de `T-001` que contiene `$ git show`. La orden que la produjo devolvio ese texto,
+  asi que cuenta como salida y tiene que entrar en la comparacion.
+
+  📌 **Antes del arreglo esa misma orden devolvia `16`**, y devolvia `10` sobre el commit que la
+  auditoria juzgo. La diferencia entre `16` y `1` es lo que el control dejaba de distinguir.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, la skill lleva la condicion de etiqueta y la prosa que la explica.
+  2. **Ordenes:**
+     ```
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'm!="O"'
+     git show <hash>:.claude/skills/protocol-close/SKILL.md | grep -c 'los dos formatos'
+     ```
+  3. **Salidas:**
+     ```
+     1
+     1
+     ```
+
+### D-078 - L-021 no sube: ya cubierta por LG-32, sexta pasada de la cosecha de 005_discovery
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** al corregir los tres hallazgos de `R-020` nacio `L-021`, y nacio **despues** de que el
+  patrocinador firmara el acta de cierre de la etapa (`D-074`). Una leccion nueva con `Portabilidad`
+  en `Sin evaluar` deja falsa la septima casilla de la condicion de salida de `005_discovery`
+  —«ninguna leccion de esta etapa queda `Sin evaluar`»— en el arbol de trabajo. El patrocinador fijo
+  la condicion: no hacer nada que afecte al cierre ya firmado.
+- **Decision:** sexta pasada de `protocol-harvest` sobre `005_discovery`, con **una sola candidata**.
+  `L-021` se clasifica **`Ya cubierta por LG-32`** y **no sube**. No hay `Global candidata`, asi que la
+  puerta del Paso 5 no tiene nada que aprobar y el Paso 6 **no se ejecuta**: el repositorio de
+  lecciones globales **no se toca**, sigue en la version 7 y en el commit `e915383`.
+- **Por que no sube — el filtro concreto es el 4:** `LG-32` ya dice, literal, «Si existe la orden que
+  produce el dato, se pega la orden y su salida, no el dato», y ya recoge el angulo de la confianza
+  —«conocer la forma del fallo no protege de cometerlo cuando la cifra se escribe de memoria»—. El
+  mecanismo concreto de los dos errores de esta sesion —que la linea de la propia orden contiene el
+  literal que busca— es `LG-101` palabra por palabra. Las dos mitades de `L-021` ya estan; no es ni
+  entrada nueva ni cara nueva que enmendar.
+- **Por que se registra igual en `lessons.md`:** una leccion que no sube **no se borra**. Es el
+  aprendizaje de esta sesion y explica por que dos cifras se corrigieron antes de commitear; sin ella,
+  el commit muestra las cifras buenas y nadie sabe que estuvieron mal.
+- **La tension de orden, declarada:** `protocol-harvest` dice que la cosecha va **antes** de la firma
+  del patrocinador, y esta va despues. Se hace igual, y el motivo es que la razon escrita de esa regla
+  —«hecha despues de firmar, esa casilla no se podria marcar nunca»— no aplica aqui: la casilla **si**
+  se marco, verificada por el acta sobre `d09abc6`, donde era cierta, y `L-021` no existia entonces.
+  Esta pasada no marca ninguna casilla: devuelve el arbol al estado que el acta ya dictamino.
+- **Que NO cambia:** el acta, su dictamen y la firma del patrocinador. Ninguna de las tres se toca, y
+  esta decision no las revisa.
+- **Alternativas descartadas:**
+  - **Dejar `L-021` en `Sin evaluar` hasta la cosecha de la etapa siguiente:** dejaria una etapa
+    cerrada con una leccion suya sin clasificar, y el registro afirmando dos cosas a la vez.
+  - **Reasignar la `Etapa` de `L-021` a la etapa siguiente para que no cuente:** la etapa siguiente no
+    ha empezado, y mover la etiqueta para esquivar una casilla es exactamente lo que vacia de sentido
+    a la casilla.
+  - **Borrar `L-021`:** una leccion que no sube no se borra; ese es el motivo de que la columna
+    `Portabilidad` exista y tenga tres valores y no dos.
+- **Verificacion.** El barrido del Paso 1, y el contraste del Paso 3 (una candidata, una fila
+  clasificada):
+
+  ```
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep '005_discovery' | grep -c 'Sin evaluar'
+  0
+  $ grep -E '^\| \[L-' _persistence/lessons.md | grep -c 'Global candidata'
+  0
+  ```
+
+  📌 **El primer `0` es el de DESPUES de clasificar.** Antes de esta pasada esa misma orden devolvia
+  `1`, que es la candidata de la que habla esta decision.
+
+  Y que el repositorio de lecciones globales no se toco:
+
+  ```
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" rev-parse --short HEAD
+  e915383
+  $ git -C "C:/Users/USUARIO/Documents/Company_TripleS/TripleS_Lessons" status --short
+  ```
+
+  📌 **La segunda orden no devuelve nada, y es lo que se afirma:** arbol limpio, ni un archivo tocado.
+  El hash es el mismo que declaro `D-072`.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, ninguna leccion de `005_discovery` queda `Sin evaluar`, ninguna queda
+     `Global candidata`, y `L-021` remite a `LG-32`.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/lessons.md | grep -E '^\| \[L-' | grep '005_discovery' | grep -c 'Sin evaluar'
+     git show <hash>:_persistence/lessons.md | grep -cE '^\| \[L-021\].*\| Ya cubierta por LG-32 \|'
+     ```
+  3. **Salidas:**
+     ```
+     0
+     1
+     ```
+
+### D-079 - A-004 y A-005 se confirman: sus disparadores corrieron con el cierre de la etapa
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** al cerrar `005_discovery` (`D-074`), dos supuestos `Abierto` tenian su disparador atado
+  a esa etapa. `A-004` —el patrocinador revisa cada salida de la IA antes de que entre al registro—
+  disparaba «en el acta de cierre de la etapa», que es hoy. `A-005` —hay acceso a personas que conocen
+  el proceso real— disparaba en el Paso 2 de la etapa (`T-029`), que ya esta `Implementada`. Un supuesto
+  abierto cuyo disparador ya corrio, y que nadie mira, deja de ser un supuesto y pasa a ser un riesgo
+  sin nadie que lo haya firmado.
+- **Decision:** los dos pasan a `Confirmado`, cada uno con su nota fechada y su evidencia, en el indice
+  y en la ficha. No se reescribe ningun enunciado ni ningun disparador: se anade la nota debajo.
+- **Por que `A-004` queda confirmado:** se refutaba si alguna entrada llegaba al registro sin
+  confirmacion explicita del patrocinador. Las nueve decisiones que adoptaron el contenido de los cuatro
+  artefactos llevan `Origen: usuario`, y el acta de cierre no abrio ningun hallazgo sobre los artefactos.
+- **Por que `A-005` queda confirmado:** el enunciado tenia dos ramas —acceso a terceros **o** el
+  patrocinador es el mismo usuario del proceso— y lo que devolvio `T-029` es la segunda. El acta lo
+  recogio al verificar el actor originador. No hubo que escalar nada: se refutaba solo si fallaban las
+  dos ramas a la vez.
+- **Que NO cambia:** `A-008` sigue `Abierto`. Su disparador es la primera linea de codigo del prototipo,
+  en la etapa siguiente, y esa etapa no ha empezado. Cerrar `005_discovery` lo acerca, no lo dispara.
+- **Alternativas descartadas:**
+  - **Dejar los dos `Abierto` hasta la etapa siguiente:** sus disparadores ya corrieron. Un supuesto que
+    sigue abierto despues de que su disparador corriera no espera a nadie, porque ya nadie tiene la
+    obligacion de volver a el — la convencion del propio archivo lo llama riesgo abierto sin firma.
+  - **Pasarlos a `Riesgo abierto`:** ese estado es para lo que **no se puede** verificar antes de
+    necesitarlo. Estos dos si se pudieron, y se verificaron.
+- **Verificacion.** Las dos ordenes de las notas, corridas en el arbol de trabajo:
+
+  ```
+  $ for d in 051 052 053 054 055 056 057 058 061; do sed -n "/^### D-$d /,/^- \*\*Contexto/p" _persistence/decisions.md | grep -c '^| Origen | usuario |'; done | sort -u
+  1
+  $ grep -cE '^\| \[T-029\].*\| Implementada \|' _persistence/tasks.md
+  1
+  ```
+
+  📌 **El `1` unico de la primera es lo que se afirma:** las nueve fichas devuelven el mismo valor. Si
+  alguna no llevara `Origen: usuario`, `sort -u` devolveria tambien un `0`.
+
+- **Criterio de cierre:**
+  1. **Enunciado:** a ese commit, los dos supuestos estan `Confirmado` en el indice y en la ficha, y
+     `A-008` sigue `Abierto`.
+  2. **Ordenes:**
+     ```
+     git show <hash>:_persistence/assumptions.md | grep -cE '^\| \[A-00[45]\].*\| Confirmado \|'
+     git show <hash>:_persistence/assumptions.md | grep -cE '^\| \[A-008\].*\| Abierto \|'
+     ```
+  3. **Salidas:**
+     ```
+     2
+     1
+     ```

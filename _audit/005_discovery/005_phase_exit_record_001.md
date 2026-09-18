@@ -295,7 +295,7 @@ y todas tuvieron una orden que las resuelve.
 
 | Campo | Valor |
 |---|---|
-| Quien | `<en blanco>` |
-| Fecha | `<en blanco>` |
-| Decision | `<en blanco>` |
+| Quien | JD Rodriguez - Main Sponsor |
+| Fecha | `2026-09-18` |
+| Decision | `ETAPA CERRADA` |
 | Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |

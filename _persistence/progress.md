@@ -52,6 +52,7 @@
 | [S-016](#s-016---f-019-de-r-017-aceptado-y-corregido-d-059-cierre-de-010_actorsmd015_stakeholdersmd-d-060-alcance-y-objetivo-del-proyecto-d-061-y-cosecha-de-005_discovery-d-062) | `F-019` de `R-017` aceptado y corregido (`D-059`), cierre de `010_actors.md`/`015_stakeholders.md` (`D-060`), alcance y objetivo del proyecto (`D-061`), y cosecha de `005_discovery` (`D-062`) | 2026-09-17 | 005_discovery |
 | [S-017](#s-017---f-020-de-r-018-aceptado-y-corregido-d-064-tres-pasadas-mas-de-la-cosecha-l-016l-017l-018--d-063d-065d-067-y-se-cierra-005_needsmd-d-066) | `F-020` de `R-018` aceptado y corregido (`D-064`), tres pasadas mas de la cosecha (`L-016`/`L-017`/`L-018` → `D-063`/`D-065`/`D-067`), y se cierra `005_needs.md` (`D-066`) | 2026-09-17 | 005_discovery |
 | [S-018](#s-018---f-021f-022f-023f-024-de-r-019-evaluados-d-068-d-071-paso-2b-bis-anadido-a-protocol-close-y-cosecha-de-l-019l-020-d-072) | `F-021`/`F-022`/`F-023`/`F-024` de `R-019` evaluados (`D-068`-`D-071`), Paso 2b-bis anadido a `protocol-close`, y cosecha de `L-019`/`L-020` (`D-072`) | 2026-09-17 | 005_discovery |
+| [S-019](#s-019---005_discovery-cerrada-y-firmada-por-el-patrocinador-d-074-y-f-025f-026f-027-de-r-020-evaluados-d-075-d-077) | `005_discovery` cerrada y firmada por el patrocinador (`D-074`), y `F-025`/`F-026`/`F-027` de `R-020` evaluados (`D-075`-`D-077`) | 2026-09-18 | 010_prototype |
 
 ---
 
@@ -82,42 +83,43 @@ entrada en la [Bitacora](#5-bitacora).
 
 | Campo | Valor |
 |---|---|
-| Etapa actual | `005_discovery` |
-| Ultima actualizacion | `2026-09-17 (S-018)` |
+| Etapa actual | `010_prototype` |
+| Ultima actualizacion | `2026-09-18 (S-019)` |
 | Salud | `En marcha` |
-| Avance de la etapa | `report_auditor` audito el commit de anclaje de `S-017` (`31ece08`, sobre `a0949c5`) en `R-019` y entrego cuatro hallazgos `Baja`/`No bloqueante`: `F-021` (ancla rota en el indice de `progress.md` para `S-017`), `F-022` (la fila de `F-020` publicaba `Estado` con la cita pegada dentro), `F-023` (`DT-005` llevaba `Confirmacion: Sin confirmar`, valor fuera de la lista declarada) y `F-024` (la nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no persiste en el commit). Los cuatro verificados vigentes contra `HEAD` antes de tratarlos y aceptados, los tres primeros en su totalidad y el cuarto en su parte comprobable: `D-068` corrige `F-021` y encontro que el alcance real eran **seis** anclas rotas, no una — se anadio el **Paso 2b-bis** a `protocol-close`, que corre `.claude/checks/anchors.js` (con su test, 10/10) sobre `_persistence/` y `_audit/`; `D-069` corrige `F-022` anadiendo la columna `Registrado en` al indice de `findings.md` (22 filas derivadas de las fichas) y corrigiendo el Paso 2b para leerla; `D-070` corrige `F-023` pasando `DT-005` a `Propuesta (pendiente del usuario)`; `D-071` acepta la parte comprobable de `F-024` (nota fechada en `D-062` y `D-064`, sin reescribir, y prohibicion nueva en el 7c-bis) y **rechaza** la atribucion del defecto a la skill, con evidencia de que esta nunca lo mandaba. Ademas, quinta pasada de `protocol-harvest` (`D-072`, usuario): `L-019` sube como **enmienda de `LG-100`**, `L-020` **no sube** (`Ya cubierta por LG-06`); version 7 del archivo global, commit `e915383`, subido |
-| Bloqueos activos | Ninguno bloquea la condicion de salida de `005_discovery`: sus siete casillas siguen cumplidas, pendiente de correr el acta de cierre de etapa (`protocol-phase-exit`), que este cierre no ejecuta. `T-032` (Alta, No bloqueante) sigue abierta. `A-004`, `A-005` y `A-008` (abiertos), este ultimo en el camino critico del producto. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, ahora `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035` y `T-037` (Baja, No bloqueante, `Origen: session-closer`) siguen abiertas, sin cambios. Nace `T-042` (`Origen: session-closer`, esta sesion): el Paso 2d detecto seis ordenes mas, repartidas en `D-068`/`D-069`/`D-070`/`D-071`/`D-072`, que publican una cifra tomada **antes** de la propia correccion de esa misma decision y hoy ya no reproducen sobre el arbol de trabajo; dos ordenes mas (scripts temporales `slug.mjs`/`validate2.mjs` de `D-068`) no son reproducibles por construccion, no por desfase |
+| Avance de la etapa | `005_discovery` quedo **cerrada**: el agente `phase_exit_auditor` levanto el acta sobre el commit `d09abc6` (`_audit/005_discovery/005_phase_exit_record_001.md`, commit `e9846f6`), dictamen `CASILLAS SATISFECHAS`, `7` de `7` en `CUMPLE`, cero `NO CUMPLE`, cero `NO COMPROBABLE`, cero hallazgos; el patrocinador (JD Rodriguez, Main Sponsor) firmo la seccion 5.2 con fecha `2026-09-18` y decision `ETAPA CERRADA` (`D-074`), lo que satisface la tercera entrada obligatoria de `010_prototype` (§3.3). Antes de la firma, se decidio el orden de la jornada (`D-073`, usuario): el acta primero, y los tres hallazgos `Abierto` de `R-020` despues, dentro de la misma sesion. Se evaluaron los tres: `D-075` acepta `F-025` (la cifra de `T-042` es ocho, no seis; corregido por nota); `D-076` acepta `F-026` (la NOTA DE CIERRE de `S-018` nombraba `ed64348` como commit de anclaje cuando es `a22ef55`; corregido por nota y nueva regla en `protocol-close` para derivar los dos hashes con `git rev-parse --short HEAD`/`HEAD^`); `D-077` acepta y corrige de inmediato `F-027` (el CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis era ciego al formato `**Ordenes:**`/`**Salidas:**` y clasificaba ordenes como salidas: la funcion `salidas()` aprende las dos etiquetas). Sexta pasada de `protocol-harvest` sobre `005_discovery` (`D-078`): `L-021` **no sube** (`Ya cubierta por LG-32`); el repositorio de lecciones globales no se toco (sigue en `e915383`). `A-004` y `A-005` se confirman (`D-079`): sus disparadores —el acta de cierre y `T-029`— ya corrieron |
+| Bloqueos activos | Ninguna casilla de `010_prototype` verificada todavia: la etapa acaba de abrirse con la firma de `D-074`. `T-032` (Alta, No bloqueante) sigue abierta. `A-008` sigue `Abierto`, en el camino critico del producto — su disparador es la primera linea de codigo del prototipo, que no ha empezado. `DT-002` sigue `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, `Propuesta (pendiente del usuario)`. `T-030`, `T-031`, `T-033`, `T-035`, `T-037` y `T-042` (Baja, No bloqueante, `Origen: session-closer`) siguen abiertas, sin cambios. Nace `T-046` (`Origen: session-closer`, esta sesion): el Paso 2d detecto que la orden de «Verificacion» de `D-073` sobre `F-025`/`F-026`/`F-027` publica `3` y hoy devuelve `0`, porque esos tres hallazgos cambiaron de estado mas tarde en la misma sesion |
 
 ---
 
 ## 2. Ultimo realizado
 
-Dieciocho sesiones de trabajo. Segun el diff: se evaluaron los cuatro hallazgos de `R-019`
-(`F-021`-`F-024`) y se aceptaron. `D-068` corrige seis anclas rotas del indice de `progress.md` (no
-una) y anade el Paso 2b-bis con su control `.claude/checks/anchors.js`. `D-069` anade la columna
-`Registrado en` al indice de `findings.md` y corrige el Paso 2b. `D-070` pone dueno a la confirmacion
-de `DT-005`. `D-071` corrige por nota dos remisiones a «Sin resolver» que no persisten en el commit, y
-rechaza la atribucion del defecto a la skill. Quinta pasada de `protocol-harvest` (`D-072`): `L-019`
-sube como enmienda de `LG-100`; `L-020` no sube. `T-038`-`T-041` quedan `Implementada`.
+Diecinueve sesiones de trabajo. Segun el diff: `005_discovery` cerrada por firma del patrocinador
+(`D-074`), sobre el acta que `phase_exit_auditor` dejo en `_audit/005_discovery/005_phase_exit_record_001.md`
+(commits `d09abc6` y `e9846f6`, ya subidos antes de este cierre). Se decidio el orden de la jornada
+(`D-073`). Se evaluaron los tres hallazgos `Abierto` de `R-020`: `D-075` (`F-025`, cifra de `T-042`),
+`D-076` (`F-026`, commit de anclaje de `S-018` mal nombrado, con regla nueva en `protocol-close`) y
+`D-077` (`F-027`, corregido en el acto: `salidas()` del Paso 7c-bis aprende el formato
+`**Ordenes:**`/`**Salidas:**`). `T-043`, `T-044` y `T-045` quedan `Implementada`. Sexta pasada de la
+cosecha (`D-078`): `L-021` no sube. Dos supuestos confirmados (`D-079`): `A-004` y `A-005`.
 
 ---
 
 ## 3. Siguiente paso
 
-Evaluar el informe de auditoria que `report_auditor` entregue sobre el commit de esta sesion
-(`S-018`). La etapa `005_discovery` sigue con **sus siete casillas de condicion de salida
-cumplidas**: el siguiente paso de fondo es correr el acta de cierre de etapa (`protocol-phase-exit`),
-que este cierre no ejecuta. `T-042` (nueva, `Origen: session-closer`): seis ordenes de Contexto en
-`D-068`/`D-069`/`D-070`/`D-071`/`D-072` no reproducen hoy porque describen el estado previo a la
-correccion de esa misma decision; anclarlas a `31ece08` o fecharlas como snapshot. `T-037` y `T-035`
-siguen abiertas con el mismo pendiente. `T-032` (Alta, No bloqueante) sigue abierta: decidir si
-`D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-030`, `T-031` y
-`T-033` (Baja, No bloqueante) siguen pendientes. `A-004`, `A-005` y `A-008` (abiertos) siguen igual.
-El esqueleto de arranque vuelve a diferir en `.claude/agents/session-closer.md`, `.claude/hooks/` (mas
-`.claude/checks/`, nueva esta sesion), `.claude/skills/protocol-close/SKILL.md`,
+Lanzar `report_auditor` sobre el commit de esta sesion (`S-019`). La etapa declarada es ahora
+`010_prototype`: el siguiente paso de fondo es leer su archivo en `_phases/010_prototype.md` y
+`_workflow/010_prototype.md` para fijar el primer paso del procedimiento. `T-046` (nueva,
+`Origen: session-closer`): la orden de «Verificacion» de `D-073` sobre `F-025`/`F-026`/`F-027` ya no
+reproduce (publica `3`, da `0`); corregirla por nota fechada o anclarla al commit anterior al cambio
+de estado. `T-042` sigue con el mismo pendiente (anclar o fechar seis ordenes de `D-068`-`D-072`).
+`T-037` y `T-035` siguen abiertas con el mismo pendiente. `T-032` (Alta, No bloqueante) sigue abierta:
+decidir si `D-050`/`A-007` sustituye el criterio literal de «tras reiniciar Claude Code». `T-030`,
+`T-031` y `T-033` (Baja, No bloqueante) siguen pendientes. `A-008` (abierto, camino critico) sigue
+igual. El esqueleto de arranque vuelve a diferir en `.claude/agents/session-closer.md`,
+`.claude/checks/`, `.claude/hooks/`, `.claude/skills/protocol-close/SKILL.md`,
 `_templates/005_discovery/015_stakeholders.md` y `_workflow/005_discovery.md`: pendiente de promocion
 con aprobacion del usuario. `DT-002` sigue `No implementada`, sin pagar; `DT-005` sigue
-`No implementada`, ahora `Propuesta (pendiente del usuario)`.
+`No implementada`, `Propuesta (pendiente del usuario)`.
 
 ---
 
@@ -605,6 +607,42 @@ Plantilla:
   `_templates/005_discovery/015_stakeholders.md` y `_workflow/005_discovery.md`. `DT-002` sigue
   `No implementada`, confirmada y sin pagar; `DT-005` sigue `No implementada`, ahora
   `Propuesta (pendiente del usuario)`.
+
+### S-019 - `005_discovery` cerrada y firmada por el patrocinador (`D-074`), y `F-025`/`F-026`/`F-027` de `R-020` evaluados (`D-075`-`D-077`)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Etapa | 010_prototype |
+| Tareas | T-043, T-044, T-045, T-046 |
+
+- **Que se hizo:** el usuario fijo el orden de la jornada (`D-073`): el acta de cierre de
+  `005_discovery` primero, los tres hallazgos `Abierto` de `R-020` despues, dentro de la misma sesion.
+  El agente `phase_exit_auditor` ya habia levantado el acta sobre `d09abc6` (commit `e9846f6`,
+  dictamen `CASILLAS SATISFECHAS`, `7`/`7` `CUMPLE`, cero hallazgos); el patrocinador (JD Rodriguez,
+  Main Sponsor) firmo la seccion 5.2 con fecha `2026-09-18` y decision `ETAPA CERRADA` (`D-074`):
+  **`005_discovery` queda cerrada** y la etapa declarada pasa a `010_prototype`. Se evaluaron los tres
+  hallazgos de `R-020`, verificados vigentes contra `HEAD` antes de tratarlos: `D-075` acepta `F-025`
+  (la cifra de `T-042` es **ocho**, no seis; corregido por nota fechada dentro de la ficha, sin
+  reescribir el titulo ancla — `T-043` `Implementada`); `D-076` acepta `F-026` (la NOTA DE CIERRE de
+  `S-018` nombraba `ed64348` para las dos cosas cuando el commit de anclaje es `a22ef55`; corregido
+  por nota y nueva regla en `protocol-close` para derivar los dos hashes con `git rev-parse --short
+  HEAD`/`HEAD^` despues del commit de anclaje — `T-044` `Implementada`); `D-077` acepta y **corrige de
+  inmediato** `F-027` (el CONTROL DE SALIDA REPRODUCIDA del Paso 7c-bis era ciego al formato
+  `**Ordenes:**`/`**Salidas:**` de las decisiones recientes y clasificaba cada orden como si fuera una
+  salida —dieciseis colaciones al empezar la sesion—; la funcion `salidas()` aprende las dos etiquetas
+  — `T-045` `Implementada`). Sexta pasada de `protocol-harvest` sobre `005_discovery` (`D-078`,
+  manager): `L-021` nace y **no sube** (`Ya cubierta por LG-32`); no hay `Global candidata`, el Paso 6
+  no se ejecuta y el repositorio de lecciones globales no se toca (sigue en `e915383`). Dos supuestos
+  se confirman (`D-079`, manager): `A-004` (el segundo disparador, el acta de cierre, corrio hoy) y
+  `A-005` (`T-029` `Implementada` devolvio la segunda rama del enunciado).
+- **Que quedo abierto:** falta lanzar `report_auditor` sobre el commit de esta sesion. Nace `T-046`
+  (`Origen: session-closer`): el Paso 2d detecto que la orden de «Verificacion» de `D-073` sobre
+  `F-025`/`F-026`/`F-027` publica `3` y hoy devuelve `0`, porque esos tres hallazgos cambiaron de
+  `Abierto` a `Aceptado — pendiente` mas tarde en la misma sesion. `T-042` sigue con el mismo pendiente
+  (seis ordenes de `D-068`-`D-072`). `T-037`, `T-035`, `T-032`, `T-030`, `T-031` y `T-033` siguen
+  abiertas, sin cambios. `A-008` sigue `Abierto`, en el camino critico. `DT-002` y `DT-005` sin cambios.
+  El siguiente paso de fondo es leer `_phases/010_prototype.md` y `_workflow/010_prototype.md` para
+  fijar el primer paso del procedimiento de la nueva etapa.
 
 ---
 
