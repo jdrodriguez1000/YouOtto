@@ -26,6 +26,7 @@
 | [DT-003](#dt-003---el-andamiaje-vuelve-a-alejarse-del-esqueleto-de-arranque) | El andamiaje vuelve a alejarse del esqueleto de arranque | Implementada | Confirmada | Alta | No bloqueante |
 | [DT-004](#dt-004---la-frase-de-d-028-quedo-fuera-de-la-promocion-de-d-032) | La frase de `D-028` quedo fuera de la promocion de `D-032` | Implementada | Confirmada | Baja | No bloqueante |
 | [DT-005](#dt-005---la-cifra-de-casillas-que-llevan-juicio-no-cuadra-en-dos-archivos-de-reparto) | La cifra de casillas «que llevan juicio» no cuadra en dos archivos de reparto | No implementada | Propuesta (pendiente del usuario) | Baja | No bloqueante |
+| [DT-006](#dt-006---la-comprobacion-9-de-la-plantilla-de-sesion-de-prototipo-nunca-puede-salir-vacia) | La comprobacion §9 de la plantilla de sesion de prototipo nunca puede salir vacia | No implementada | Propuesta (pendiente del usuario) | Baja | No bloqueante |
 
 ---
 
@@ -289,3 +290,36 @@ estado real de ese momento de la sesion; queda con esta nota fechada al lado, co
 - **Como se paga:** decidir que significa «llevan juicio» — preferiblemente escribiendolo en el propio
   archivo, que es lo que falta —, y recontar las dos cifras y la coletilla contra sus tablas, con su
   `D-XXX`. Al estar en los copiables, la correccion debe llegar tambien al esqueleto de arranque.
+
+### DT-006 - La comprobacion §9 de la plantilla de sesion de prototipo nunca puede salir vacia
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Confirmacion | Propuesta (pendiente del usuario) |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Origen | manager |
+| Fecha | 2026-09-18 |
+
+- **Deuda:** `D-097` observa, al rellenar `010_prototype/015_session_001.md`, que la comprobacion
+  §9 de `_templates/010_prototype/015_session_NNN.md` pide `grep -n "<" <archivo>` con la condicion
+  «debe no devolver nada», pero la propia casilla y la propia orden contienen el caracter `<` que
+  buscan:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_001.md
+  198:- [ ] **No queda ni un solo `<` en el archivo.**
+  202:grep -n "<" 010_prototype/015_session_001.md                 # debe no devolver nada
+  ```
+
+  Sobre cualquier archivo ya relleno esa orden devuelve siempre esas dos lineas como minimo: la
+  comprobacion no puede salir vacia nunca, ni siquiera en un archivo perfecto.
+- **Por que se tomo:** `D-097` la deja observada y sin corregir en la misma jornada, porque
+  `_templates/` es agnostica y viaja al esqueleto de arranque: corregirla ahi es un cambio de
+  andamiaje que no cabe en la evaluacion de esa decision.
+- **Costo de no pagarla:** cada sesion de prototipo que use esta plantilla repite la misma alarma
+  falsa, y una alarma que siempre suena se aprende a ignorar — el dia que aparezca un `<` real de
+  huecos sin rellenar, nadie lo distinguira de las dos lineas de siempre.
+- **Como se paga:** ajustar el patron de la comprobacion para que excluya su propia casilla y su
+  propia linea de orden (por ejemplo, acotandolo a las secciones 1 a 8), con su `D-XXX`; la
+  correccion es del esqueleto de arranque, no solo de este proyecto.

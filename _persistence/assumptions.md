@@ -29,7 +29,7 @@
 | [A-006](#a-006---el-hook-de-la-cabecera-de-session-closer-se-dispara-dentro-del-agente) | El hook de la cabecera de session-closer se dispara dentro del agente | 2026-09-17 | Confirmado |
 | [A-007](#a-007---la-cabecera-exacta-de-session-closer-deja-pasar-protocol-close-y-bloquea-las-demas-skills) | La cabecera exacta de session-closer deja pasar protocol-close y bloquea las demas skills | 2026-09-17 | Confirmado |
 | [A-008](#a-008---las-condiciones-de-uso-de-baloto-permiten-leer-su-historico-de-forma-automatica) | Las condiciones de uso de Baloto permiten leer su historico de forma automatica | 2026-09-17 | Confirmado |
-| [A-009](#a-009---los-seis-numeros-arbitrarios-no-desviaran-la-atencion-del-participante-durante-la-sesion) | Los seis numeros arbitrarios no desviaran la atencion del participante durante la sesion | 2026-09-18 | Abierto |
+| [A-009](#a-009---los-seis-numeros-arbitrarios-no-desviaran-la-atencion-del-participante-durante-la-sesion) | Los seis numeros arbitrarios no desviaran la atencion del participante durante la sesion | 2026-09-18 | Confirmado |
 
 ---
 
@@ -352,7 +352,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-18 |
-| Estado | Abierto |
+| Estado | Confirmado |
 | Origen | manager |
 | Dueno | manager |
 
@@ -376,3 +376,13 @@ Plantilla:
   `_phases/010_prototype.md` §2 prohibe modificar el prototipo entre sesiones. Cambiar los numeros a
   mitad de ronda romperia la comparabilidad de las cinco. La salida seria registrarlo como limitacion
   de la ronda y llevarlo al Gate 1, no retocar el artefacto.
+- 🕐 **Nota 2026-09-18 (confirmado, `D-098`):** se cumplio el disparador: la sesion `001` se cerro
+  y la `002` no se ha corrido. Contra la forma de refutarlo escrita arriba, el registro
+  `010_prototype/015_session_001.md` dice: ningun comentario espontaneo durante la tarea —«no emitio
+  palabras diferentes a la lectura» (§6)—, ninguna intervencion (§5) y ninguna fila de §4 que vuelva
+  sobre los numeros o se detenga a recalcular. La tarea duro 57.61 s (§8). En las preguntas
+  posteriores tampoco nombro la discrepancia: a la primera contesto «Que iba a obtener 6 numeros, 5 de
+  balota y 1 de superbalota, siguiendo mis metodos de seleccion de numeros». **El supuesto queda
+  `Confirmado` para la sesion en que se fijo su prueba.** ⚠️ Lo que no confirma: que no lo note en
+  las sesiones siguientes. Si en alguna vuelve sobre la discrepancia, eso se anota en su registro y
+  va al Gate 1 como limite de la ronda; el prototipo sigue sin tocarse.

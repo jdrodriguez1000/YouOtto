@@ -115,6 +115,10 @@
 | [D-092](#d-092---f-031-se-acepta-el-anclaje-de-s-021-se-completa-por-nota-y-el-control-sigue-siendo-t-049) | F-031 se acepta: el anclaje de S-021 se completa por nota, y el control sigue siendo T-049 | 2026-09-18 | Vigente |
 | [D-093](#d-093---lo-que-quedo-elegido-al-construir-el-prototipo-un-indexhtml-orden-ascendente-arriba-y-razones-encadenadas-debajo) | Lo que quedo elegido al construir el prototipo: un index.html, orden ascendente arriba y razones encadenadas debajo | 2026-09-18 | Vigente |
 | [D-094](#d-094---el-patrocinador-da-el-prototipo-por-bueno-y-el-paso-4-queda-cerrado) | El patrocinador da el prototipo por bueno y el Paso 4 queda cerrado | 2026-09-18 | Vigente |
+| [D-095](#d-095---f-032-se-acepta-el-anclaje-de-s-022-se-completa-por-nota-y-t-049-no-basta-tal-como-esta-escrita) | F-032 se acepta: el anclaje de S-022 se completa por nota, y T-049 no basta tal como esta escrita | 2026-09-18 | Vigente |
+| [D-096](#d-096---f-033-se-acepta-la-salida-de-d-093-se-publica-anclada-por-nota) | F-033 se acepta: la salida de D-093 se publica anclada por nota | 2026-09-18 | Vigente |
+| [D-097](#d-097---el-registro-de-la-sesion-001-se-transcribe-al-dictado-y-la-respuesta-5-se-aclara-despues) | El registro de la sesion 001 se transcribe al dictado, y la respuesta 5 se aclara despues | 2026-09-18 | Vigente |
+| [D-098](#d-098---a-009-se-confirma-con-la-sesion-001) | A-009 se confirma con la sesion 001 | 2026-09-18 | Vigente |
 
 ---
 
@@ -5724,6 +5728,29 @@ la trate en la sesion siguiente.
     mostrar una fecha falsa el dia de la sesion. «Proximo sorteo» no envejece.
 - **Necesidades:** `N-001`, `N-002`.
 
+🕐 **NOTA 2026-09-18 (`F-033`, `D-096`) — la segunda orden de la «Verificacion del orden que exige
+el Gate», releida despues del commit como pedia este mismo bloque.**
+
+El bloque de arriba publico `(sin salida)` porque se escribio antes del commit que creo
+`010_prototype/app/`. **No se reescribe**: lo que dijo el dia que se escribio es cierto para ese
+momento. Esta es la salida de las dos ordenes, anclada ya a un commit posterior, sobre `HEAD`
+(`cc16375`):
+
+```
+$ git log --diff-filter=A --format='%h %ad %s' --date=short -- 010_prototype/005_happy_path.md
+22747a9 2026-09-18 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+$ git log --diff-filter=A --format='%h %ad' --date=short -- 010_prototype/app/
+e45185d 2026-09-18
+```
+
+El artefacto sellado nacio en `22747a9` y el codigo del prototipo en `e45185d`. Por el orden del
+historial, `e45185d` es posterior a `22747a9`:
+
+```
+$ git merge-base --is-ancestor 22747a9 e45185d && echo "22747a9 es anterior a e45185d"
+22747a9 es anterior a e45185d
+```
+
 ---
 
 ### D-094 - El patrocinador da el prototipo por bueno y el Paso 4 queda cerrado
@@ -5758,4 +5785,191 @@ la trate en la sesion siguiente.
     respuesta; insistir seria pedirle que firme dos veces lo mismo.
   - **Dar el paso por cerrado sin registrar la firma:** la aprobacion del stakeholder es una de las
     dos validaciones obligatorias, y una firma que no se escribe no existe para la auditoria.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-095 - F-032 se acepta: el anclaje de S-022 se completa por nota, y T-049 no basta tal como esta escrita
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-024` abrio `F-032` (`Media`/`No bloqueante`): la NOTA DE CIERRE de
+  `_audit/S-022.md` publico el commit de sesion y dejo el de anclaje con el texto literal de la
+  plantilla. Es la tercera sesion consecutiva con el mismo hueco en el mismo rotulo.
+- **Verificado contra `HEAD` antes de evaluarlo**: el hallazgo **sigue vivo**.
+
+  ```
+  $ git rev-parse --short HEAD
+  cc16375
+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-022.md
+  207: 5	+  $ grep -nE '<se completa|<pendiente|<en blanco|<rellenar' _audit/S-021.md
+  239:| 5 | `grep -nE '<se completa\|<pendiente\|<en blanco\|<rellenar' _audit/S-021.md` | Si | lineas 228, 272 y 287, coinciden con lo publicado en `D-092` |
+  258:**NOTA DE CIERRE — commit de sesion `e45185d`, commit de anclaje `<se completa tras commitear el
+  $ git log --format='%h %ad %s' --date=short -- _audit/S-022.md
+  07ca614 2026-09-18 S-022: ancla el informe al hash e45185d
+  e45185d 2026-09-18 S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  ```
+
+  Las lineas 207 y 239 son citas del patron dentro de la evidencia; el hueco real es la 258, y no hay
+  commit posterior que lo complete.
+- **Decision: se acepta, y se corrige el archivo.** `_audit/S-022.md` recibe una **nota fechada**
+  que declara `07ca614` como commit de anclaje, con la salida de `git rev-parse --short` corrida y
+  pegada. **La linea 258 no se reescribe.** Hecho en esta jornada como `T-052`.
+- **Lo que esta evaluacion descubre sobre el mecanismo, y por eso no basta con esperar a `T-049`:**
+  la plantilla de la NOTA DE CIERRE de `protocol-close` pide publicar el hash del commit de anclaje,
+  y la propia plantilla dice que ese hash «se lee DESPUES de commitear el anclaje y antes de
+  publicarla»:
+
+  ```
+  $ grep -n "corrido tras el commit de anclaje" .claude/skills/protocol-close/SKILL.md
+  1321:  git rev-parse --short HEAD        # corrido tras el commit de anclaje: ese es el de ANCLAJE
+  ```
+
+  Pero la NOTA DE CIERRE **viaja dentro** del commit de anclaje. Un commit no puede contener su propio
+  hash, porque el hash se calcula sobre el contenido. Por eso el hueco no es un descuido que se repite:
+  **el procedimiento pide algo que no se puede cumplir**, y cada cierre lo deja en blanco porque no
+  hay con que rellenarlo. `T-049`, tal como esta escrita, amplia el control para que **vea** el hueco;
+  si ademas lo convirtiera en puerta, el cierre ya no podria commitear el anclaje nunca. Ver el hueco
+  no lo arregla: lo que hay que cambiar es **que dato pide el rotulo**.
+- **Lo que NO decide esta entrada:** como se reformula la plantilla. Hay al menos dos salidas —que
+  el rotulo publique solo el commit de sesion y remita el de anclaje a
+  `git log -1 --format=%h -- _audit/S-XXX.md`, o que el anclaje lleve un tercer commit solo para la
+  nota— y la eleccion toca el protocolo del cierre. Se deja a `T-049` con una nota fechada que
+  recoge este diagnostico, y se consulta al usuario antes de implementarla.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-032` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**. Ese estado lo pone una auditoria posterior.
+- **Alternativas descartadas:**
+  - **Reescribir la linea 258 con el hash:** convertiria «falta evidencia» en «hay evidencia falsa».
+    Mismo motivo que `D-091` y `D-092`.
+  - **Rechazarlo por reincidente y esperar a `T-049`:** `T-049` corrige hacia adelante y no toca
+    ningun archivo ya cerrado; `S-022` se quedaria sin decir donde quedo su anclaje.
+  - **Implementar `T-049` en esta jornada tal como esta escrita:** detectaria un hueco que el cierre
+    no puede rellenar, y lo bloquearia.
+- **Tarea:** `T-052`. El mecanismo sigue en `T-049`.
+
+---
+
+### D-096 - F-033 se acepta: la salida de D-093 se publica anclada por nota
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-024` abrio `F-033` (`Baja`/`No bloqueante`): el bloque «Verificacion del orden que
+  exige el Gate» de `D-093` publica `(sin salida)` para la orden que demuestra cuando nacio el codigo
+  del prototipo, y esa orden devuelve una linea desde el commit de la sesion.
+- **Verificado contra `HEAD` antes de evaluarlo**: el hallazgo **sigue vivo**.
+
+  ```
+  $ git rev-parse --short HEAD
+  cc16375
+  $ git log --diff-filter=A --format='%h %ad' --date=short -- 010_prototype/app/
+  e45185d 2026-09-18
+  $ grep -n "(sin salida)" _persistence/decisions.md | tail -1
+  5709:  (sin salida)
+  ```
+
+  La linea 5709 es la de `D-093`, y ninguna nota posterior publica la salida nueva.
+- **Decision: se acepta con la primera de las dos salidas que propone el hallazgo.** `D-093` recibe
+  una **nota fechada** que publica las dos ordenes con su salida sobre `HEAD`, mas la orden que
+  demuestra el orden del historial. **El bloque original no se reescribe.** Hecho en esta jornada
+  como `T-053`.
+- **Por que no se mete en `T-050`:** `T-050` trata numeros de linea de `D-086`/`D-087` que dejaron
+  de reproducir; esto es una salida que **se sabia** que cambiaria y que la propia decision mandaba
+  releer. Es una nota de un solo bloque, y juntarlas retrasaria esta, que es evidencia del Gate 1,
+  hasta que se resuelva aquella.
+- **Alternativas descartadas:**
+  - **Reescribir `(sin salida)` por `e45185d 2026-09-18`:** el bloque diria algo que no era cierto
+    cuando se escribio. Se corrige anadiendo.
+  - **Rechazarlo por menor:** la conclusion es cierta, pero es la mitad de la evidencia que el Gate 1
+    tiene que reproducir, y hoy quien corre la orden obtiene otra cosa que lo publicado.
+- **Tarea:** `T-053`.
+
+---
+
+### D-097 - El registro de la sesion 001 se transcribe al dictado, y la respuesta 5 se aclara despues
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la sesion `001` de `010_prototype` se corrio el 2026-09-18, de 16:43 a 16:44, con
+  JD Rodriguez como participante y Juana Ramirez como facilitadora. Al terminar, el archivo
+  `010_prototype/015_session_001.md` seguia con los huecos de la plantilla: la facilitadora tenia los
+  datos, pero no los habia escrito en el.
+- **Decision 1: el registro lo transcribe `manager` al dictado de la facilitadora**, palabra por
+  palabra, y la cabecera lo declara: «Juana Ramirez (facilitadora), transcrito al dictado por
+  manager». El estado lo asigno ella; la frase que lo justifica la redacto `manager` a partir de sus
+  datos, y ella la confirmo antes del commit.
+- **Decision 2: la respuesta 5 se aclara con una pregunta de seguimiento, y las dos respuestas quedan
+  en el registro.** El participante contesto «Realmente hoy no lo hago», y eso choca con el perfil
+  sellado en `010_participants.md` §2 («hoy lo aplica a mano en Excel») y con su primer
+  descalificador. Sin aclararlo no se podia rellenar «¿Encajo en el perfil?». La facilitadora
+  pregunto, despues de la tarea, si queria decir que no lo hace a mano o que ya no juega con su
+  metodo, y la respuesta fue «Sigo jugando con el metodo a mano». La respuesta original **no se
+  borra ni se corrige**.
+- **Por que se deja escrito:** la revision del Gate va a leer una sesion con una pregunta que no esta
+  entre las cinco de la guia, y un registro que no escribio la facilitadora de su puño. Las dos cosas
+  son legitimas; calladas, parecerian un registro retocado.
+- **Alternativas descartadas:**
+  - **Que la facilitadora escribiera el archivo ella misma:** era lo mas limpio, pero el participante
+    y la facilitadora eligieron dictar. Lo que se protege es que las palabras sean suyas, y la
+    transcripcion literal lo conserva.
+  - **Dejar la respuesta 5 sin aclarar y marcar «¿Encajo?» como `si`:** seria decidir el encaje por
+    la impresion del dia, justo lo que `010_participants.md` §4 prohibe.
+  - **Sustituir la respuesta 5 por la aclaracion:** reescribiria lo que dijo el participante.
+- **Lo que queda observado y no se corrige en esta etapa:** la comprobacion §9 de la plantilla
+  `_templates/010_prototype/015_session_NNN.md` busca `<` con `grep -n "<"`, y su propia casilla y su
+  propia orden contienen ese caracter. Sobre el archivo relleno devuelve dos lineas y nunca sale
+  vacia:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_001.md
+  198:- [ ] **No queda ni un solo `<` en el archivo.**
+  202:grep -n "<" 010_prototype/015_session_001.md                 # debe no devolver nada
+  ```
+
+  No son huecos: son la casilla y la orden. El registro no se toca por eso. La plantilla tampoco se
+  toca en esta jornada: la plantilla es agnostica y viaja al esqueleto, y corregirla es un cambio de
+  andamiaje que no cabe en esta evaluacion.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-098 - A-009 se confirma con la sesion 001
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-18 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** `A-009` suponia que el participante, al ver una combinacion que su metodo no habria
+  producido (`D-086`), lo comentaria como mucho de pasada y seguiria con la tarea. Su disparador era
+  el cierre de la primera sesion, y la sesion `001` se cerro hoy.
+- **Evidencia, del registro de la sesion:**
+
+  ```
+  $ grep -n "no emitio palabras diferentes a la lectura\|Total de intervenciones\|57.61" 010_prototype/015_session_001.md
+  126:**Total de intervenciones que dieron informacion:** `0`
+  145:- > Ninguno. Durante toda la tarea leyo en voz alta y «no emitio palabras diferentes a la lectura» (Juana Ramirez).
+  175:- Cronometro, desde que empezo hasta que dio la combinacion por buena y vio la confirmacion: 57.61 s.
+  ```
+
+- **Decision: `A-009` pasa a `Confirmado`** para la sesion en que se fijo su prueba. No hubo
+  comentario sobre la discrepancia, ni se detuvo a recalcular, ni volvio sobre los numeros.
+- **Limite:** confirma la primera sesion, no las cuatro siguientes. Si en alguna el participante
+  vuelve sobre la discrepancia, se anota en su registro y va al Gate 1 como limite de la ronda. El
+  prototipo **no** se toca (`_phases/010_prototype.md`, Paso 6).
+- **Alternativas descartadas:**
+  - **Dejarlo `Abierto` hasta la quinta sesion:** cambiaria el disparador despues de ver el
+    resultado, que es justo lo que sellarlo antes existia para impedir.
 - **Necesidades:** `N-001`, `N-002`.

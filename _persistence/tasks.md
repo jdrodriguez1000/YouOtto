@@ -68,6 +68,10 @@
 | [T-049](#t-049---ampliar-el-control-de-huecos-del-cierre-a-los-marcadores-inline-de-la-nota-de-cierre) | Ampliar el control de huecos del cierre a los marcadores inline de la NOTA DE CIERRE | No implementada | Media | No bloqueante | 010_prototype |
 | [T-050](#t-050---anclar-o-corregir-los-numeros-de-linea-de-las-verificaciones-de-d-086d-087-que-ya-no-reproducen) | Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen | No implementada | Baja | No bloqueante | 010_prototype |
 | [T-051](#t-051---completar-por-nota-fechada-el-commit-de-anclaje-de-s-021) | Completar por nota fechada el commit de anclaje de S-021 | Implementada | Media | No bloqueante | 010_prototype |
+| [T-052](#t-052---completar-por-nota-fechada-el-commit-de-anclaje-de-s-022) | Completar por nota fechada el commit de anclaje de S-022 | Implementada | Media | No bloqueante | 010_prototype |
+| [T-053](#t-053---publicar-por-nota-la-salida-anclada-de-la-verificacion-de-orden-de-d-093) | Publicar por nota la salida anclada de la verificacion de orden de D-093 | Implementada | Baja | No bloqueante | 010_prototype |
+| [T-054](#t-054---anclar-o-fechar-la-orden-de-historial-de-s-022md-que-el-commit-de-esta-sesion-deja-de-reproducir) | Anclar o fechar la orden de historial de S-022.md que el commit de esta sesion deja de reproducir | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-055](#t-055---corregir-por-nota-el-grep--tail--1-de-d-096-que-ya-apunta-a-su-propia-prosa) | Corregir por nota el `grep \| tail -1` de D-096 que ya apunta a su propia prosa | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1322,6 +1326,13 @@ Plantilla:
   una NOTA DE CIERRE con un marcador entre angulos inline. Se publicara la orden con su salida cruda,
   anclada por el Paso 7c-bis, en la sesion que implemente esta tarea.
 
+🕐 **NOTA 2026-09-18 (`F-032`, `D-095`) — el criterio de cierre de esta tarea no basta.** La
+plantilla de la NOTA DE CIERRE pide publicar el hash del commit de anclaje **dentro** de ese mismo
+commit, y un commit no puede contener su propio hash. Ampliar el control para que vea el hueco lo
+haria visible, pero no rellenable; convertido en puerta, bloquearia el anclaje. Antes de implementar
+esta tarea hay que decidir **que dato pide el rotulo**. Esa eleccion toca el protocolo del cierre y
+se consulta al usuario. Esta nota no cambia el estado de la tarea.
+
 ### T-050 - Anclar o corregir los numeros de linea de las verificaciones de D-086/D-087 que ya no reproducen
 | Campo | Valor |
 |---|---|
@@ -1402,3 +1413,133 @@ Plantilla:
   $ grep -c 'rev-parse' _audit/S-021.md
   8
   ```
+
+### T-052 - Completar por nota fechada el commit de anclaje de S-022
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-032` (`Media`/`No bloqueante`), aceptado en `D-095`. Añadir al final de
+  `_audit/S-022.md` una nota fechada que declare `07ca614` como commit de anclaje, con la salida de
+  `git rev-parse --short` corrida y pegada, **sin reescribir la linea 258**.
+- **Por que:** la NOTA DE CIERRE dejo el commit de anclaje con el texto literal de la plantilla, asi
+  que el registro de `S-022` no dice donde quedo su anclaje.
+- **Que NO cubre:** el **mecanismo**, que sigue en `T-049`. `D-095` explica por que `T-049` necesita
+  una decision antes de implementarse.
+- **Criterio de cierre:** `_audit/S-022.md` termina en una nota fechada que nombra `07ca614`, la
+  linea 258 sigue literal, y la orden de derivacion queda publicada con su salida.
+
+  **Verificacion:**
+
+  ```
+  $ tail -24 _audit/S-022.md | grep -c '07ca614'
+  6
+  $ sed -n '258p' _audit/S-022.md
+  **NOTA DE CIERRE — commit de sesion `e45185d`, commit de anclaje `<se completa tras commitear el
+  $ grep -c 'rev-parse' _audit/S-022.md
+  10
+  ```
+
+### T-053 - Publicar por nota la salida anclada de la verificacion de orden de D-093
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-033` (`Baja`/`No bloqueante`), aceptado en `D-096`. Añadir a `D-093` una nota fechada
+  con las dos ordenes de su «Verificacion del orden que exige el Gate» y su salida sobre `HEAD`, mas
+  la orden que prueba que `22747a9` es anterior a `e45185d`. **El bloque original no se reescribe.**
+- **Por que:** la segunda orden se publico como `(sin salida)` antes del commit que creo el codigo, y
+  la propia decision mandaba releerla despues. Es la evidencia del orden que exige el Gate 1.
+- **Criterio de cierre:** `D-093` lleva la nota con `e45185d 2026-09-18` para `010_prototype/app/`, y
+  la linea `(sin salida)` original sigue en su sitio.
+
+  **Verificacion:**
+
+  ```
+  $ grep -c 'NOTA 2026-09-18 (`F-033`, `D-096`)' _persistence/decisions.md
+  1
+  $ grep -n '^  (sin salida)' _persistence/decisions.md | tail -1
+  5713:  (sin salida)
+  $ grep -c '^e45185d 2026-09-18$' _persistence/decisions.md
+  1
+  ```
+
+### T-054 - Anclar o fechar la orden de historial de S-022.md que el commit de esta sesion deja de reproducir
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d de `protocol-close`, corrido antes del `git add`, encontro una orden publicada
+  hoy sin ancla a un commit, presente en dos sitios: la nota `NOTA 2026-09-18 (F-032, D-095)` de
+  `_audit/S-022.md`, y el bloque «Verificado contra `HEAD`» de `D-095` en `_persistence/decisions.md`.
+- **Orden:** `git log --format='%h %ad %s' --date=short -- _audit/S-022.md`
+- **Publicado (2 lineas):**
+
+  ```
+  07ca614 2026-09-18 S-022: ancla el informe al hash e45185d
+  e45185d 2026-09-18 S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  ```
+
+- **Por que ya no reproduce:** esta misma sesion vuelve a tocar `_audit/S-022.md` (la propia nota
+  que contiene la orden es un cambio sobre ese archivo). El commit de esta sesion sera una **tercera**
+  entrada en el historial de `_audit/S-022.md`, asi que reejecutar la orden despues de commitear
+  devuelve 3 lineas, no 2.
+- **Por que no se corrige en este cierre:** ninguno de los dos sitios es editable por
+  `session-closer`. `_audit/S-022.md` es un informe ya entregado — no se reescribe —, y el bloque de
+  `D-095` no es un «Criterio de cierre» (es la seccion de verificacion previa a la evaluacion), asi
+  que no entra en el alcance del Paso 7c-bis.
+- **Como se paga:** una nota fechada, en los dos sitios, que ancle la orden al commit auditado
+  (`git log <hash-de-S-022> -- _audit/S-022.md`) o que declare las 3 lineas como el estado final. La
+  escribe `manager` en la sesion siguiente.
+- **Criterio de cierre:** las dos citas de la orden quedan ancladas o fechadas, y reejecutada sobre
+  el commit que corresponda devuelve exactamente lo que la nota declare.
+
+### T-055 - Corregir por nota el `grep | tail -1` de D-096 que ya apunta a su propia prosa
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el Paso 2d de `protocol-close` encontro que una orden del bloque «Verificado contra
+  `HEAD`» de `D-096` (`_persistence/decisions.md`) ya no reproduce sobre el arbol que esta misma
+  sesion deja, **incluso antes de commitear**.
+- **Orden:** `grep -n "(sin salida)" _persistence/decisions.md | tail -1`
+- **Publicado:** `5709:  (sin salida)`
+- **Da hoy, sobre el arbol de esta sesion:**
+
+  ```
+  $ grep -n "(sin salida)" _persistence/decisions.md | tail -1
+  5888:  - **Reescribir `(sin salida)` por `e45185d 2026-09-18`:** el bloque diria algo que no era cierto
+  ```
+
+- **Por que ya no reproduce:** la orden se corrio para probar que `F-033` seguia abierto, **antes**
+  de escribir la propia nota de `D-096` que lo corrige. Esa nota, en su seccion de alternativas
+  descartadas, vuelve a escribir la cadena `(sin salida)` en prosa — mas abajo en el archivo —, y
+  `tail -1` ahora se queda con esa aparicion en vez de con la que se queria mostrar.
+- **Por que no se corrige en este cierre:** `decisions.md` no es editable por `session-closer`, y
+  este bloque no es un «Criterio de cierre» (es la verificacion previa a la evaluacion del hallazgo),
+  asi que no entra en el alcance del Paso 7c-bis.
+- **Como se paga:** una nota fechada que acote el patron (por ejemplo, `^  (sin salida)$` en vez de
+  `(sin salida)`, que es el que usa el propio `T-053`) o que ancle el numero de linea directamente.
+  La escribe `manager` en la sesion siguiente.
+- **Criterio de cierre:** la cita queda anclada o fechada, y reejecutada devuelve exactamente lo que
+  la nota declare.

@@ -118,7 +118,7 @@ todavia.
 
 | Sesion | Fecha | Perfil previsto | ¿Encajo? | Archivo | Notas de reclutamiento |
 |---|---|---|---|---|---|
-| `001` | pendiente | Unico | pendiente | `015_session_001.md` | Sin reclutamiento: es el Actor Generador |
+| `001` | 2026-09-18 | Unico | si | `015_session_001.md` | Sin reclutamiento: es el Actor Generador |
 | `002` | pendiente | Unico | pendiente | `015_session_002.md` | Sin reclutamiento: es el Actor Generador |
 | `003` | pendiente | Unico | pendiente | `015_session_003.md` | Sin reclutamiento: es el Actor Generador |
 | `004` | pendiente | Unico | pendiente | `015_session_004.md` | Sin reclutamiento: es el Actor Generador |

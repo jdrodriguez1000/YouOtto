@@ -40,6 +40,7 @@
 | `S-020.md` | S-020 | 2026-09-18 | 7b0c48f | `R-022.md` | Con hallazgos (1) | F-030 |
 | `S-021.md` | S-021 | 2026-09-18 | 22747a9 | `R-023.md` | Con hallazgos (1) | F-031 |
 | `S-022.md` | S-022 | 2026-09-18 | e45185d | `R-024.md` | Con hallazgos (2) | F-032, F-033 |
+| `S-023.md` | S-023 | 2026-09-18 | Pendiente | Pendiente | Pendiente | - |
 
 ---
 

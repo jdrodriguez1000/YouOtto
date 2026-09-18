@@ -51,8 +51,8 @@
 | [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Aceptado — pendiente | `T-048`, `D-081` |
 | [F-030](#f-030---la-nota-de-cierre-de-s-020-deja-el-commit-de-anclaje-como-hueco-de-plantilla-sin-instanciar-y-sin-derivar) | La NOTA DE CIERRE de `S-020` deja el commit de anclaje como hueco de plantilla, sin instanciar y sin derivar | R-022 | Media | No bloqueante | Aceptado — pendiente | `T-049`, `D-091` |
 | [F-031](#f-031---la-nota-de-cierre-de-s-021-repite-el-hueco-de-plantilla-en-el-commit-de-anclaje-dentro-de-la-misma-sesion-que-acepto-f-030) | La NOTA DE CIERRE de `S-021` repite el hueco de plantilla en el commit de anclaje, dentro de la misma sesion que acepto `F-030` | R-023 | Media | No bloqueante | Implementado | D-092 / T-051 |
-| [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Abierto | — |
-| [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Abierto | — |
+| [F-032](#f-032---la-nota-de-cierre-de-s-022-repite-por-tercera-sesion-consecutiva-el-hueco-de-plantilla-en-el-commit-de-anclaje) | La NOTA DE CIERRE de `S-022` repite por tercera sesion consecutiva el hueco de plantilla en el commit de anclaje | R-024 | Media | No bloqueante | Aceptado — pendiente | D-095 / T-052 |
+| [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Aceptado — pendiente | D-096 / T-053 |
 
 ---
 
@@ -1126,8 +1126,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-095 / T-052 |
 | Cerrado en | |
 
 - **Que se observo:** el commit de anclaje `07ca614` escribio la NOTA DE CIERRE entera de `S-022` y
@@ -1179,8 +1179,8 @@ Plantilla:
 | Fecha | 2026-09-18 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-096 / T-053 |
 | Cerrado en | |
 
 - **Que se observo:** el bloque «Verificacion del orden que exige el Gate» de `D-093` publica dos
