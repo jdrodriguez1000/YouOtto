@@ -5033,11 +5033,23 @@ Plantilla:
   1. **Enunciado:** a ese commit, el registro de este repositorio cita los dos hashes de la promocion.
   2. **Ordenes:**
      ```
-     git show <hash>:_persistence/decisions.md | grep -c 'Commit del esqueleto `5b3fb6e`'
-     git show <hash>:_persistence/decisions.md | grep -c 'desde el origen `00f09e1`'
+     git show 7b0c48f:_persistence/decisions.md | grep -c 'Commit del esqueleto `5b3fb6e`'
+     git show 7b0c48f:_persistence/decisions.md | grep -c 'desde el origen `00f09e1`'
      ```
   3. **Salidas:**
      ```
      1
      1
      ```
+
+     **Salida anclada (Paso 7c-bis, commit `7b0c48f`):**
+     ```
+     1
+     2
+     ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `7b0c48f`. La primera orden reproduce; la segunda no.**
+La segunda publica `1` y la version anclada devuelve `2`: la cadena buscada, «desde el origen
+`00f09e1`», aparece tambien dentro de su propio bloque «Ordenes» — la orden se hace match a si
+misma. No se corrige aqui: la discrepancia queda con las dos salidas a la vista, para que `manager`
+la trate en la sesion siguiente.
