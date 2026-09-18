@@ -44,9 +44,11 @@
 | [F-022](#f-022---la-fila-de-f-020-publica-un-valor-de-estado-que-la-convencion-de-findingsmd-no-declara) | La fila de `F-020` publica un valor de `Estado` que la convencion de `findings.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-039` y `D-069` |
 | [F-023](#f-023---dt-005-lleva-confirmacion-sin-confirmar-un-valor-que-la-convencion-de-techdebtmd-no-declara) | `DT-005` lleva `Confirmacion: Sin confirmar`, un valor que la convencion de `techdebt.md` no declara | R-019 | Baja | No bloqueante | Implementado | `T-040` y `D-070` |
 | [F-024](#f-024---la-nota-de-anclaje-de-d-064-remite-a-una-seccion-sin-resolver-que-no-existe) | La nota de anclaje de `D-064` remite a una seccion «Sin resolver» que no existe | R-019 | Baja | No bloqueante | Implementado | `T-041` y `D-071` |
-| [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-043` y `D-075` |
-| [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-044` y `D-076` |
-| [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Aceptado — pendiente | `T-045` y `D-077` |
+| [F-025](#f-025---t-042-publica-seis-ordenes-donde-su-propia-ficha-enumera-ocho-casos-y-el-informe-repite-la-cifra) | `T-042` publica «seis» ordenes donde su propia ficha enumera ocho casos, y el informe repite la cifra | R-020 | Media | No bloqueante | Implementado | `T-043` y `D-075` |
+| [F-026](#f-026---la-nota-de-cierre-de-s-018-declara-ed64348-como-commit-de-anclaje-y-el-anclaje-esta-en-a22ef55) | La NOTA DE CIERRE de `S-018` declara `ed64348` como commit de anclaje, y el anclaje esta en `a22ef55` | R-020 | Media | No bloqueante | Implementado | `T-044` y `D-076` |
+| [F-027](#f-027---el-control-de-salida-reproducida-es-ciego-al-formato-ordenessalidas-y-su-limite-no-quedo-registrado) | El CONTROL DE SALIDA REPRODUCIDA es ciego al formato «Ordenes:»/«Salidas:» y su limite no quedo registrado | R-020 | Media | No bloqueante | Implementado | `T-045` y `D-077` |
+| [F-028](#f-028---la-nota-de-anclaje-de-s-019-dice-que-la-escribio-70fe40c-y-esta-en-e610906) | La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906` | R-021 | Media | No bloqueante | Abierto | — |
+| [F-029](#f-029---el-acta-de-cierre-de-005_discovery-conserva-el-d-xxx-de-la-plantilla-donde-debe-citar-d-074) | El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074` | R-021 | Baja | No bloqueante | Abierto | — |
 
 ---
 
@@ -784,9 +786,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-043` y `D-075` |
-| Cerrado en | |
+| Cerrado en | d80a965 (verificado en `R-021`) |
 
 - **Que se observo:** el titulo de `T-042`, su fila del indice y la seccion 5 de `_audit/S-018.md`
   dicen «seis ordenes»; la ficha enumera ocho vinetas y nueve ordenes, y su propia prosa dice «los
@@ -833,9 +835,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-044` y `D-076` |
-| Cerrado en | |
+| Cerrado en | d80a965 (verificado en `R-021`) |
 
 - **Que se observo:** la nota nombra el mismo hash para el commit de sesion y para el de anclaje.
 
@@ -870,9 +872,9 @@ Plantilla:
 | Fecha | 2026-09-17 |
 | Gravedad | Media |
 | Urgencia | No bloqueante |
-| Estado | Aceptado — pendiente |
+| Estado | Implementado |
 | Registrado en | `T-045` y `D-077` |
-| Cerrado en | |
+| Cerrado en | d80a965 (verificado en `R-021`) |
 
 - **Que se observo:** la funcion `salidas()` del Paso 7c-bis excluye del computo las lineas que
   empiezan por `$ `, y las decisiones de este proyecto ya no escriben sus ordenes con ese prefijo:
@@ -908,3 +910,78 @@ Plantilla:
 - **Que lo corregiria:** adaptar `salidas()` para que reconozca la cerca «Salidas:» como la de salidas
   y la cerca «Ordenes:» como ordenes; o, si se decide no tocarlo ahora, registrarlo como `DT-XXX` con
   su coste, porque hoy es un limite conocido sin dueno. ⚠️ Es una recomendacion, no una orden.
+
+### F-028 - La nota de anclaje de `S-019` dice que la escribio `70fe40c`, y esta en `e610906`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-021 |
+| Fecha | 2026-09-18 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la nota fechada que completa el commit de anclaje de `S-019` afirma, literal:
+  «El primero es el commit de anclaje (**este mismo, el que anadio esta nota**)». La nota no esta en
+  `70fe40c`: entro en un tercer commit, `e610906`.
+
+  ```
+  $ git show 70fe40c:_audit/S-019.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es'
+  0
+  $ git show e610906:_audit/S-019.md | grep -c 'NOTA 2026-09-18 — el commit de anclaje es'
+  1
+  $ git log --format='%h %s' -1 e610906
+  e610906 S-019: completa por nota fechada el commit de anclaje derivado (70fe40c)
+  ```
+
+  Los dos hashes que la nota publica —`70fe40c` como anclaje y `d80a965` como sesion— **son
+  correctos**; lo que no se sostiene es el parentesis que atribuye la nota a `70fe40c`. Es la misma
+  prueba que la nota de `S-018` usa para `F-026`: una nota que solo puede existir despues del commit
+  no puede declarar ese commit como el suyo.
+- **Por que importa:** es la primera aplicacion de la regla que `D-076` acaba de escribir para impedir
+  esta clase de afirmacion, y la reintroduce por otra via: ya no confunde los dos hashes, pero si
+  confunde que commit contiene la nota. Quien siga el puntero para reproducirla correra
+  `git show 70fe40c:_audit/S-019.md` y no la encontrara. `Media` porque el registro afirma algo
+  comprobablemente falso, no porque pierda contenido. `No bloqueante` porque nada de lo que venga
+  despues hereda el error.
+- **Que lo corregiria:** una nota fechada mas que declare que la nota de anclaje vive en `e610906`,
+  derivando el hash con `git log -1 --format=%h -- _audit/S-019.md`; y, hacia adelante, que la
+  plantilla de la NOTA DE CIERRE prohiba el autorreferente «este mismo commit» dentro de una nota que
+  se redacta antes del commit que la contiene. ⚠️ Es una recomendacion, no una orden.
+
+### F-029 - El acta de cierre de `005_discovery` conserva el `D-XXX` de la plantilla donde debe citar `D-074`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-021 |
+| Fecha | 2026-09-18 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la firma del patrocinador se relleno en tres filas (`Quien`, `Fecha`,
+  `Decision`) y la cuarta quedo con el texto generico de la plantilla, sin instanciar a `D-074`.
+
+  ```
+  $ git show d80a965:_audit/005_discovery/005_phase_exit_record_001.md | sed -n '/^| Donde queda/p'
+  | Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |
+  $ git show d80a965:_templates/phase_exit_record.md | sed -n '/^| Donde queda/p'
+  | Donde queda registrada | `_persistence/decisions.md`, con su `D-XXX` |
+  $ git show d80a965:_audit/000_preproject/005_phase_exit_record_001.md | sed -n '/^| Donde queda/p'
+  | Donde queda registrada | `_persistence/decisions.md`, con `D-015` (decision) y `D-020` (firma escrita en esta tabla) |
+  ```
+
+  La fila de la instancia es identica, byte a byte, a la de la plantilla agnostica; el acta anterior
+  del mismo proyecto si la instancio, asi que la forma correcta esta establecida.
+- **Por que importa:** el acta es el artefacto que cierra una etapa y es lo que se lee para saber
+  quien la cerro y con que autoridad; sin el puntero a `D-074`, llegar a la decision que la sostiene
+  exige buscarla. Ademas el control de huecos del propio cierre no lo ve —`grep -c '<en blanco>'`
+  devuelve `0` porque esta fila nunca llevo ese marcador—, asi que una fila sin instanciar pasa el
+  control. `Baja` porque no hay afirmacion falsa y `D-074` existe y es localizable; `No bloqueante`
+  porque nada hereda el defecto.
+- **Que lo corregiria:** instanciar la fila a `D-074`, y anadir al control de huecos del acta un
+  barrido de codigos genericos sin instanciar (`D-XXX`, `T-XXX`, `F-NNN`) sobre las secciones de
+  firma, que es donde una plantilla agnostica los deja por construccion. ⚠️ Es una recomendacion, no
+  una orden.
