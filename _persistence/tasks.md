@@ -77,6 +77,9 @@
 | [T-058](#t-058---anclar-o-fechar-la-cuarta-orden-de-evidencia-de-d-102-que-el-commit-de-esta-sesion-deja-de-reproducir) | Anclar o fechar la cuarta orden de evidencia de D-102 que el commit de esta sesion deja de reproducir | No implementada | Baja | No bloqueante | 010_prototype |
 | [T-059](#t-059---completar-por-nota-la-lista-de-hallazgos-pendientes-de-la-seccion-0-de-s-025) | Completar por nota la lista de hallazgos pendientes de la seccion 0 de S-025 | Implementada | Baja | No bloqueante | 010_prototype |
 | [T-060](#t-060---derivar-del-registro-con-orden-publicada-las-listas-y-cifras-de-hallazgos-y-sesiones-que-escribe-el-cierre) | Derivar del registro, con orden publicada, las listas y cifras de hallazgos y sesiones que escribe el cierre | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-061](#t-061---poner-en-confirmado-las-fichas-de-a-004-y-a-005-y-fechar-el-desfase-en-d-079-y-s-026) | Poner en Confirmado las fichas de A-004 y A-005 y fechar el desfase en D-079 y S-026 | Implementada | Media | Bloqueante | 010_prototype |
+| [T-062](#t-062---comparar-en-el-cierre-el-estado-del-indice-con-el-de-la-ficha-tambien-en-assumptionsmd) | Comparar en el cierre el estado del indice con el de la ficha tambien en assumptions.md | No implementada | Media | No bloqueante | 010_prototype |
+| [T-063](#t-063---corregir-el-recuento-que-la-plantilla-de-observaciones-atribuye-a-su-tercera-orden) | Corregir el recuento que la plantilla de observaciones atribuye a su tercera orden | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1703,3 +1706,76 @@ se consulta al usuario. Esta nota no cambia el estado de la tarea.
   lo dejaron corto.
 - **Criterio de cierre:** `protocol-close` contiene la orden de derivacion de la lista de pendientes,
   y la plantilla del informe remite a ella. La orden concreta de verificacion se fija al implementarla.
+
+---
+
+### T-061 - Poner en Confirmado las fichas de A-004 y A-005 y fechar el desfase en D-079 y S-026
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | Bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-037` (`Media`/`Bloqueante`), aceptado en `D-105`. Poner el `Estado` de las fichas de
+  `A-004` y `A-005` en `Confirmado`, cada una con su nota fechada, y anadir otra nota fechada en
+  `D-079` y al final de `_audit/S-026.md`, **sin reescribir ni la prosa de `D-079` ni la seccion 4 de
+  `S-026`**.
+- **Por que:** el registro afirmaba dos estados a la vez, y el arranque y el cierre leen los supuestos
+  abiertos desde la ficha.
+- **Criterio de cierre:** los estados de las fichas coinciden con los del indice, las cuatro notas
+  estan y la seccion 4 de `S-026` sigue como estaba.
+
+  **Verificacion:**
+
+  ```
+  $ diff <(awk '/^### A-[0-9]/{c=$2} /^\| Estado \|/ && c{print c, $4; c=""}' _persistence/assumptions.md) <(sed -n '/^## Indice/,/^---/p' _persistence/assumptions.md | awk -F'|' '/^\| \[A-/{gsub(/ /,"",$5); print substr($2,3,5), $5}') && echo "indice = ficha"
+  indice = ficha
+  $ grep -c "NOTA 2026-09-19 (\`F-037\`, \`D-105\`)" _audit/S-026.md
+  1
+  $ sed -n "165p" _audit/S-026.md | cut -c1-60
+  del propio archivo, no de una entrada real. Los dos supuesto
+  ```
+
+---
+
+### T-062 - Comparar en el cierre el estado del indice con el de la ficha tambien en assumptions.md
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** tercera recomendacion de `F-037`, aceptada y aplazada en `D-105`. Que el Paso 2b de
+  `protocol-close` compare, en `_persistence/assumptions.md`, el estado de cada fila del indice con el
+  `Estado` de su ficha, como ya hace con `_audit/findings.md`. Mirar en la misma pasada si
+  `decisions.md` y `tasks.md` tienen el mismo punto ciego.
+- **Por que:** el control de indice ↔ detalle compara codigos, no estados, y dejo pasar sin verlo el
+  desfase de `A-004`/`A-005` desde el commit de `D-079` (`d80a965`, `S-019`).
+- **Criterio de cierre:** el Paso 2b de `protocol-close` contiene la comparacion por estado para
+  `assumptions.md`. La orden concreta de verificacion se fija al implementarla.
+
+---
+
+### T-063 - Corregir el recuento que la plantilla de observaciones atribuye a su tercera orden
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | manager |
+| Sesion | la de esta jornada |
+
+- **Que:** nace de `D-108`. En `_templates/010_prototype/020_observations.md` §9, la nota de la
+  tercera orden dice que devuelve «dos mas que el numero de observaciones». Devuelve una mas: el
+  separador `|---|` no encaja con `'^| '`. Hay que corregir la nota, o la orden, y promover el cambio
+  al esqueleto.
+- **Por que:** quien la siga restara dos y publicara una observacion de menos.
+- **Criterio de cierre:** la nota de la plantilla coincide con lo que devuelve la orden sobre un
+  archivo con un numero conocido de filas. La orden concreta se fija al implementarla.

@@ -56,7 +56,7 @@
 | [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Implementado | D-100 / T-056 |
 | [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Implementado | D-101 / T-057 |
 | [F-036](#f-036---la-seccion-0-de-s-025-enumera-como-aceptado--pendiente-cuatro-hallazgos-donde-el-registro-tiene-seis) | La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis | R-027 | Baja | No bloqueante | Aceptado — pendiente | D-103 / T-059, T-060 |
-| [F-037](#f-037---a-004-y-a-005-estan-confirmado-en-el-indice-y-abierto-en-su-ficha-y-el-informe-de-s-026-los-da-por-vigentes) | `A-004` y `A-005` estan `Confirmado` en el indice y `Abierto` en su ficha, y el informe de `S-026` los da por vigentes | R-028 | Media | Bloqueante | Abierto | — |
+| [F-037](#f-037---a-004-y-a-005-estan-confirmado-en-el-indice-y-abierto-en-su-ficha-y-el-informe-de-s-026-los-da-por-vigentes) | `A-004` y `A-005` estan `Confirmado` en el indice y `Abierto` en su ficha, y el informe de `S-026` los da por vigentes | R-028 | Media | Bloqueante | Aceptado — pendiente | D-105 / T-061, T-062 |
 
 ---
 
@@ -1378,8 +1378,8 @@ Plantilla:
 | Fecha | 2026-09-19 |
 | Gravedad | Media |
 | Urgencia | Bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-105 / T-061, T-062 |
 | Cerrado en | |
 
 - **Que se observo:** en `c424ae8`, el indice de `_persistence/assumptions.md` da `A-004` y `A-005`
@@ -1408,4 +1408,6 @@ Plantilla:
 - **Que lo corregiria (recomendacion):** llevar `Estado` de las dos fichas a `Confirmado`, con nota
   fechada en `D-079` sobre el desfase; opcionalmente una nota en `S-026.md` sobre su seccion 4; y que
   el cierre compare indice y ficha por estado en `assumptions.md`, como ya hace con `findings.md`.
-- **Que se hizo:** pendiente de evaluacion por `manager`.
+- **Que se hizo:** aceptado en `D-105` (2026-09-19). Las fichas de `A-004` y `A-005` pasan a
+  `Confirmado`, con notas fechadas en las fichas, en `D-079` y en `S-026` (`T-061`). El control por
+  estado en el cierre queda aplazado a `T-062`.

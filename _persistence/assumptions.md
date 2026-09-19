@@ -189,7 +189,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-17 |
-| Estado | Abierto |
+| Estado | Confirmado |
 | Origen | manager |
 | Dueno | JD Rodriguez (patrocinador) |
 
@@ -215,11 +215,16 @@ Plantilla:
   adopto contenido sin que el patrocinador lo confirmara. Ninguna entrada llego al registro sin esa
   confirmacion, que es lo que lo habria refutado.
 
+- 🕐 **Nota 2026-09-19 (`F-037`, `D-105`):** hasta hoy el campo `Estado` de esta ficha decia
+  `Abierto`, mientras el indice decia `Confirmado` desde `D-079`. `D-079` decidio cambiar los dos
+  sitios y solo cambio el indice. Se corrige el campo; el enunciado, el disparador y la nota de
+  `D-079` quedan como estaban.
+
 ### A-005 - Hay acceso a personas que conocen el proceso real, ademas del patrocinador
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-09-17 |
-| Estado | Abierto |
+| Estado | Confirmado |
 | Origen | manager |
 | Dueno | JD Rodriguez (patrocinador) |
 
@@ -243,6 +248,11 @@ Plantilla:
 
   📌 **No hizo falta escalar nada:** el supuesto se refutaba solo si el patrocinador no era el usuario
   **y** no habia nadie alcanzable que lo fuera.
+
+- 🕐 **Nota 2026-09-19 (`F-037`, `D-105`):** hasta hoy el campo `Estado` de esta ficha decia
+  `Abierto`, mientras el indice decia `Confirmado` desde `D-079`. `D-079` decidio cambiar los dos
+  sitios y solo cambio el indice. Se corrige el campo; el enunciado, el disparador y la nota de
+  `D-079` quedan como estaban.
 
 ### A-006 - El hook de la cabecera de session-closer se dispara dentro del agente
 | Campo | Valor |

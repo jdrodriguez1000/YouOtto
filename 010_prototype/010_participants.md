@@ -122,7 +122,7 @@ todavia.
 | `002` | 2026-09-18 | Unico | si | `015_session_002.md` | Sin reclutamiento: es el Actor Generador |
 | `003` | 2026-09-19 | Unico | si | `015_session_003.md` | Sin reclutamiento: es el Actor Generador |
 | `004` | 2026-09-19 | Unico | si | `015_session_004.md` | Sin reclutamiento: es el Actor Generador |
-| `005` | pendiente | Unico | pendiente | `015_session_005.md` | Sin reclutamiento: es el Actor Generador |
+| `005` | 2026-09-19 | Unico | si | `015_session_005.md` | Sin reclutamiento: es el Actor Generador |
 
 📌 **La columna «¿Encajo?» se responde contra §2, no contra la impresion del dia.** Si un
 participante no encajaba y aun asi se corrio la sesion, se escribe `no` y se explica en §5. La

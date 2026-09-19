@@ -125,6 +125,10 @@
 | [D-102](#d-102---el-registro-de-la-sesion-003-se-transcribe-al-dictado-y-el-proceso-actual-se-registra-en-1) | El registro de la sesion 003 se transcribe al dictado, y el proceso actual se registra en §1 | 2026-09-19 | Vigente |
 | [D-103](#d-103---f-036-se-acepta-la-lista-de-pendientes-de-s-025-se-completa-por-nota-y-derivarla-se-aplaza-a-t-060) | F-036 se acepta: la lista de pendientes de S-025 se completa por nota, y derivarla se aplaza a T-060 | 2026-09-19 | Vigente |
 | [D-104](#d-104---el-registro-de-la-sesion-004-se-transcribe-al-dictado-y-su-comentario-espontaneo-se-declara-no-literal) | El registro de la sesion 004 se transcribe al dictado, y su comentario espontaneo se declara no literal | 2026-09-19 | Vigente |
+| [D-105](#d-105---f-037-se-acepta-las-fichas-de-a-004-y-a-005-pasan-a-confirmado-y-el-control-por-estado-se-aplaza-a-t-062) | F-037 se acepta: las fichas de A-004 y A-005 pasan a Confirmado, y el control por estado se aplaza a T-062 | 2026-09-19 | Vigente |
+| [D-106](#d-106---el-registro-de-la-sesion-005-se-transcribe-al-dictado-y-la-hora-de-fin-se-corrige-antes-de-escribirla) | El registro de la sesion 005 se transcribe al dictado, y la hora de fin se corrige antes de escribirla | 2026-09-19 | Vigente |
+| [D-107](#d-107---las-observaciones-de-la-ronda-llevan-el-codigo-o-xxx-y-su-clasificacion-la-decide-el-patrocinador) | Las observaciones de la ronda llevan el codigo O-XXX, y su clasificacion la decide el patrocinador | 2026-09-19 | Vigente |
+| [D-108](#d-108---020_observationsmd-se-cierra-y-el-recuento-de-su-plantilla-se-corrige-aparte-en-t-063) | 020_observations.md se cierra, y el recuento de su plantilla se corrige aparte en T-063 | 2026-09-19 | Vigente |
 
 ---
 
@@ -4823,6 +4827,13 @@ Plantilla:
 
   📌 **Ancladas por el Paso 7c-bis al commit `d80a965`.** Las dos reproducen lo publicado arriba.
 
+🕐 **NOTA 2026-09-19 (`F-037`, `D-105`) — esta decision cambio el indice y no la ficha.**
+
+La **Decision** de arriba dice «en el indice y en la ficha», pero el commit `d80a965` solo cambio el
+indice: las fichas de `A-004` y `A-005` siguieron en `Abierto`. El criterio de cierre no lo detecto
+porque sus dos ordenes solo leen filas del indice. **No se reescribe nada de arriba.** La ficha se
+corrige en `D-105`, y el control que habria detectado el desfase queda en `T-062`.
+
 ### D-080 - F-028 se acepta: la nota de anclaje declara donde vive, y el autorreferente queda prohibido
 | Campo | Valor |
 |---|---|
@@ -6355,3 +6366,231 @@ $ git merge-base --is-ancestor 22747a9 e45185d && echo "22747a9 es anterior a e4
   todo en una sola pagina) **no se tocan en el prototipo**. Se clasifican en `020_observations.md`
   cuando termine la ronda.
 - **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-105 - F-037 se acepta: las fichas de A-004 y A-005 pasan a Confirmado, y el control por estado se aplaza a T-062
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-028` abrio `F-037` (`Media`/`Bloqueante`): en `_persistence/assumptions.md`, el
+  indice da `A-004` y `A-005` por `Confirmado` y sus fichas siguen en `Abierto`. Viene de `D-079`, que
+  decidio cambiar los dos sitios y solo cambio el indice. El informe de `S-026` lo propago: su seccion 4
+  da los dos supuestos por vigentes.
+- **Verificado contra `HEAD` (`c8b2581`)**: el hallazgo **sigue vivo**. Se comparan los estados de
+  las fichas (lado `<`) con los del indice (lado `>`):
+
+  ```
+  $ git rev-parse --short HEAD
+  c8b2581
+  $ diff <(git show c8b2581:_persistence/assumptions.md | awk '/^### A-[0-9]/{c=$2} /^\| Estado \|/ && c{print c, $4; c=""}') <(git show c8b2581:_persistence/assumptions.md | sed -n '/^## Indice/,/^---/p' | awk -F'|' '/^\| \[A-/{gsub(/ /,"",$5); print substr($2,3,5), $5}')
+  4,5c4,5
+  < A-004 Abierto
+  < A-005 Abierto
+  ---
+  > A-004 Confirmado
+  > A-005 Confirmado
+  ```
+
+  📌 **Los siete supuestos restantes coinciden:** `diff` solo muestra las lineas 4 y 5.
+
+- **Por que el estado bueno es el del indice y no el de la ficha:** las dos notas fechadas de
+  `D-079`, que estan dentro de las propias fichas, ya los dan por confirmados con su evidencia. El
+  hallazgo no discute que lo esten; lo que se quedo sin cambiar fue el campo.
+- **Decision: se acepta.** El hallazgo trae tres recomendaciones, y se tratan distinto:
+  - **Poner el `Estado` de las dos fichas en `Confirmado`, cada una con su nota fechada, y otra nota
+    fechada en `D-079`:** hecho en esta jornada como `T-061`. No se reescribe ni enunciado, ni
+    disparador, ni la prosa de `D-079`.
+  - **La nota opcional en `_audit/S-026.md` sobre su seccion 4:** se acepta, tambien dentro de
+    `T-061`, al final del informe y **sin reescribir la seccion 4**. El informe se lee para saber que
+    supuestos siguen vivos, y hoy afirma dos que no lo estan.
+  - **Que el cierre compare indice y ficha por estado en `assumptions.md`, como ya hace con
+    `findings.md` en el Paso 2b:** se acepta y **se aplaza** a `T-062`. Toca `protocol-close`, que es
+    andamiaje agnostico, y esta jornada la pidio el usuario para la sesion `005` del Paso 5. Es el
+    mismo criterio con el que `D-103` aplazo `T-060`.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-037` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**. Ese estado lo pone una auditoria posterior.
+- **Alternativas descartadas:**
+  - **Poner el indice en `Abierto` para que coincida con la ficha:** reabriria dos supuestos que ya se
+    verificaron, y contradiria las notas de `D-079` que llevan la evidencia.
+  - **Revocar `D-079`:** esa decision acerto en lo que decidio; lo que fallo fue ejecutarla.
+    Revocarla haria desaparecer del indice una decision que sigue en pie. Lo que corresponde es una
+    nota.
+  - **Cambiar `protocol-close` ya:** sacaria la jornada de lo que se pidio; queda como `T-062`.
+- **Criterio de cierre:**
+  1. **Enunciado:** en ese commit, los estados de las fichas de `assumptions.md` coinciden con los del
+     indice, las dos fichas llevan su nota `F-037` y `D-079` lleva la suya.
+  2. **Ordenes:**
+     ```
+     diff <(awk '/^### A-[0-9]/{c=$2} /^\| Estado \|/ && c{print c, $4; c=""}' _persistence/assumptions.md) <(sed -n '/^## Indice/,/^---/p' _persistence/assumptions.md | awk -F'|' '/^\| \[A-/{gsub(/ /,"",$5); print substr($2,3,5), $5}') && echo "indice = ficha"
+     grep -c "Nota 2026-09-19 (\`F-037\`, \`D-105\`)" _persistence/assumptions.md
+     grep -c "NOTA 2026-09-19 (\`F-037\`, \`D-105\`)" _persistence/decisions.md
+     ```
+  3. **Salidas:**
+     ```
+     indice = ficha
+     2
+     1
+     ```
+- **Tareas:** `T-061`, `T-062`.
+
+---
+
+### D-106 - El registro de la sesion 005 se transcribe al dictado, y la hora de fin se corrige antes de escribirla
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la sesion `005` de `010_prototype`, la quinta y ultima de la ronda, se corrio el
+  2026-09-19 de 10:38 a 10:39 (53.56 s cronometrados). El participante fue JD Rodriguez y la
+  facilitadora Juana Ramirez. El prototipo es el mismo: el unico commit que toca `010_prototype/app/`
+  sigue siendo `e45185d`.
+- **Decision 1: el registro se transcribe al dictado, igual que en las sesiones `001` a `004`
+  (`D-097`, `D-099`, `D-102`, `D-104`).** `manager` copio la plantilla antes de la sesion y solo
+  escribio el numero, las rutas y la tarea literal de `005_happy_path.md` §2. El resto se relleno con
+  lo que el usuario dicto al terminar. Juana Ramirez asigno el estado `Exito autonomo` con una frase
+  propia, que va entrecomillada. La justificacion de §3 («Por que ese y no el de al lado») la redacto
+  `manager` solo con hechos ya registrados en §4, §5 y §7, y se le pidio al usuario que la revisara.
+  **Su respuesta siguiente solo corrigio la hora; sobre esa frase no dijo nada.**
+- **Decision 2: la hora de fin se escribio cuando el usuario la corrigio, no antes.** La primera
+  version dictada fue «inicio 10:38, fin 10:36», con el fin antes del inicio. `manager` no eligio la
+  lectura mas plausible: dejo el hueco y pregunto. El usuario corrigio a 10:39, que cuadra con los
+  53.56 s del cronometro.
+- **Sin comentarios espontaneos:** §6 dice «Ninguno», como lo dicto la facilitadora. Las cinco
+  respuestas de §7 llegaron en primera persona y van entrecomilladas con su grafia, erratas incluidas.
+  §1 y la ultima respuesta de §7 remiten al relato del proceso de `015_session_004.md` §1, porque
+  segun la facilitadora el participante lo conto igual.
+- **Sobre `A-009`:** la respuesta de «Expectativa» menciona generar otra combinacion «cuando no
+  estuviera de acuerdo con la que me propone la aplicacion». **No cumple la forma de refutarlo:** es
+  una respuesta posterior a la tarea y no un comentario durante ella; no vuelve sobre la discrepancia
+  con su metodo ni se detuvo a recalcular. Se anota aqui para que el Gate la pueda pesar, dentro del
+  limite de `D-098`.
+- **Alternativas descartadas:**
+  - **Escribir 10:38 o 10:39 sin preguntar:** es el dato que la revision del Gate cruza contra el
+    commit; elegirlo seria fabricarlo.
+  - **Copiar en §1 el relato del proceso de la sesion `004`:** lo pondria en boca de esta sesion con
+    unas palabras que en esta sesion no se dictaron.
+- **Evidencia:** las cuatro ordenes de §9 del registro, corridas antes del commit. La cuarta se ancla
+  a `c8b2581` —el `HEAD` al empezar esta jornada— para que siga reproduciendo despues del commit de
+  esta sesion:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_005.md
+  198:- [ ] **No queda ni un solo `<` en el archivo.**
+  202:grep -n "<" 010_prototype/015_session_005.md                 # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/015_session_005.md
+  199:- [ ] La seccion «Guia de llenado» **esta borrada**.
+  203:grep -n "Guia de llenado" 010_prototype/015_session_005.md   # debe no devolver nada
+  $ git log --diff-filter=A --format=%ad -- 010_prototype/015_session_005.md
+  $ git log --oneline --name-only c8b2581 -- 010_prototype/
+  c424ae8 S-026: cuarta sesion del Paso 5 corrida (D-104/L-027), y F-036 de R-027 evaluado (D-103/T-059/T-060)
+  010_prototype/010_participants.md
+  010_prototype/015_session_004.md
+  0c07cc8 S-025: tercera sesion del Paso 5 corrida (D-102)
+  010_prototype/010_participants.md
+  010_prototype/015_session_003.md
+  d802324 S-024: segunda sesion del Paso 5 (D-099), y F-034/F-035 de R-025 evaluados (D-100/D-101)
+  010_prototype/010_participants.md
+  010_prototype/015_session_002.md
+  66e6413 S-023: F-032/F-033 evaluados (D-095/D-096), primera sesion del Paso 5 corrida (D-097), y A-009 confirmado (D-098)
+  010_prototype/010_participants.md
+  010_prototype/015_session_001.md
+  e45185d S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  010_prototype/app/index.html
+  22747a9 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  010_prototype/005_happy_path.md
+  010_prototype/010_participants.md
+  010_prototype/012_facilitator_guide.md
+  ```
+
+  Las dos primeras solo devuelven la casilla y la orden, el mismo falso positivo que ya describio
+  `D-097`. La tercera sale vacia porque el archivo aun no esta commiteado; su fecha la contrasta el
+  cierre. La cuarta muestra que ningun commit toco `010_prototype/app/` despues de `e45185d`.
+- **Lo que no se hace ahora:** lo que pidio en §7 (un boton para generar otra combinacion, ver todo
+  en una sola pagina) **no se toca en el prototipo**. Se clasifica en `020_observations.md` ahora que
+  la ronda ha terminado.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-107 - Las observaciones de la ronda llevan el codigo O-XXX, y su clasificacion la decide el patrocinador
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** con la sesion `005` (`D-106`) la ronda de cinco sesiones del Paso 5 esta completa, y
+  el Paso 8 de `_phases/010_prototype.md` pide clasificar las observaciones en
+  `010_prototype/020_observations.md`. La plantilla exige declarar el codigo de observacion en la
+  tabla «Codigos» de `project.md`, con su `D-XXX`, antes de escribir la primera fila. El reparto de
+  `D-085` asigna la propuesta a la IA y la decision al humano.
+- **Decision 1: el codigo es `O-XXX`**, declarado en `project.md` en la misma pasada. Ningun prefijo
+  de la tabla empezaba por `O`.
+- **Decision 2: la clasificacion la decidio el patrocinador sobre la propuesta de `manager`.**
+  Aprobo tal cual las propuestas de `O-001` a `O-005`. En `O-001` (el boton para generar otra
+  combinacion) se le ofrecio la alternativa `necesidad no contemplada`, y se quedo con la propuesta
+  `nueva funcionalidad potencial`. `O-006` (la lectura desigual de las razones en la sesion `001`) no
+  llevaba propuesta firme, porque no encajaba con claridad en ninguna categoria; se le pregunto
+  aparte, con tres opciones, y eligio `idea para una etapa posterior`.
+- **Lo que queda escrito por si el Gate lo mira:** de las seis, solo `O-004` —la doble lectura del
+  boton antes del clic, en la sesion `002`— cae en una de las tres categorias que pesan en el Gate.
+  `O-006` pudo haber ido a `problema de comprension`, que tambien pesa, y el patrocinador lo decidio
+  en contra con la evidencia delante: ocurrio en una sesion de cinco y en la `002` leyo los seis
+  numeros «con la misma calma».
+- **Alternativas descartadas:**
+  - **Clasificar `manager` sin preguntar:** el reparto de `D-085` lo prohibe, y en esta etapa el
+    peso de cada categoria decide el Gate.
+  - **Reutilizar un prefijo existente:** `N-XXX` son necesidades del descubrimiento; mezclarlas con
+    observaciones haria que un comentario pareciera una necesidad ya adoptada.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-108 - 020_observations.md se cierra, y el recuento de su plantilla se corrige aparte en T-063
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | usuario |
+
+- **Contexto:** `010_prototype/020_observations.md` se escribio en `BORRADOR` con la clasificacion
+  de `D-107`. El patrocinador lo reviso y lo aprobo.
+- **Decision 1: el artefacto pasa a `CERRADO` con fecha 2026-09-19** y se borra su «Guia de llenado»,
+  como pide su §9.
+- **Evidencia:** las cuatro ordenes de §9, corridas antes del commit:
+
+  ```
+  $ grep -n "<" 010_prototype/020_observations.md
+  195:- [ ] **No queda ni un solo `<` en el archivo.**
+  199:grep -n "<" 010_prototype/020_observations.md                # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/020_observations.md
+  196:- [ ] La seccion «Guia de llenado» **esta borrada**.
+  200:grep -n "Guia de llenado" 010_prototype/020_observations.md  # debe no devolver nada
+  $ sed -n '/^## 3. Las observaciones/,/^## 4/p' 010_prototype/020_observations.md | grep -c '^| '
+  7
+  $ git log --diff-filter=A --format=%ad -- 010_prototype/020_observations.md
+  ```
+
+  Las dos primeras solo devuelven la casilla y la orden, el falso positivo de `D-097`. La tercera
+  devuelve `7`: la cabecera mas **seis** observaciones. La cuarta sale vacia porque el archivo aun
+  no esta commiteado; su fecha la contrasta el cierre contra la de la sesion `005` (`D-106`).
+- **Decision 2: el recuento de la plantilla se corrige aparte, no ahora.** La plantilla
+  (`_templates/010_prototype/020_observations.md` §9) dice que la tercera orden devuelve «dos mas que
+  el numero de observaciones», contando cabecera y separador. En realidad devuelve una mas, porque el
+  separador `|---|` no encaja con `'^| '`. Queda como `T-063`: la plantilla es andamiaje agnostico
+  que se promueve al esqueleto, y tocarla no es parte de lo que pidio esta jornada.
+- **Alternativas descartadas:**
+  - **Publicar «6 observaciones» sin la salida:** la plantilla exige la salida cruda, y un recuento
+    maquillado deja de ser reproducible.
+  - **Corregir la plantilla ya:** saca la jornada de lo pedido (`PI-3`).
+- **Tareas:** `T-063`.

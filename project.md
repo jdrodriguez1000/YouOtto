@@ -259,6 +259,7 @@ nadie la revise y acaba tapando justo lo que el control existe para ver.
 | `R-XXX` | `_audit/R-XXX.md` | auditoria de una sesion |
 | `N-XXX` | `005_discovery/005_needs.md` | necesidad del producto |
 | `I-XXX` | `005_discovery/015_stakeholders.md` | interesado del proyecto |
+| `O-XXX` | `010_prototype/020_observations.md` | observacion clasificada de la ronda de sesiones del prototipo |
 
 🚨 **Ningun codigo se reutiliza, en ningun archivo.** Un id retirado queda retirado; la entrada que
 lo llevaba conserva su texto para que se entienda que se creia y por que dejo de valer.

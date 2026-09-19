@@ -47,6 +47,7 @@
 | [L-025](#l-025---un-bloque-de-verificacion-se-escribe-despues-de-correr-la-orden-nunca-antes) | Un bloque de verificacion se escribe DESPUES de correr la orden, nunca antes | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-026](#l-026---una-respuesta-dictada-que-admite-dos-lecturas-se-pregunta-antes-de-escribirla-y-se-declara-de-donde-salio-la-aclaracion) | Una respuesta dictada que admite dos lecturas se pregunta antes de escribirla, y se declara de donde salio la aclaracion | 2026-09-18 | 010_prototype | Sin evaluar |
 | [L-027](#l-027---un-comentario-que-llega-en-estilo-indirecto-ya-no-se-puede-volver-literal-las-palabras-exactas-se-anotan-en-la-sesion) | Un comentario que llega en estilo indirecto ya no se puede volver literal: las palabras exactas se anotan en la sesion | 2026-09-19 | 010_prototype | Sin evaluar |
+| [L-028](#l-028---un-criterio-de-cierre-tiene-que-leer-cada-sitio-que-la-decision-dice-cambiar-no-solo-el-primero) | Un criterio de cierre tiene que leer cada sitio que la decision dice cambiar, no solo el primero | 2026-09-19 | 010_prototype | Sin evaluar |
 
 ---
 
@@ -687,3 +688,24 @@ Plantilla:
   espontaneos se anotan **en el momento y con las palabras exactas**, igual que las respuestas de §7.
   Si aun asi llegan en estilo indirecto, se registran declarados como transmitidos y la decision de la
   sesion lo dice.
+
+### L-028 - Un criterio de cierre tiene que leer cada sitio que la decision dice cambiar, no solo el primero
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+
+- **Contexto:** en este registro, un supuesto, un hallazgo o una tarea viven en dos sitios del mismo
+  archivo: la fila del indice y la ficha. Una decision que cambia el estado tiene que cambiar los dos.
+- **Que ocurrio:** `D-079` decidio pasar `A-004` y `A-005` a `Confirmado` «en el indice y en la
+  ficha», y solo cambio el indice. Su criterio de cierre solo leia filas del indice, asi que dio por
+  buena una decision a medio hacer, y el desfase siguio de `S-019` a `S-026` hasta que `R-028` lo vio
+  (`F-037`, `D-105`).
+- **Leccion:** un criterio que solo comprueba una parte de lo que la decision afirma no puede fallar
+  en la otra parte. Da el mismo resultado tanto si esa parte se hizo como si no, y por eso no la
+  respalda.
+- **Como aplicarla:** al escribir el criterio de cierre, se recorren los sitios que nombra la
+  **Decision** («en el indice y en la ficha», «en la tabla y en la nota») y cada uno lleva su orden.
+  Si dos sitios deben decir lo mismo, la orden los compara entre si, como hace el `diff` de `D-105`,
+  en vez de contar solo uno.
