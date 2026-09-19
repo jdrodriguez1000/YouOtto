@@ -1,0 +1,211 @@
+# Sesion 003 — YouOtto
+
+> 📄 **Se copia una vez por sesion.** El nombre del archivo lleva el numero con tres cifras:
+> `015_session_001.md`, `015_session_002.md`, … El numero **no se reutiliza**, ni siquiera si la
+> sesion se cae.
+
+| Campo | Valor |
+|---|---|
+| Artefacto | `010_prototype/015_session_003.md` |
+| Etapa que lo produce | `010_prototype`, Paso 7 |
+| Fecha de la sesion | `2026-09-19` |
+| Hora de inicio / fin | `08:51 — 08:52` |
+| Escrito por | `Juana Ramirez (facilitadora), transcrito al dictado por manager` |
+| Escrito | `inmediatamente despues` |
+
+> 🚨 **SE ESCRIBE DURANTE LA SESION O INMEDIATAMENTE DESPUES, Y SE COMMITEA EL MISMO DIA.**
+>
+> La revision independiente del Gate cruza **la fecha declarada aqui arriba contra la fecha del
+> commit**:
+>
+> ```bash
+> git log --diff-filter=A --format=%ad -- 010_prototype/015_session_003.md
+> ```
+>
+> 🔑 **Un registro reconstruido al dia siguiente es un recuerdo, y un recuerdo ya viene filtrado por
+> lo que uno esperaba encontrar.** No se nota al leerlo: se lee igual de convincente. Por eso la
+> comprobacion es la fecha y no la calidad del texto.
+>
+> 🚨 **Estos archivos son la Definicion de Terminado del prototipo.** La etapa prohibe los tests
+> —el artefacto se tira— y a cambio declara que lo que respalda al prototipo es **la evidencia
+> registrada de las sesiones**. Un prototipo sin sus archivos de sesion no esta Terminado: esta
+> afirmado.
+
+---
+
+## 1. El participante
+
+| Campo | Contenido |
+|---|---|
+| **Identificador** | `JD Rodriguez — el Actor Generador, unico participante de la ronda` |
+| **Perfil previsto** | `Unico — el jugador que aplica el metodo a mano (010_participants.md §2)` |
+| **¿Encajo en el perfil?** | `si` |
+| **Descalificadores comprobados** | `ninguno aplicaba — segun su propio relato de §1, sigue aplicando el metodo a mano en Excel` |
+| **Como se hace hoy su trabajo** | `Relatado por el participante y transmitido por Juana Ramirez: primero entra en la pagina de Baloto a ver los resultados de Baloto y Revancha; despues los registra en Excel; a continuacion determina el numero mas proximo a caer, sacando cuando salio por ultima vez, cada cuanto sale y cuando se espera que vuelva a salir; despues busca los dos numeros que mas veces salen en pareja con ese primero, y asi obtiene el 2 y el 3; para el 2 y el 3 busca los numeros que mas salen con ellos, y asi completa del 1 al 5; despues saca la superbalota con el mismo principio con que saca el numero uno. Si alguno de los seis salio en el ultimo sorteo de Baloto o Revancha lo descarta, y si hay tres consecutivos descarta el tercero; y repite la operacion para el numero descartado` |
+
+🚨 **Si esta etapa necesita un codigo propio para identificar participantes o sesiones, se declara
+antes en la tabla «Codigos» de `project.md`, con su `D-XXX`.** Escribir el primero sin declararlo es
+un desfase, no una novedad.
+
+⚠️ Si el participante **no** encajaba y la sesion se corrio igual, aqui queda dicho, y ademas va a
+`010_participants.md` §5 como desviacion. **En los dos sitios**: este archivo lo cuenta, aquel lo
+suma.
+
+---
+
+## 2. La tarea que se le entrego
+
+Se pega **literal** desde `005_happy_path.md` §2, sin una palabra distinta.
+
+> ### 📋
+> Hoy hay sorteo por la noche y todavia no tienes tu apuesta. Quieres llevar los seis numeros que
+> saldrian de tu metodo, y quieres quedarte tranquilo con ellos: saber por que va cada uno antes de
+> darlos por buenos. Usa esta aplicacion para conseguirlo.
+
+| Comprobacion | Respuesta |
+|---|---|
+| **¿Es identica a la de las sesiones anteriores?** | `si — se leyo sin entregar ninguna explicacion (Juana Ramirez); pegada literal de 005_happy_path.md §2` |
+| **¿Se añadio alguna explicacion antes de empezar?** | `no — se leyo sin entregar ninguna explicacion (Juana Ramirez)` |
+| **¿El prototipo cambio desde la sesion anterior?** | `no — el codigo es el del commit e45185d, el unico que toca 010_prototype/app/, igual que en las sesiones 001 y 002` |
+
+🚨 **Las tres respuestas correctas son `si`, `no`, `no`.** Cualquier otra cosa rompe la
+comparabilidad: si el prototipo o la tarea cambian entre el primer usuario y el cuarto, **las
+sesiones ya no midieron lo mismo y no se pueden sumar.** Lo que sale es una anecdota por usuario.
+
+---
+
+## 3. Resultado
+
+| Estado | Significado | Valor |
+|---|---|---:|
+| ⬜ **Exito autonomo** | completa sin ayuda | 3 |
+| ⬜ **Exito con dudas** | completa sin ayuda, pero con dudas importantes | 2 |
+| ⬜ **Exito con ayuda** | el facilitador intervino → **no es exito completo** | 1 |
+| ⬜ **Fracaso** | no completa | 0 |
+
+**Estado asignado:** `Exito autonomo` — lo asigno Juana Ramirez
+
+**Por que ese y no el de al lado:**
+
+> Llego a la confirmacion sin hacer ninguna pregunta (§5: cero intervenciones) y sin ningun comentario
+> (§6). Segun Juana Ramirez, «no presento dudas» (§4), y el propio participante lo confirmo despues:
+> «En todo momento sabia hacia donde ir» (§7). No es «exito con dudas» porque ni Juana registro una
+> vacilacion ni el dijo en ningun momento que no supiera si lo estaba haciendo bien.
+
+🚨 **Esta ultima casilla no es retorica: es la que decide el Gate.** El criterio de que *«el
+Generador ejecuta el flujo principal de forma autonoma»* se lee directo de estos estados, y **«exito
+con ayuda» no es exito autonomo**. La frontera entre 3, 2 y 1 es donde se gana o se pierde el Gate,
+asi que se argumenta aqui, con el hecho delante, y no al final cuando ya se sabe cuantos hacen
+falta.
+
+---
+
+## 4. El recorrido — donde se bloqueo, dudo o se equivoco
+
+Cada fila con **el punto del flujo**, no una impresion general.
+
+| # | Punto del flujo | Que paso | Bloqueo · duda · error | Cuanto duro |
+|---|---|---|---|---|
+| 1 | Todo el flujo, de la tarea a la confirmacion | «El usuario no presento dudas, tampoco realizo comentarios» (Juana Ramirez) | ninguno | 52.31 s en total |
+
+📌 **Se registra comportamiento, no interpretacion.** *«Se quedo mirando la pantalla 40 segundos y
+volvio atras»* es un hecho. *«No entendio la pantalla»* ya es una conclusion, y puede ser la
+equivocada.
+
+---
+
+## 5. Intervenciones del facilitador
+
+**Todas. Aunque parecieran inofensivas.**
+
+| # | Momento | Que pregunto el usuario | Que respondio el facilitador |
+|---|---|---|---|
+| — | — | Ninguna: «No hubo preguntas durante la sesion» (Juana Ramirez) | — |
+
+**Total de intervenciones que dieron informacion:** `0`
+
+🚨 **Si ese total es mayor que cero, el estado NO puede ser «exito autonomo».** Esa es toda la
+regla, y es la que mas se dobla sin querer: la intervencion se recuerda como *«solo le di un
+empujoncito»* y el estado se anota como autonomo.
+
+📌 Devolver la pelota —*«¿tu que harias?»*— **no** es dar informacion. Contestar «si», señalar la
+pantalla o repetir la tarea con otras palabras, **si lo es**.
+
+📌 **Y el patrocinador no contesta.** Si contesto, va en esta tabla como intervencion, con su nombre
+o su rol — es el principio de no sesgo que mas se rompe, porque se rompe con buena intencion y
+rapidez.
+
+---
+
+## 6. Comentarios espontaneos
+
+En **sus palabras**, entrecomillados, sin arreglar la gramatica ni resumir.
+
+- > Ninguno: «No hubo comentarios del participante» (Juana Ramirez).
+
+📌 Un comentario parafraseado ya paso por la cabeza de quien lo anoto. Las palabras exactas son el
+unico dato que la revision del Gate puede leer sin intermediario.
+
+---
+
+## 7. Preguntas posteriores
+
+**Solo despues de la tarea, nunca durante.**
+
+| Dimension | Pregunta | Respuesta |
+|---|---|---|
+| **Comprension** | ¿Que creias que iba a pasar cuando hiciste esto? | «Que al abrir la pagina web iba a ver los numeros del proximo sorteo, con la explicacion o justificacion de cada numero.» |
+| **Dificultad** | ¿Hubo algun momento en que no supieras que hacer? | «No. En todo momento sabia hacia donde ir.» |
+| **Expectativa** | ¿Esperabas encontrar alguna otra opcion? | «Tal vez un boton de generar otra combinacion y cuando me muestra la combinacion elegida un boton de regresar para observar la explicacion de cada numero nuevamente por si algo no me quedaba claro.» |
+| **Necesidad** | ¿Que informacion necesitarias realmente para completar esto? | «Ninguna adicional, como se presenta es muy claro, aunque me gustaria que todo estuviera en una sola pagina y que no me llevara a otra.» |
+| **Proceso actual** | **¿Como haces esto hoy?** | «TAl como se describio anteriormente y se lo entregue a Juana» — remite al relato de su proceso registrado en §1, «Como se hace hoy su trabajo» |
+
+📌 La ultima es la mas valiosa de las cinco: es la unica que permite **comparar la solucion
+propuesta contra el comportamiento real**, y suele desmentir lo que el propio usuario acaba de decir
+que le parecio facil.
+
+---
+
+## 8. Observaciones en bruto
+
+Sin clasificar todavia. La clasificacion en las nueve categorias se hace en `020_observations.md`,
+**cuando la ronda entera termine** — no aqui, y no hoy.
+
+- Cronometro, desde que empezo hasta que dio la combinacion por buena y vio la confirmacion: 52.31 s.
+
+⚠️ **Lo que se anota aqui NO se arregla en el prototipo.** Aunque cueste diez minutos y el tropiezo
+sea obvio. El prototipo **no se toca entre sesiones**: si cambia entre el primer usuario y el
+cuarto, las cuatro sesiones dejan de ser sumables.
+
+🚨 **La unica excepcion:** un fallo tan grave que **impide continuar**. Entonces se detiene la ronda,
+se arregla, y **se vuelve a empezar contando desde cero** — no se mezclan las sesiones de antes con
+las de despues.
+
+---
+
+## 9. Comprobacion antes de commitear — hoy mismo
+
+- [ ] La fecha de la cabecera es **la de hoy**, y el commit tambien.
+- [ ] La tarea de §2 es **identica** a la sellada; las tres respuestas son `si, no, no`.
+- [ ] Hay **un estado asignado** de los cuatro, con su frase de justificacion.
+- [ ] Si hubo intervenciones que dieron informacion, el estado **no** es autonomo.
+- [ ] Los comentarios estan **entrecomillados**, no parafraseados.
+- [ ] Las cinco preguntas posteriores tienen respuesta o un «no contesto».
+- [ ] Los tropiezos estan anotados y **el prototipo sigue sin tocarse**.
+- [ ] **No queda ni un solo `<` en el archivo.**
+- [ ] La seccion «Guia de llenado» **esta borrada**.
+
+```bash
+grep -n "<" 010_prototype/015_session_003.md                 # debe no devolver nada
+grep -n "Guia de llenado" 010_prototype/015_session_003.md   # debe no devolver nada
+git log --diff-filter=A --format=%ad -- 010_prototype/015_session_003.md   # = la fecha de la cabecera
+git log --oneline --name-only -- 010_prototype/             # ningun commit al codigo entre sesiones
+```
+
+📌 **El cuarto se lee mirando los nombres de archivo, no solo los commits.** Entre dos sesiones puede
+haber commits legitimos —el archivo de la sesion anterior, el de participantes—; lo que no puede
+haber es un commit **que toque el codigo del prototipo**. Uno de esos, con sesiones a los dos lados,
+parte la ronda en dos.
+
+🚨 **La salida cruda de las cuatro ordenes va al registro**, no la conclusion.
+

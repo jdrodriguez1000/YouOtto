@@ -122,6 +122,7 @@
 | [D-099](#d-099---el-registro-de-la-sesion-002-se-transcribe-al-dictado-y-la-respuesta-5-lleva-su-aclaracion-aparte) | El registro de la sesion 002 se transcribe al dictado, y la respuesta 5 lleva su aclaracion aparte | 2026-09-18 | Vigente |
 | [D-100](#d-100---f-034-se-acepta-la-ronda-de-cinco-sesiones-se-corrige-por-nota-en-s-023-y-en-progressmd) | F-034 se acepta: la ronda de cinco sesiones se corrige por nota en S-023 y en progress.md | 2026-09-18 | Vigente |
 | [D-101](#d-101---f-035-se-acepta-las-correcciones-de-f-032f-033-se-situan-por-nota-en-66e6413) | F-035 se acepta: las correcciones de F-032/F-033 se situan por nota en 66e6413 | 2026-09-18 | Vigente |
+| [D-102](#d-102---el-registro-de-la-sesion-003-se-transcribe-al-dictado-y-el-proceso-actual-se-registra-en-1) | El registro de la sesion 003 se transcribe al dictado, y el proceso actual se registra en §1 | 2026-09-19 | Vigente |
 
 ---
 
@@ -6138,3 +6139,74 @@ $ git merge-base --is-ancestor 22747a9 e45185d && echo "22747a9 es anterior a e4
   - **Rechazarlo porque la seccion 1 ya lo dice bien:** la seccion 0 es la que lee la auditoria para
     saber donde verificar, y el informe se contradice a si mismo.
 - **Tarea:** `T-057`.
+
+---
+
+### D-102 - El registro de la sesion 003 se transcribe al dictado, y el proceso actual se registra en §1
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la sesion `003` de `010_prototype` se corrio el 2026-09-19, de 08:51 a 08:52 (52.31 s
+  cronometrados), con JD Rodriguez como participante y Juana Ramirez como facilitadora, en una
+  jornada distinta de la `002` (`D-088`). El prototipo es el mismo: el unico commit que toca
+  `010_prototype/app/` sigue siendo `e45185d`.
+- **Decision 1: el registro se transcribe al dictado, igual que en la `001` y la `002` (`D-097`,
+  `D-099`).** `manager` copio la plantilla antes de la sesion y dejo escritos solo los datos ya
+  conocidos: numero, fecha, facilitadora, participante, perfil, tarea literal y que el prototipo no
+  cambio. El resto se relleno con lo que se dicto al terminar. Juana Ramirez asigno el estado
+  `Exito autonomo`. La frase que lo justifica la redacto `manager` solo con hechos ya registrados en
+  §4, §5, §6 y §7, y el usuario la acepto antes de escribirla. La hora de fin (08:52) la dio el
+  usuario cuando `manager` pregunto, y no se dedujo de la duracion.
+- **Decision 2: el relato del proceso actual va a §1, y la respuesta 5 de §7 se registra literal
+  remitiendo a el.** Esta vez el participante conto su proceso completo, y se transmitio junto con
+  los datos de §1. A la pregunta 5 respondio «TAl como se describio anteriormente y se lo entregue a
+  Juana». El relato queda en §1, declarado como relatado por el participante y transmitido por la
+  facilitadora, y §7 conserva la respuesta tal cual, con su remision.
+- **Por que se deja escrito:** el relato de §1 no son palabras literales del participante sino la
+  version que se transmitio, y por eso no va entrecomillado. La revision del Gate tiene que poder
+  pesarlo como lo que es.
+- **Alternativas descartadas:**
+  - **Copiar el relato de §1 tambien como respuesta 5:** pondria en boca del participante unas
+    palabras que en esa pregunta no dijo.
+  - **Corregir el «TAl» de la respuesta 5:** la plantilla prohibe arreglar lo dicho.
+  - **Que `manager` dedujera la hora de fin a partir de la duracion:** 52.31 s desde las 08:51 cae en
+    08:51 o en 08:52 segun los segundos del inicio, y ese dato no lo tenia.
+- **Evidencia:** las cuatro ordenes de §9 del registro, corridas antes del commit:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_003.md
+  195:- [ ] **No queda ni un solo `<` en el archivo.**
+  199:grep -n "<" 010_prototype/015_session_003.md                 # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/015_session_003.md
+  196:- [ ] La seccion «Guia de llenado» **esta borrada**.
+  200:grep -n "Guia de llenado" 010_prototype/015_session_003.md   # debe no devolver nada
+  $ git log --diff-filter=A --format=%ad -- 010_prototype/015_session_003.md
+  $ git log --oneline --name-only -- 010_prototype/
+  d802324 S-024: segunda sesion del Paso 5 (D-099), y F-034/F-035 de R-025 evaluados (D-100/D-101)
+  010_prototype/010_participants.md
+  010_prototype/015_session_002.md
+  66e6413 S-023: F-032/F-033 evaluados (D-095/D-096), primera sesion del Paso 5 corrida (D-097), y A-009 confirmado (D-098)
+  010_prototype/010_participants.md
+  010_prototype/015_session_001.md
+  e45185d S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  010_prototype/app/index.html
+  22747a9 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  010_prototype/005_happy_path.md
+  010_prototype/010_participants.md
+  010_prototype/012_facilitator_guide.md
+  ```
+
+  Las dos primeras devuelven solo la casilla y la orden, que es el mismo falso positivo que ya
+  describio `D-097`. La tercera sale vacia porque el archivo aun no esta commiteado, y su fecha la
+  contrasta el cierre. La cuarta muestra que ningun commit toco `010_prototype/app/` despues de
+  `e45185d`.
+- **Sobre `A-009`:** el participante no hizo comentarios durante la sesion («No hubo comentarios del
+  participante»), asi que no hay nada que anotar segun el limite de `D-098`.
+- **Lo que no se hace ahora:** las peticiones de §7 (un boton para generar otra combinacion, otro
+  para volver a la explicacion, todo en una sola pagina) **no se tocan en el prototipo**. Se
+  clasifican en `020_observations.md` cuando termine la ronda.
+- **Necesidades:** `N-001`, `N-002`.

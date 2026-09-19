@@ -120,7 +120,7 @@ todavia.
 |---|---|---|---|---|---|
 | `001` | 2026-09-18 | Unico | si | `015_session_001.md` | Sin reclutamiento: es el Actor Generador |
 | `002` | 2026-09-18 | Unico | si | `015_session_002.md` | Sin reclutamiento: es el Actor Generador |
-| `003` | pendiente | Unico | pendiente | `015_session_003.md` | Sin reclutamiento: es el Actor Generador |
+| `003` | 2026-09-19 | Unico | si | `015_session_003.md` | Sin reclutamiento: es el Actor Generador |
 | `004` | pendiente | Unico | pendiente | `015_session_004.md` | Sin reclutamiento: es el Actor Generador |
 | `005` | pendiente | Unico | pendiente | `015_session_005.md` | Sin reclutamiento: es el Actor Generador |
 

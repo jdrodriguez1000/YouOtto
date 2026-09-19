@@ -74,6 +74,7 @@
 | [T-055](#t-055---corregir-por-nota-el-grep--tail--1-de-d-096-que-ya-apunta-a-su-propia-prosa) | Corregir por nota el `grep \| tail -1` de D-096 que ya apunta a su propia prosa | No implementada | Baja | No bloqueante | 010_prototype |
 | [T-056](#t-056---corregir-por-nota-la-cifra-de-la-ronda-del-paso-5-en-s-023-y-en-progressmd) | Corregir por nota la cifra de la ronda del Paso 5 en S-023 y en progress.md | Implementada | Media | Bloqueante | 010_prototype |
 | [T-057](#t-057---situar-por-nota-en-66e6413-las-correcciones-de-f-032-y-f-033-en-s-023) | Situar por nota en 66e6413 las correcciones de F-032 y F-033 en S-023 | Implementada | Baja | No bloqueante | 010_prototype |
+| [T-058](#t-058---anclar-o-fechar-la-cuarta-orden-de-evidencia-de-d-102-que-el-commit-de-esta-sesion-deja-de-reproducir) | Anclar o fechar la cuarta orden de evidencia de D-102 que el commit de esta sesion deja de reproducir | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1604,3 +1605,49 @@ se consulta al usuario. Esta nota no cambia el estado de la tarea.
   | F-032 — La NOTA DE CIERRE de S-022 repite por tercera se
   | F-033 — La verificacion de orden de D-093 publica «(sin
   ```
+
+### T-058 - Anclar o fechar la cuarta orden de evidencia de D-102 que el commit de esta sesion deja de reproducir
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | session-closer |
+| Sesion | la de esta jornada |
+
+- **Que:** el bloque de Evidencia de `D-102` (`_persistence/decisions.md`) publica, entre otras, la
+  orden `git log --oneline --name-only -- 010_prototype/`, con su salida cruda pegada debajo. Esa
+  orden no esta acotada a un commit: el commit de esta misma sesion (que anade
+  `010_prototype/010_participants.md` y `010_prototype/015_session_003.md`, ambos bajo
+  `010_prototype/`) va a aparecer como primera linea la proxima vez que alguien la corra, y la salida
+  publicada dejara de coincidir con lo que la orden devuelve.
+- **Por que:** el Paso 2d de `protocol-close` exige que toda orden publicada en un archivo de
+  registro describa el commit que la va a contener, no el arbol en el instante en que se corrio.
+  `decisions.md` no es un archivo que este protocolo pueda editar fuera de la excepcion mecanica del
+  Paso 7c-bis (que solo cubre bloques «Criterio de cierre», y este es un bloque «Evidencia»), asi que
+  el pendiente se abre como tarea en vez de corregirse en este cierre.
+- **Criterio de cierre:** la orden queda anclada a un rango de commits que no incluya el de esta
+  sesion (por ejemplo `git log --oneline --name-only <hash-anterior-a-S-025> -- 010_prototype/`), o
+  lleva una nota fechada que declare que su salida es un snapshot previo al commit de `S-025`.
+
+  **Verificacion (corrida el 2026-09-19, antes del commit de esta sesion):**
+
+  ```
+  $ git log --oneline --name-only -- 010_prototype/
+  d802324 S-024: segunda sesion del Paso 5 (D-099), y F-034/F-035 de R-025 evaluados (D-100/D-101)
+  010_prototype/010_participants.md
+  010_prototype/015_session_002.md
+  66e6413 S-023: F-032/F-033 evaluados (D-095/D-096), primera sesion del Paso 5 corrida (D-097), y A-009 confirmado (D-098)
+  010_prototype/010_participants.md
+  010_prototype/015_session_001.md
+  e45185d S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  010_prototype/app/index.html
+  22747a9 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  010_prototype/005_happy_path.md
+  010_prototype/010_participants.md
+  010_prototype/012_facilitator_guide.md
+  ```
+
+  Reproduce exactamente lo publicado en `D-102` **hoy**; dejara de reproducir en cuanto el commit de
+  `S-025` exista, porque ese commit tambien toca `010_prototype/`.
