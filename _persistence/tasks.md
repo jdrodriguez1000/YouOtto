@@ -75,6 +75,8 @@
 | [T-056](#t-056---corregir-por-nota-la-cifra-de-la-ronda-del-paso-5-en-s-023-y-en-progressmd) | Corregir por nota la cifra de la ronda del Paso 5 en S-023 y en progress.md | Implementada | Media | Bloqueante | 010_prototype |
 | [T-057](#t-057---situar-por-nota-en-66e6413-las-correcciones-de-f-032-y-f-033-en-s-023) | Situar por nota en 66e6413 las correcciones de F-032 y F-033 en S-023 | Implementada | Baja | No bloqueante | 010_prototype |
 | [T-058](#t-058---anclar-o-fechar-la-cuarta-orden-de-evidencia-de-d-102-que-el-commit-de-esta-sesion-deja-de-reproducir) | Anclar o fechar la cuarta orden de evidencia de D-102 que el commit de esta sesion deja de reproducir | No implementada | Baja | No bloqueante | 010_prototype |
+| [T-059](#t-059---completar-por-nota-la-lista-de-hallazgos-pendientes-de-la-seccion-0-de-s-025) | Completar por nota la lista de hallazgos pendientes de la seccion 0 de S-025 | Implementada | Baja | No bloqueante | 010_prototype |
+| [T-060](#t-060---derivar-del-registro-con-orden-publicada-las-listas-y-cifras-de-hallazgos-y-sesiones-que-escribe-el-cierre) | Derivar del registro, con orden publicada, las listas y cifras de hallazgos y sesiones que escribe el cierre | No implementada | Baja | No bloqueante | 010_prototype |
 
 ---
 
@@ -1651,3 +1653,49 @@ se consulta al usuario. Esta nota no cambia el estado de la tarea.
 
   Reproduce exactamente lo publicado en `D-102` **hoy**; dejara de reproducir en cuanto el commit de
   `S-025` exista, porque ese commit tambien toca `010_prototype/`.
+
+### T-059 - Completar por nota la lista de hallazgos pendientes de la seccion 0 de S-025
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** `F-036` (`Baja`/`No bloqueante`), aceptado en `D-103`. Anadir una nota fechada al final de
+  `_audit/S-025.md` que complete con `F-016` y `F-017` la lista de hallazgos `Aceptado — pendiente`
+  de su seccion 0, **sin reescribir la seccion 0**.
+- **Por que:** la seccion 0 es la que se lee para saber que hallazgos siguen vivos, y omitia dos.
+- **Criterio de cierre:** hay una nota `F-036` en `S-025`, y la linea 15 de su seccion 0 sigue
+  literal.
+
+  **Verificacion:**
+
+  ```
+  $ grep -c "NOTA 2026-09-19 (\`F-036\`, \`D-103\`)" _audit/S-025.md
+  1
+  $ sed -n "15p" _audit/S-025.md | cut -c1-60
+  `_audit/findings.md` (`F-028`, `F-029`, `F-030`, `F-034`) no
+  ```
+
+### T-060 - Derivar del registro, con orden publicada, las listas y cifras de hallazgos y sesiones que escribe el cierre
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 010_prototype |
+| Origen | report_auditor |
+| Sesion | la de esta jornada |
+
+- **Que:** segunda recomendacion de `F-036`, aceptada y aplazada en `D-103`. Que `protocol-close`
+  obligue a derivar de `_audit/findings.md` —con la orden publicada en el informe, filtrando la
+  columna `Estado` y no la linea entera— la lista de hallazgos `Aceptado — pendiente` que el informe
+  enumere, en vez de escribirla a mano. Mirar en la misma pasada la cifra de sesiones restantes que
+  `F-034` vio repetirse mal, que es el mismo defecto de fondo.
+- **Por que:** dos cierres consecutivos han escrito a mano un dato que el registro ya tenia, y los dos
+  lo dejaron corto.
+- **Criterio de cierre:** `protocol-close` contiene la orden de derivacion de la lista de pendientes,
+  y la plantilla del informe remite a ella. La orden concreta de verificacion se fija al implementarla.

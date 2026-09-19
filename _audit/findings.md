@@ -55,7 +55,7 @@
 | [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Implementado | D-096 / T-053 |
 | [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Aceptado — pendiente | D-100 / T-056 |
 | [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Implementado | D-101 / T-057 |
-| [F-036](#f-036---la-seccion-0-de-s-025-enumera-como-aceptado--pendiente-cuatro-hallazgos-donde-el-registro-tiene-seis) | La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis | R-027 | Baja | No bloqueante | Abierto | — |
+| [F-036](#f-036---la-seccion-0-de-s-025-enumera-como-aceptado--pendiente-cuatro-hallazgos-donde-el-registro-tiene-seis) | La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis | R-027 | Baja | No bloqueante | Aceptado — pendiente | D-103 / T-059, T-060 |
 
 ---
 
@@ -1335,8 +1335,8 @@ Plantilla:
 | Fecha | 2026-09-19 |
 | Gravedad | Baja |
 | Urgencia | No bloqueante |
-| Estado | Abierto |
-| Registrado en | — |
+| Estado | Aceptado — pendiente |
+| Registrado en | D-103 / T-059, T-060 |
 | Cerrado en | |
 
 - **Que se observo:** la seccion 0 de `_audit/S-025.md` presenta como la lista de hallazgos que

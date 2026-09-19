@@ -123,6 +123,8 @@
 | [D-100](#d-100---f-034-se-acepta-la-ronda-de-cinco-sesiones-se-corrige-por-nota-en-s-023-y-en-progressmd) | F-034 se acepta: la ronda de cinco sesiones se corrige por nota en S-023 y en progress.md | 2026-09-18 | Vigente |
 | [D-101](#d-101---f-035-se-acepta-las-correcciones-de-f-032f-033-se-situan-por-nota-en-66e6413) | F-035 se acepta: las correcciones de F-032/F-033 se situan por nota en 66e6413 | 2026-09-18 | Vigente |
 | [D-102](#d-102---el-registro-de-la-sesion-003-se-transcribe-al-dictado-y-el-proceso-actual-se-registra-en-1) | El registro de la sesion 003 se transcribe al dictado, y el proceso actual se registra en §1 | 2026-09-19 | Vigente |
+| [D-103](#d-103---f-036-se-acepta-la-lista-de-pendientes-de-s-025-se-completa-por-nota-y-derivarla-se-aplaza-a-t-060) | F-036 se acepta: la lista de pendientes de S-025 se completa por nota, y derivarla se aplaza a T-060 | 2026-09-19 | Vigente |
+| [D-104](#d-104---el-registro-de-la-sesion-004-se-transcribe-al-dictado-y-su-comentario-espontaneo-se-declara-no-literal) | El registro de la sesion 004 se transcribe al dictado, y su comentario espontaneo se declara no literal | 2026-09-19 | Vigente |
 
 ---
 
@@ -6209,4 +6211,147 @@ $ git merge-base --is-ancestor 22747a9 e45185d && echo "22747a9 es anterior a e4
 - **Lo que no se hace ahora:** las peticiones de §7 (un boton para generar otra combinacion, otro
   para volver a la explicacion, todo en una sola pagina) **no se tocan en el prototipo**. Se
   clasifican en `020_observations.md` cuando termine la ronda.
+- **Necesidades:** `N-001`, `N-002`.
+
+---
+
+### D-103 - F-036 se acepta: la lista de pendientes de S-025 se completa por nota, y derivarla se aplaza a T-060
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | report_auditor |
+
+- **Contexto:** `R-027` abrio `F-036` (`Baja`/`No bloqueante`): la seccion 0 de `_audit/S-025.md`
+  enumera como `Aceptado — pendiente` cuatro hallazgos (`F-028`, `F-029`, `F-030`, `F-034`) donde el
+  registro del mismo commit tiene seis; faltan `F-016` y `F-017`.
+- **Verificado contra `HEAD` (`b374d01`), sobre el estado que `0c07cc8` dejo**: el hallazgo **sigue
+  vivo**.
+
+  ```
+  $ git rev-parse --short HEAD
+  b374d01
+  $ git show b374d01:_audit/S-025.md | grep -n "F-028"
+  15:`_audit/findings.md` (`F-028`, `F-029`, `F-030`, `F-034`) no fueron tocados en esta sesion: sus
+  $ git show b374d01:_audit/S-025.md | grep -c "F-036"
+  0
+  $ git show b374d01:_audit/findings.md | awk -F'|' '$7 ~ /Aceptado — pendiente/' | cut -c1-12
+  | [F-016](#f
+  | [F-017](#f
+  | [F-028](#f
+  | [F-029](#f
+  | [F-030](#f
+  | [F-034](#f
+  ```
+
+  Una precision a la orden del hallazgo, que no lo debilita: en `HEAD`, su
+  `grep "Aceptado — pendiente"` sobre la linea entera devuelve **siete** filas, porque el titulo de
+  `F-036` contiene esas palabras. Por eso aqui se filtra la columna `Estado` (la septima con `-F'|'`)
+  y no la linea:
+
+  ```
+  $ git show b374d01:_audit/findings.md | grep -n "^| \[F-0" | grep "Aceptado — pendiente" | cut -c1-12
+  38:| [F-016]
+  39:| [F-017]
+  50:| [F-028]
+  51:| [F-029]
+  52:| [F-030]
+  56:| [F-034]
+  58:| [F-036]
+  ```
+
+- **Decision: se acepta.** El hallazgo trae dos recomendaciones, y se tratan distinto:
+  - **La nota fechada al final de `_audit/S-025.md`** que completa la lista con `F-016` y `F-017`,
+    **sin reescribir la seccion 0**. Hecho en esta jornada como `T-059`.
+  - **Que el cierre derive esa lista de `findings.md` con una orden publicada**: se acepta y **se
+    aplaza** a `T-060`. Toca `protocol-close`, que es andamiaje agnostico y se promueve al esqueleto;
+    no es una correccion de este informe sino un cambio de protocolo, y esta jornada la pidio el
+    usuario para la sesion `004` del Paso 5. Es el mismo defecto de fondo que `F-034` (una cifra o una
+    lista escrita a mano donde el registro ya la tiene), asi que `T-060` debe mirar los dos.
+- **Lo que esta evaluacion NO escribe en `findings.md`:** la fila de `F-036` pasa a
+  `Aceptado — pendiente`, **no a `Implementado`**.
+- **Alternativas descartadas:**
+  - **Reescribir la seccion 0 de `S-025`:** convertiria «el informe dijo cuatro» en «siempre dijo
+    seis». Mismo motivo que `D-100` y `D-101`.
+  - **Rechazarlo porque `findings.md` y la seccion 2 ya tienen el dato:** la seccion 0 es la que se
+    lee para saber que sigue vivo, y el informe se contradice a si mismo.
+  - **Cambiar `protocol-close` ya:** ampliaria la jornada fuera de lo pedido; queda como `T-060`.
+- **Tareas:** `T-059`, `T-060`.
+
+---
+
+### D-104 - El registro de la sesion 004 se transcribe al dictado, y su comentario espontaneo se declara no literal
+
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-09-19 |
+| Estado | Vigente |
+| Origen | manager |
+
+- **Contexto:** la sesion `004` de `010_prototype` se corrio el 2026-09-19, de 09:44 a 09:45 (50.45 s
+  cronometrados), con JD Rodriguez como participante y Juana Ramirez como facilitadora, en una
+  jornada distinta de la `003` (`D-088`). El prototipo es el mismo: el unico commit que toca
+  `010_prototype/app/` sigue siendo `e45185d`.
+- **Decision 1: el registro se transcribe al dictado, igual que en la `001`, la `002` y la `003`
+  (`D-097`, `D-099`, `D-102`).** `manager` copio la plantilla antes de la sesion y dejo escritos solo
+  los datos ya conocidos: numero, fecha, facilitadora, participante, perfil, tarea literal y que el
+  prototipo no cambio. El resto se relleno con lo que el usuario dicto al terminar, horas de inicio y
+  fin incluidas. Juana Ramirez asigno el estado `Exito autonomo`. La frase que lo justifica la redacto
+  `manager` solo con hechos ya registrados en §4, §5, §6 y §7, y el usuario la acepto antes de
+  escribirla.
+- **Decision 2: el comentario espontaneo de §6 se registra como transmitido, no entrecomillado.**
+  Llego dictado en estilo indirecto («menciono que le gustaria que la confirmacion de los numeros
+  estuviera en la misma pagina donde se encuentra la justificacion de cada numero»). La plantilla
+  pide las palabras exactas; `manager` pregunto si la facilitadora las tenia, y el usuario acepto el
+  registro tal como estaba propuesto, sin aportar una cita. Queda en §6 declarado **no literal**, y
+  el relato del proceso actual va a §1 como relatado y transmitido, igual que en `D-102`.
+- **Por que se deja escrito:** la revision del Gate tiene que poder pesar el comentario de §6 como lo
+  que es —una version transmitida—, y no como las palabras del participante. Las respuestas de §7 si
+  llegaron en primera persona y van entrecomilladas.
+- **Alternativas descartadas:**
+  - **Entrecomillar el comentario:** pondria en boca del participante unas palabras que no se sabe si
+    dijo.
+  - **Omitirlo:** la plantilla pide registrar todo comentario, y su contenido coincide con lo que dijo
+    despues en §7 (una sola pagina), que si es literal.
+- **Evidencia:** las cuatro ordenes de §9 del registro, corridas antes del commit. La cuarta se ancla
+  a `b374d01` —el `HEAD` al empezar esta jornada— para que no deje de reproducir cuando exista el
+  commit de esta sesion, que es el defecto que abrio `T-058`:
+
+  ```
+  $ grep -n "<" 010_prototype/015_session_004.md
+  199:- [ ] **No queda ni un solo `<` en el archivo.**
+  203:grep -n "<" 010_prototype/015_session_004.md                 # debe no devolver nada
+  $ grep -n "Guia de llenado" 010_prototype/015_session_004.md
+  200:- [ ] La seccion «Guia de llenado» **esta borrada**.
+  204:grep -n "Guia de llenado" 010_prototype/015_session_004.md   # debe no devolver nada
+  $ git log --diff-filter=A --format=%ad -- 010_prototype/015_session_004.md
+  $ git log --oneline --name-only b374d01 -- 010_prototype/
+  0c07cc8 S-025: tercera sesion del Paso 5 corrida (D-102)
+  010_prototype/010_participants.md
+  010_prototype/015_session_003.md
+  d802324 S-024: segunda sesion del Paso 5 (D-099), y F-034/F-035 de R-025 evaluados (D-100/D-101)
+  010_prototype/010_participants.md
+  010_prototype/015_session_002.md
+  66e6413 S-023: F-032/F-033 evaluados (D-095/D-096), primera sesion del Paso 5 corrida (D-097), y A-009 confirmado (D-098)
+  010_prototype/010_participants.md
+  010_prototype/015_session_001.md
+  e45185d S-022: F-031 evaluado (D-092/T-051), el prototipo se construye (D-093) y el patrocinador lo aprueba (D-094)
+  010_prototype/app/index.html
+  22747a9 S-021: A-008 confirmado (D-083/C-006), Pasos 1-4 de 010_prototype sellados y decididos (D-084-D-090), F-030 evaluado (D-091)
+  010_prototype/005_happy_path.md
+  010_prototype/010_participants.md
+  010_prototype/012_facilitator_guide.md
+  ```
+
+  Las dos primeras devuelven solo la casilla y la orden, que es el mismo falso positivo que ya
+  describio `D-097`. La tercera sale vacia porque el archivo aun no esta commiteado, y su fecha la
+  contrasta el cierre. La cuarta muestra que ningun commit toco `010_prototype/app/` despues de
+  `e45185d`.
+- **Sobre `A-009`:** el unico comentario espontaneo trata de la organizacion de la pagina, no de que
+  la combinacion no sea la que produciria su metodo. No hay nada que anotar segun el limite de
+  `D-098`.
+- **Lo que no se hace ahora:** las peticiones de §6 y §7 (un boton para generar otra combinacion,
+  todo en una sola pagina) **no se tocan en el prototipo**. Se clasifican en `020_observations.md`
+  cuando termine la ronda.
 - **Necesidades:** `N-001`, `N-002`.
