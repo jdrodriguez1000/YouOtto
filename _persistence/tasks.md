@@ -1674,11 +1674,15 @@ se consulta al usuario. Esta nota no cambia el estado de la tarea.
   **Verificacion:**
 
   ```
-  $ grep -c "NOTA 2026-09-19 (\`F-036\`, \`D-103\`)" _audit/S-025.md
+  $ git show c424ae8:_audit/S-025.md | grep -c "NOTA 2026-09-19 (\`F-036\`, \`D-103\`)"
   1
-  $ sed -n "15p" _audit/S-025.md | cut -c1-60
+  $ git show c424ae8:_audit/S-025.md | sed -n "15p" | cut -c1-60
   `_audit/findings.md` (`F-028`, `F-029`, `F-030`, `F-034`) no
   ```
+
+📌 **Ancladas por el Paso 7c-bis al commit `c424ae8`.** Las dos reproducen lo publicado arriba.
+
+---
 
 ### T-060 - Derivar del registro, con orden publicada, las listas y cifras de hallazgos y sesiones que escribe el cierre
 | Campo | Valor |
