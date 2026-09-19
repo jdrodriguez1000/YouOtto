@@ -44,7 +44,7 @@
 | `S-024.md` | S-024 | 2026-09-18 | d802324 | `R-026.md` | Sin hallazgos | - |
 | `S-025.md` | S-025 | 2026-09-19 | 0c07cc8 | `R-027.md` | Con hallazgos (1) | F-036 |
 | `S-026.md` | S-026 | 2026-09-19 | c424ae8 | `R-028.md` | Con hallazgos (1) | F-037 |
-| `S-027.md` | S-027 | 2026-09-19 | Pendiente | Pendiente | Pendiente | - |
+| `S-027.md` | S-027 | 2026-09-19 | 50c8aec | `R-029.md` | Con hallazgos (3) | F-038, F-039, F-040 |
 
 ---
 

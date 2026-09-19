@@ -57,6 +57,9 @@
 | [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Implementado | D-101 / T-057 |
 | [F-036](#f-036---la-seccion-0-de-s-025-enumera-como-aceptado--pendiente-cuatro-hallazgos-donde-el-registro-tiene-seis) | La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis | R-027 | Baja | No bloqueante | Aceptado — pendiente | D-103 / T-059, T-060 |
 | [F-037](#f-037---a-004-y-a-005-estan-confirmado-en-el-indice-y-abierto-en-su-ficha-y-el-informe-de-s-026-los-da-por-vigentes) | `A-004` y `A-005` estan `Confirmado` en el indice y `Abierto` en su ficha, y el informe de `S-026` los da por vigentes | R-028 | Media | Bloqueante | Aceptado — pendiente | D-105 / T-061, T-062 |
+| [F-038](#f-038---dos-cifras-escritas-en-letra-en-s-027-contradicen-el-bloque-que-tienen-encima-y-el-control-de-cifra-adyacente-no-las-ve) | Dos cifras escritas en letra en `S-027` contradicen el bloque que tienen encima, y el CONTROL DE CIFRA ADYACENTE no las ve | R-029 | Media | No bloqueante | Abierto | — |
+| [F-039](#f-039---progressmd-dice-en-tres-sitios-que-r-028-audito-el-commit-c8b2581-y-audito-c424ae8) | `progress.md` dice en tres sitios que `R-028` audito el commit `c8b2581`, y audito `c424ae8` | R-029 | Baja | No bloqueante | Abierto | — |
+| [F-040](#f-040---la-nota-de-cierre-de-s-027-afirma-que-no-hubo-commit-de-anclaje-aparte-y-esta-dentro-de-uno) | La NOTA DE CIERRE de `S-027` afirma que no hubo commit de anclaje aparte, y esta dentro de uno | R-029 | Baja | No bloqueante | Abierto | — |
 
 ---
 
@@ -1411,3 +1414,72 @@ Plantilla:
 - **Que se hizo:** aceptado en `D-105` (2026-09-19). Las fichas de `A-004` y `A-005` pasan a
   `Confirmado`, con notas fechadas en las fichas, en `D-079` y en `S-026` (`T-061`). El control por
   estado en el cierre queda aplazado a `T-062`.
+
+### F-038 - Dos cifras escritas en letra en `S-027` contradicen el bloque que tienen encima, y el CONTROL DE CIFRA ADYACENTE no las ve
+| Campo | Valor |
+|---|---|
+| Auditoria | R-029 |
+| Fecha | 2026-09-19 |
+| Gravedad | Media |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** en `50c8aec`, `_audit/S-027.md` linea 107 dice «Diecinueve tareas» bajo un
+  bloque de 18 filas `T-` (`grep -c '^| \[T-'` → `18`; el indice de `tasks.md` da 18
+  `No implementada`), y la linea 152 dice «`Confirmado` (ocho) o `Refutado` (uno)» cuando el indice
+  de `assumptions.md` da 7 `Confirmado` y 2 `Refutado` (`A-001`, `A-002`). Las dos son la primera
+  linea tras un bloque de salida cruda; el CONTROL DE CIFRA ADYACENTE (Paso 6b de `protocol-close`)
+  filtra con `/[0-9]/` y por eso devuelve las lineas 108 y 153, no la 107 ni la 152. La NOTA DE
+  CIERRE declara «Ninguna exigio correccion». Comandos y salidas en `_audit/R-029.md` §2.
+- **Por que importa:** el informe publica dos recuentos falsos en la franja exacta que el control
+  vigila, y el control sale limpio sobre ellos: una cifra en letra nunca se contrasta. Es el mismo
+  defecto que `F-017`.
+- **Que lo corregiria (recomendacion):** nota fechada en `S-027.md` con las dos cifras correctas, sin
+  reescribir las secciones 2 y 4; y que el control incluya los numerales en letra o imprima siempre la
+  primera linea no vacia tras cada bloque.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
+
+### F-039 - `progress.md` dice en tres sitios que `R-028` audito el commit `c8b2581`, y audito `c424ae8`
+| Campo | Valor |
+|---|---|
+| Auditoria | R-029 |
+| Fecha | 2026-09-19 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** en `50c8aec`, `_persistence/progress.md` lineas 97, 114 y 941 dicen
+  «`report_auditor` audito el commit de `S-026` (`c8b2581`) en `R-028`». `R-028` declara
+  `Commit auditado | c424ae8`, y `c8b2581` es el commit de la propia auditoria
+  («auditoria R-028 sobre S-026 (c424ae8)»). La linea 944 (`HEAD` = `c8b2581`) si es correcta.
+  Comandos y salidas en `_audit/R-029.md` §2.
+- **Por que importa:** `progress.md` se lee al arrancar; el hash manda a quien contraste `F-037` a un
+  commit que no contiene el estado juzgado.
+- **Que lo corregiria (recomendacion):** nota fechada en `progress.md` con el hash correcto, sin
+  reescribir las entradas.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
+
+### F-040 - La NOTA DE CIERRE de `S-027` afirma que no hubo commit de anclaje aparte, y esta dentro de uno
+| Campo | Valor |
+|---|---|
+| Auditoria | R-029 |
+| Fecha | 2026-09-19 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** `git show b580b13:_audit/S-027.md` linea 254: «NOTA DE CIERRE (Paso 7c-bis,
+  sobre el commit `50c8aec` — este cierre no genero un commit de anclaje aparte…». Esa nota vive en
+  `b580b13` («S-027: ancla el informe al hash 50c8aec»), commit de anclaje de un solo archivo
+  (`_audit/S-027.md`). Comandos y salidas en `_audit/R-029.md` §2.
+- **Por que importa:** la nota existe para distinguir el commit de sesion del de anclaje; negar que
+  el segundo exista desorienta a quien busque donde se anclo el informe.
+- **Que lo corregiria (recomendacion):** nota fechada al final de `S-027.md` que nombre `b580b13` como
+  commit de anclaje y aclare que lo que no hubo fue anclaje del Paso 7c-bis.
+- **Que se hizo:** pendiente de evaluacion por `manager`.
