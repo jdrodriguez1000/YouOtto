@@ -55,6 +55,7 @@
 | [F-033](#f-033---la-verificacion-de-orden-de-d-093-publica-sin-salida-para-una-orden-que-a-partir-del-commit-devuelve-una-linea) | La verificacion de orden de `D-093` publica «(sin salida)» para una orden que a partir del commit devuelve una linea | R-024 | Baja | No bloqueante | Implementado | D-096 / T-053 |
 | [F-034](#f-034---el-registro-de-s-023-afirma-una-ronda-de-cuatro-sesiones-donde-la-sellada-es-de-cinco) | El registro de `S-023` afirma una ronda de cuatro sesiones donde la sellada es de cinco | R-025 | Media | Bloqueante | Aceptado — pendiente | D-100 / T-056 |
 | [F-035](#f-035---la-seccion-0-de-s-023-situa-en-el-commit-anterior-las-correcciones-de-f-032-y-f-033-que-estan-en-66e6413) | La seccion 0 de `S-023` situa en el commit anterior las correcciones de `F-032` y `F-033`, que estan en `66e6413` | R-025 | Baja | No bloqueante | Implementado | D-101 / T-057 |
+| [F-036](#f-036---la-seccion-0-de-s-025-enumera-como-aceptado--pendiente-cuatro-hallazgos-donde-el-registro-tiene-seis) | La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis | R-027 | Baja | No bloqueante | Abierto | — |
 
 ---
 
@@ -1325,4 +1326,46 @@ Plantilla:
   auditoria ya cierra los dos hallazgos contra el commit correcto y nada posterior hereda el error.
 - **Que lo corregiria:** una nota fechada al final de `_audit/S-023.md` que declare que las dos
   correcciones van en el commit de sesion `66e6413`, sin reescribir la seccion 0.
+  ⚠️ Es una recomendacion, no una orden.
+
+### F-036 - La seccion 0 de `S-025` enumera como `Aceptado — pendiente` cuatro hallazgos donde el registro tiene seis
+| Campo | Valor |
+|---|---|
+| Auditoria | R-027 |
+| Fecha | 2026-09-19 |
+| Gravedad | Baja |
+| Urgencia | No bloqueante |
+| Estado | Abierto |
+| Registrado en | — |
+| Cerrado en | |
+
+- **Que se observo:** la seccion 0 de `_audit/S-025.md` presenta como la lista de hallazgos que
+  siguen pendientes solo cuatro:
+
+  ```
+  $ git show 0c07cc8:_audit/S-025.md | grep -n "F-028"
+  15:`_audit/findings.md` (`F-028`, `F-029`, `F-030`, `F-034`) no fueron tocados en esta sesion: sus
+  ```
+
+  El registro del mismo commit tiene seis en ese estado:
+
+  ```
+  $ git show 0c07cc8:_audit/findings.md | grep -n "^| \[F-0" | grep "Aceptado — pendiente" | cut -c1-12
+  38:| [F-016]
+  39:| [F-017]
+  50:| [F-028]
+  51:| [F-029]
+  52:| [F-030]
+  56:| [F-034]
+  ```
+
+  Faltan `F-016` y `F-017` (`T-030`, `T-031`), que el propio informe lista como `No implementada`
+  en su seccion 2.
+- **Por que importa:** la seccion 0 es la que se lee para saber que hallazgos siguen vivos; quien
+  se fie de ella da por cerrados dos que no lo estan. `Baja` porque `findings.md` y la seccion 2 del
+  mismo informe tienen el dato correcto; `No bloqueante` porque el registro que se lee al arrancar
+  (`findings.md`) no hereda el error.
+- **Que lo corregiria:** una nota fechada al final de `_audit/S-025.md` que complete la lista con
+  `F-016` y `F-017`, sin reescribir la seccion 0; y que el cierre derive esa lista de
+  `findings.md` con una orden publicada en vez de escribirla a mano.
   ⚠️ Es una recomendacion, no una orden.
